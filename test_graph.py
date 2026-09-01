@@ -28,6 +28,23 @@ def test_clean_mdx_preserves_generics_inside_code_fences():
     assert "List<String>" in out
 
 
+def test_retriever_finds_jargon_term():
+    """Exact-identifier jargon is where dense-only retrieval typically fails."""
+    from retrieval import get_retriever
+    docs = get_retriever().invoke("continue-as-new")
+    assert docs, "retriever returned nothing - is chroma_db/ built?"
+    assert any("continue-as-new" in d.metadata["source"] for d in docs)
+
+
+def test_every_graph_exposes_the_shared_interface():
+    """compare.py depends on this contract. If it breaks, the table breaks."""
+    import importlib, pathlib
+    modules = [p.stem for p in pathlib.Path(".").glob("graph_v*.py")]
+    assert modules, "no graph modules found"
+    for name in modules:
+        graph = importlib.import_module(name).graph
+        assert hasattr(graph, "invoke"), f"{name}.graph is not invokable"
+
 if __name__ == "__main__":
     import sys
     mod = sys.modules[__name__]
