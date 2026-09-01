@@ -61,7 +61,7 @@ __pycache__/
 - [ ] **Step 5: Write `.env.example`**
 ```
 GROQ_API_KEY=
-GROQ_MODEL=llama-3.3-70b-versatile
+GROQ_MODEL=openai/gpt-oss-120b
 GROQ_RPS=0.4
 LANGSMITH_TRACING=true
 LANGSMITH_API_KEY=
@@ -156,7 +156,7 @@ load_dotenv()
 
 def get_llm(temperature: float = 0.0):
     return init_chat_model(
-        os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile"),
+        os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b"),
         model_provider="groq",
         temperature=temperature,
         rate_limiter=InMemoryRateLimiter(

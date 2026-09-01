@@ -19,7 +19,7 @@ def get_llm(temperature: float = 0.0) -> BaseChatModel:
     the 429s that a fallback could only react to after the fact.
     """
     return init_chat_model(
-        os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile"),
+        os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b"),
         model_provider="groq",
         temperature=temperature,
         rate_limiter=InMemoryRateLimiter(
