@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from pydantic import BaseModel, Field
 
 from ingest import load_chunks
-from llm import get_llm
+from llm import structured
 
 OUT = Path(__file__).parent / "golden.draft.jsonl"
 TARGET = {"direct": 12, "jargon": 8, "multihop": 8, "ambiguous": 4}
@@ -43,7 +43,7 @@ class QA(BaseModel):
 
 def _draft(llm, instruction: str, passage: str) -> QA | None:
     try:
-        return llm.with_structured_output(QA).invoke(
+        return llm.invoke(
             f"{instruction}\n\nPassage:\n{passage[:2500]}"
         )
     except Exception as exc:  # noqa: BLE001 - drafting is best-effort
@@ -72,7 +72,7 @@ def main() -> None:
     random.seed(0)
     chunks = [c for c in load_chunks() if len(c.page_content) > 400]
     glossary = [c for c in chunks if "glossary" in c.metadata["source"]]
-    llm = get_llm(temperature=0.3)
+    llm = structured(QA, temperature=0.3)
     rows = []
 
     for bucket, n in TARGET.items():

@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pydantic import BaseModel, Field
 
-from llm import get_llm
+from llm import structured
 
 ROOT = Path(__file__).parent
 GOLDEN = ROOT / "golden.jsonl"
@@ -45,7 +45,8 @@ def load_golden(limit: int | None = None) -> list[dict]:
 
 def run_eval(graph_module: str, limit: int | None = None) -> dict:
     graph = importlib.import_module(graph_module).graph
-    judge = get_llm()
+    judge_correct = structured(Correctness)
+    judge_grounded = structured(Faithfulness)
     rows = load_golden(limit)
 
     correct, grounded, recalled = [], [], []
@@ -63,7 +64,7 @@ def run_eval(graph_module: str, limit: int | None = None) -> dict:
             correct.append(is_refusal(answer))
             continue
 
-        verdict = judge.with_structured_output(Correctness).invoke(
+        verdict = judge_correct.invoke(
             f"Reference answer:\n{row['answer']}\n\nGiven answer:\n{answer}\n\n"
             "Does the given answer match the reference in substance?"
         )
@@ -71,7 +72,7 @@ def run_eval(graph_module: str, limit: int | None = None) -> dict:
 
         if docs:
             context = "\n\n".join(d.page_content for d in docs)
-            fverdict = judge.with_structured_output(Faithfulness).invoke(
+            fverdict = judge_grounded.invoke(
                 f"Context:\n{context[:6000]}\n\nAnswer:\n{answer}\n\n"
                 "Is every claim in the answer supported by the context?"
             )

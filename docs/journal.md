@@ -46,3 +46,28 @@ Verified both plain and structured calls succeed.
 **Aside:** the `/v1/models` endpoint returns 403 to Python's `urllib` but 200 to
 `curl` — a User-Agent filter, not a permissions problem. Worth knowing before
 misreading it as a key scope issue.
+
+## 2026-09-01 — Structured output: json_schema, not tool calling
+
+Golden-set drafting failed intermittently with
+`tool_use_failed: Tool choice is required, but model did not call a tool`.
+
+Cause: `with_structured_output()` defaults to function calling. gpt-oss is a
+reasoning model, and on longer passages it replies in prose rather than invoking
+the tool. Groq then rejects the response.
+
+Tested all three methods against this model:
+
+| method | result |
+|---|---|
+| `json_schema` | works |
+| `json_mode` | rejected — requires the literal word "json" in the messages |
+| `function_calling` | works on short input, fails on long — **intermittent** |
+
+Intermittent is the dangerous one. It does not fail loudly; it silently thins
+the golden set, and a golden set quietly missing its hardest questions is worse
+than one that fails to build at all.
+
+Fixed at the source with `llm.structured()`, which both the drafter and the eval
+judges now route through. Every v2 grader node will use it too — those nodes are
+entirely structured-output calls, so this would have surfaced as flaky grading.
