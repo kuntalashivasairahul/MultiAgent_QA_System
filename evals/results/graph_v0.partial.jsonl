@@ -2,3 +2,11 @@
 {"question": "What does Activity.wrap() return when it is given a checked exception?", "bucket": "direct", "correct": false}
 {"question": "What command is used to start the Worker?", "bucket": "direct", "correct": false}
 {"question": "What tag narrows down which Activity is failing?", "bucket": "direct", "correct": false}
+{"question": "What function is called inside the Workflow to start a new run when using Continue-As-New?", "bucket": "direct", "correct": true}
+{"question": "What command disables API key authentication for a Temporal Cloud namespace?", "bucket": "direct", "correct": false}
+{"question": "In Temporal, how can a workflow be paused after activity retries are exhausted and later resumed with corrected input using a signal?", "bucket": "direct", "correct": true}
+{"question": "What is the default value for max_concurrent_activities in the lambda_worker package?", "bucket": "direct", "correct": false}
+{"question": "What is the task queue name used when executing the workflow?", "bucket": "direct", "correct": false}
+{"question": "What is the mainClass argument used to run the handler Worker?", "bucket": "direct", "correct": false}
+{"question": "How often does the dashboard poll the web service?", "bucket": "direct", "correct": false}
+{"question": "Which command pulls the Temporal proxy container image?", "bucket": "direct", "correct": false}

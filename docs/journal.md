@@ -173,3 +173,35 @@ Read the actual limits from the API rather than guessing:
 command was piped through `grep`, so the pipeline returned grep's status and the
 Python traceback was masked. A failed eval looked like a completed one. Fixed by
 running under `set -o pipefail`.
+
+## 2026-09-01 — Judges that fail intermittently
+
+Second v0 attempt died at question 8 with a different error:
+
+```
+400 output_parse_failed
+failed_generation: 'We need to output JSON with property correct boolean.
+                    ... They don't match. So correct=false.'
+```
+
+At `reasoning_effort="low"` the 20b judge skipped the structured-emission
+discipline and returned its reasoning where the JSON object belonged. Removed
+the low setting.
+
+Tested four model/effort combinations against three fixed cases first: **all four
+passed**, which is the important part — the failure is intermittent, not
+deterministic, so no configuration choice can fix it. The run has to tolerate it.
+(Worth noting: `gpt-oss-120b` at low effort got one case *wrong*, judging a clear
+mismatch as correct. A small sample, but not an argument for the larger model as
+judge.)
+
+Added `_judge()`: retry four times, and on total failure return `None` so the
+caller leaves that metric unset. **It deliberately does not substitute a
+default.** A guessed verdict is fabricated data, which is precisely the failure
+this harness exists to detect — quietly defaulting to `False` would have
+depressed correctness scores with no visible cause. Unscored rows are excluded
+from the means and counted in a new `unjudged` column, so a shrunken denominator
+cannot pass unnoticed.
+
+Checkpointing proved itself here: the crash at question 8 cost nothing, and the
+rerun resumed from 8.

@@ -16,11 +16,14 @@ from run_eval import RESULTS, run_eval  # noqa: E402
 ROOT = Path(__file__).parent
 VERSIONS = [p.stem for p in sorted(Path(__file__).parent.parent.glob("graph_v*.py"))]
 COLS = [("correctness", "Correct"), ("faithfulness", "Faithful"),
-        ("recall_at_k", "Recall@5"), ("refusal_rate", "Refuses")]
+        ("recall_at_k", "Recall@5"), ("refusal_rate", "Refuses"),
+        ("unjudged", "Unjudged")]
 
 
 def cell(v) -> str:
-    return "—" if v is None else f"{v:.3f}"
+    if v is None:
+        return "—"
+    return str(v) if isinstance(v, int) else f"{v:.3f}"
 
 
 def main() -> None:
@@ -37,7 +40,7 @@ def main() -> None:
     head = "| Version | n | " + " | ".join(c[1] for c in COLS) + " |"
     sep = "|---" * (len(COLS) + 2) + "|"
     body = [
-        f"| {r['graph']} | {r['n']} | " + " | ".join(cell(r[c[0]]) for c in COLS) + " |"
+        f"| {r['graph']} | {r['n']} | " + " | ".join(cell(r.get(c[0])) for c in COLS) + " |"
         for r in rows
     ]
     table = "\n".join([head, sep, *body])
@@ -50,7 +53,10 @@ def main() -> None:
         f"{table}\n\n"
         "**Reading v0:** it retrieves nothing. High correctness there means the\n"
         "model already knows this corpus, and the retrieval numbers below it are\n"
-        "not measuring what they appear to.\n"
+        "not measuring what they appear to.\n\n"
+        "**Unjudged** counts rows the LLM judge could not score after retries.\n"
+        "Those rows are excluded from the means, so a non-zero value means the\n"
+        "denominator is smaller than n.\n"
     )
     print(f"\nwrote {ROOT / 'RESULTS.md'}")
 
