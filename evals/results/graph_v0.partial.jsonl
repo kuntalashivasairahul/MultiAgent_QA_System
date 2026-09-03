@@ -10,3 +10,31 @@
 {"question": "What is the mainClass argument used to run the handler Worker?", "bucket": "direct", "correct": false}
 {"question": "How often does the dashboard poll the web service?", "bucket": "direct", "correct": false}
 {"question": "Which command pulls the Temporal proxy container image?", "bucket": "direct", "correct": false}
+{"question": "What does the Parent Close Policy determine in Temporal?", "bucket": "jargon", "correct": true}
+{"question": "What responsibilities does the Frontend Service have in Temporal?", "bucket": "jargon", "correct": true}
+{"question": "What is the definition of the Temporal-specific term \"Retention Period\"?", "bucket": "jargon", "correct": true}
+{"question": "What components make up a Temporal Service?", "bucket": "jargon", "correct": true}
+{"question": "What is a Local Activity in Temporal?", "bucket": "jargon", "correct": true}
+{"question": "What does the term Visibility refer to within the Temporal Platform?", "bucket": "jargon", "correct": true}
+{"question": "What are Dynamic Handlers in Temporal?", "bucket": "jargon", "correct": false}
+{"question": "What is the Nexus Registry in Temporal?", "bucket": "jargon", "correct": false}
+{"question": "What permission is required to manage a Namespace\u2011scoped service account, and which Temporal component provides the APIs that a developer would use to interact with the Temporal Service when performing such management tasks?", "bucket": "multihop", "correct": false}
+{"question": "What permissions are needed for processes/components that store payloads versus those that retrieve payloads, according to the Go and TypeScript external storage prerequisites?", "bucket": "multihop", "correct": false}
+{"question": "According to the documentation, which metrics should be used to monitor a Task Queue backlog and worker saturation, and what does the Datadog OpenMetrics integration monitor?", "bucket": "multihop", "correct": false}
+{"question": "How does a client invoke a Dynamic Workflow implementation and what method must the workflow implementation provide to handle inputs?", "bucket": "multihop", "correct": false}
+{"question": "What must an Activity do to be able to receive a cancellation request, and what are the Cancelled Failure messages for a missed heartbeat timeout and for a workflow that has reached a Closed state?", "bucket": "multihop", "correct": false}
+{"question": "What does the `#[WorkflowInit]` attribute do for a Workflow constructor, and why are Workflow constructors considered useful for message handlers?", "bucket": "multihop", "correct": true}
+{"question": "What pattern should be used to undo completed steps when a later step fails, and how does the pause\u2011and\u2011fix loop handle compensation failures?", "bucket": "multihop", "correct": true}
+{"question": "What are the method names used in the .NET and Go SDKs to count standalone Nexus operations?", "bucket": "multihop", "correct": false}
+{"question": "Why are some scheduled workflow actions being skipped or delayed even though they were supposed to run?", "bucket": "ambiguous", "correct": false}
+{"question": "How can a workflow detect that the target worker deployment version has changed?", "bucket": "ambiguous", "correct": false}
+{"question": "Is it possible to eliminate a workflow that only triggers one Nexus operation and call the operation directly?", "bucket": "ambiguous", "correct": false}
+{"question": "How can I mock Nexus operations in a workflow test and add custom logic to them?", "bucket": "ambiguous", "correct": true}
+{"question": "How much does Temporal Cloud cost per million actions?", "bucket": "unanswerable", "refused": true, "correct": true}
+{"question": "What is the home address of Temporal's CEO?", "bucket": "unanswerable", "refused": false, "correct": false}
+{"question": "How many employees does Temporal Technologies have?", "bucket": "unanswerable", "refused": true, "correct": true}
+{"question": "What was Temporal's revenue last quarter?", "bucket": "unanswerable", "refused": true, "correct": true}
+{"question": "Which venture capital firm led Temporal's Series C?", "bucket": "unanswerable", "refused": false, "correct": false}
+{"question": "What is the WiFi password at Temporal's head office?", "bucket": "unanswerable", "refused": true, "correct": true}
+{"question": "What is our company's internal on-call escalation policy for Temporal?", "bucket": "unanswerable", "refused": false, "correct": false}
+{"question": "How many Temporal workflows did Netflix run yesterday?", "bucket": "unanswerable", "refused": true, "correct": true}

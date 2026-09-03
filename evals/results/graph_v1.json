@@ -1,0 +1,9 @@
+{
+  "graph": "graph_v1",
+  "n": 40,
+  "correctness": 0.8,
+  "faithfulness": 0.839,
+  "recall_at_k": 0.688,
+  "refusal_rate": 0.875,
+  "unjudged": 0
+}

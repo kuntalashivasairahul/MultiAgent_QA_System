@@ -205,3 +205,48 @@ cannot pass unnoticed.
 
 Checkpointing proved itself here: the crash at question 8 cost nothing, and the
 rerun resumed from 8.
+
+## 2026-09-01 — v1 baseline. Phase gate met.
+
+| Version | Correct | Faithful | Recall@5 | Refuses | Unjudged |
+|---|---|---|---|---|---|
+| v0 (no retrieval) | 0.425 | — | — | 0.625 | 0 |
+| v1 (retrieve→generate) | 0.800 | 0.839 | 0.688 | 0.875 | 0 |
+
+Answerable-only correctness: **0.375 → 0.781**. Fabrication on unanswerable
+questions: **3/8 → 1/8**. Retrieval is doing real work.
+
+**The corpus choice is vindicated, with one exception.** v0 scoring 0.375 means
+the model does not already know this material, so v1's gain measures retrieval
+rather than memorisation. But the jargon bucket scored 0.750 at v0 — gpt-oss
+already knows Temporal's conceptual vocabulary (Parent Close Policy, Local
+Activity, Nexus Registry).
+
+Per bucket at v1:
+
+| bucket | correct | recall@5 |
+|---|---|---|
+| direct | 0.667 | 0.667 |
+| jargon | **1.000** | **0.250** |
+| multihop | 0.875 | 1.000 |
+| ambiguous | 0.500 | 1.000 |
+
+**The jargon row is the interesting failure.** Perfect answers on a quarter of
+the retrieval recall. Two candidate explanations, and they imply opposite fixes:
+
+1. The model answers from parametric memory (v0 already 0.750), so retrieval
+   quality does not affect the score.
+2. `recall_at_k` does exact source-path matching. Glossary terms are documented
+   in both `glossary.md` and under `encyclopedia/`, so retrieving an equally
+   valid alternative file counts as a miss. The metric would be undercounting.
+
+If (2), the recall number is wrong rather than the retriever. Single-path ground
+truth is too strict for a corpus that documents the same concept in several
+places. **This must be resolved before v2**, because v2's hybrid BM25 retrieval
+is justified precisely by fixing jargon retrieval — and right now the jargon
+bucket has 0.25 of correctness headroom and a recall metric that may be
+measuring nothing. Fixing the metric, and rewriting jargon questions to target
+specific identifiers (flag names, config keys, CLI arguments) rather than
+definable concepts, is the first v2 task.
+
+**Gate met:** v1 built, evaluated, numbers committed. v2 may begin.
