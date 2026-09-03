@@ -71,3 +71,35 @@ than one that fails to build at all.
 Fixed at the source with `llm.structured()`, which both the drafter and the eval
 judges now route through. Every v2 grader node will use it too — those nodes are
 entirely structured-output calls, so this would have surfaced as flaky grading.
+
+## 2026-09-01 — Human review caught a drafting bug, not just bad rows
+
+Verified all 40 drafted questions against source. Direct, jargon, ambiguous, and
+unanswerable buckets were clean. **Four of eight multihop rows were wrong**, and
+every failure sat in the second half of the two-part answer:
+
+| Row | Failure |
+|---|---|
+| 21 | Arithmetic error — confused the per-TRU rate with the 6-TRU total |
+| 23 | Fabricated a resolution the source never gives; the doc stops mid-thought |
+| 24 | Reversed the source's meaning about assumed Temporal knowledge |
+| 25 | Invented API behaviour supported by neither cited file |
+
+**Root cause was in the drafter, not the model.** Multihop drafting used
+`random.sample(chunks, 2)` — two arbitrary chunks out of 9,765, which are
+essentially never related. The prompt then demanded "one question that requires
+BOTH to answer." With no real connection available, the only way to comply is to
+invent one. The prompt was a fabrication instruction.
+
+Fixed with `_related_pair()`: pick a chunk, then take its nearest neighbour from a
+*different* file via the vector store. The prompt now also forbids inference and
+arithmetic, and allows the model to answer "SKIP" rather than force a link.
+Redrafted pairs are things like `go/external-storage` + `typescript/external-storage`
+and `cli/namespace` + `cloud/namespaces` — genuinely connected material.
+
+**Why this matters more than the four rows.** An LLM judge would have passed all
+four: they are fluent, well-structured, and cite real files. Only reading the
+source catches them. Had they entered the golden set, every faithfulness number
+for v1, v2, and v3 would have been quietly measured against fabricated ground
+truth — and the errors would have looked like model failures rather than
+dataset failures. This is the concrete reason the human verification gate exists.

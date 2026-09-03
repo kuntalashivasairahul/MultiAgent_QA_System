@@ -1,14 +1,12 @@
 # Golden Set — Review Sheet
 
-40 questions. **Check each answer against its cited source file.**
-Tell me any row numbers that are wrong and I'll redraft them.
-Nothing here is verified until you say so — an unverified golden set makes
-every number downstream decorative.
+40 questions. Check each answer against its cited source.
+Rows 0 and 21-25 were redrafted after the first review found fabrications.
 
 ## direct (12)
 
-**0.** What is the full email format of the invoker service account created by the module? 
-> <invoker_account_id>@<project_id>.iam.gserviceaccount.com
+**0.** What is required to access the pre‑release Cloud Run support for Temporal Serverless Workers? 
+> You must create a support ticket or contact your account team for access, and you can sign up for updates to hear when Cloud Run reaches Public Preview.
 `production-deployment/worker-deployments/serverless-workers/cloud-run/index.mdx`
 
 **1.** What does Activity.wrap() return when it is given a checked exception? 
@@ -95,25 +93,25 @@ every number downstream decorative.
 > Managing a Namespace‑scoped service account requires the Namespace Admin permission on that namespace, and a developer would use the Temporal SDK, which offers APIs to communicate with the Temporal Service.
 `cloud/manage-access/permissions-reference.mdx,glossary.md`
 
-**21.** When a Nexus operation is started using the NexusOperationLogInterceptor, what details are logged, and what is the maximum number of Actions Per Second allowed for a provisioned capacity of 6 TRUs? 
-> The interceptor logs the service name and operation name when the operation starts, and after the operation starts it logs the same service and operation along with whether the result is asynchronous (the 'async' flag). For a provisioned capacity of 6 TRUs, the maximum Actions Per Second is 500.
-`cloud/capacity-modes.mdx,develop/typescript/workers/interceptors.mdx`
+**21.** What permissions are needed for processes/components that store payloads versus those that retrieve payloads, according to the Go and TypeScript external storage prerequisites? 
+> Permission to write objects on processes that store payloads, and to read objects on processes that retrieve them. Storing also requires read permission, because the drivers check whether an object already exists before uploading. Components that only retrieve payloads do not need write access, and the reverse is also true.
+`develop/go/best-practices/data-handling/external-storage.mdx,develop/typescript/best-practices/data-handling/external-storage.mdx`
 
-**22.** What mechanisms are used to detect dead or crashed Workers in Temporal workflows, and where can you find sample implementations of these mechanisms? 
-> The workflow uses heartbeats (30 seconds) for fast crash detection and a schedule‑to‑start timeout (5 minutes) for dead‑worker detection; sample implementations of these patterns are provided in the pick‑first design‑pattern page with Go, TypeScript, Java, and Python sample repositories.
-`guides/worker-execution-affinity.mdx,design-patterns/pick-first.mdx`
+**22.** According to the documentation, which signals should be used to monitor a Task Queue backlog and worker saturation, and what does the Datadog OpenMetrics integration monitor? 
+> To monitor Tasks backing up in a Task Queue, use Cloud metrics plus SDK Schedule-To-Start metrics. To monitor Workers saturated, under‑provisioned, or misconfigured, use SDK metrics. The Datadog OpenMetrics integration lets you use OpenMetrics in Datadog to monitor Temporal Cloud behavior such as Task Queue backlog, poll success, and rate limiting, and you can collect SDK metrics from your Workers separately to monitor saturation, Schedule-To-Start latency, slot availability, and sticky cache behavior.
+`cloud/metrics/openmetrics/metrics-integrations.mdx,cloud/metrics/index.mdx`
 
-**23.** How can you run a workflow that uses standalone activities on Temporal Cloud when the task queue name cannot be defined as a constant across different client implementations? 
-> You can keep the existing Worker and Client code (which uses Temporalio::EnvConfig::ClientConfig.load_client_connect_options) and configure the connection to Temporal Cloud via environment variables or a TOML profile, so no code changes are needed. For the task‑queue name, instead of a compile‑time constant, supply the name at runtime through configuration (e.g., an environment variable or a settings file) that both the client that starts the workflow and the worker can read, allowing the workflow to be started from a different system or language while still using the same standalone‑activity code.
-`develop/ruby/activities/standalone-activities.mdx,encyclopedia/workers/task-queue-naming.mdx`
+**23.** How does a client invoke a Dynamic Workflow implementation and what method must the workflow implementation provide to handle inputs? 
+> The client calls the Dynamic Workflow using an untyped WorkflowStub (as shown in the client code) and the workflow implementation must be registered with the worker (e.g., worker.registerWorkflowImplementationTypes(...)). The implementation must extend DynamicWorkflow and provide the execute method, which receives EncodedValues as the inputs to the Workflow Execution.
+`develop/java/client/temporal-client.mdx,develop/java/workflows/message-passing.mdx`
 
-**24.** What is the initial version number for Cluster A in the version‑history example, and what prerequisite knowledge does the Strands Agents guide assume you have? 
-> The initial version of Cluster A is 1, and the guide assumes you are already familiar with Strands Agents (and have basic knowledge of Temporal).
-`production-deployment/self-hosted-guide/multi-cluster-replication.mdx,develop/typescript/integrations/strands-agents.mdx`
+**24.** What must an Activity do to be able to receive a cancellation request, and what are the Cancelled Failure messages for a missed heartbeat timeout and for a workflow that has reached a Closed state? 
+> The Activity Execution must send Heartbeats and set a Heartbeat Timeout; if the Heartbeat is not invoked, the Activity cannot receive a cancellation request. If the Server didn’t receive a heartbeat within the Activity’s Heartbeat timeout, the Cancelled Failure will have message: 'TIMED_OUT'. If the Workflow Run reached a Closed state, the Cancelled Failure will have message: 'NOT_FOUND'.
+`encyclopedia/activities/activity-execution.mdx,develop/typescript/workflows/cancellation.mdx`
 
-**25.** When a worker's task slots are exhausted (no new tasks can be picked up), which Temporal API call can still be used to retrieve workflow information, and is it permitted for all user roles listed in the permissions table? 
-> The `QueryWorkflow` API call can still be used, and it is permitted (✅) for all three user roles shown in the table.
-`troubleshooting/worker-capacity.mdx,cloud/manage-access/users.mdx`
+**25.** What command retrieves the current mTLS authentication configuration for a Temporal Cloud namespace, and which flag can be used to authenticate with an API key instead of interactive login? 
+> Use the command `temporal cloud namespace mtls get --namespace my-namespace.my-account`; you can add the `--api-key` flag (a string API key) to authenticate with Temporal Cloud instead of interactive login.
+`cli/command-reference/cloud/namespace.mdx,cloud/get-started/namespaces.mdx`
 
 **26.** When setting up a GCP Private Service Connect endpoint for a Temporal workflow that uses the `Patched` marker feature flag, which endpoint option must be enabled to allow workers outside the selected region to connect, and what does the `Patched` marker guarantee during workflow replay? 
 > You must enable **Enable global access** on the endpoint (which requires the network routing mode to be set to GLOBAL) to let workers outside the region connect. The `Patched` marker guarantees that, during replay, a workflow task will fail if the current code does not produce the same patch marker, ensuring the feature‑flag behavior is consistent between pre‑patch and post‑patch versions.
@@ -145,32 +143,32 @@ every number downstream decorative.
 
 **32.** How much does Temporal Cloud cost per million actions? 
 > I don't know.
-`NO SOURCE — must be genuinely absent from the docs`
+`NO SOURCE`
 
 **33.** What is the home address of Temporal's CEO? 
 > I don't know.
-`NO SOURCE — must be genuinely absent from the docs`
+`NO SOURCE`
 
 **34.** How many employees does Temporal Technologies have? 
 > I don't know.
-`NO SOURCE — must be genuinely absent from the docs`
+`NO SOURCE`
 
 **35.** What was Temporal's revenue last quarter? 
 > I don't know.
-`NO SOURCE — must be genuinely absent from the docs`
+`NO SOURCE`
 
 **36.** Which venture capital firm led Temporal's Series C? 
 > I don't know.
-`NO SOURCE — must be genuinely absent from the docs`
+`NO SOURCE`
 
 **37.** What is the WiFi password at Temporal's head office? 
 > I don't know.
-`NO SOURCE — must be genuinely absent from the docs`
+`NO SOURCE`
 
 **38.** What is our company's internal on-call escalation policy for Temporal? 
 > I don't know.
-`NO SOURCE — must be genuinely absent from the docs`
+`NO SOURCE`
 
 **39.** How many Temporal workflows did Netflix run yesterday? 
 > I don't know.
-`NO SOURCE — must be genuinely absent from the docs`
+`NO SOURCE`

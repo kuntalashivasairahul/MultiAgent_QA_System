@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from pydantic import BaseModel, Field
 
-from ingest import load_chunks
+from ingest import get_vectorstore, load_chunks
 from llm import structured
 
 OUT = Path(__file__).parent / "golden.draft.jsonl"
@@ -62,16 +62,43 @@ INSTRUCTIONS = {
         "passage answers. Do not use the passage's exact wording. Then answer it."
     ),
     "multihop": (
-        "These two passages are from different documents. Write one question "
-        "that requires BOTH to answer, then answer it."
+        "These two passages come from different documents about a related topic. "
+        "Write one question that genuinely requires BOTH to answer, then answer it.\n"
+        "HARD RULES:\n"
+        "- Every clause of your answer must be stated in one of the passages. Do not "
+        "infer, connect, or explain beyond what is literally written.\n"
+        "- If the two passages share no real connection, write the question as 'SKIP' "
+        "rather than inventing a link between them.\n"
+        "- Do not perform arithmetic. Quote figures exactly as stated."
     ),
 }
+
+
+def _related_pair(chunks, store):
+    """Pick a chunk, then its nearest neighbour from a *different* file.
+
+    Pairing two random chunks out of ~9,765 yields two unrelated passages, and
+    demanding a question that requires both then forces the model to invent a
+    connection. That is not a hard multi-hop question, it is a fabrication
+    prompt: it produced four bad rows in the first draft, each inventing
+    connective tissue in the second half of the answer.
+    """
+    for _ in range(12):
+        a = random.choice(chunks)
+        for cand in store.similarity_search(a.page_content[:1500], k=6):
+            if (
+                cand.metadata["source"] != a.metadata["source"]
+                and len(cand.page_content) > 400
+            ):
+                return a, cand
+    return None
 
 
 def main() -> None:
     random.seed(0)
     chunks = [c for c in load_chunks() if len(c.page_content) > 400]
     glossary = [c for c in chunks if "glossary" in c.metadata["source"]]
+    store = get_vectorstore()
     llm = structured(QA, temperature=0.3)
     rows = []
 
@@ -80,7 +107,10 @@ def main() -> None:
         print(f"{bucket}: drafting {n}")
         for _ in range(n):
             if bucket == "multihop":
-                a, b = random.sample(chunks, 2)
+                pair = _related_pair(chunks, store)
+                if not pair:
+                    continue
+                a, b = pair
                 passage = f"[A: {a.metadata['source']}]\n{a.page_content}\n\n[B: {b.metadata['source']}]\n{b.page_content}"
                 source = f"{a.metadata['source']},{b.metadata['source']}"
             else:
