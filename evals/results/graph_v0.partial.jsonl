@@ -1,0 +1,4 @@
+{"question": "What is required to access the pre\u2011release Cloud Run support for Temporal Serverless Workers?", "bucket": "direct", "correct": true}
+{"question": "What does Activity.wrap() return when it is given a checked exception?", "bucket": "direct", "correct": false}
+{"question": "What command is used to start the Worker?", "bucket": "direct", "correct": false}
+{"question": "What tag narrows down which Activity is failing?", "bucket": "direct", "correct": false}
