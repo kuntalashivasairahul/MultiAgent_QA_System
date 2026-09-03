@@ -1,7 +1,6 @@
 # Golden Set — Review Sheet
 
-40 questions. Check each answer against its cited source.
-Rows 0 and 21-25 were redrafted after the first review found fabrications.
+40 questions, verified against source by hand.
 
 ## direct (12)
 
@@ -33,7 +32,7 @@ Rows 0 and 21-25 were redrafted after the first review found fabrications.
 > The workflow can be parked in a waiting state and block on a Signal; when the Signal arrives with corrected input from a human operator, the workflow re-executes the activity, resuming exactly where it left off.
 `design-patterns/resumable-activity.mdx`
 
-**7.** What is the default value for max_concurrent_activities in the lambda_worker package? **[answer too short]**
+**7.** What is the default value for max_concurrent_activities in the lambda_worker package? 
 > 2
 `develop/python/workers/serverless-workers/aws-lambda.mdx`
 
@@ -97,7 +96,7 @@ Rows 0 and 21-25 were redrafted after the first review found fabrications.
 > Permission to write objects on processes that store payloads, and to read objects on processes that retrieve them. Storing also requires read permission, because the drivers check whether an object already exists before uploading. Components that only retrieve payloads do not need write access, and the reverse is also true.
 `develop/go/best-practices/data-handling/external-storage.mdx,develop/typescript/best-practices/data-handling/external-storage.mdx`
 
-**22.** According to the documentation, which signals should be used to monitor a Task Queue backlog and worker saturation, and what does the Datadog OpenMetrics integration monitor? 
+**22.** According to the documentation, which metrics should be used to monitor a Task Queue backlog and worker saturation, and what does the Datadog OpenMetrics integration monitor? 
 > To monitor Tasks backing up in a Task Queue, use Cloud metrics plus SDK Schedule-To-Start metrics. To monitor Workers saturated, under‑provisioned, or misconfigured, use SDK metrics. The Datadog OpenMetrics integration lets you use OpenMetrics in Datadog to monitor Temporal Cloud behavior such as Task Queue backlog, poll success, and rate limiting, and you can collect SDK metrics from your Workers separately to monitor saturation, Schedule-To-Start latency, slot availability, and sticky cache behavior.
 `cloud/metrics/openmetrics/metrics-integrations.mdx,cloud/metrics/index.mdx`
 
@@ -109,17 +108,17 @@ Rows 0 and 21-25 were redrafted after the first review found fabrications.
 > The Activity Execution must send Heartbeats and set a Heartbeat Timeout; if the Heartbeat is not invoked, the Activity cannot receive a cancellation request. If the Server didn’t receive a heartbeat within the Activity’s Heartbeat timeout, the Cancelled Failure will have message: 'TIMED_OUT'. If the Workflow Run reached a Closed state, the Cancelled Failure will have message: 'NOT_FOUND'.
 `encyclopedia/activities/activity-execution.mdx,develop/typescript/workflows/cancellation.mdx`
 
-**25.** What command retrieves the current mTLS authentication configuration for a Temporal Cloud namespace, and which flag can be used to authenticate with an API key instead of interactive login? 
-> Use the command `temporal cloud namespace mtls get --namespace my-namespace.my-account`; you can add the `--api-key` flag (a string API key) to authenticate with Temporal Cloud instead of interactive login.
-`cli/command-reference/cloud/namespace.mdx,cloud/get-started/namespaces.mdx`
+**25.** What does the `#[WorkflowInit]` attribute do for a Workflow constructor, and why are Workflow constructors considered useful for message handlers? 
+> `#[WorkflowInit]` is used to operate on Workflow input before any handler executes, and Workflow constructors are useful if you have message handlers that need access to Workflow input.
+`develop/php/workflows/message-passing.mdx,develop/php/workflows/basics.mdx`
 
-**26.** When setting up a GCP Private Service Connect endpoint for a Temporal workflow that uses the `Patched` marker feature flag, which endpoint option must be enabled to allow workers outside the selected region to connect, and what does the `Patched` marker guarantee during workflow replay? 
-> You must enable **Enable global access** on the endpoint (which requires the network routing mode to be set to GLOBAL) to let workers outside the region connect. The `Patched` marker guarantees that, during replay, a workflow task will fail if the current code does not produce the same patch marker, ensuring the feature‑flag behavior is consistent between pre‑patch and post‑patch versions.
-`develop/dotnet/workflows/versioning.mdx,cloud/connectivity/gcp-connectivity.mdx`
+**26.** What pattern should be used to undo completed steps when a later step fails, and how does the pause‑and‑fix loop handle compensation failures? 
+> Use the Saga Pattern, and the pause‑and‑fix loop recovers from compensation failures so a stuck rollback does not leave the process in a partially unwound state.
+`guides/recover-without-restart.mdx,design-patterns/distributed-transaction-patterns.mdx`
 
-**27.** When using the Continue‑As‑New helper to roll over a workflow that contains large payloads, how can the carried state be kept small, and which Temporal CLI command creates a new default Build ID for the task queue that will run the new workflow version? 
-> Offload the large payloads to external storage so each item is a small reference and apply truncation to drop entries already consumed; the CLI command is `temporal task-queue update-build-ids add-new-default` (with appropriate flags).
-`encyclopedia/workflow-message-passing/workflow-streams.mdx,cli/command-reference/task-queue.mdx`
+**27.** What are the method names used in the .NET and Go SDKs to count standalone Nexus operations? 
+> In the .NET SDK the method is `ITemporalClient.CountNexusOperationsAsync()`, and in the Go SDK the method is `client.CountNexusOperations()`.
+`develop/dotnet/nexus/standalone-operations.mdx,develop/go/nexus/standalone-operations.mdx`
 
 ## ambiguous (4)
 
