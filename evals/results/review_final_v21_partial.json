@@ -1,10 +1,10 @@
 {
-  "scope": "Partial coding-assistant source review of five completed final-profile development outputs, not independent human review or a final accuracy metric. Automated labels are preserved. Remaining development outputs and all confirmation outputs are unreviewed.",
-  "reviewed_at": "2026-10-14T16:12:21.679510+00:00",
+  "scope": "Partial coding-assistant source review of six completed final-profile development outputs, not independent human review or a final accuracy metric. Automated labels are preserved. Remaining development outputs and all confirmation outputs are unreviewed.",
+  "reviewed_at": "2026-10-14T16:22:19.540362+00:00",
   "implementation_commit": "9d39840",
   "native_attempt": "evals/results/verified/graph_v2_1/22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f/20261014T152435540331Z-c2ddd6c6",
   "fingerprint": "22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f",
-  "reviewed": 5,
+  "reviewed": 6,
   "rows": [
     {
       "id": "dev-00",
@@ -69,6 +69,19 @@
       "automated_grounded": true,
       "source_assessment": "supported_correct",
       "note": "The cited Java Continue-As-New prose explicitly says the call stops the current Workflow and starts a new one; the cited code invokes Workflow.continueAsNew. The answer matches both and the reference. All sufficiency/support quotes, including the API URL and code fence, occur literally in their original chunks."
+    },
+    {
+      "id": "dev-05",
+      "question": "What command disables API key authentication for a Temporal Cloud namespace?",
+      "answer_sha256": "5930c9c65df36adfd622a62729a306763572e1175a5eee8e78b4411b2c948197",
+      "cited_canonical_chunk_ids": [
+        "ba0fb503099de8c68c39e3411cafbfbbbfffed73e4fdf4b8b3142a8cbb378f56",
+        "0e51c9e6db5dc193e05ed306220e99c1ccf06ee7784688d2061d25d6c8446ea9"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "The cited CLI section explicitly describes api-key disable, and the exact code example uses temporal cloud namespace api-key disable --namespace my-namespace.my-account. The answer retains that command structure with a generic namespace placeholder, consistent with the generic question. Both gate quote sets match the canonical chunks. The CLI command was reviewed as source text, not executed."
     }
   ]
 }
