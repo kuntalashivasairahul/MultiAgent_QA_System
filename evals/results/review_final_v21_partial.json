@@ -1,10 +1,10 @@
 {
-  "scope": "Partial coding-assistant source review of four completed final-profile development outputs, not independent human review or a final accuracy metric. Automated labels are preserved. Remaining development outputs and all confirmation outputs are unreviewed.",
-  "reviewed_at": "2026-10-14T15:36:53.610152+00:00",
+  "scope": "Partial coding-assistant source review of five completed final-profile development outputs, not independent human review or a final accuracy metric. Automated labels are preserved. Remaining development outputs and all confirmation outputs are unreviewed.",
+  "reviewed_at": "2026-10-14T16:12:21.679510+00:00",
   "implementation_commit": "9d39840",
   "native_attempt": "evals/results/verified/graph_v2_1/22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f/20261014T152435540331Z-c2ddd6c6",
   "fingerprint": "22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f",
-  "reviewed": 4,
+  "reviewed": 5,
   "rows": [
     {
       "id": "dev-00",
@@ -56,6 +56,19 @@
       "automated_grounded": true,
       "source_assessment": "supported_correct",
       "note": "The cited execution-failures triage text explicitly identifies the activity_type tag. The supplementary alerting table corroborates the same tag; no extra operational advice was added."
+    },
+    {
+      "id": "dev-04",
+      "question": "In the Java SDK, what function starts a new Workflow Run using Continue-As-New?",
+      "answer_sha256": "38696c945b84a8d120b13428061544f9dccff9a36804dba3026821bc25ef735d",
+      "cited_canonical_chunk_ids": [
+        "b93646b03b40b02cad14691ad62f56fc5cf30c7806eb53de1af11cafdbfba339",
+        "19dcd0f0af4daf473d23029b95f45a684b36aaff941e4f03aea574d80298093c"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "The cited Java Continue-As-New prose explicitly says the call stops the current Workflow and starts a new one; the cited code invokes Workflow.continueAsNew. The answer matches both and the reference. All sufficiency/support quotes, including the API URL and code fence, occur literally in their original chunks."
     }
   ]
 }

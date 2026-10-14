@@ -132,6 +132,29 @@ def test_validation_audit_survives_a_later_provider_outage(setup):
     assert len(error.value.validation_failures) == 1 and grader.invoke.call_count == 2
 
 
+def test_recorded_java_url_corruption_is_repaired_without_weakening_quotes(monkeypatch):
+    import json
+    from pathlib import Path
+    captured = json.loads((Path(__file__).parent / "evals/results/quote_diagnosis_dev-20.json").read_text())
+    documents = json.loads(captured["messages"][1]["content"])["documents"]
+    quote = next(q for q in captured["verdict"]["quotes"] if "/latest/io.temporal/" in q["text"])
+    source = next(d["text"] for d in documents if d["id"] == quote["id"])
+    with pytest.raises(ValueError, match="non-verbatim"):
+        v2.source_quote(quote["text"], source)
+    invalid = v2.EvidenceCheck(passed=True, reason="Recorded URL corruption",
+                              quotes=[v2.Quote(id=1, text=quote["text"])])
+    corrected = v2.EvidenceCheck(passed=True, reason="Literal source",
+                                quotes=[v2.Quote(id=1, text=source)])
+    grader = Mock()
+    grader.invoke.side_effect = [invalid, corrected]
+    monkeypatch.setattr(v2, "structured", lambda *args, **kwargs: grader)
+    result = v2.check("Check supplied source.", "Which Java API?", [
+        Document(page_content=source, metadata={"source": "recorded-java-source.mdx"})])
+    assert grader.invoke.call_count == 2
+    assert result["quotes"][0]["text"] == source
+    assert result["validation_failures"][0]["verdict"] == invalid.model_dump()
+
+
 def test_support_uses_only_cited_chunks_and_retains_original_ids(setup):
     _, _, generate, grader = setup
     generate.invoke.return_value = graph_v1.GroundedAnswer(answer="executeUpdate", citations=[2])

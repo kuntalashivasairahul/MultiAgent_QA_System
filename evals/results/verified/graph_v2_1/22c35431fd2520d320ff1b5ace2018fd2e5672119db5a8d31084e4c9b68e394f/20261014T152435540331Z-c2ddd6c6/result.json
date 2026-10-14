@@ -11,33 +11,33 @@
   "coverage": {
     "correctness": {
       "eligible": 40,
-      "scored": 4,
-      "missing": 36
+      "scored": 5,
+      "missing": 35
     },
     "answerable_correctness": {
       "eligible": 33,
-      "scored": 4,
-      "missing": 29
+      "scored": 5,
+      "missing": 28
     },
     "faithfulness": {
       "eligible": 33,
-      "scored": 4,
-      "missing": 29
+      "scored": 5,
+      "missing": 28
     },
     "recall_at_k": {
       "eligible": 33,
-      "scored": 4,
-      "missing": 29
+      "scored": 5,
+      "missing": 28
     },
     "all_sources_rate": {
       "eligible": 33,
-      "scored": 4,
-      "missing": 29
+      "scored": 5,
+      "missing": 28
     },
     "any_source_rate": {
       "eligible": 33,
-      "scored": 4,
-      "missing": 29
+      "scored": 5,
+      "missing": 28
     },
     "refusal_rate": {
       "eligible": 7,
@@ -46,21 +46,21 @@
     },
     "false_refusal_rate": {
       "eligible": 33,
-      "scored": 4,
-      "missing": 29
+      "scored": 5,
+      "missing": 28
     },
     "supported_correct_rate": {
       "eligible": 33,
-      "scored": 4,
-      "missing": 29
+      "scored": 5,
+      "missing": 28
     },
     "unsupported_answer_rate": {
       "eligible": 40,
-      "scored": 4,
-      "missing": 36
+      "scored": 5,
+      "missing": 35
     }
   },
-  "generation_errors": 36,
+  "generation_errors": 35,
   "graph_usage_scope": "Accumulated reported callbacks from persisted attempts; excludes lost writes and is not a billing ledger.",
   "graph_time_scope": "Active graph-attempt wall time; excludes gaps between resumptions.",
   "correctness": 1.0,
@@ -73,7 +73,7 @@
   "false_refusal_rate": 0.0,
   "supported_correct_rate": 1.0,
   "unsupported_answer_rate": 0.0,
-  "unjudged": 29,
+  "unjudged": 28,
   "status": "incomplete",
   "buckets": {
     "ambiguous": {
@@ -83,8 +83,8 @@
     },
     "direct": {
       "n": 13,
-      "correct": 4,
-      "judged": 4
+      "correct": 5,
+      "judged": 5
     },
     "jargon": {
       "n": 8,
@@ -102,7 +102,7 @@
       "judged": 0
     }
   },
-  "mean_generation_seconds": 9.847,
+  "mean_generation_seconds": 13.515,
   "generation_usage": [
     {
       "openai/gpt-oss-120b": {
@@ -168,13 +168,38 @@
       }
     },
     {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2588,
+        "output_tokens": 169,
+        "total_tokens": 2757,
+        "input_token_details": {
+          "cache_read": 2560
+        },
+        "output_token_details": {
+          "reasoning": 124
+        }
+      },
       "qwen/qwen3.8-27b": {
-        "input_tokens": 2701,
-        "output_tokens": 195,
-        "total_tokens": 2896
+        "total_tokens": 3727,
+        "input_tokens": 3321,
+        "output_tokens": 406
       }
     },
-    {},
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2085,
+        "output_tokens": 163,
+        "total_tokens": 2248,
+        "output_token_details": {
+          "reasoning": 114
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 2175,
+        "output_tokens": 120,
+        "total_tokens": 2295
+      }
+    },
     {},
     {},
     {},
