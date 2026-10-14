@@ -1,64 +1,63 @@
-"""Build the comparison table across every graph version that has results.
-
-Run: uv run python evals/compare.py          (reuses cached results)
-     uv run python evals/compare.py --run    (re-runs every version)
-"""
+"""Compare full evaluations on current inputs; preserve the historical baseline table."""
 from __future__ import annotations
 
-import json
+import argparse
+import os
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from run_eval import RESULTS, run_eval  # noqa: E402
+from evals.run_eval import GOLDEN, run_eval
 
-ROOT = Path(__file__).parent
-VERSIONS = [p.stem for p in sorted(Path(__file__).parent.parent.glob("graph_v*.py"))]
-COLS = [("correctness", "Correct"), ("faithfulness", "Faithful"),
-        ("recall_at_k", "Recall@5"), ("refusal_rate", "Refuses"),
-        ("unjudged", "Unjudged")]
+ROOT = Path(__file__).resolve().parent
+VERSIONS = [p.stem for p in sorted(ROOT.parent.glob("graph_v*.py"))]
+COLS = [
+    ("correctness", "Correct"), ("answerable_correctness", "Answerable correct"),
+    ("faithfulness", "Faithful"), ("recall_at_k", "Source recall@k"),
+    ("all_sources_rate", "All sources@k"), ("refusal_rate", "Exact refusal"),
+]
 
 
 def cell(v) -> str:
-    if v is None:
-        return "—"
-    return str(v) if isinstance(v, int) else f"{v:.3f}"
+    return "—" if v is None else str(v) if isinstance(v, int) else f"{v:.3f}"
 
 
-def main() -> None:
-    rerun = "--run" in sys.argv
-    rows = []
-    for v in VERSIONS:
-        cached = RESULTS / f"{v}.json"
-        if rerun or not cached.exists():
-            print(f"running {v}")
-            rows.append(run_eval(v))
-        else:
-            rows.append(json.loads(cached.read_text()))
-
-    head = "| Version | n | " + " | ".join(c[1] for c in COLS) + " |"
-    sep = "|---" * (len(COLS) + 2) + "|"
+def main(argv=None) -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--run", action="store_true", help="Fresh inference, preserving prior attempts")
+    parser.add_argument("--dataset", type=Path, default=GOLDEN)
+    args = parser.parse_args(argv)
+    rows = [run_eval(v, dataset=args.dataset, fresh=args.run) for v in VERSIONS]
+    head = "| Version | n | " + " | ".join(c[1] for c in COLS) + " | Status |"
+    sep = "|---" * (len(COLS) + 3) + "|"
     body = [
-        f"| {r['graph']} | {r['n']} | " + " | ".join(cell(r.get(c[0])) for c in COLS) + " |"
+        f"| {r['graph']} | {r['n']} | " + " | ".join(cell(r[c[0]]) for c in COLS) + f" | {r['status']} |"
         for r in rows
     ]
-    table = "\n".join([head, sep, *body])
-    print("\n" + table)
-
-    (ROOT / "RESULTS.md").write_text(
-        "# Evaluation Results\n\n"
-        "Identical golden set across every version. Retrieval and generation\n"
-        "scored separately. `Refuses` is measured only on the unanswerable bucket.\n\n"
-        f"{table}\n\n"
-        "**Reading v0:** it retrieves nothing. High correctness there means the\n"
-        "model already knows this corpus, and the retrieval numbers below it are\n"
-        "not measuring what they appear to.\n\n"
-        "**Unjudged** counts rows the LLM judge could not score after retries.\n"
-        "Those rows are excluded from the means, so a non-zero value means the\n"
-        "denominator is smaller than n.\n"
+    details = []
+    for r in rows:
+        artifact = Path(r["artifact_dir"])
+        relative = Path(os.path.relpath(artifact, ROOT)).as_posix()
+        details.append(f"\n## {r['graph']}\n\nRun: [{r['run_id']}]({relative}/result.json). "
+                       f"Fingerprint: {r['fingerprint']}. Retrieval k: {r['retrieval_k']}.\n\n"
+                       "| Metric | Eligible | Scored | Missing |\n|---|---:|---:|---:|\n" +
+                       "\n".join(f"| {m} | {c['eligible']} | {c['scored']} | {c['missing']} |"
+                                 for m, c in r["coverage"].items()))
+    path = ROOT / ("RESULTS_VERIFIED.md" if args.dataset.resolve() == GOLDEN.resolve() else "RESULTS_HOLDOUT.md")
+    path.write_text(
+        "# Verified evaluation results\n\nDataset: " + args.dataset.name + ". "
+        "Only current-input full evaluations appear here; missing metrics are visible below.\n\n" +
+        "\n".join([head, sep, *body]) + "\n" + "\n".join(details) +
+        "\n\nSource recall counts evidence groups, accepting reviewed alternative paths. "
+        "All-sources success requires every group. Exact refusal is a contract check, not a direct hallucination measure. "
+        "Model-only performance cannot establish training-data provenance. "
+        "Development and holdout scores must be interpreted separately; small samples have substantial uncertainty.\n",
+        encoding="utf-8",
     )
-    print(f"\nwrote {ROOT / 'RESULTS.md'}")
+    print(path.read_text())
+    if any(r["status"] != "complete" for r in rows):
+        raise SystemExit("Incomplete evaluation; not a phase-gate pass")
 
 
 if __name__ == "__main__":

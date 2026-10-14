@@ -3,6 +3,8 @@
 **Date:** 2026-09-01
 **Status:** Approved design, pre-implementation
 
+Historical design: current behavior is documented in docs/architecture.md and README.md. The 14 October repairs replace the original whitespace-damaging splitter, metrics, checkpoint identity, refusal substring test, and unpinned corpus fetch. v0 performance cannot establish training-data provenance. v2/v3 remain proposed, require complete current baselines, and need component ablations. Private-data/ACL claims are outside the implemented public-corpus prototype.
+
 ## 1. Purpose
 
 Build a retrieval-augmented Q&A system over a technical knowledge base, on

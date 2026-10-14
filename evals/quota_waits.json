@@ -1,0 +1,9 @@
+{
+  "waits": [
+    {
+      "seconds": 396.0,
+      "time_utc": "2026-10-14T03:51:34Z"
+    }
+  ],
+  "note": "Outer workflow waited for provider retry-after; prompts, models, graph outputs and saved successful rows unchanged."
+}

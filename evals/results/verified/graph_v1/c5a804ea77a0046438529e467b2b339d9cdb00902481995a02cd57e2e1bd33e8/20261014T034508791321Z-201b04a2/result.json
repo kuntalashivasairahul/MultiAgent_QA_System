@@ -1,0 +1,84 @@
+{
+  "graph": "graph_v1",
+  "fingerprint": "c5a804ea77a0046438529e467b2b339d9cdb00902481995a02cd57e2e1bd33e8",
+  "run_id": "20261014T034508791321Z-201b04a2",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v1/c5a804ea77a0046438529e467b2b339d9cdb00902481995a02cd57e2e1bd33e8/20261014T034508791321Z-201b04a2",
+  "dataset": "holdout.jsonl",
+  "n": 10,
+  "scope": "full",
+  "retrieval_k": 5,
+  "coverage": {
+    "correctness": {
+      "eligible": 10,
+      "scored": 10,
+      "missing": 0
+    },
+    "answerable_correctness": {
+      "eligible": 8,
+      "scored": 8,
+      "missing": 0
+    },
+    "faithfulness": {
+      "eligible": 8,
+      "scored": 8,
+      "missing": 0
+    },
+    "recall_at_k": {
+      "eligible": 8,
+      "scored": 8,
+      "missing": 0
+    },
+    "all_sources_rate": {
+      "eligible": 8,
+      "scored": 8,
+      "missing": 0
+    },
+    "any_source_rate": {
+      "eligible": 8,
+      "scored": 8,
+      "missing": 0
+    },
+    "refusal_rate": {
+      "eligible": 2,
+      "scored": 2,
+      "missing": 0
+    }
+  },
+  "generation_errors": 0,
+  "correctness": 0.6,
+  "answerable_correctness": 0.625,
+  "faithfulness": 1.0,
+  "recall_at_k": 0.812,
+  "all_sources_rate": 0.75,
+  "any_source_rate": 0.875,
+  "refusal_rate": 0.5,
+  "unjudged": 0,
+  "status": "complete",
+  "buckets": {
+    "ambiguous": {
+      "n": 2,
+      "correct": 2,
+      "judged": 2
+    },
+    "direct": {
+      "n": 2,
+      "correct": 2,
+      "judged": 2
+    },
+    "jargon": {
+      "n": 2,
+      "correct": 1,
+      "judged": 2
+    },
+    "multihop": {
+      "n": 2,
+      "correct": 0,
+      "judged": 2
+    },
+    "unanswerable": {
+      "n": 2,
+      "correct": 1,
+      "judged": 2
+    }
+  }
+}

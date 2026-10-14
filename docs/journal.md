@@ -1,5 +1,7 @@
 # Journal
 
+Historical entries below describe the original experiment. The 14 October 2026 audit supersedes claims that low v0 performance proves no memorization, that refusal substring failures count fabrications, or that the original Unjudged counter exposes every missing judgment. See PROJECT_AUDIT.md, architecture.md, and verified result artifacts for current behavior.
+
 Dated record of what was built, what the numbers said, and what was decided next.
 
 ## 2026-09-01 — Project start, v1 built

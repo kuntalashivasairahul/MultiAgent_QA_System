@@ -1,53 +1,69 @@
-# MultiAgent QA System
+# Temporal QA / RAG Evaluation
 
-A retrieval-augmented Q&A system over [Temporal's](https://temporal.io) documentation,
-built on LangGraph — and, more to the point, an experiment in whether added graph
-complexity actually improves answers.
+A versioned LangGraph experiment over a pinned snapshot of public Temporal documentation. The repository name describes a possible direction: v0 is a model-only baseline; v1 retrieves five chunks and generates an answer with validated citation IDs. Multiple agents, corrective loops, hybrid search, private-data access control, and memory are not implemented.
 
-Each version is a separate graph scored on the same 40 questions. The output that
-matters is not the chatbot; it is [`evals/RESULTS.md`](evals/RESULTS.md).
-
-| Version | What it does | Status |
-|---|---|---|
-| **v0** | No retrieval — asks the model directly | built |
-| **v1** | `retrieve → generate`, no branching | built |
-| v2 | Document grading, query rewrite loop, refusal, hybrid search | not started |
-| v3 | Complexity routing, ACL filtering, conversational memory | not started |
-
-**v0 is not filler.** It measures whether the model already knows this corpus. If it
-scores well, every retrieval number below it is measuring memorisation instead.
+Model-only performance measures answering without supplied documents. It cannot establish whether training data contained Temporal documentation.
 
 ## Setup
 
-```bash
-uv sync                       # Python 3.12 — 3.14 breaks torch wheels
-./fetch_corpus.sh             # sparse-clone Temporal docs (762 files, ~889k words)
-uv run python ingest.py       # embed 9,765 chunks locally into chroma_db/ (~3 min)
-cp .env.example .env          # then paste your Groq key
-```
+Python 3.12 is selected by .python-version. Corpus fetching requires Bash; use WSL or Git Bash on Windows.
 
-Embeddings run locally on CPU (`BAAI/bge-small-en-v1.5`) — no key, no quota.
-Only generation calls the network.
+~~~sh
+uv sync
+./fetch_corpus.sh
+uv run python ingest.py
+test -f .env || cp .env.example .env
+~~~
 
-## Use
+Set GROQ_API_KEY in .env. CORPUS_REVISION pins the Git snapshot. Fetching refuses local edits and preserves old checkouts before replacement. Embeddings use a pinned BGE-small revision on CPU; the initial model download needs network access. Generation, drafting, and judging call Groq.
 
-```bash
-uv run python test_graph.py                    # the check
-uv run python evals/draft_golden.py            # draft golden-set candidates
-uv run python evals/run_eval.py graph_v1       # score one version
-uv run python evals/compare.py                 # build the comparison table
-```
+Indexing publishes a new fingerprinted collection after every chunk is present. Repeating the same build does not duplicate documents. Old collections remain recoverable. Corpus, pipeline, or dependency changes require a rebuild; a missing/mismatched index fails clearly.
 
-## The rule this project runs on
+LangSmith tracing defaults to false in .env.example. Existing local .env preferences are preserved. Opting in can send prompts, retrieved documents, and answers to LangSmith. This implementation supports public data only. Private sources require identity filtering before generation/tracing and dedicated access-control tests.
 
-**No v2 code until v1's numbers are committed.** Complexity gets added in response to
-a measured deficiency, never in anticipation of one. If context recall is already high
-and answers are still wrong, the fault is in generation and more graph structure will
-not fix it.
+## Use and verification
 
-## Docs
+~~~sh
+uv run pytest -q
+uv run python evals/calibrate.py
+uv run python evals/run_eval.py graph_v1
+uv run python evals/run_eval.py graph_v1 5
+uv run python evals/run_eval.py graph_v1 --fresh
+uv run python evals/compare.py
+uv run python evals/compare.py --run
+uv run python evals/compare.py --dataset evals/holdout.jsonl
+~~~
 
-- [Architecture](docs/architecture.md) — graph shapes, state, ingestion
-- [Journal](docs/journal.md) — what was built, what the numbers said, what was decided
-- [Design spec](docs/superpowers/specs/2026-09-01-multiagent-qa-design.md)
-- [v1 plan](docs/superpowers/plans/2026-09-01-multiagent-qa-v1.md)
+The five-question run is exploratory and cannot overwrite a full result. Default evaluation resumes only matching inputs. --fresh and compare.py --run create new attempts while preserving prior artifacts. Restart Python after changing .env model/rate settings because clients are cached.
+
+~~~python
+from graph_v1 import graph
+result = graph.invoke({"question": "What is a Local Activity in Temporal?"})
+print(result["generation"])
+print(result["citations"])
+~~~
+
+Graph output includes generation, documents, and citations. Citation IDs bind to actual retrieved chunks; structural validity alone does not prove claim support. Faithfulness evaluates the cited context when citations are present. Missing context produces the exact refusal: I don't know.
+
+## Evidence
+
+- [Current development results](evals/RESULTS_VERIFIED.md): 40 revised questions, per-metric coverage, raw evidence links.
+- [Holdout confirmation](evals/RESULTS_HOLDOUT.md): 10 additional questions excluded from development runs. Shared topics and authorship mean this is not an independent blind benchmark.
+- [Reference review](evals/REVIEW.md): SDK/sample-specific questions and required/alternative evidence groups. Source-audited by the coding assistant; independent human review is not claimed.
+- [Judge calibration](evals/calibration.json): positive, negative, and adversarial controls; a small calibration does not prove universal reliability.
+- [Actual judge review](evals/JUDGE_REVIEW.md): one confirmed false-negative despite passing controls. Reported correctness is an automated label, not independently certified accuracy.
+- [Live generation controls](evals/generation_controls.json): source/question injection and an unknown private fact; these checks mitigate risk without proving immunity to every attack.
+- [Historical results](evals/RESULTS.md) and [original references](evals/history/golden_v1.jsonl): preserved, uncorrected baselines.
+
+New artifacts live under evals/results/verified/graph/fingerprint/attempt/. They retain run inputs, answers, retrieved chunks, citations, judge prompts/verdicts/errors, and metric denominators. Code, references, corpus/index, dependency lock, actual model settings, and sample size contribute to the fingerprint. Generation is checkpointed before judging, so missing verdicts can retry without repeating successful generation. A torn final append recovers; other corruption fails explicitly.
+
+Source recall counts every required evidence group, accepting reviewed alternatives within a group. All-sources success requires every group. Empty retrieval is a miss for v1 and N/A for v0. Exact refusal checks the whole answer; it is not a measured hallucination rate. Each metric reports eligible, scored, and missing counts.
+
+## Further work
+
+Verify repaired baselines before adding complexity. Choose one change from retained failures: lexical retrieval for demonstrated identifier misses, or rewriting for demonstrated phrasing misses. Bundled retrieval, rewriting, grading, and reflection cannot support component-specific claims without ablations. Use holdout data for confirmation, not repeated tuning. One development question changes the overall score by 2.5 percentage points; one unanswerable question changes that bucket by 12.5 points.
+
+- [Architecture](docs/architecture.md)
+- [Audit and repair status](docs/PROJECT_AUDIT.md)
+- [Historical journal](docs/journal.md)
+- [Original design](docs/superpowers/specs/2026-09-01-multiagent-qa-design.md)
