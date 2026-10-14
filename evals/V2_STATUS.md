@@ -6,7 +6,7 @@ Implemented: exact-question evidence sufficiency, generation through unchanged v
 
 Verified locally: **49 tests passed**. [Live synthetic calibration](v2_calibration.json): **8/8 passed**, balancing positive and negative controls, including partial multi-hop evidence, private scope, unsupported extra claims, and injections. These controls establish limited integration behavior, not corpus accuracy or injection immunity.
 
-The first fresh v2 graph answer is checkpointed successfully: serialization runs the Payload Converter before the Payload Codec, with both gates passing and their quotes validated. Provider usage was 1,846 generator tokens plus 4,183 gate tokens on this single question. Its observed 587-second graph time includes a 573-second quota wait and cannot estimate intrinsic gate latency. Independent evaluation judgments and the remaining questions are still pending; this is not an aggregate quality result.
+The first fresh v2 answer is fully judged successfully: serialization runs the Payload Converter before the Payload Codec, with both gates passing, their quotes validated, and correctness/faithfulness judges both passing. Provider usage was 1,846 generator tokens plus 4,183 gate tokens on this single question. Its observed 587-second graph time includes a 573-second quota wait and cannot estimate intrinsic gate latency. The remaining three questions and completed replay comparison are still pending; this is not an aggregate quality result.
 
 ## Live comparison remains incomplete
 
