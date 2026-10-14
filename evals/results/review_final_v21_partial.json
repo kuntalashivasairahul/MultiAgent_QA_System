@@ -1,0 +1,61 @@
+{
+  "scope": "Partial coding-assistant source review of four completed final-profile development outputs, not independent human review or a final accuracy metric. Automated labels are preserved. Remaining development outputs and all confirmation outputs are unreviewed.",
+  "reviewed_at": "2026-10-14T15:36:53.610152+00:00",
+  "implementation_commit": "9d39840",
+  "native_attempt": "evals/results/verified/graph_v2_1/22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f/20261014T152435540331Z-c2ddd6c6",
+  "fingerprint": "22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f",
+  "reviewed": 4,
+  "rows": [
+    {
+      "id": "dev-00",
+      "question": "What is required to access the pre‑release Cloud Run support for Temporal Serverless Workers?",
+      "answer_sha256": "08f9234bc9baedbafd9ba6c215d1b86d39b5d9e2f8c1d7f36801d725fd651c37",
+      "cited_canonical_chunk_ids": [
+        "dbe88a7ae15bc673fb7dd08d9975d08fc4a2723687573ae9b520e3dce2b7d617",
+        "d500dec9eea7e091cd573237238651268ed99e40dd44e350defdf5b29575b409"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "qualified_support",
+      "note": "The cited Go and Ruby passages explicitly say request access via support/account team and sign up for preview updates. The main access requirement matches. The answer says must sign up whereas the reference says can; the source uses and without separately specifying whether signup is a formal prerequisite. This is a possible modal overstatement, retained as a qualification rather than silently changing automated labels."
+    },
+    {
+      "id": "dev-01",
+      "question": "What does Activity.wrap() return when it is given a checked exception?",
+      "answer_sha256": "e303d67360d8f4eff44b5831eb22edda18d85b56d2953abec85098e7235ee94d",
+      "cited_canonical_chunk_ids": [
+        "5934ff8f78d0fa743e6d72a76e5323626651b8ebce117fd5b6799cd0f380c177"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "The cited error-handling passage explicitly states that a checked exception is wrapped in CheckedExceptionWrapper. The answer states only that supported claim."
+    },
+    {
+      "id": "dev-02",
+      "question": "In the Celery-to-Standalone-Activity migration guide, what command starts the Python Worker?",
+      "answer_sha256": "539ab4d27a85bc26b0c1ec3d9ecde660d024c74acdce5296b2abca8a2178855d",
+      "cited_canonical_chunk_ids": [
+        "3e13fcc9458017176faa923a8073649a4233294f0928854f030d2e271656e915"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "The cited complete bash code block under Step 5 contains exactly python worker.py. The answer exactly matches the requested command."
+    },
+    {
+      "id": "dev-03",
+      "question": "In the execution-failures troubleshooting guide, which metric tag identifies the failing Activity type?",
+      "answer_sha256": "e7bceab8d7651667fce5964b62fd8726fdd86b1c44a7095a7966ff7f5c954b57",
+      "cited_canonical_chunk_ids": [
+        "f68038c3e4a5421e4deb67dba9eac63812d54a5a053a0ea90e9450bad9176898",
+        "0c139c0adb419e2ef02b047e452b7f21098654d93498ea6325996c8c05b66553",
+        "a9ff676c2d4914ae9e802f20b97bf676802b68fafd3013acfaf0aad421528772"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "The cited execution-failures triage text explicitly identifies the activity_type tag. The supplementary alerting table corroborates the same tag; no extra operational advice was added."
+    }
+  ]
+}
