@@ -17,6 +17,8 @@ Both models reached provider quotas during the fresh comparison. Paid successful
 - Gate replay runs live under `evals/results/replay_v2/`: fixed v1 drafts and original correctness labels, never fresh generation accuracy. Initial replay also exposed three quote-validation errors; failed checks remain missing and retryable, rather than successful refusals.
 - [Initial quota observations](v2_quota_waits.json), [initial wrapper](results/quota_resume_v2.txt), [node-preserving wrapper](results/quota_resume_v2_nodes.txt). Node-preserving observations are written to `v2_node_quota_waits.json` when a quota wait occurs.
 
+The first cross-SDK heartbeat invocation failed quote validation in the sufficiency check, before any generator call (1,822 grader tokens, no generator usage). It remains an operational error, not a refusal or a successful answer. The [observed resumption wrapper](results/quota_resume_v2_observed.txt) now writes immutable per-call receipts under `evals/results/v2_call_receipts/` so the exact returned quotes can be inspected on a retry. These receipts contain parsed model outputs **before** deterministic quote validation; a parsed `passed=true` receipt alone is not a successful graph verdict. Prompts, models, graph code, and index remain frozen.
+
 No full v1/v2 quality advantage or latency/token conclusion is established yet. [Judge review](JUDGE_REVIEW.md) records a confirmed scope false-positive and a disputed heartbeat API judgment in the fresh set. Preserve those limitations when interpreting any completed scores.
 
 ## Next course

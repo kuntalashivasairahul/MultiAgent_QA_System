@@ -1,0 +1,76 @@
+"""Resume identical calls with quota waits and durable structured-call receipts."""
+import hashlib
+import json
+import sys
+import time
+import uuid
+from datetime import datetime, timezone
+from pathlib import Path
+
+project = Path('/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System')
+sys.path.insert(0, str(project))
+import graph_v1
+import graph_v2
+from groq import RateLimitError
+from langchain_core.callbacks import get_usage_metadata_callback
+from artifacts import write_json
+from llm import GEN_MODEL
+import evals.run_eval as evaluator
+
+events = []
+deadline = time.monotonic() + 7200
+wrapper_hash = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+receipts = project / 'evals/results/v2_call_receipts'
+receipts.mkdir(parents=True, exist_ok=True)
+
+def observed(factory):
+    def make(schema, *args, **kwargs):
+        chain = factory(schema, *args, **kwargs)
+        class Observed:
+            def invoke(self, *a, **kw):
+                for attempt in range(12):
+                    stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
+                    rec = {'at': stamp, 'schema': schema.__name__, 'model': kwargs.get('model', GEN_MODEL),
+                           'wrapper_sha256': wrapper_hash,
+                           'messages': [m.model_dump(include={'type','content'}) for m in a[0]]}
+                    started = time.perf_counter()
+                    with get_usage_metadata_callback() as usage:
+                        try:
+                            reply = chain.invoke(*a, **kw)
+                        except Exception as exc:
+                            rec.update(error=type(exc).__name__, usage=usage.usage_metadata,
+                                       seconds=time.perf_counter() - started)
+                            if isinstance(exc, RateLimitError):
+                                delay = float(exc.response.headers.get('retry-after', '60')) + 1
+                                rec['retry_after_seconds'] = delay - 1
+                            write_json(receipts / f'{stamp}-{uuid.uuid4().hex[:8]}.json', rec)
+                            if not isinstance(exc, RateLimitError):
+                                raise
+                            events.append({k:rec[k] for k in ('at','model','retry_after_seconds')})
+                            write_json(project / 'evals/v2_observed_quota_waits.json',
+                                       {'scope':'same calls and prompts; quota waits within failed call; receipts retain structured outputs',
+                                        'wrapper_sha256':wrapper_hash,'max_wait_window_seconds':7200,'events':events})
+                            print(f'waiting {delay}s for {rec["model"]} / {schema.__name__}', flush=True)
+                            if time.monotonic() + delay > deadline:
+                                raise
+                            time.sleep(delay)
+                        else:
+                            rec.update(output=reply.model_dump(), usage=usage.usage_metadata,
+                                       seconds=time.perf_counter() - started)
+                            write_json(receipts / f'{stamp}-{uuid.uuid4().hex[:8]}.json', rec)
+                            print(f'completed structured call: {schema.__name__}', flush=True)
+                            return reply
+                raise RuntimeError('Quota resumption attempts exhausted')
+        return Observed()
+    return make
+
+graph_v1.structured = observed(graph_v1.structured)
+graph_v2.structured = observed(graph_v2.structured)
+evaluator.structured = observed(evaluator.structured)
+for graph_name in ('graph_v2', 'graph_v1'):
+    result = evaluator.run_eval(graph_name, dataset=project / 'evals/confirmation_v2.jsonl')
+    print(json.dumps({k:result[k] for k in ('graph','status','generation_errors','correctness','false_refusal_rate')}), flush=True)
+from evals.replay_v2 import replay
+baseline=project / 'evals/results/verified/graph_v1/c5a804ea77a0046438529e467b2b339d9cdb00902481995a02cd57e2e1bd33e8/20261014T034508791321Z-201b04a2/partial.jsonl'
+result = replay(baseline)
+print(json.dumps(result['variants'], indent=2), flush=True)

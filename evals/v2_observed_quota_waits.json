@@ -1,0 +1,17 @@
+{
+  "scope": "same calls and prompts; quota waits within failed call; receipts retain structured outputs",
+  "wrapper_sha256": "3a7ea1ab93e4fb57e0a126ad2210b15be148b8b649199327f12530c6c33e2895",
+  "max_wait_window_seconds": 7200,
+  "events": [
+    {
+      "at": "20261014T052208683115Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 283.0
+    },
+    {
+      "at": "20261014T052703572593Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 484.0
+    }
+  ]
+}

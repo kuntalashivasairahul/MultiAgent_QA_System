@@ -60,14 +60,16 @@ The default v2 variant runs both checks; single-check variants are evaluation ab
 - [Holdout confirmation](evals/RESULTS_HOLDOUT.md): 10 additional questions excluded from development runs. Shared topics and authorship mean this is not an independent blind benchmark.
 - [Reference review](evals/REVIEW.md): SDK/sample-specific questions and required/alternative evidence groups. Source-audited by the coding assistant; independent human review is not claimed.
 - [Judge calibration](evals/calibration.json): positive, negative, and adversarial controls; a small calibration does not prove universal reliability.
-- [Actual judge review](evals/JUDGE_REVIEW.md): one confirmed false-negative despite passing controls. Reported correctness is an automated label, not independently certified accuracy.
+- [Actual judge review](evals/JUDGE_REVIEW.md): a confirmed correctness false-negative, scope errors in faithfulness judgments, and a disputed API label despite passing controls. Reported metrics are automated labels, not independently certified accuracy.
 - [V2 retrieval diagnosis](evals/RETRIEVAL_DIAGNOSIS_V2.md): seven refusals labeled at the chunk level, including a short code block omitted during indexing.
 - [Live generation controls](evals/generation_controls.json): source/question injection and an unknown private fact; these checks mitigate risk without proving immunity to every attack.
 - [Historical results](evals/RESULTS.md) and [original references](evals/history/golden_v1.jsonl): preserved, uncorrected baselines.
 
 New artifacts live under evals/results/verified/graph/fingerprint/attempt/. They retain run inputs, answers, retrieved chunks, citations, judge prompts/verdicts/errors, and metric denominators. Code, references, corpus/index, dependency lock, actual model settings, and sample size contribute to the fingerprint. Generation is checkpointed before judging, so missing verdicts can retry without repeating successful generation. A torn final append recovers; other corruption fails explicitly.
 
-Source recall counts every required evidence group, accepting reviewed alternatives within a group. All-sources success requires every group. Empty retrieval is a miss for v1 and N/A for v0. Exact refusal checks the whole answer; it is not a measured hallucination rate. Each metric reports eligible, scored, and missing counts.
+Source recall counts every required evidence group, accepting reviewed alternatives within a group. All-sources success requires every group. Empty retrieval is a miss for retrieval-enabled graphs and N/A for v0. Exact refusal checks the whole answer; it is not a measured hallucination rate. Each metric reports eligible, scored, and missing counts.
+
+The headline faithfulness metric covers answerable questions and counts refusals as grounded because they make no factual claim. Unsupported-answer rate also covers unanswerable questions, but still depends on a fallible judge. False-refusal rate uses questions answerable in the full corpus, so it can count a defensible refusal when retrieval omitted the necessary evidence. Interpret these together with correctness, answer-bearing chunk coverage, and retained gate reasons.
 
 ## Further work
 

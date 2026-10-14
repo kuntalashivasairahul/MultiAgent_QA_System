@@ -42,12 +42,12 @@ V2 imports v1 retrieval/generation unchanged and extends QAState locally. Suffic
 |---|---|
 | correctness | Question/reference/answer judge; whole-answer refusal for unanswerable rows |
 | answerable_correctness | Correctness restricted to answerable questions |
-| faithfulness | Every factual claim supported by cited chunks, or retrieved chunks without citations |
+| faithfulness | Answerable questions only: every factual claim supported by cited chunks, or retrieved chunks without citations; refusals count as grounded |
 | recall_at_k | Fraction of required evidence groups retrieved, accepting listed alternatives |
 | all_sources_rate | All evidence groups retrieved |
 | any_source_rate | At least one evidence group retrieved |
 | refusal_rate | Whole answer matches the exact refusal contract; not a fabrication classifier |
-| false_refusal_rate | Canonical refusals among answerable questions |
+| false_refusal_rate | Canonical refusals among questions answerable in the full corpus, including cases where retrieval omitted the necessary evidence |
 | supported_correct_rate | Non-refusal answers both correct and grounded, among answerable questions |
 | unsupported_answer_rate | Non-refusal answers judged unsupported, including unanswerable questions |
 
