@@ -1,6 +1,6 @@
 # Temporal QA / RAG Evaluation
 
-A versioned LangGraph experiment over a pinned snapshot of public Temporal documentation. The repository name describes a possible direction: v0 is a model-only baseline; v1 retrieves five chunks and generates an answer with validated citation IDs. Multiple agents, corrective loops, hybrid search, private-data access control, and memory are not implemented.
+A versioned LangGraph experiment over a pinned snapshot of public Temporal documentation. v0 is a model-only baseline; v1 retrieves five chunks and generates an answer with validated citation IDs; v2 adds evidence sufficiency and cited-claim support checks. Multiple agents, corrective loops, hybrid search, private-data access control, and memory are not implemented.
 
 Model-only performance measures answering without supplied documents. It cannot establish whether training data contained Temporal documentation.
 
@@ -26,6 +26,10 @@ LangSmith tracing defaults to false in .env.example. Existing local .env prefere
 ~~~sh
 uv run pytest -q
 uv run python evals/calibrate.py
+uv run python evals/calibrate_v2.py
+uv run python evals/run_eval.py graph_v2
+uv run python evals/run_eval.py graph_v2 --variant sufficiency
+uv run python evals/run_eval.py graph_v2 --variant support
 uv run python evals/run_eval.py graph_v1
 uv run python evals/run_eval.py graph_v1 5
 uv run python evals/run_eval.py graph_v1 --fresh
@@ -37,13 +41,17 @@ uv run python evals/compare.py --dataset evals/holdout.jsonl
 The five-question run is exploratory and cannot overwrite a full result. Default evaluation resumes only matching inputs. --fresh and compare.py --run create new attempts while preserving prior artifacts. Restart Python after changing .env model/rate settings because clients are cached.
 
 ~~~python
-from graph_v1 import graph
+from graph_v2 import graph
 result = graph.invoke({"question": "What is a Local Activity in Temporal?"})
 print(result["generation"])
 print(result["citations"])
 ~~~
 
 Graph output includes generation, documents, and citations. Citation IDs bind to actual retrieved chunks; structural validity alone does not prove claim support. Faithfulness evaluates the cited context when citations are present. Missing context produces the exact refusal: I don't know.
+
+V2 checks that retrieved evidence answers the exact question, including entity, SDK, and scope, before generation. It then checks every claim against only the cited chunks. Failing either semantic check produces the canonical refusal; a rejected answer remains in `draft` for inspection. Grader outages, malformed verdicts, and non-verbatim evidence quotes raise errors. Output also includes `sufficiency` and `support` verdicts with reasons and checked quotes. These model-based checks can still be wrong.
+
+The default v2 variant runs both checks; single-check variants are evaluation ablations and have distinct fingerprints. Evaluation retains gate audits, provider-reported generation/gate token usage, wall-clock generation time, false refusals, supported correct answers, and unsupported answers across **all** buckets. Empty usage metadata means unreported usage, not zero billing. Evaluation-judge tokens are outside generation usage.
 
 ## Evidence
 
@@ -61,7 +69,9 @@ Source recall counts every required evidence group, accepting reviewed alternati
 
 ## Further work
 
-Verify repaired baselines before adding complexity. Choose one change from retained failures: lexical retrieval for demonstrated identifier misses, or rewriting for demonstrated phrasing misses. Bundled retrieval, rewriting, grading, and reflection cannot support component-specific claims without ablations. Use holdout data for confirmation, not repeated tuning. One development question changes the overall score by 2.5 percentage points; one unanswerable question changes that bucket by 12.5 points.
+The repaired v0/v1 baseline is frozen at commit `9dcd9ef`. Its results describe that snapshot; adding v2 changes current evaluation fingerprints. Existing holdout questions are now regression examples. Gate replay on frozen drafts measures rejection behavior without regenerating answers; it is not a fresh end-to-end accuracy comparison. Use newly authored questions after freezing code for confirmation, and report their small sample and shared authorship.
+
+Choose retrieval changes from retained failures: lexical retrieval for demonstrated identifier misses, or rewriting for demonstrated phrasing misses. Bundled retrieval, rewriting, grading, and reflection cannot support component-specific claims without ablations. One development question changes the overall score by 2.5 percentage points; one unanswerable question changes that bucket by 12.5 points.
 
 - [Architecture](docs/architecture.md)
 - [Audit and repair status](docs/PROJECT_AUDIT.md)

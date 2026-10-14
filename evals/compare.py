@@ -16,6 +16,8 @@ COLS = [
     ("correctness", "Correct"), ("answerable_correctness", "Answerable correct"),
     ("faithfulness", "Faithful"), ("recall_at_k", "Source recall@k"),
     ("all_sources_rate", "All sources@k"), ("refusal_rate", "Exact refusal"),
+    ("false_refusal_rate", "False refusal"), ("supported_correct_rate", "Supported correct"),
+    ("unsupported_answer_rate", "Unsupported answers"),
 ]
 
 
@@ -44,7 +46,10 @@ def main(argv=None) -> None:
                        "| Metric | Eligible | Scored | Missing |\n|---|---:|---:|---:|\n" +
                        "\n".join(f"| {m} | {c['eligible']} | {c['scored']} | {c['missing']} |"
                                  for m, c in r["coverage"].items()))
-    path = ROOT / ("RESULTS_VERIFIED.md" if args.dataset.resolve() == GOLDEN.resolve() else "RESULTS_HOLDOUT.md")
+    name = ("RESULTS_VERIFIED.md" if args.dataset.resolve() == GOLDEN.resolve() else
+            "RESULTS_HOLDOUT.md" if args.dataset.resolve() == (ROOT / "holdout.jsonl").resolve() else
+            f"RESULTS_{args.dataset.stem}.md")
+    path = ROOT / name
     path.write_text(
         "# Verified evaluation results\n\nDataset: " + args.dataset.name + ". "
         "Only current-input full evaluations appear here; missing metrics are visible below.\n\n" +

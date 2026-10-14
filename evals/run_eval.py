@@ -8,6 +8,7 @@ import json
 import os
 import re
 import sys
+import time
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -15,6 +16,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from groq import GroqError
+from langchain_core.callbacks import get_usage_metadata_callback
 from langchain_core.exceptions import OutputParserException
 from langchain_core.messages import HumanMessage, SystemMessage
 from pydantic import BaseModel, Field, ValidationError
@@ -162,15 +164,23 @@ def _messages(instruction: str, data: dict) -> list:
     ]
 
 
-def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | None = None, fresh: bool = False) -> dict:
+def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | None = None,
+             fresh: bool = False, variant: str | None = None) -> dict:
     if not re.fullmatch(r"graph_v[0-9]+", graph_module):
         raise ValueError("Expected a graph_vN module")
     module = importlib.import_module(graph_module)
     if type(module.USES_RETRIEVAL) is not bool:
         raise ValueError("Graph must declare USES_RETRIEVAL")
+    if variant is not None and graph_module != "graph_v2":
+        raise ValueError("Variants apply only to graph_v2")
+    if graph_module == "graph_v2":
+        variant = variant or "both"
+        graph = module.build_graph(variant)
+    else:
+        graph = module.graph
     dataset = Path(dataset or GOLDEN).resolve()
     rows = load_golden(limit, dataset=dataset)
-    inputs = {**run_inputs(module, rows, dataset), "limit": limit}
+    inputs = {**run_inputs(module, rows, dataset), "limit": limit, "variant": variant}
     fingerprint = hashlib.sha256(json.dumps(inputs, sort_keys=True).encode()).hexdigest()
     run_root = RESULTS / "verified" / graph_module / fingerprint
     attempts = sorted(p for p in run_root.glob("*") if p.is_dir())
@@ -186,13 +196,20 @@ def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | Non
     for i, row in enumerate(rows, 1):
         rec = done.get(row["question"], {"question": row["question"], "bucket": row["bucket"]})
         if "answer" not in rec:
+            started = time.perf_counter()
             try:
-                out = module.graph.invoke({"question": row["question"]})
+                with get_usage_metadata_callback() as usage:
+                    try:
+                        out = graph.invoke({"question": row["question"]})
+                    finally:
+                        rec["generation_seconds"] = time.perf_counter() - started
+                        rec["generation_usage"] = usage.usage_metadata
                 answer = out["generation"]
                 if not isinstance(answer, str) or not answer.strip():
                     raise ValueError("Graph returned empty/non-text answer")
                 rec.update(answer=answer, citations=out.get("citations", []),
                            documents=[{"id": d.id, "text": d.page_content, "metadata": d.metadata} for d in out.get("documents", [])])
+                rec["checks"] = {name: out[name] for name in ("sufficiency", "support", "draft") if name in out}
                 rec.pop("generation_error", None)
             except Exception as exc:
                 rec["generation_error"] = type(exc).__name__
@@ -218,30 +235,36 @@ def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | Non
                 rec["judges"]["correct"] = judgment
                 if judgment["output"] is not None:
                     rec["correct"] = judgment["output"]["correct"]
-            if module.USES_RETRIEVAL:
+        if module.USES_RETRIEVAL:
+            if row["bucket"] != "unanswerable":
                 rec["recalled"] = source_recall(row, docs)
                 rec["all_sources"] = rec["recalled"] == 1.0
                 rec["any_source"] = rec["recalled"] > 0
-                if "grounded" not in rec:
-                    if rec["refused"] or not docs:
-                        rec["grounded"] = rec["refused"]
-                    else:
-                        if "grounded" not in chains:
-                            chains["grounded"] = structured(Faithfulness, model=JUDGE_MODEL)
-                        judgment = _judge(chains["grounded"], _messages(
-                            "Decide whether every factual claim in the answer is supported by the context.",
-                            {"question": row["question"],
-                             "context": [docs[c["id"] - 1] for c in rec["citations"]] if rec["citations"] else docs,
-                             "answer": answer},
-                        ))
-                        rec["judges"]["grounded"] = judgment
-                        if judgment["output"] is not None:
-                            rec["grounded"] = judgment["output"]["grounded"]
+            if "grounded" not in rec:
+                if rec["refused"] or not docs:
+                    rec["grounded"] = rec["refused"]
+                else:
+                    if "grounded" not in chains:
+                        chains["grounded"] = structured(Faithfulness, model=JUDGE_MODEL)
+                    judgment = _judge(chains["grounded"], _messages(
+                        "Decide whether every factual claim in the answer is supported by the context for the exact "
+                        "entity and scope in the question. Public examples do not establish private configurations.",
+                        {"question": row["question"],
+                         "context": [docs[c["id"] - 1] for c in rec["citations"]] if rec["citations"] else docs,
+                         "answer": answer},
+                    ))
+                    rec["judges"]["grounded"] = judgment
+                    if judgment["output"] is not None:
+                        rec["grounded"] = judgment["output"]["grounded"]
+        if "answer" in rec and "correct" in rec and "grounded" in rec:
+            rec["supported_correct"] = not rec["refused"] and rec["correct"] and rec["grounded"]
+        if "grounded" in rec:
+            rec["unsupported_answer"] = not rec["refused"] and not rec["grounded"]
         _append(partial, rec)
         done[row["question"]] = rec
         print(f"[{i}/{len(rows)}] {row['bucket']}: correct={rec.get('correct')} grounded={rec.get('grounded')}", flush=True)
 
-    if {**run_inputs(module, rows, dataset), "limit": limit} != inputs:
+    if {**run_inputs(module, rows, dataset), "limit": limit, "variant": variant} != inputs:
         raise ValueError("Run inputs changed during evaluation; results not published")
     scored = [done[r["question"]] for r in rows]
     answerable = [r for r in scored if r["bucket"] != "unanswerable"]
@@ -253,9 +276,12 @@ def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | Non
         "all_sources_rate": ("all_sources", answerable if module.USES_RETRIEVAL else []),
         "any_source_rate": ("any_source", answerable if module.USES_RETRIEVAL else []),
         "refusal_rate": ("refused", unanswerable),
+        "false_refusal_rate": ("refused", answerable),
+        "supported_correct_rate": ("supported_correct", answerable if module.USES_RETRIEVAL else []),
+        "unsupported_answer_rate": ("unsupported_answer", scored if module.USES_RETRIEVAL else []),
     }
     result = {
-        "graph": graph_module, "fingerprint": fingerprint, "run_id": run_id,
+        "graph": graph_module, "variant": variant, "fingerprint": fingerprint, "run_id": run_id,
         "artifact_dir": str(attempt), "dataset": dataset.name, "n": len(scored),
         "scope": "sample" if limit is not None else "full", "retrieval_k": inputs.get("retrieval_k"),
         "coverage": {}, "generation_errors": sum("generation_error" in r for r in scored),
@@ -271,6 +297,9 @@ def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | Non
             "judged": sum("correct" in r for r in rs)}
         for b in sorted(BUCKETS) if (rs := [r for r in scored if r["bucket"] == b])
     }
+    timings = [r["generation_seconds"] for r in scored if "generation_seconds" in r]
+    result["mean_generation_seconds"] = round(sum(timings) / len(timings), 3) if timings else None
+    result["generation_usage"] = [r.get("generation_usage", {}) for r in scored]
     write_json(attempt / "result.json", result)
     return result
 
@@ -281,7 +310,8 @@ if __name__ == "__main__":
     parser.add_argument("limit", nargs="?", type=int)
     parser.add_argument("--dataset", type=Path)
     parser.add_argument("--fresh", action="store_true", help="Start a new attempt; preserve prior evidence")
+    parser.add_argument("--variant", choices=("both", "sufficiency", "support"), help="V2 ablation; default both")
     args = parser.parse_args()
-    outcome = run_eval(args.graph, args.limit, dataset=args.dataset, fresh=args.fresh)
+    outcome = run_eval(args.graph, args.limit, dataset=args.dataset, fresh=args.fresh, variant=args.variant)
     print(json.dumps(outcome, indent=2))
     sys.exit(0 if outcome["status"] == "complete" else 1)
