@@ -68,8 +68,10 @@ def test_unknown_dense_id_and_index_errors_propagate(monkeypatch):
         r.get_hybrid_context("workflow")
 
 
-def test_fusion_ties_are_stable_and_duplicates_share_one_ranked_id():
+def test_fusion_ties_are_stable_and_duplicates_share_one_ranked_id(monkeypatch):
     assert r._fuse(["b", "a"], ["a", "b"]) == ["b", "a"]
+    monkeypatch.setitem(r.HYBRID_LIMITS, "lexical_weight", 1)
+    assert r._fuse(["b", "a"], ["a", "b"]) == ["a", "b"]
     assert r._fuse([], ["z", "a"]) == ["z", "a"]
 
 

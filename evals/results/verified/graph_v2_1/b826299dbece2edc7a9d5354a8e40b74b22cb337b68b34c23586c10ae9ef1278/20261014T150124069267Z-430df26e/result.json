@@ -1,0 +1,530 @@
+{
+  "graph": "graph_v2_1",
+  "variant": null,
+  "fingerprint": "b826299dbece2edc7a9d5354a8e40b74b22cb337b68b34c23586c10ae9ef1278",
+  "run_id": "20261014T150124069267Z-430df26e",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v2_1/b826299dbece2edc7a9d5354a8e40b74b22cb337b68b34c23586c10ae9ef1278/20261014T150124069267Z-430df26e",
+  "dataset": "golden.jsonl",
+  "n": 40,
+  "scope": "full",
+  "retrieval_k": 12,
+  "coverage": {
+    "correctness": {
+      "eligible": 40,
+      "scored": 25,
+      "missing": 15
+    },
+    "answerable_correctness": {
+      "eligible": 32,
+      "scored": 18,
+      "missing": 14
+    },
+    "faithfulness": {
+      "eligible": 32,
+      "scored": 18,
+      "missing": 14
+    },
+    "recall_at_k": {
+      "eligible": 32,
+      "scored": 18,
+      "missing": 14
+    },
+    "all_sources_rate": {
+      "eligible": 32,
+      "scored": 18,
+      "missing": 14
+    },
+    "any_source_rate": {
+      "eligible": 32,
+      "scored": 18,
+      "missing": 14
+    },
+    "refusal_rate": {
+      "eligible": 8,
+      "scored": 7,
+      "missing": 1
+    },
+    "false_refusal_rate": {
+      "eligible": 32,
+      "scored": 18,
+      "missing": 14
+    },
+    "supported_correct_rate": {
+      "eligible": 32,
+      "scored": 18,
+      "missing": 14
+    },
+    "unsupported_answer_rate": {
+      "eligible": 40,
+      "scored": 25,
+      "missing": 15
+    }
+  },
+  "generation_errors": 15,
+  "graph_usage_scope": "Accumulated reported callbacks from persisted attempts; excludes lost writes and is not a billing ledger.",
+  "graph_time_scope": "Active graph-attempt wall time; excludes gaps between resumptions.",
+  "correctness": 0.92,
+  "answerable_correctness": 0.944,
+  "faithfulness": 1.0,
+  "recall_at_k": 1.0,
+  "all_sources_rate": 1.0,
+  "any_source_rate": 1.0,
+  "refusal_rate": 0.857,
+  "false_refusal_rate": 0.056,
+  "supported_correct_rate": 0.944,
+  "unsupported_answer_rate": 0.0,
+  "unjudged": 14,
+  "status": "incomplete",
+  "buckets": {
+    "ambiguous": {
+      "n": 4,
+      "correct": 1,
+      "judged": 1
+    },
+    "direct": {
+      "n": 12,
+      "correct": 10,
+      "judged": 10
+    },
+    "jargon": {
+      "n": 8,
+      "correct": 4,
+      "judged": 4
+    },
+    "multihop": {
+      "n": 8,
+      "correct": 2,
+      "judged": 3
+    },
+    "unanswerable": {
+      "n": 8,
+      "correct": 6,
+      "judged": 7
+    }
+  },
+  "mean_generation_seconds": 19.814,
+  "generation_usage": [
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3200,
+        "output_tokens": 286,
+        "total_tokens": 3486,
+        "output_token_details": {
+          "reasoning": 232
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 4158,
+        "output_tokens": 382,
+        "total_tokens": 4540
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3209,
+        "output_tokens": 157,
+        "total_tokens": 3366,
+        "output_token_details": {
+          "reasoning": 115
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3928,
+        "output_tokens": 152,
+        "total_tokens": 4080
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2558,
+        "output_tokens": 178,
+        "total_tokens": 2736,
+        "output_token_details": {
+          "reasoning": 141
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3113,
+        "output_tokens": 226,
+        "total_tokens": 3339
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3070,
+        "output_tokens": 220,
+        "total_tokens": 3290,
+        "output_token_details": {
+          "reasoning": 186
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 4530,
+        "output_tokens": 278,
+        "total_tokens": 4808
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2588,
+        "output_tokens": 220,
+        "total_tokens": 2808,
+        "output_token_details": {
+          "reasoning": 165
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3331,
+        "output_tokens": 412,
+        "total_tokens": 3743
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2085,
+        "output_tokens": 200,
+        "total_tokens": 2285,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 163
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 2566,
+        "output_tokens": 204,
+        "total_tokens": 2770
+      }
+    },
+    {
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 16455,
+        "output_tokens": 2210,
+        "total_tokens": 18665
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3389,
+        "output_tokens": 121,
+        "total_tokens": 3510,
+        "output_token_details": {
+          "reasoning": 98
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3521,
+        "output_tokens": 68,
+        "total_tokens": 3589
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2474,
+        "output_tokens": 154,
+        "total_tokens": 2628,
+        "output_token_details": {
+          "reasoning": 115
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3466,
+        "output_tokens": 220,
+        "total_tokens": 3686
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2928,
+        "output_tokens": 241,
+        "total_tokens": 3169,
+        "output_token_details": {
+          "reasoning": 206
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3477,
+        "output_tokens": 228,
+        "total_tokens": 3705
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2915,
+        "output_tokens": 113,
+        "total_tokens": 3028,
+        "output_token_details": {
+          "reasoning": 82
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3655,
+        "output_tokens": 179,
+        "total_tokens": 3834
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 1980,
+        "output_tokens": 123,
+        "total_tokens": 2103,
+        "output_token_details": {
+          "reasoning": 89
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 2407,
+        "output_tokens": 137,
+        "total_tokens": 2544
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2735,
+        "output_tokens": 150,
+        "total_tokens": 2885,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 97
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3683,
+        "output_tokens": 335,
+        "total_tokens": 4018
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3260,
+        "output_tokens": 319,
+        "total_tokens": 3579,
+        "output_token_details": {
+          "reasoning": 213
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3377,
+        "output_tokens": 211,
+        "total_tokens": 3588
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2365,
+        "output_tokens": 199,
+        "total_tokens": 2564,
+        "output_token_details": {
+          "reasoning": 151
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3048,
+        "output_tokens": 232,
+        "total_tokens": 3280
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2989,
+        "output_tokens": 209,
+        "total_tokens": 3198,
+        "output_token_details": {
+          "reasoning": 156
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3953,
+        "output_tokens": 396,
+        "total_tokens": 4349
+      }
+    },
+    {},
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2671,
+        "output_tokens": 277,
+        "total_tokens": 2948,
+        "output_token_details": {
+          "reasoning": 219
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 4219,
+        "output_tokens": 512,
+        "total_tokens": 4731
+      }
+    },
+    {},
+    {},
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2689,
+        "output_tokens": 235,
+        "total_tokens": 2924,
+        "output_token_details": {
+          "reasoning": 167
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 7808,
+        "output_tokens": 1758,
+        "total_tokens": 9566
+      }
+    },
+    {},
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2724,
+        "output_tokens": 274,
+        "total_tokens": 2998,
+        "output_token_details": {
+          "reasoning": 213
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3548,
+        "output_tokens": 261,
+        "total_tokens": 3809
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2995,
+        "output_tokens": 422,
+        "total_tokens": 3417,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 321
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3070,
+        "output_tokens": 278,
+        "total_tokens": 3348
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2946,
+        "output_tokens": 340,
+        "total_tokens": 3286,
+        "output_token_details": {
+          "reasoning": 243
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 4598,
+        "output_tokens": 822,
+        "total_tokens": 5420
+      }
+    },
+    {},
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2784,
+        "output_tokens": 367,
+        "total_tokens": 3151,
+        "output_token_details": {
+          "reasoning": 343
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 2892,
+        "output_tokens": 366,
+        "total_tokens": 3258
+      }
+    },
+    {
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 5954,
+        "output_tokens": 387,
+        "total_tokens": 6341
+      }
+    },
+    {},
+    {},
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2664,
+        "output_tokens": 223,
+        "total_tokens": 2887,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 166
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3630,
+        "output_tokens": 471,
+        "total_tokens": 4101
+      }
+    },
+    {},
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2862,
+        "output_tokens": 168,
+        "total_tokens": 3030,
+        "output_token_details": {
+          "reasoning": 92
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3849,
+        "output_tokens": 561,
+        "total_tokens": 4410
+      }
+    },
+    {
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 2466,
+        "output_tokens": 62,
+        "total_tokens": 2528
+      }
+    },
+    {
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3194,
+        "output_tokens": 58,
+        "total_tokens": 3252
+      }
+    },
+    {
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 2658,
+        "output_tokens": 55,
+        "total_tokens": 2713
+      }
+    },
+    {
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3329,
+        "output_tokens": 71,
+        "total_tokens": 3400
+      }
+    },
+    {},
+    {
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 3150,
+        "output_tokens": 114,
+        "total_tokens": 3264
+      }
+    },
+    {
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 2843,
+        "output_tokens": 71,
+        "total_tokens": 2914
+      }
+    }
+  ]
+}

@@ -60,7 +60,7 @@ Every metric reports eligible/scored/missing counts. v0 retrieval/faithfulness a
 
 Runs fingerprint code, dependencies, actual model configuration, references, corpus/index, and sample size. Attempt directories retain generation, retrieval, citations, judge inputs/outputs/reasons/errors, and exact run metadata. Generation is flushed before judging. Samples and fresh attempts never overwrite full historical results. Inputs are checked again before publication.
 
-V2 gate audits and rejected drafts are retained. Generation wall-clock time includes retrieval, rate limits, generation and gates; it excludes evaluation judges. Token metadata covers successful provider-reported generation/gate calls and is not a billing ledger. Missing usage stays empty. Variant identity contributes to the fingerprint. replay_v2.py applies gates to frozen v1 drafts and reuses original correctness labels explicitly; it cannot establish fresh end-to-end performance.
+V2 gate audits and rejected drafts are retained. Generation wall-clock time includes active retrieval, rate limits, generation and gate attempts; it excludes evaluation judges and gaps between resumptions. Graph callbacks retain provider-reported generation/gate usage, including callbacks before a later failure. Evaluation-judge attempts, usage and time are recorded separately. None is a billing ledger; missing callbacks stay unreported. Variant identity contributes to the fingerprint. replay_v2.py applies gates to frozen v1 drafts and reuses original correctness labels explicitly; it cannot establish fresh end-to-end performance.
 
 compare.py resumes matching full runs; --run forces fresh inference. RESULTS_VERIFIED.md and RESULTS_HOLDOUT.md expose coverage and raw artifacts. Original RESULTS.md and result files remain historical. Complete metric coverage is required for a phase-gate pass, regardless of quality scores.
 
@@ -70,4 +70,4 @@ Groq clients and per-model request limiters are cached. Settings are fixed when 
 
 Duration depends on account-specific token limits and response sizes. Tracing is opt-in in the example configuration. Public prompts leave the machine through Groq, and through LangSmith when tracing is enabled.
 
-Corrective loops, hybrid retrieval, reflection, ACLs, and memory remain proposals. Introduce one measured change at a time or supply ablations. Multiple agents require an actual heterogeneous task.
+Corrective loops, reflection, ACLs, and conversational memory remain proposals. Introduce one measured change at a time or supply ablations. Multiple agents require an actual heterogeneous task.

@@ -265,6 +265,8 @@ def _run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | No
                     "status_code": getattr(exc, "status_code", None),
                     "retry_after": getattr(getattr(exc, "response", None), "headers", {}).get("retry-after"),
                 }
+                if hasattr(exc, "validation_failures"):
+                    rec["generation_error_details"]["validation_failures"] = exc.validation_failures
                 _append(partial, rec)
                 done[row["question"]] = rec
                 print(f"[{i}/{len(rows)}] generation failed: {type(exc).__name__}", flush=True)

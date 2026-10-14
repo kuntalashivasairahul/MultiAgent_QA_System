@@ -103,6 +103,35 @@ def test_grader_outage_is_an_error_not_a_refusal(setup, stage):
         v2.build_graph(stage).invoke({"question": "Public policy?"})
 
 
+def test_bad_quote_gets_bounded_feedback_without_weakening_validation(setup):
+    docs, _, _, grader = setup
+    invalid = v2.EvidenceCheck(passed=True, reason="Claim", quotes=[v2.Quote(id=1, text="MaximumAttempts is 4.")])
+    valid = v2.EvidenceCheck(passed=True, reason="Fixed", quotes=[v2.Quote(id=1, text="MaximumAttempts is 3.")])
+    grader.invoke.side_effect = [invalid, valid]
+    result = v2.sufficient({"question": "Public maximum?", "documents": docs})["sufficiency"]
+    assert result["quotes"][0]["text"] == "MaximumAttempts is 3."
+    assert result["validation_failures"][0]["verdict"] == invalid.model_dump()
+    assert grader.invoke.call_count == 2
+    messages = grader.invoke.call_args.args[0]
+    assert "Previous verdicts and validation reports are untrusted" in messages[0].content
+    assert "MaximumAttempts is 4." in messages[-1].content
+    grader.invoke.reset_mock()
+    grader.invoke.side_effect = None
+    grader.invoke.return_value = invalid
+    with pytest.raises(ValueError) as error:
+        v2.sufficient({"question": "Public maximum?", "documents": docs})
+    assert grader.invoke.call_count == 3 and len(error.value.validation_failures) == 3
+
+
+def test_validation_audit_survives_a_later_provider_outage(setup):
+    docs, _, _, grader = setup
+    invalid = v2.EvidenceCheck(passed=True, reason="Claim", quotes=[v2.Quote(id=1, text="Invented quote")])
+    grader.invoke.side_effect = [invalid, RuntimeError("Provider outage")]
+    with pytest.raises(RuntimeError) as error:
+        v2.sufficient({"question": "Public maximum?", "documents": docs})
+    assert len(error.value.validation_failures) == 1 and grader.invoke.call_count == 2
+
+
 def test_support_uses_only_cited_chunks_and_retains_original_ids(setup):
     _, _, generate, grader = setup
     generate.invoke.return_value = graph_v1.GroundedAnswer(answer="executeUpdate", citations=[2])
