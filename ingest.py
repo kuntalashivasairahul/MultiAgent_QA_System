@@ -80,7 +80,8 @@ def load_chunks() -> list[Document]:
         for section in by_header.split_text(clean_mdx(raw)):
             headings = _heading_chain(section.metadata) or title
             for piece in by_size.split_documents([section]):
-                if len(piece.page_content.strip()) < 50:
+                # Syntax splitting emits short commands as standalone fenced chunks.
+                if len(piece.page_content.strip()) < 50 and "Code" not in piece.metadata:
                     continue
                 source = path.relative_to(CORPUS).as_posix()
                 chunk_id = hashlib.sha256(json.dumps([source, headings, piece.page_content]).encode()).hexdigest()
