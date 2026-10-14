@@ -1,0 +1,24 @@
+{
+  "id": "supported-answer",
+  "verdict": {
+    "passed": true,
+    "reason": "The proposed answer correctly states that the public example sets MaximumAttempts to 3, which is directly supported by the text in document 1.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ]
+  },
+  "expected": true,
+  "actual": true,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 302,
+      "output_tokens": 64,
+      "total_tokens": 366
+    }
+  },
+  "seconds": 3.987192833003064
+}

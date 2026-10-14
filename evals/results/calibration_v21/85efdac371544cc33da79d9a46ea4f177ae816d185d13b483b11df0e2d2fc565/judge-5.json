@@ -1,0 +1,18 @@
+{
+  "id": "judge-5",
+  "verdict": {
+    "grounded": false,
+    "reason": "The context explicitly states the timeout is 5 seconds, which directly contradicts the answer's claim of 60 seconds."
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 106,
+      "output_tokens": 38,
+      "total_tokens": 144
+    }
+  },
+  "seconds": 4.033161500003189
+}

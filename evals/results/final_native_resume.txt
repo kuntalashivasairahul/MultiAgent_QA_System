@@ -1,0 +1,37 @@
+"""Operational resumption only: unchanged inputs, no fresh attempts or verdict replacement."""
+import json
+import sys
+import time
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from evals.run_eval import run_eval, _load_partial
+
+assert [float(value) for value in (None, "7", "1.5", "invalid")
+        if str(value or "").replace(".", "", 1).isdigit()] == [7.0, 1.5]
+assert (ROOT / "evals/confirmation_final_v21.jsonl").exists()
+for dataset in (ROOT / "evals/golden.jsonl", ROOT / "evals/confirmation_final_v21.jsonl"):
+    identity = None
+    for cycle in range(1, 65):
+        result = run_eval("graph_v2_1", dataset=dataset)
+        current = (result["fingerprint"], result["run_id"])
+        if identity is None:
+            identity = current
+        assert current == identity, "Resumption must retain the same inputs and attempt"
+        print(json.dumps({"dataset": dataset.name, "cycle": cycle, "status": result["status"],
+                          "coverage": result["coverage"], "artifact_dir": result["artifact_dir"]}), flush=True)
+        if result["status"] == "complete":
+            break
+        rows = _load_partial(Path(result["artifact_dir"]) / "partial.jsonl").values()
+        delays = [float(details["retry_after"]) for row in rows
+                  for details in [row.get("generation_error_details", {}),
+                                  *(j.get("error_details") or {} for j in row.get("judges", {}).values())]
+                  if str(details.get("retry_after") or "").replace(".", "", 1).isdigit()]
+        delay = max([30, *delays]) + 5
+        print("Provider recovery wait seconds:", delay, flush=True)
+        deadline = time.monotonic() + delay
+        while (remaining := deadline - time.monotonic()) > 0:
+            time.sleep(min(remaining, 60))
+    else:
+        raise SystemExit("Still incomplete after 64 resumptions; preserve artifacts and inspect operational errors")

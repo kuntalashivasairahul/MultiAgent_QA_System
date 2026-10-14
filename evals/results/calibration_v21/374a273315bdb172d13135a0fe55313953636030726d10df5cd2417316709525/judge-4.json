@@ -1,0 +1,18 @@
+{
+  "id": "judge-4",
+  "verdict": {
+    "grounded": true,
+    "reason": "The context explicitly states 'The timeout is 5 seconds.' The answer states 'The timeout is five seconds.' These are semantically identical, with '5' and 'five' being equivalent representations of the same number. Therefore, the answer is fully supported by the context."
+  },
+  "expected": true,
+  "actual": true,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 104,
+      "output_tokens": 68,
+      "total_tokens": 172
+    }
+  },
+  "seconds": 4.057685082996613
+}

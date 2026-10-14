@@ -1,0 +1,18 @@
+{
+  "id": "private-timeout-faithfulness",
+  "verdict": {
+    "grounded": false,
+    "reason": "The context describes a generic failure scenario in a guide (guides/worker-execution-affinity.mdx) and mentions a heartbeat_timeout of 30s as an example. It does not provide information about the specific configuration of the 'private Nova payments production Worker repository'. Therefore, the claim about the specific private repository's configuration is not supported by the provided context."
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 406,
+      "output_tokens": 87,
+      "total_tokens": 493
+    }
+  },
+  "seconds": 4.092845457998919
+}

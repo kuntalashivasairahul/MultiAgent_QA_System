@@ -1,0 +1,19 @@
+{
+  "id": "private-retry-scope",
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document is a generic design pattern example for a 'payments' package, not the specific 'Acme billing Workflow repository' requested. The document does not contain information about the private Acme billing repository's configuration.",
+    "quotes": []
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 678,
+      "output_tokens": 60,
+      "total_tokens": 738
+    }
+  },
+  "seconds": 3.866795916997944
+}

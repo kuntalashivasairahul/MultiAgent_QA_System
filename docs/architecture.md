@@ -14,7 +14,7 @@ Markdown/MDX → protected inline/fenced code → ESM/JSX cleanup
 
 The lightweight cleaner leaves arbitrary JSX expressions as text; it does not evaluate MDX. Large code blocks may span size-bounded chunks, with indentation preserved. Stable chunk IDs derive from source, headings, and text. Metadata contains source, title, headings, chunk_id, and the public-only placeholder permitted_roles=all.
 
-The manifest binds source hashes, pipeline code, dependency lock, embedding revision, collection, and chunk count. Existing IDs allow an interrupted build to resume. Rebuilding is idempotent. Source additions/edits/deletions select a distinct collection; old snapshots remain recoverable. Readers require a current, complete manifest. Cached embeddings/stores/retrievers avoid per-question initialization; a newly published collection selects a new store/retriever.
+The manifest binds source hashes, pipeline code, dependency lock, embedding revision, collection, chunk count and a canonical text/metadata digest. Existing IDs allow an interrupted build to resume only if their content matches canonical records. Rebuilding is idempotent. Source additions/edits/deletions select a distinct collection; old snapshots remain recoverable. Readers require a current, complete manifest and validate stored text/metadata on first opening the immutable snapshot in each process. This detects accidental content corruption; embedding coordinates and malicious local filesystem changes are outside that boundary. Cached embeddings/stores/retrievers avoid per-question initialization; a newly published collection selects a new store/retriever.
 
 ## Graph contract
 
@@ -26,7 +26,7 @@ v1: START → retrieve → generate → END
 v2: START → retrieve → sufficiency → generate → support → END
                           ↓ insufficient          ↓ unsupported
                        refusal                 refusal + retained draft
-v2.1: same v2 graph with a bounded section-context retrieval node
+v2.1: same v2 graph with bounded hybrid/SDK/section retrieval
 ~~~
 
 v0 measures model-only answering, not training-data provenance. v1 uses a system instruction and JSON-encoded untrusted question/documents in a human message. Structured output contains answer text and numeric citation IDs. Non-refusal answers must cite actually retrieved IDs; refusals must have no citations. Empty retrieval refuses without a provider call. Invalid citations fail explicitly.
@@ -37,9 +37,11 @@ V2 imports v1 retrieval/generation unchanged and extends QAState locally. Suffic
 
 ## Evaluation
 
-V2.1 keeps the first five dense chunks, then appends nearest chunks within each anchor's contiguous canonical source/heading section. It preserves anchor order and citation IDs, deduplicates stable IDs, and caps output at ten chunks and 8,000 text characters. Metadata/prompt overhead is outside that text limit. Section membership is cached by verified collection; returned additions are copied to isolate cached evidence from caller mutation. No new index or embeddings are required. Early anchors can consume the expansion budget, and a missing SDK/source cannot be recovered without an anchor. [Initial results](../evals/V21_STATUS.md) separate retrieval coverage, native development regression, and incomplete fresh confirmation.
+V2.1 fuses up to 100 dense and 100 positive-scoring TF-IDF candidates with reciprocal rank constant 60 and lexical weight 2. Text normalizes camelCase and punctuation for identifier matching. Explicit SDK mentions add filtered dense-20/lexical-100 pools, reserving up to two candidates per SDK round-robin within six anchors. It then appends nearest chunks round-robin within each anchor's contiguous canonical source/heading section, and fills remaining space from global candidates. Stable IDs deduplicate evidence; output is capped at 12 chunks and 8,000 text characters. Metadata/prompt overhead is outside that text limit and is measured separately. Cached lexical/section data are keyed by verified collection; returned evidence is copied. SDK recognition is heuristic and does not infer unspecified languages. The former section-ten policy remains a development control. [Current scorecard](../evals/V21_SCORECARD.md) separates retrieval coverage from native answer quality; [initial results](../evals/V21_STATUS.md) retain the earlier policy's evidence.
 
-40 development references and 10 held-out confirmation references specify required evidence groups, with reviewed alternatives inside groups. Source audit was by the coding assistant, not independent human certification. Holdout topics overlap with development; it is not a blind external benchmark.
+V2/v2.1 evaluation uses a synchronous SQLite graph checkpointer with a question-hash thread ID. Pending execution resumes with the same thread; a complete saved graph result can recover an interrupted answer write. SQLite transactions serialize attempt ownership. Persisted-attempt graph and judge callbacks/time accumulate, but unreported provider work and lost writes remain outside those totals. SQLite recovery state is local and ignored by Git. JSONL answers and verdicts remain portable and survive aggregation failures. New installs use GPT-OSS-120B generation and separately calibrated Qwen3.8-27B grading; actual environment values are fingerprinted. Grading remains fallible, including semantic scope/coverage errors despite valid quotes.
+
+40 frozen development references and the original 10-question confirmation specify required evidence groups, with reviewed alternatives inside groups. The original confirmation is now a regression set. The final v2.1 confirmation adds 12 questions authored and source-reviewed after implementation freeze `3ff77dc`; three multihop timer questions share a topic. Source audit is by the coding assistant, not independent human certification. Shared authorship and correlated topics limit generalization; this is not a blind external benchmark.
 
 | Metric | Meaning |
 |---|---|

@@ -1,0 +1,19 @@
+{
+  "id": "incomplete-definition",
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document does not define what an Activity Execution consists of. It only states that Activities are individual units of work and that the SDK provides APIs to customize the behavior of an Activity Execution (specifically timeouts, retry policy, heartbeat monitoring, and asynchronous completion). The answer claims an Activity Execution is 'the run of an Activity,' which is not explicitly stated in the text, and it conflates the definition of the execution with the customizable behaviors. The document does not provide a definition of the composition or nature of an Activity Execution itself.",
+    "quotes": []
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 522,
+      "output_tokens": 123,
+      "total_tokens": 645
+    }
+  },
+  "seconds": 4.273763958000927
+}

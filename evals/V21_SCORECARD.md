@@ -60,3 +60,17 @@ The rebuilt real index retains **14,414 chunks**. Current full suite: **87 passe
 | **Weighted overall** | **8.00** |
 
 Findings 2, 3, 5 and 6 now have implemented fixes and passing regressions. Findings 1, 4 and clean-environment verification from 7 remain open. No 9/10 claim is made. Retrieval prototypes are development experiments, not shipped gains or native accuracy evidence.
+
+## Iteration 2: retrieval and clean-environment validation
+
+Implementation freeze: **`3ff77dc`**. Selected weighted dense/TF-IDF search with SDK-balanced anchors and round-robin section neighbours. Development selection compared 12 profiles, including six anchor/neighbour profiles, without using confirmation outcomes. The chunk cap increased from 10 to 12; the 8,000 document-text-character cap stayed fixed. This is a development-tuned policy, not an independently established optimum.
+
+The [current-code 40-question retrieval diagnostic](results/section_retrieval/802c10587c53190607bd2bf6512d11b36ea3ef1ee4552df0a2d206345738ac1d/result.json) finds **11/11 selected facts, 7/7 complete diagnostic contexts, and 32/32 required source groups**. Dense-twelve finds 6/11, 2/7 and 30/32; legacy section-ten finds 5/11, 1/7 and 23/32. The hybrid context averages 6,240 text characters and 9,087 serialized characters including metadata; it costs more context than dense-five. Diagnostic timing includes first-query lexical cache construction, excludes store initialization, and is not an end-to-end latency claim.
+
+Qwen3.8-27B replaces the default GPT-OSS-20B grader after [21/21 native controls](results/calibration_v21/374a273315bdb172d13135a0fe55313953636030726d10df5cd2417316709525/result.json), including previously observed scope, incomplete-definition, unsupported-cause and exact-identifier errors. Existing `.env` is preserved; final commands select the tested model explicitly. Generation remains GPT-OSS-120B. Model and retrieval changes are bundled in the final native profile; their separate effects on end-to-end accuracy cannot be inferred from that run. Retrieval-only controls and native grader calibration establish narrower component evidence.
+
+The full suite passes **94 tests in 9.68s**. A committed-code snapshot without corpus, index or `.env` passes **90 offline tests, four integration tests deselected, in 5.82s**. That check exposed and fixed v1 opening the index before rejecting invalid input. Full tests still include real retrieval. The added GitHub workflow explicitly runs both phases; execution on GitHub and Windows remains unchecked. Real rebuilding was also repeated: 14,414 stored text/metadata records exactly match the previous snapshot, rebuilding is idempotent, and the old collection remains accessible.
+
+Evaluation also accumulates reported evaluation-judge usage and attempts across resumptions, retaining safe rate-limit recovery metadata. Rate-limit responses stop the immediate judge retry loop. [Twelve new questions](confirmation_final_v21.jsonl) were authored/source-reviewed after implementation freeze; [provenance](confirmation_final_v21_provenance.json) records literal canonical quote checks and shared-authorship/topic limitations. No outcomes from those questions selected the policy.
+
+Findings 1 and 7 now have fixes and observed validation. Finding 4 remains open until final native development and confirmation runs are complete and adjudicated. **Interim overall: 8.63/10** (all areas 9.0 except evaluation validity 7.5). Missing native coverage still prevents 9/10.

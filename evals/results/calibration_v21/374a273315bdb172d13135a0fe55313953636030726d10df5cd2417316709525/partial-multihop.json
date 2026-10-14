@@ -1,0 +1,19 @@
+{
+  "id": "partial-multihop",
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document only mentions the heartbeat function for Go ('RecordHeartbeat') but does not contain any information about the heartbeat function in Python. Therefore, the question cannot be answered completely.",
+    "quotes": []
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 274,
+      "output_tokens": 53,
+      "total_tokens": 327
+    }
+  },
+  "seconds": 4.2536580829982995
+}

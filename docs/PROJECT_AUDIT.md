@@ -1,5 +1,7 @@
 # Project audit — 14 October 2026
 
+Historical initial audit. For current repairs, verification and rating, see the [v2.1 scorecard](../evals/V21_SCORECARD.md). Findings below describe the audited commit and remain unchanged as evidence.
+
 Audited application commit: 078d185. Local corpus commit: 5b56ddca7d409a82f2d74e21f20edf35f29ad483.
 
 **Score: 5.5/10 as the research/learning prototype described in the design.** The small graph architecture and baseline experiment are sound. Evaluation integrity and ingestion fidelity need repair before the comparison table can support strong upgrade claims.
