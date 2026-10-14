@@ -1,17 +1,16 @@
-"""V2 gates with bounded expansion of dense anchors within canonical sections."""
+"""V2 gates with bounded hybrid search, SDK balance and section neighbours."""
 import graph_v2 as v2
-from retrieval import SECTION_MAX_CHARS, SECTION_MAX_CHUNKS, SECTION_SEED_K, get_section_context
+from retrieval import HYBRID_LIMITS, get_hybrid_context
 from state import question_text
 
 USES_RETRIEVAL = True
 SUPPORTS_CHECKPOINTS = True
-RETRIEVAL_K = SECTION_MAX_CHUNKS  # Maximum returned chunks, including the original dense anchors.
-CONTEXT_LIMITS = {"seed_k": SECTION_SEED_K, "max_chunks": SECTION_MAX_CHUNKS,
-                  "max_document_text_characters": SECTION_MAX_CHARS}
+RETRIEVAL_K = HYBRID_LIMITS["max_chunks"]
+CONTEXT_LIMITS = dict(HYBRID_LIMITS)
 
 
 def retrieve(state: v2.V2State) -> v2.V2State:
-    return {"documents": get_section_context(question_text(state)),
+    return {"documents": get_hybrid_context(question_text(state)),
             "sufficiency": None, "support": None, "draft": None}
 
 

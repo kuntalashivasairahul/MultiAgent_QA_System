@@ -30,7 +30,8 @@ class GroundedAnswer(BaseModel):
 
 
 def retrieve(state: QAState) -> QAState:
-    return {"documents": get_retriever(RETRIEVAL_K).invoke(question_text(state))}
+    question = question_text(state)
+    return {"documents": get_retriever(RETRIEVAL_K).invoke(question)}
 
 
 def generate(state: QAState) -> QAState:

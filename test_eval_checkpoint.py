@@ -17,6 +17,26 @@ from graph_v2 import V2State
 from test_evals import evaluation
 
 
+def test_judge_retains_usage_and_rate_limit_metadata_on_resume(monkeypatch):
+    reports = iter([{"judge": {"input_tokens": 10, "output_tokens": 2, "total_tokens": 12}},
+                    {"judge": {"input_tokens": 20, "output_tokens": 3, "total_tokens": 23}}])
+    @contextmanager
+    def usage():
+        yield SimpleNamespace(usage_metadata=next(reports))
+    monkeypatch.setattr(ev, "get_usage_metadata_callback", usage)
+    response = httpx.Response(429, headers={"retry-after": "7"}, request=httpx.Request("POST", "https://test.invalid"))
+    chain = Mock()
+    chain.invoke.side_effect = RateLimitError("private response body", response=response, body=None)
+    failed = ev._judge(chain, [])
+    assert failed["error_details"] == {"status_code": 429, "retry_after": "7"}
+    assert failed["attempts"] == 1 and "private response body" not in json.dumps(failed)
+    chain.invoke.side_effect = None
+    chain.invoke.return_value = ev.Correctness(correct=True, reason="Supported")
+    resumed = ev._judge(chain, [], previous=failed)
+    assert resumed["output"]["correct"] and resumed["error"] is None
+    assert resumed["attempts"] == 2 and resumed["usage"]["judge"]["total_tokens"] == 35
+
+
 def checkpoint_graph(module, *, fail_support=True):
     calls = {name: 0 for name in ("retrieve", "sufficient", "generate", "support")}
     document = Document(id="a", page_content="Evidence A", metadata={"source": "a.mdx", "chunk_id": "a"})
@@ -50,7 +70,7 @@ def test_resume_reopens_disk_checkpoint_without_repeating_paid_nodes(evaluation,
     module, dataset, _, _ = evaluation
     calls = checkpoint_graph(module)
     reports = iter([{"test-model": {"input_tokens": 100, "output_tokens": 20, "total_tokens": 120}},
-                    {"test-model": {"input_tokens": 30, "output_tokens": 4, "total_tokens": 34}}])
+                    {"test-model": {"input_tokens": 30, "output_tokens": 4, "total_tokens": 34}}, {}, {}])
     @contextmanager
     def usage():
         yield SimpleNamespace(usage_metadata=next(reports))

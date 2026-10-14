@@ -88,7 +88,7 @@ def test_v21_graph_generates_and_cites_added_evidence(monkeypatch):
     anchors = [doc("intro", "Start the Worker with this command:")]
     command = doc("command", "```bash\npython worker.py\n```")
     retrieve = Mock(return_value=anchors + [command])
-    monkeypatch.setattr(v21, "get_section_context", retrieve)
+    monkeypatch.setattr(v21, "get_hybrid_context", retrieve)
     generator = Mock(return_value=graph_v1.GroundedAnswer(answer="python worker.py", citations=[2]))
     monkeypatch.setattr(graph_v1, "structured", lambda schema: SimpleNamespace(invoke=generator))
     verdict = v2.EvidenceCheck(passed=True, reason="The command is explicit.",
@@ -106,7 +106,7 @@ def test_v21_insufficient_evidence_does_not_generate(monkeypatch):
     import graph_v1
     import graph_v2 as v2
     import graph_v2_1 as v21
-    monkeypatch.setattr(v21, "get_section_context", lambda question: [doc("sample")])
+    monkeypatch.setattr(v21, "get_hybrid_context", lambda question: [doc("sample")])
     generator = Mock(side_effect=AssertionError("Do not generate private facts"))
     monkeypatch.setattr(graph_v1, "structured", generator)
     monkeypatch.setattr(v2, "structured", lambda *a, **kw: SimpleNamespace(invoke=lambda messages:
@@ -119,7 +119,7 @@ def test_v21_insufficient_evidence_does_not_generate(monkeypatch):
 def test_v21_rejects_bad_question_before_retrieval(monkeypatch):
     import graph_v2_1 as v21
     retrieve = Mock()
-    monkeypatch.setattr(v21, "get_section_context", retrieve)
+    monkeypatch.setattr(v21, "get_hybrid_context", retrieve)
     with pytest.raises(ValueError, match="non-empty"):
         v21.graph.invoke({"question": ""})
     retrieve.assert_not_called()

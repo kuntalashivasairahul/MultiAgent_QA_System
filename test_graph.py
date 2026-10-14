@@ -97,15 +97,18 @@ def test_citations_bind_to_retrieved_chunks_and_reject_inventions(monkeypatch):
     assert graph_v1.generate({"question": "Unknown?", "documents": []})["generation"] == "I don't know."
 
 
-def test_graphs_reject_missing_or_empty_questions():
+def test_graphs_reject_missing_or_empty_questions(monkeypatch):
+    from unittest.mock import Mock
     import pytest
     import graph_v0
     import graph_v1
-
+    index = Mock(side_effect=AssertionError("Invalid input must not open the index"))
+    monkeypatch.setattr(graph_v1, "get_retriever", index)
     for graph in (graph_v0.graph, graph_v1.graph):
         for state in ({}, {"question": ""}, {"question": 123}):
             with pytest.raises(ValueError, match="non-empty"):
                 graph.invoke(state)
+    index.assert_not_called()
 
 
 def test_model_cache_shares_limiter_between_configurations(monkeypatch):

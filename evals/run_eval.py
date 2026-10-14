@@ -124,17 +124,29 @@ def _append(path: Path, rec: dict) -> None:
         os.fsync(stream.fileno())
 
 
-def _judge(chain, messages: list, tries: int = 4) -> dict:
-    error = None
-    for attempt in range(1, tries + 1):
-        try:
-            verdict = chain.invoke(messages)
-            return {"input": [m.model_dump(include={"type", "content"}) for m in messages],
-                    "output": verdict.model_dump(), "error": None, "attempts": attempt}
-        except (GroqError, OutputParserException, ValidationError, ValueError) as exc:
-            error = type(exc).__name__
+def _judge(chain, messages: list, tries: int = 4, *, previous: dict | None = None) -> dict:
+    previous = previous or {}
+    started = time.perf_counter()
+    output, error, details = None, None, None
+    with get_usage_metadata_callback() as usage:
+        for attempt in range(1, tries + 1):
+            try:
+                output = chain.invoke(messages).model_dump()
+                error, details = None, None
+                break
+            except (GroqError, OutputParserException, ValidationError, ValueError) as exc:
+                error = type(exc).__name__
+                details = {"status_code": getattr(exc, "status_code", None),
+                           "retry_after": getattr(getattr(exc, "response", None), "headers", {}).get("retry-after")}
+                if details["status_code"] in (401, 403, 429):
+                    break
+    old, current = previous.get("usage", {}), usage.usage_metadata
     return {"input": [m.model_dump(include={"type", "content"}) for m in messages],
-            "output": None, "error": error, "attempts": tries}
+            "output": output, "error": error, "error_details": details,
+            "attempts": previous.get("attempts", 0) + attempt,
+            "seconds": previous.get("seconds", 0) + time.perf_counter() - started,
+            "usage": {model: add_usage(old.get(model), current.get(model))
+                      for model in sorted(old.keys() | current.keys())}}
 
 
 def source_recall(row: dict, docs: list[dict]) -> float:
@@ -271,7 +283,7 @@ def _run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | No
                 judgment = _judge(chains["correct"], _messages(
                     "Decide whether the answer addresses the question and matches the reference in substance.",
                     {"question": row["question"], "reference": row["answer"], "answer": answer},
-                ))
+                ), previous=rec["judges"].get("correct"))
                 rec["judges"]["correct"] = judgment
                 if judgment["output"] is not None:
                     rec["correct"] = judgment["output"]["correct"]
@@ -292,7 +304,7 @@ def _run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | No
                         {"question": row["question"],
                          "context": [docs[c["id"] - 1] for c in rec["citations"]] if rec["citations"] else docs,
                          "answer": answer},
-                    ))
+                    ), previous=rec["judges"].get("grounded"))
                     rec["judges"]["grounded"] = judgment
                     if judgment["output"] is not None:
                         rec["grounded"] = judgment["output"]["grounded"]

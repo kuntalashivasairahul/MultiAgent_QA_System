@@ -15,7 +15,7 @@ load_dotenv(Path(__file__).resolve().parent / ".env")
 os.environ.setdefault("LANGSMITH_TRACING", "false")
 
 GEN_MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
-JUDGE_MODEL = os.environ.get("GROQ_JUDGE_MODEL", "openai/gpt-oss-20b")
+JUDGE_MODEL = os.environ.get("GROQ_JUDGE_MODEL", "qwen/qwen3.8-27b")
 MAX_RETRIES = int(os.environ.get("GROQ_MAX_RETRIES", "8"))
 REQUESTS_PER_SECOND = float(os.environ.get("GROQ_RPS", "0.25"))
 if MAX_RETRIES < 0 or not 0 < REQUESTS_PER_SECOND < float("inf"):

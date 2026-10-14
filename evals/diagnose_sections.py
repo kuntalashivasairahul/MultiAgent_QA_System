@@ -11,7 +11,7 @@ import graph_v2_1 as v21
 from artifacts import write_json
 from evals.run_eval import GOLDEN, load_golden, run_inputs, source_recall
 from ingest import get_vectorstore, load_chunks
-from retrieval import SECTION_MAX_CHARS, SECTION_MAX_CHUNKS, SECTION_SEED_K, _section_chunks, expand_sections, get_retriever
+from retrieval import SECTION_SEED_K, _section_chunks, expand_sections, format_docs, get_retriever
 
 
 def main() -> None:
@@ -35,11 +35,12 @@ def main() -> None:
         anchors = retriever.invoke(row["question"])
         dense_seconds = time.perf_counter() - started
         started = time.perf_counter()
-        expanded = expand_sections(anchors, sections)
+        expanded = v21.retrieve({"question": row["question"]})["documents"]
         expansion_seconds = time.perf_counter() - started
-        assert expanded[:len(anchors)] == anchors
-        assert len(expanded) <= SECTION_MAX_CHUNKS
-        assert sum(len(d.page_content) for d in expanded) <= SECTION_MAX_CHARS
+        assert len(expanded) <= v21.CONTEXT_LIMITS["max_chunks"]
+        assert sum(len(d.page_content) for d in expanded) <= v21.CONTEXT_LIMITS["max_document_text_characters"]
+        controls = {"dense_twelve": get_retriever(12).invoke(row["question"]),
+                    "legacy_section_ten": expand_sections(anchors, sections)}
         assert len({d.id for d in expanded}) == len(expanded)
         for doc in expanded:
             assert doc.page_content == canonical[doc.id].page_content
@@ -49,17 +50,23 @@ def main() -> None:
                   "documents": [{"id": d.id, "text": d.page_content, "metadata": d.metadata} for d in expanded],
                   "dense_seconds": dense_seconds, "expansion_seconds": expansion_seconds,
                   "dense_characters": sum(len(d.page_content) for d in anchors),
-                  "expanded_characters": sum(len(d.page_content) for d in expanded)}
+                  "expanded_characters": sum(len(d.page_content) for d in expanded),
+                  "serialized_context_characters": len(format_docs(expanded)),
+                  "controls": {name: {"ids": [d.id for d in docs],
+                                      "characters": sum(len(d.page_content) for d in docs)}
+                               for name, docs in controls.items()}}
         if row["bucket"] != "unanswerable":
-            record["dense_source_recall"] = source_recall(row, record["documents"][:len(anchors)])
+            record["dense_source_recall"] = source_recall(row, [{"metadata": d.metadata} for d in anchors])
             record["expanded_source_recall"] = source_recall(row, record["documents"])
-            assert record["expanded_source_recall"] >= record["dense_source_recall"]
+            for name, docs in controls.items():
+                record["controls"][name]["source_recall"] = source_recall(row, [{"metadata": d.metadata} for d in docs])
         if row["question"] in labels:
             record["labeled_facts"] = []
             for fact in labels[row["question"]]["facts"]:
                 matches = lambda docs: [d.id for d in docs if d.metadata["source"] == fact["source"] and fact["quote"] in d.page_content]
                 dense_hits, expanded_hits = matches(anchors), matches(expanded)
-                assert set(dense_hits) <= set(expanded_hits)
+                for name, docs in controls.items():
+                    record["controls"][name].setdefault("fact_hits", []).append(bool(matches(docs)))
                 record["labeled_facts"].append({"source": fact["source"], "quote": fact["quote"],
                                                "indexed_ids": matches(canonical.values()),
                                                "dense_hits": dense_hits, "expanded_hits": expanded_hits})
@@ -88,7 +95,14 @@ def main() -> None:
                "expanded_mean_chunks": sum(len(r["documents"]) for r in results) / len(results),
                "dense_mean_warm_seconds": sum(r["dense_seconds"] for r in results) / len(results),
                "mean_expansion_seconds": sum(r["expansion_seconds"] for r in results) / len(results)}
-    write_json(directory / "result.json", {"scope": "Retrieval-only development comparison; no generation, native gates, correctness judges or token-cost measurement. Fact labels are selected coding-assistant annotations, not exhaustive independent ground truth. Timings exclude model/store initialization and section-cache construction.",
+    summary["mean_serialized_context_characters"] = sum(r["serialized_context_characters"] for r in results) / len(results)
+    summary["controls"] = {name: {
+        "facts": sum(sum(r["controls"][name].get("fact_hits", [])) for r in results),
+        "complete_diagnostic_contexts": sum(all(r["controls"][name]["fact_hits"]) for r in diagnostic_rows),
+        "all_sources": sum(r["controls"][name]["source_recall"] == 1 for r in answerable),
+        "mean_characters": sum(r["controls"][name]["characters"] for r in results) / len(results)}
+        for name in controls}
+    write_json(directory / "result.json", {"scope": "Current v21 hybrid retrieval (expanded fields) compared with dense-five, dense-twelve and legacy-section-ten controls, development only; no generation or native judges. Selected coding-assistant fact labels are not independent ground truth. Timings exclude store initialization; first hybrid query includes lexical cache construction. Text budget excludes serialized metadata overhead, reported separately.",
                                           "fingerprint": fingerprint, "summary": summary, "rows": results})
     print(json.dumps({"artifact_dir": str(directory), **summary}, indent=2))
 
