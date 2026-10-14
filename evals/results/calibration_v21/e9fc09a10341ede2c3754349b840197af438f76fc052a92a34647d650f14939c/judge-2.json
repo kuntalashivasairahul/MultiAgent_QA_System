@@ -1,0 +1,18 @@
+{
+  "id": "judge-2",
+  "verdict": {
+    "correct": false,
+    "reason": "The answer 'I don't know' does not provide the requested information ('--alpha') and therefore does not match the reference."
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 80,
+      "output_tokens": 37,
+      "total_tokens": 117
+    }
+  },
+  "seconds": 4.031990582996514
+}

@@ -1,0 +1,19 @@
+{
+  "id": "private-scope",
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document only states the configuration for a 'public billing example' (MaximumAttempts = 3). It does not contain information about the 'private billing repository' requested in the question. Public examples cannot establish an organization's private configuration.",
+    "quotes": []
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 277,
+      "output_tokens": 64,
+      "total_tokens": 341
+    }
+  },
+  "seconds": 4.0773782499964
+}

@@ -10,11 +10,19 @@ from evals.run_eval import run_eval, _load_partial
 
 assert [float(value) for value in (None, "7", "1.5", "invalid")
         if str(value or "").replace(".", "", 1).isdigit()] == [7.0, 1.5]
-assert (ROOT / "evals/confirmation_final_v21.jsonl").exists()
-for dataset in (ROOT / "evals/golden.jsonl", ROOT / "evals/confirmation_final_v21.jsonl"):
+assert (ROOT / "evals/confirmation_repaired_v21.jsonl").exists()
+for dataset in (ROOT / "evals/golden_current_v21.jsonl", ROOT / "evals/confirmation_repaired_v21.jsonl"):
     identity = None
     for cycle in range(1, 65):
-        result = run_eval("graph_v2_1", dataset=dataset)
+        while True:
+            try:
+                result = run_eval("graph_v2_1", dataset=dataset)
+                break
+            except RuntimeError as exc:
+                if "This evaluation is already running" not in str(exc):
+                    raise
+                print("Existing evaluation owns this attempt; waiting 30 seconds.", flush=True)
+                time.sleep(30)
         current = (result["fingerprint"], result["run_id"])
         if identity is None:
             identity = current

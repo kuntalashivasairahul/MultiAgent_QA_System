@@ -26,9 +26,7 @@ LangSmith tracing defaults to false in .env.example. Existing local .env prefere
 ~~~sh
 uv run pytest -q
 uv run pytest -q -m "not integration"
-uv run python evals/calibrate.py
-uv run python evals/calibrate_v2.py
-LANGSMITH_TRACING=false GROQ_JUDGE_MODEL=qwen/qwen3.8-27b GROQ_MAX_RETRIES=0 uv run python evals/calibrate_v21.py
+LANGSMITH_TRACING=false GROQ_JUDGE_MODEL=qwen/qwen3.8-27b GROQ_MAX_RETRIES=8 uv run python evals/calibrate_v21.py
 uv run python evals/run_eval.py graph_v2
 uv run python evals/run_eval.py graph_v2_1
 uv run python evals/diagnose_sections.py
@@ -47,7 +45,7 @@ The five-question run is exploratory and cannot overwrite a full result. Default
 The GitHub workflow runs offline behavioural tests before fetching the corpus/building the index and running explicit integration tests. The offline suite works without a corpus, index, API key, or `.env`; real retrieval tests require setup. Workflow execution on GitHub and Windows runtime portability remain unverified locally.
 
 ~~~python
-from graph_v2 import graph
+from graph_v2_1 import graph
 result = graph.invoke({"question": "What is a Local Activity in Temporal?"})
 print(result["generation"])
 print(result["citations"])
@@ -64,6 +62,7 @@ The default v2 variant runs both checks; single-check variants are evaluation ab
 ## Evidence
 
 - [Current audit and improvement scorecard](evals/V21_SCORECARD.md): fixed weighted rubric, reproduced failures, repair cycles and completion gates. Historical results below retain the code/model/snapshot they actually measured.
+- [Final verification status](evals/V21_FINAL_STATUS.md): selected freeze, current native coverage, provider-quota wait and exact recovery commands.
 - [Reference erratum](evals/REFERENCE_ERRATA_V21.md): the frozen benchmark incorrectly labels its pricing question unanswerable. A separate corrected reference file is available for future runs; original automated labels remain preserved.
 - [V2.1 initial results](evals/V21_STATUS.md): 82 passing tests, all-40-question retrieval comparison, one successful paired native development regression, and the incomplete fresh confirmation. Selected fact coverage rises from 3/11 to 5/11 while context nearly doubles; six of seven diagnosed questions still lack a necessary fact.
 - [V2 results and next course](evals/V2_STATUS.md): 66 passing tests, four-question native comparison, fixed-draft ablations, usage, judge errors, and prioritized retrieval follow-up. The native study uses the frozen 14,153-chunk index; the current short-code fix yields 14,414 chunks. Post-fix recorded-output revalidation is labeled separately from native evaluation.

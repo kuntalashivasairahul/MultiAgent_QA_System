@@ -1,0 +1,28 @@
+{
+  "id": "complete-multihop",
+  "verdict": {
+    "passed": true,
+    "reason": "The documents explicitly state the heartbeat function for Go (RecordHeartbeat) and Python (heartbeat()), fully answering the question.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "In Go, use RecordHeartbeat."
+      },
+      {
+        "id": 2,
+        "text": "In Python, use heartbeat()."
+      }
+    ]
+  },
+  "expected": true,
+  "actual": true,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 313,
+      "output_tokens": 76,
+      "total_tokens": 389
+    }
+  },
+  "seconds": 4.002123833997757
+}

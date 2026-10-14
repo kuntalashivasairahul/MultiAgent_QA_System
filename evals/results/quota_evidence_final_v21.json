@@ -1,0 +1,23 @@
+{
+  "scope": "Safe numeric fields extracted from native checkpoint provider failures; organization identifiers and raw response bodies excluded. These observations do not promise an account-wide reset time.",
+  "observed_at": "2026-10-14T15:31:46.369796+00:00",
+  "native_attempt": "evals/results/verified/graph_v2_1/22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f/20261014T152435540331Z-c2ddd6c6",
+  "models": {
+    "openai/gpt-oss-120b": {
+      "node": "generate",
+      "question_id": "dev-04",
+      "limit_kind": "tokens_per_day",
+      "limit": 200000.0,
+      "used": 198350.0,
+      "requested": 3000.0
+    },
+    "qwen/qwen3.8-27b": {
+      "node": "sufficient",
+      "question_id": "dev-05",
+      "limit_kind": "tokens_per_day",
+      "limit": 200000.0,
+      "used": 199018.0,
+      "requested": 2397.0
+    }
+  }
+}
