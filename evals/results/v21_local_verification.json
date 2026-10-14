@@ -1,0 +1,51 @@
+{
+  "scope": "Final local verification of the initial v2.1 milestone; no new provider calls. Saved live results describe the initial freeze; only output-copy isolation changed afterward.",
+  "latest_test_command": "LANGSMITH_TRACING=false HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 .venv/bin/python -m pytest -q",
+  "latest_observed_test_result": "82 passed in 7.27s",
+  "pytest_exit_code": 0,
+  "current_index_chunks": 14414,
+  "index_manifest_matches_current_diagnostic": true,
+  "context_copy_fix_preserves_all_40_contexts": true,
+  "current_probe_context_equals_native_context": true,
+  "paired_native_input_checks_passed": true,
+  "v2_gate_semantics_unchanged_except_retrieval_node_injection": true,
+  "protected_files_unchanged_from_2cd663b": [
+    "graph_v0.py",
+    "graph_v1.py",
+    "llm.py",
+    "state.py",
+    "ingest.py",
+    "uv.lock",
+    "evals/golden.jsonl",
+    "evals/holdout.jsonl",
+    "evals/confirmation_v2.jsonl"
+  ],
+  "native_confirmation_status": "incomplete; RateLimitError on 2/3 v2 and 3/3 v2.1 graph invocations",
+  "sha256": {
+    "retrieval.py": "21ff74a8187dc49caa23bd257274bd7e90d2e0540fbe590297408521d2fa48d3",
+    "graph_v2.py": "e52b5e18951391f5d3bb076b6ea6e30c055624f46eb4607a3e2d38e5c248bb06",
+    "graph_v2_1.py": "42c933233e369673de2d0fc4818868b4a2371e9286428af7fe17871a392adf61",
+    "evals/run_eval.py": "9da48a7da7186f2e822bb39d4f5f2fe0a44289114584e8899684474c7213b55d",
+    "evals/diagnose_sections.py": "f852f9ba85edc18275f3cc41951dc0a37066d1d8ba9a014452658229818b9290",
+    "test_section_retrieval.py": "55712f28ffc5496dbe24a205acd5f7729fca6e568f10b08bbbe00b46c3c3bb38",
+    "test_v2_eval.py": "5e3da864c8aae399351b956647fd8d5421164e9237ad19541bd967e88a99bf2b"
+  },
+  "artifact_sha256": {
+    "evals/results/section_retrieval/f9d9edaecd10f25d344e01eae89a27f9acacb20ff7c619d02c62c32c91944ec4/inputs.json": "faa7648d0b77ea71bede6d26d3ec7562e9299a211caf3fa0d1dc837f0c0f2fa0",
+    "evals/results/section_retrieval/f9d9edaecd10f25d344e01eae89a27f9acacb20ff7c619d02c62c32c91944ec4/result.json": "01dac6ff0a200a91da17b07f011d8980dc56d581b34d46e588c03f413f8ea7f9",
+    "evals/results/section_retrieval/9708a3d5b2bdb816875e71aed2c7be2047e3f5fe6939186d01a24585c9f00c63/result.json": "4f6328bd2edb55a45be49bccb0e1d6d900487854cc3c82bad62b8c1bd1d6371a",
+    "evals/results/v21_native_initial.json": "87d1b164318cd985fbfddfcf634bf3ed5a743d30eca1c4f37b14452f75d4a6b4",
+    "evals/results/verified/graph_v2/6e949119ed12ba6520ef404d9109096cf0351f7d3a9895950a995acf28ee1008/20261014T125517419253Z-61e4b687/inputs.json": "daaafcae79f3c8b9198ace6bed8fed0517499c7febb199644e29108559d0d2aa",
+    "evals/results/verified/graph_v2/6e949119ed12ba6520ef404d9109096cf0351f7d3a9895950a995acf28ee1008/20261014T125517419253Z-61e4b687/result.json": "cdbf1a3ebc20ec567b2117e437e9179d932ae1ad210a6347cf81dcdd1edfa75e",
+    "evals/results/verified/graph_v2/6e949119ed12ba6520ef404d9109096cf0351f7d3a9895950a995acf28ee1008/20261014T125517419253Z-61e4b687/partial.jsonl": "87db43753a73fe88a99f83dcea6794278e39b3fc3e73400a3d264857b03da182",
+    "evals/results/verified/graph_v2_1/9df8e11185ead4464c7595203c660fba6ac61d8d9c158be5bf8cc53e688944b6/20261014T125526393552Z-9c5a389c/inputs.json": "3f4ed154bb6b2fe90a7643d7d7d27bc52cd4c3cdc25448e3c7316fcead07b101",
+    "evals/results/verified/graph_v2_1/9df8e11185ead4464c7595203c660fba6ac61d8d9c158be5bf8cc53e688944b6/20261014T125526393552Z-9c5a389c/result.json": "07d8849cba124a787d85d32f0060a8f1d76283ddb5ff14108fd2ccb8027fe320",
+    "evals/results/verified/graph_v2_1/9df8e11185ead4464c7595203c660fba6ac61d8d9c158be5bf8cc53e688944b6/20261014T125526393552Z-9c5a389c/partial.jsonl": "c637f2ef619a0fcf9a3f4e460f4e8402788968d1e60150fe40d6d760e7f49752",
+    "evals/results/verified/graph_v2/138ff0f53481d0e4e6e5b6a4e2b33a451b8d56eb6ccd471a55f85eb142cb8d86/20261014T125544936648Z-07281bb1/inputs.json": "542e62945c3857c7560c7185a461354bbaadeaba737d62c48c21cb1e845c9e76",
+    "evals/results/verified/graph_v2/138ff0f53481d0e4e6e5b6a4e2b33a451b8d56eb6ccd471a55f85eb142cb8d86/20261014T125544936648Z-07281bb1/result.json": "30c4ecdeb02f0372c77e85854f0645ddc9d32960650aa512c70925664ca6c267",
+    "evals/results/verified/graph_v2/138ff0f53481d0e4e6e5b6a4e2b33a451b8d56eb6ccd471a55f85eb142cb8d86/20261014T125544936648Z-07281bb1/partial.jsonl": "42396b805aa6acb44680694b4350000ac0c6d03e4df4cf92125e7502fa23a721",
+    "evals/results/verified/graph_v2_1/583cceb2a7e337504bbe79a799fa4e4b1bf14d6b0cbb12eec122f6632610dc57/20261014T125604465582Z-fd3c4435/inputs.json": "f8515786fdf42ad8eb160059c6e92d6c4eef926bdbf950c31482ee9774289eb2",
+    "evals/results/verified/graph_v2_1/583cceb2a7e337504bbe79a799fa4e4b1bf14d6b0cbb12eec122f6632610dc57/20261014T125604465582Z-fd3c4435/result.json": "b858b4cb6525e6aad156db1229e66822657d3d7eaee7e6ca730de0a87bfe3567",
+    "evals/results/verified/graph_v2_1/583cceb2a7e337504bbe79a799fa4e4b1bf14d6b0cbb12eec122f6632610dc57/20261014T125604465582Z-fd3c4435/partial.jsonl": "0438248347ef10b1f73e3ace23c08a810c5927cd7b02f1a1bc186d13318a50a0"
+  }
+}

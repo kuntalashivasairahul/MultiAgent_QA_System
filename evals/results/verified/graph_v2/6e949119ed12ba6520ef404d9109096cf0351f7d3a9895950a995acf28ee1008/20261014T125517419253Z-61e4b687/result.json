@@ -1,0 +1,96 @@
+{
+  "graph": "graph_v2",
+  "variant": "both",
+  "fingerprint": "6e949119ed12ba6520ef404d9109096cf0351f7d3a9895950a995acf28ee1008",
+  "run_id": "20261014T125517419253Z-61e4b687",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v2/6e949119ed12ba6520ef404d9109096cf0351f7d3a9895950a995acf28ee1008/20261014T125517419253Z-61e4b687",
+  "dataset": "section_development_probe.jsonl",
+  "n": 1,
+  "scope": "full",
+  "retrieval_k": 5,
+  "coverage": {
+    "correctness": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    },
+    "answerable_correctness": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    },
+    "faithfulness": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    },
+    "recall_at_k": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    },
+    "all_sources_rate": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    },
+    "any_source_rate": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    },
+    "refusal_rate": {
+      "eligible": 0,
+      "scored": 0,
+      "missing": 0
+    },
+    "false_refusal_rate": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    },
+    "supported_correct_rate": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    },
+    "unsupported_answer_rate": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    }
+  },
+  "generation_errors": 0,
+  "correctness": 0.0,
+  "answerable_correctness": 0.0,
+  "faithfulness": 1.0,
+  "recall_at_k": 1.0,
+  "all_sources_rate": 1.0,
+  "any_source_rate": 1.0,
+  "refusal_rate": null,
+  "false_refusal_rate": 1.0,
+  "supported_correct_rate": 0.0,
+  "unsupported_answer_rate": 0.0,
+  "unjudged": 0,
+  "status": "complete",
+  "buckets": {
+    "direct": {
+      "n": 1,
+      "correct": 0,
+      "judged": 1
+    }
+  },
+  "mean_generation_seconds": 5.403,
+  "generation_usage": [
+    {
+      "openai/gpt-oss-20b": {
+        "input_tokens": 1575,
+        "output_tokens": 406,
+        "total_tokens": 1981,
+        "output_token_details": {
+          "reasoning": 322
+        }
+      }
+    }
+  ]
+}

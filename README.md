@@ -1,6 +1,6 @@
 # Temporal QA / RAG Evaluation
 
-A versioned LangGraph experiment over a pinned snapshot of public Temporal documentation. v0 is a model-only baseline; v1 retrieves five chunks and generates an answer with validated citation IDs; v2 adds evidence sufficiency and cited-claim support checks. Multiple agents, corrective loops, hybrid search, private-data access control, and memory are not implemented.
+A versioned LangGraph experiment over a pinned snapshot of public Temporal documentation. v0 is a model-only baseline; v1 retrieves five chunks and generates an answer with validated citation IDs; v2 adds evidence sufficiency and cited-claim support checks; v2.1 expands context within retrieved sections under fixed limits. Multiple agents, corrective loops, hybrid search, private-data access control, and memory are not implemented.
 
 Model-only performance measures answering without supplied documents. It cannot establish whether training data contained Temporal documentation.
 
@@ -28,6 +28,8 @@ uv run pytest -q
 uv run python evals/calibrate.py
 uv run python evals/calibrate_v2.py
 uv run python evals/run_eval.py graph_v2
+uv run python evals/run_eval.py graph_v2_1
+uv run python evals/diagnose_sections.py
 uv run python evals/run_eval.py graph_v2 --variant sufficiency
 uv run python evals/run_eval.py graph_v2 --variant support
 uv run python evals/run_eval.py graph_v1
@@ -53,8 +55,11 @@ V2 checks that retrieved evidence answers the exact question, including entity, 
 
 The default v2 variant runs both checks; single-check variants are evaluation ablations and have distinct fingerprints. Evaluation retains gate audits, provider-reported generation/gate token usage, wall-clock generation time, false refusals, supported correct answers, and unsupported answers across **all** buckets. Empty usage metadata means unreported usage, not zero billing. Evaluation-judge tokens are outside generation usage.
 
+`graph_v2_1` runs the same two gates after bounded section retrieval. It retains five dense anchors and appends nearby canonical chunks, capped at ten chunks and 8,000 document-text characters. Context limits are fingerprinted. The index and models are unchanged. Its known Worker-command regression now produces a correct cited answer; the fresh native comparison is incomplete due to provider rate limits. See the results before interpreting this as a general quality improvement.
+
 ## Evidence
 
+- [V2.1 initial results](evals/V21_STATUS.md): 82 passing tests, all-40-question retrieval comparison, one successful paired native development regression, and the incomplete fresh confirmation. Selected fact coverage rises from 3/11 to 5/11 while context nearly doubles; six of seven diagnosed questions still lack a necessary fact.
 - [V2 results and next course](evals/V2_STATUS.md): 66 passing tests, four-question native comparison, fixed-draft ablations, usage, judge errors, and prioritized retrieval follow-up. The native study uses the frozen 14,153-chunk index; the current short-code fix yields 14,414 chunks. Post-fix recorded-output revalidation is labeled separately from native evaluation.
 - [Frozen development baseline](evals/RESULTS_VERIFIED.md): 40 revised questions at `9dcd9ef`, per-metric coverage, raw evidence links.
 - [Earlier confirmation, now a regression set](evals/RESULTS_HOLDOUT.md): 10 questions originally excluded from development runs, since inspected. Shared topics and authorship mean this is not an independent blind benchmark.

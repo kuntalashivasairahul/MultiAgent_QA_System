@@ -26,6 +26,7 @@ v1: START → retrieve → generate → END
 v2: START → retrieve → sufficiency → generate → support → END
                           ↓ insufficient          ↓ unsupported
                        refusal                 refusal + retained draft
+v2.1: same v2 graph with a bounded section-context retrieval node
 ~~~
 
 v0 measures model-only answering, not training-data provenance. v1 uses a system instruction and JSON-encoded untrusted question/documents in a human message. Structured output contains answer text and numeric citation IDs. Non-refusal answers must cite actually retrieved IDs; refusals must have no citations. Empty retrieval refuses without a provider call. Invalid citations fail explicitly.
@@ -35,6 +36,8 @@ Message separation and adversarial controls reduce instruction confusion; they d
 V2 imports v1 retrieval/generation unchanged and extends QAState locally. Sufficiency requires evidence for all parts of the exact question; public samples do not establish private configuration. Support sees only cited chunks with their original IDs and requires every answer claim to follow from them for the requested scope. Positive verdicts require checked quotes. The validator restores simple whitespace, bold, and link-label formatting to literal source spans, preserving inline code and IDs; fenced/indented code requires literal matching. It rejects changed facts and unsupported formatting. Grader errors propagate as operational failures. Audit fields reset on retrieval; support is skipped after a generator refusal. Single-check variants are ablations, not extra production workflows. These are prompt requirements and deterministic quote checks, not a guarantee that the grader enforces semantic support correctly.
 
 ## Evaluation
+
+V2.1 keeps the first five dense chunks, then appends nearest chunks within each anchor's contiguous canonical source/heading section. It preserves anchor order and citation IDs, deduplicates stable IDs, and caps output at ten chunks and 8,000 text characters. Metadata/prompt overhead is outside that text limit. Section membership is cached by verified collection; returned additions are copied to isolate cached evidence from caller mutation. No new index or embeddings are required. Early anchors can consume the expansion budget, and a missing SDK/source cannot be recovered without an anchor. [Initial results](../evals/V21_STATUS.md) separate retrieval coverage, native development regression, and incomplete fresh confirmation.
 
 40 development references and 10 held-out confirmation references specify required evidence groups, with reviewed alternatives inside groups. Source audit was by the coding assistant, not independent human certification. Holdout topics overlap with development; it is not a blind external benchmark.
 

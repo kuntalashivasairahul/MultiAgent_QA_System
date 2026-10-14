@@ -1,0 +1,1 @@
+{"id":"dev-02","question":"In the Celery-to-Standalone-Activity migration guide, what command starts the Python Worker?","answer":"python worker.py","bucket":"direct","source":"guides/celery-to-standalone-activity.mdx","evidence_groups":[["guides/celery-to-standalone-activity.mdx"]]}

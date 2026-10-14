@@ -1,0 +1,423 @@
+{
+  "scope": "Paired initial native study; development probe and fresh confirmation are separate. SDK retries=0 for both graphs. Inspect per-metric coverage before interpreting scores.",
+  "runs": {
+    "section_development_probe.jsonl": {
+      "graph_v2": {
+        "graph": "graph_v2",
+        "variant": "both",
+        "fingerprint": "6e949119ed12ba6520ef404d9109096cf0351f7d3a9895950a995acf28ee1008",
+        "run_id": "20261014T125517419253Z-61e4b687",
+        "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v2/6e949119ed12ba6520ef404d9109096cf0351f7d3a9895950a995acf28ee1008/20261014T125517419253Z-61e4b687",
+        "dataset": "section_development_probe.jsonl",
+        "n": 1,
+        "scope": "full",
+        "retrieval_k": 5,
+        "coverage": {
+          "correctness": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "answerable_correctness": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "faithfulness": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "recall_at_k": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "all_sources_rate": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "any_source_rate": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "refusal_rate": {
+            "eligible": 0,
+            "scored": 0,
+            "missing": 0
+          },
+          "false_refusal_rate": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "supported_correct_rate": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "unsupported_answer_rate": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          }
+        },
+        "generation_errors": 0,
+        "correctness": 0.0,
+        "answerable_correctness": 0.0,
+        "faithfulness": 1.0,
+        "recall_at_k": 1.0,
+        "all_sources_rate": 1.0,
+        "any_source_rate": 1.0,
+        "refusal_rate": null,
+        "false_refusal_rate": 1.0,
+        "supported_correct_rate": 0.0,
+        "unsupported_answer_rate": 0.0,
+        "unjudged": 0,
+        "status": "complete",
+        "buckets": {
+          "direct": {
+            "n": 1,
+            "correct": 0,
+            "judged": 1
+          }
+        },
+        "mean_generation_seconds": 5.403,
+        "generation_usage": [
+          {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1575,
+              "output_tokens": 406,
+              "total_tokens": 1981,
+              "output_token_details": {
+                "reasoning": 322
+              }
+            }
+          }
+        ]
+      },
+      "graph_v2_1": {
+        "graph": "graph_v2_1",
+        "variant": null,
+        "fingerprint": "9df8e11185ead4464c7595203c660fba6ac61d8d9c158be5bf8cc53e688944b6",
+        "run_id": "20261014T125526393552Z-9c5a389c",
+        "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v2_1/9df8e11185ead4464c7595203c660fba6ac61d8d9c158be5bf8cc53e688944b6/20261014T125526393552Z-9c5a389c",
+        "dataset": "section_development_probe.jsonl",
+        "n": 1,
+        "scope": "full",
+        "retrieval_k": 10,
+        "coverage": {
+          "correctness": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "answerable_correctness": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "faithfulness": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "recall_at_k": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "all_sources_rate": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "any_source_rate": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "refusal_rate": {
+            "eligible": 0,
+            "scored": 0,
+            "missing": 0
+          },
+          "false_refusal_rate": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "supported_correct_rate": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          },
+          "unsupported_answer_rate": {
+            "eligible": 1,
+            "scored": 1,
+            "missing": 0
+          }
+        },
+        "generation_errors": 0,
+        "correctness": 1.0,
+        "answerable_correctness": 1.0,
+        "faithfulness": 1.0,
+        "recall_at_k": 1.0,
+        "all_sources_rate": 1.0,
+        "any_source_rate": 1.0,
+        "refusal_rate": null,
+        "false_refusal_rate": 0.0,
+        "supported_correct_rate": 1.0,
+        "unsupported_answer_rate": 0.0,
+        "unjudged": 0,
+        "status": "complete",
+        "buckets": {
+          "direct": {
+            "n": 1,
+            "correct": 1,
+            "judged": 1
+          }
+        },
+        "mean_generation_seconds": 10.341,
+        "generation_usage": [
+          {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 2886,
+              "output_token_details": {
+                "reasoning": 511
+              },
+              "output_tokens": 620,
+              "total_tokens": 3506
+            },
+            "openai/gpt-oss-120b": {
+              "input_tokens": 2178,
+              "output_tokens": 177,
+              "total_tokens": 2355,
+              "output_token_details": {
+                "reasoning": 143
+              }
+            }
+          }
+        ]
+      }
+    },
+    "confirmation_v21.jsonl": {
+      "graph_v2": {
+        "graph": "graph_v2",
+        "variant": "both",
+        "fingerprint": "138ff0f53481d0e4e6e5b6a4e2b33a451b8d56eb6ccd471a55f85eb142cb8d86",
+        "run_id": "20261014T125544936648Z-07281bb1",
+        "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v2/138ff0f53481d0e4e6e5b6a4e2b33a451b8d56eb6ccd471a55f85eb142cb8d86/20261014T125544936648Z-07281bb1",
+        "dataset": "confirmation_v21.jsonl",
+        "n": 3,
+        "scope": "full",
+        "retrieval_k": 5,
+        "coverage": {
+          "correctness": {
+            "eligible": 3,
+            "scored": 1,
+            "missing": 2
+          },
+          "answerable_correctness": {
+            "eligible": 2,
+            "scored": 1,
+            "missing": 1
+          },
+          "faithfulness": {
+            "eligible": 2,
+            "scored": 1,
+            "missing": 1
+          },
+          "recall_at_k": {
+            "eligible": 2,
+            "scored": 1,
+            "missing": 1
+          },
+          "all_sources_rate": {
+            "eligible": 2,
+            "scored": 1,
+            "missing": 1
+          },
+          "any_source_rate": {
+            "eligible": 2,
+            "scored": 1,
+            "missing": 1
+          },
+          "refusal_rate": {
+            "eligible": 1,
+            "scored": 0,
+            "missing": 1
+          },
+          "false_refusal_rate": {
+            "eligible": 2,
+            "scored": 1,
+            "missing": 1
+          },
+          "supported_correct_rate": {
+            "eligible": 2,
+            "scored": 1,
+            "missing": 1
+          },
+          "unsupported_answer_rate": {
+            "eligible": 3,
+            "scored": 1,
+            "missing": 2
+          }
+        },
+        "generation_errors": 2,
+        "correctness": 0.0,
+        "answerable_correctness": 0.0,
+        "faithfulness": 1.0,
+        "recall_at_k": 1.0,
+        "all_sources_rate": 1.0,
+        "any_source_rate": 1.0,
+        "refusal_rate": null,
+        "false_refusal_rate": 1.0,
+        "supported_correct_rate": 0.0,
+        "unsupported_answer_rate": 0.0,
+        "unjudged": 1,
+        "status": "incomplete",
+        "buckets": {
+          "direct": {
+            "n": 2,
+            "correct": 0,
+            "judged": 1
+          },
+          "unanswerable": {
+            "n": 1,
+            "correct": 0,
+            "judged": 0
+          }
+        },
+        "mean_generation_seconds": 4.864,
+        "generation_usage": [
+          {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1337,
+              "output_tokens": 402,
+              "total_tokens": 1739,
+              "output_token_details": {
+                "reasoning": 333
+              }
+            }
+          },
+          {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 2004,
+              "output_tokens": 1570,
+              "total_tokens": 3574,
+              "output_token_details": {
+                "reasoning": 1426
+              }
+            },
+            "openai/gpt-oss-120b": {
+              "input_tokens": 1943,
+              "output_tokens": 324,
+              "total_tokens": 2267,
+              "output_token_details": {
+                "reasoning": 275
+              }
+            }
+          },
+          {}
+        ]
+      },
+      "graph_v2_1": {
+        "graph": "graph_v2_1",
+        "variant": null,
+        "fingerprint": "583cceb2a7e337504bbe79a799fa4e4b1bf14d6b0cbb12eec122f6632610dc57",
+        "run_id": "20261014T125604465582Z-fd3c4435",
+        "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v2_1/583cceb2a7e337504bbe79a799fa4e4b1bf14d6b0cbb12eec122f6632610dc57/20261014T125604465582Z-fd3c4435",
+        "dataset": "confirmation_v21.jsonl",
+        "n": 3,
+        "scope": "full",
+        "retrieval_k": 10,
+        "coverage": {
+          "correctness": {
+            "eligible": 3,
+            "scored": 0,
+            "missing": 3
+          },
+          "answerable_correctness": {
+            "eligible": 2,
+            "scored": 0,
+            "missing": 2
+          },
+          "faithfulness": {
+            "eligible": 2,
+            "scored": 0,
+            "missing": 2
+          },
+          "recall_at_k": {
+            "eligible": 2,
+            "scored": 0,
+            "missing": 2
+          },
+          "all_sources_rate": {
+            "eligible": 2,
+            "scored": 0,
+            "missing": 2
+          },
+          "any_source_rate": {
+            "eligible": 2,
+            "scored": 0,
+            "missing": 2
+          },
+          "refusal_rate": {
+            "eligible": 1,
+            "scored": 0,
+            "missing": 1
+          },
+          "false_refusal_rate": {
+            "eligible": 2,
+            "scored": 0,
+            "missing": 2
+          },
+          "supported_correct_rate": {
+            "eligible": 2,
+            "scored": 0,
+            "missing": 2
+          },
+          "unsupported_answer_rate": {
+            "eligible": 3,
+            "scored": 0,
+            "missing": 3
+          }
+        },
+        "generation_errors": 3,
+        "correctness": null,
+        "answerable_correctness": null,
+        "faithfulness": null,
+        "recall_at_k": null,
+        "all_sources_rate": null,
+        "any_source_rate": null,
+        "refusal_rate": null,
+        "false_refusal_rate": null,
+        "supported_correct_rate": null,
+        "unsupported_answer_rate": null,
+        "unjudged": 2,
+        "status": "incomplete",
+        "buckets": {
+          "direct": {
+            "n": 2,
+            "correct": 0,
+            "judged": 0
+          },
+          "unanswerable": {
+            "n": 1,
+            "correct": 0,
+            "judged": 0
+          }
+        },
+        "mean_generation_seconds": 4.036,
+        "generation_usage": [
+          {},
+          {},
+          {}
+        ]
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@ Implementation scope:
 
 - Keep five dense anchors in their original order, then append nearest chunks from each anchor's section in anchor-rank order. Deduplicate stable chunk IDs; never replace anchors with expansion chunks.
 - Cap the result at ten chunks and 8,000 document-text characters. Skip additions that do not fit. Fail clearly if anchors themselves exceed the budget; do not truncate code or silently drop evidence.
-- Build section membership from the existing canonical chunker, preserving contiguous source/heading runs and source order. Cache by verified collection identity. A changed/missing index must continue to fail explicitly.
+- Build section membership from the existing canonical chunker, preserving contiguous source/heading runs and source order. Cache by verified collection identity and return independent added chunks so caller mutations cannot alter cached evidence. A changed/missing index must continue to fail explicitly.
 - Reuse v2's graph builder with an injected retrieval node. Expose `graph_v2_1` through the existing evaluator and retain its context limits in run inputs.
 - Test budgets, source/heading boundaries, repeated heading runs, ordering, deduplication, cache identity, citation IDs, and negative gate/error behavior. Preserve the user's existing `.serena/project.yml` change.
 
