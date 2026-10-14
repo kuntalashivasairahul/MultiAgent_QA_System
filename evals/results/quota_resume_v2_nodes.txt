@@ -1,0 +1,55 @@
+"""Honor provider quota waits within the failed call, preserving completed graph nodes."""
+import hashlib
+import json
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
+project = Path('/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System')
+sys.path.insert(0, str(project))
+import graph_v1
+import graph_v2
+from groq import RateLimitError
+from artifacts import write_json
+from evals.run_eval import run_eval
+
+path = project / 'evals/v2_node_quota_waits.json'
+events = []
+deadline = time.monotonic() + 7200
+
+def waited(factory):
+    def make(*args, **kwargs):
+        chain = factory(*args, **kwargs)
+        class Waited:
+            def invoke(self, *a, **kw):
+                for attempt in range(12):
+                    try:
+                        return chain.invoke(*a, **kw)
+                    except RateLimitError as exc:
+                        delay = float(exc.response.headers.get('retry-after', '60')) + 1
+                        events.append({'at': datetime.now(timezone.utc).isoformat(),
+                                       'retry_after_seconds': delay - 1,
+                                       'model': kwargs.get('model', 'openai/gpt-oss-120b')})
+                        write_json(path, {'scope': 'external quota orchestration; prompts/models/SDK retries unchanged; failed calls wait in place',
+                                          'wrapper_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                                          'max_wait_window_seconds':7200,'events': events})
+                        print(f'waiting {delay}s for {events[-1]["model"]}', flush=True)
+                        if time.monotonic() + delay > deadline:
+                            raise
+                        time.sleep(delay)
+                raise RuntimeError('Quota resumption attempts exhausted')
+        return Waited()
+    return make
+
+graph_v1.structured = waited(graph_v1.structured)
+graph_v2.structured = waited(graph_v2.structured)
+import evals.run_eval as evaluator
+evaluator.structured = waited(evaluator.structured)
+for graph_name in ('graph_v2', 'graph_v1'):
+    result = run_eval(graph_name, dataset=project / 'evals/confirmation_v2.jsonl')
+    print(json.dumps({k:result[k] for k in ('graph','status','generation_errors','correctness','false_refusal_rate')}), flush=True)
+from evals.replay_v2 import replay
+baseline=project / 'evals/results/verified/graph_v1/c5a804ea77a0046438529e467b2b339d9cdb00902481995a02cd57e2e1bd33e8/20261014T034508791321Z-201b04a2/partial.jsonl'
+result = replay(baseline)
+print(json.dumps(result['variants'],indent=2),flush=True)

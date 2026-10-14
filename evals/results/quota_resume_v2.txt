@@ -1,0 +1,54 @@
+"""Observe quota headers without changing prompts, models, or retry settings."""
+import json
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
+project = Path('/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System')
+sys.path.insert(0, str(project))
+import graph_v1
+import graph_v2
+from groq import RateLimitError
+from artifacts import write_json
+from evals.run_eval import run_eval
+
+observations = []
+path = project / 'evals/v2_quota_waits.json'
+
+def observed(factory):
+    def make(*args, **kwargs):
+        chain = factory(*args, **kwargs)
+        class Observed:
+            def invoke(self, *a, **kw):
+                try:
+                    return chain.invoke(*a, **kw)
+                except RateLimitError as exc:
+                    delay = float(exc.response.headers.get('retry-after', '60'))
+                    observations.append({'at': datetime.now(timezone.utc).isoformat(), 'retry_after_seconds': delay})
+                    write_json(path, {'scope': 'observational wrapper; original prompts/model/retries unchanged',
+                                      'wrapper_sha256': __import__('hashlib').sha256(Path(__file__).read_bytes()).hexdigest(),
+                                      'events': observations})
+                    print(f'provider retry-after: {delay}s', flush=True)
+                    raise
+        return Observed()
+    return make
+
+graph_v1.structured = observed(graph_v1.structured)
+graph_v2.structured = observed(graph_v2.structured)
+deadline = time.monotonic() + 3600
+for attempt in range(12):
+    count = len(observations)
+    outcomes = [run_eval(name, dataset=project / 'evals/confirmation_v2.jsonl') for name in ('graph_v1', 'graph_v2')]
+    print(json.dumps([{k: r[k] for k in ('graph','status','generation_errors','correctness','false_refusal_rate')} for r in outcomes]), flush=True)
+    if all(r['status'] == 'complete' for r in outcomes):
+        break
+    if len(observations) == count:
+        raise SystemExit('Incomplete for a non-quota reason; inspect artifacts')
+    delay = max(e['retry_after_seconds'] for e in observations[count:]) + 1
+    if time.monotonic() + delay > deadline:
+        raise SystemExit('Quota still unavailable after bounded one-hour resumption window')
+    print(f'waiting {delay}s before resuming missing rows', flush=True)
+    time.sleep(delay)
+else:
+    raise SystemExit('Resumption attempts exhausted')

@@ -1,0 +1,164 @@
+{
+  "scope": "assistant-authored diagnostic labels for seven existing v1 refusals; not exhaustive alternative-evidence annotation",
+  "baseline": "evals/results/verified/graph_v1/e13b5e6dd44ede10c5f55f8e798477049e4d60775d5eb064aa94836aa8be31e4/20261014T033524238124Z-1faf06c2/partial.jsonl",
+  "records": [
+    {
+      "id": "dev-02",
+      "question": "In the Celery-to-Standalone-Activity migration guide, what command starts the Python Worker?",
+      "document_source_recall": 1.0,
+      "facts": [
+        {
+          "source": "guides/celery-to-standalone-activity.mdx",
+          "quote": "python worker.py",
+          "answer_bearing_chunk_ids": [],
+          "indexed": false,
+          "retrieved_ids": []
+        }
+      ]
+    },
+    {
+      "id": "dev-04",
+      "question": "In the Java SDK, what function starts a new Workflow Run using Continue-As-New?",
+      "document_source_recall": 1.0,
+      "facts": [
+        {
+          "source": "develop/java/workflows/continue-as-new.mdx",
+          "quote": "Workflow.continueAsNew(",
+          "answer_bearing_chunk_ids": [
+            "19dcd0f0af4daf473d23029b95f45a684b36aaff941e4f03aea574d80298093c"
+          ],
+          "indexed": true,
+          "retrieved_ids": []
+        }
+      ]
+    },
+    {
+      "id": "dev-10",
+      "question": "In the Recover Without Restart guide, how often does its dashboard poll the web service?",
+      "document_source_recall": 0.0,
+      "facts": [
+        {
+          "source": "guides/recover-without-restart.mdx",
+          "quote": "The dashboard polls the web service every 3 seconds",
+          "answer_bearing_chunk_ids": [
+            "ebd018dbd7344558767493cc79784562f8873e8aadd24f151166d4730a54bdce"
+          ],
+          "indexed": true,
+          "retrieved_ids": []
+        }
+      ]
+    },
+    {
+      "id": "dev-20",
+      "question": "When porting Continue-As-New logic between Java and Python Temporal Workflows, what function starts the new Run in each SDK?",
+      "document_source_recall": 0.5,
+      "facts": [
+        {
+          "source": "develop/java/workflows/continue-as-new.mdx",
+          "quote": "Workflow.continueAsNew(",
+          "answer_bearing_chunk_ids": [
+            "19dcd0f0af4daf473d23029b95f45a684b36aaff941e4f03aea574d80298093c"
+          ],
+          "indexed": true,
+          "retrieved_ids": []
+        },
+        {
+          "source": "develop/python/workflows/continue-as-new.mdx",
+          "quote": "workflow.continue_as_new(",
+          "answer_bearing_chunk_ids": [
+            "86ab366fe1b021b577cfed65279e860d929bcc998c8d1ba8b3deb85912c36c5e"
+          ],
+          "indexed": true,
+          "retrieved_ids": []
+        }
+      ]
+    },
+    {
+      "id": "dev-21",
+      "question": "How do the Go and TypeScript external-storage prerequisite documents differ in their stated read/write permissions for storing payloads?",
+      "document_source_recall": 0.5,
+      "facts": [
+        {
+          "source": "develop/go/best-practices/data-handling/external-storage.mdx",
+          "quote": "Storing also requires read permission",
+          "answer_bearing_chunk_ids": [
+            "fd36453c87b4f4771eeaf00eafe90fe1bf40ce5799903109fe5966083e2808f6"
+          ],
+          "indexed": true,
+          "retrieved_ids": []
+        },
+        {
+          "source": "develop/typescript/best-practices/data-handling/external-storage.mdx",
+          "quote": "Components that only retrieve payloads do not need write access, and the reverse is also true.",
+          "answer_bearing_chunk_ids": [
+            "edb9dc82defb31a8e228d8844ce0e4124a5ffd31a72f22a30620972b94fbbbb0"
+          ],
+          "indexed": true,
+          "retrieved_ids": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dev-22",
+      "question": "When monitoring whether Continue-As-New is suggested, which SDK call should a Java Workflow use and which should a Python Workflow use?",
+      "document_source_recall": 1.0,
+      "facts": [
+        {
+          "source": "develop/java/workflows/continue-as-new.mdx",
+          "quote": "Workflow.getInfo().isContinueAsNewSuggested()",
+          "answer_bearing_chunk_ids": [
+            "e16d723d2c71822564325ae4c9a378ce7e153a2991ed6c75ff8546aa8cda5ced",
+            "7ff7d7d361fb3b73900f8ecf4bda4218a6f4ad181970a89a2e5b00f0cf51024f"
+          ],
+          "indexed": true,
+          "retrieved_ids": []
+        },
+        {
+          "source": "develop/python/workflows/continue-as-new.mdx",
+          "quote": "workflow.info().is_continue_as_new_suggested()",
+          "answer_bearing_chunk_ids": [
+            "322f40a36bd5dd1f98a2e1e13cec4938286b0da2bf0a2d30cb3f4f506f7f6432",
+            "01f4bd61f62dac4eed7486d1d399f175065df6dc0cc368ed64584dfbab46cda8"
+          ],
+          "indexed": true,
+          "retrieved_ids": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dev-24",
+      "question": "To let a Child Workflow survive its parent closing, which Parent Close Policy field/parameter and ABANDON value are used in Go and Python?",
+      "document_source_recall": 0.5,
+      "facts": [
+        {
+          "source": "develop/go/workflows/child-workflows.mdx",
+          "quote": "PARENT_CLOSE_POLICY_ABANDON",
+          "answer_bearing_chunk_ids": [
+            "d923b11ba1672b50be953062a9458e117d8e2d21ac7b0748d80e3923e2572db3",
+            "da5188de4137f5989752c6e49216c664fbed0cbd1c0decb5ee16cc9ef669a60a",
+            "0eabf456979df536983ba0ad78f18c6799622fefd134fdc48cb3a80c75b1245e"
+          ],
+          "indexed": true,
+          "retrieved_ids": [
+            1,
+            5
+          ]
+        },
+        {
+          "source": "develop/python/workflows/child-workflows.mdx",
+          "quote": "parent_close_policy=ParentClosePolicy.ABANDON",
+          "answer_bearing_chunk_ids": [
+            "a55c5500e3e08871958bfafa6192a069bb84651fc5bc433401aa16b30ebd5346",
+            "349feb1efe1d72c60f617dbe9fb992fb61678b65ca240ed6f7994b7ec56cbb00"
+          ],
+          "indexed": true,
+          "retrieved_ids": []
+        }
+      ]
+    }
+  ]
+}

@@ -55,11 +55,13 @@ The default v2 variant runs both checks; single-check variants are evaluation ab
 
 ## Evidence
 
+- [V2 status and next course](evals/V2_STATUS.md): frozen implementation, calibration, comparison limits, and prioritized retrieval follow-up.
 - [Current development results](evals/RESULTS_VERIFIED.md): 40 revised questions, per-metric coverage, raw evidence links.
 - [Holdout confirmation](evals/RESULTS_HOLDOUT.md): 10 additional questions excluded from development runs. Shared topics and authorship mean this is not an independent blind benchmark.
 - [Reference review](evals/REVIEW.md): SDK/sample-specific questions and required/alternative evidence groups. Source-audited by the coding assistant; independent human review is not claimed.
 - [Judge calibration](evals/calibration.json): positive, negative, and adversarial controls; a small calibration does not prove universal reliability.
 - [Actual judge review](evals/JUDGE_REVIEW.md): one confirmed false-negative despite passing controls. Reported correctness is an automated label, not independently certified accuracy.
+- [V2 retrieval diagnosis](evals/RETRIEVAL_DIAGNOSIS_V2.md): seven refusals labeled at the chunk level, including a short code block omitted during indexing.
 - [Live generation controls](evals/generation_controls.json): source/question injection and an unknown private fact; these checks mitigate risk without proving immunity to every attack.
 - [Historical results](evals/RESULTS.md) and [original references](evals/history/golden_v1.jsonl): preserved, uncorrected baselines.
 
