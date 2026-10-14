@@ -144,12 +144,12 @@ def refuse(state: V2State) -> V2State:
     return {"generation": REFUSAL, "citations": []}
 
 
-def build_graph(variant: str = "both"):
+def build_graph(variant: str = "both", *, retrieve_node=retrieve):
     """Single-check variants exist only for component ablations."""
     if variant not in VARIANTS:
         raise ValueError(f"Unknown v2 variant: {variant}")
     builder = StateGraph(V2State)
-    builder.add_node("retrieve", retrieve)
+    builder.add_node("retrieve", retrieve_node)
     builder.add_node("generate", graph_v1.generate)
     builder.add_edge(START, "retrieve")
     if variant != "support":

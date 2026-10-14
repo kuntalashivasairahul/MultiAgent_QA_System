@@ -153,6 +153,7 @@ def run_inputs(module, rows: list[dict], dataset: Path) -> dict:
         "max_retries": llm.MAX_RETRIES,
         "requests_per_second": llm.REQUESTS_PER_SECOND,
         "retrieval_k": getattr(module, "RETRIEVAL_K", None),
+        "context_limits": dict(getattr(module, "CONTEXT_LIMITS", {})),
     }
 
 
@@ -166,7 +167,7 @@ def _messages(instruction: str, data: dict) -> list:
 
 def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | None = None,
              fresh: bool = False, variant: str | None = None) -> dict:
-    if not re.fullmatch(r"graph_v[0-9]+", graph_module):
+    if not re.fullmatch(r"graph_v[0-9]+(?:_[0-9]+)?", graph_module):
         raise ValueError("Expected a graph_vN module")
     module = importlib.import_module(graph_module)
     if type(module.USES_RETRIEVAL) is not bool:

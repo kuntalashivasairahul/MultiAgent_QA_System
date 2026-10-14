@@ -52,3 +52,13 @@ def test_unanswerable_unsupported_claims_are_judged_not_hidden(evaluation, monke
     assert result["correctness"] == 0 and result["unsupported_answer_rate"] == 1
     assert result["faithfulness"] is None
     assert result["coverage"]["unsupported_answer_rate"] == {"eligible": 1, "scored": 1, "missing": 0}
+
+
+def test_minor_version_module_runs_through_the_existing_evaluator(evaluation, monkeypatch):
+    import sys
+    module, dataset, _, _ = evaluation
+    monkeypatch.setattr(module, "__name__", "graph_v2_1")
+    monkeypatch.setitem(sys.modules, module.__name__, module)
+    result = ev.run_eval("graph_v2_1", dataset=dataset)
+    assert result["graph"] == "graph_v2_1" and result["status"] == "complete"
+    module.graph.invoke.assert_called_once()
