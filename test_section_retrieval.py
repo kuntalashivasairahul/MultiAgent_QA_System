@@ -158,3 +158,14 @@ def test_index_errors_propagate_instead_of_becoming_refusals(monkeypatch):
 def test_missing_chunk_ids_fail_clearly():
     with pytest.raises(ValueError, match="stable chunk IDs"):
         r.expand_sections([Document(page_content="No stable identity")], {})
+
+
+def test_returned_context_cannot_mutate_cached_section_evidence():
+    anchor, neighbor = doc("anchor"), doc("neighbor", "Original source evidence")
+    sections = {d.id: [anchor, neighbor] for d in (anchor, neighbor)}
+    first = r.expand_sections([anchor], sections)
+    first[1].page_content = "Untrusted replacement"
+    first[1].metadata["headings"] = "Wrong heading"
+    second = r.expand_sections([anchor], sections)
+    assert second[1].page_content == "Original source evidence"
+    assert second[1].metadata["headings"] == "Step"

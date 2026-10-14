@@ -56,7 +56,7 @@ def expand_sections(anchors: list[Document], sections: dict[str, list[Document]]
             if len(documents) == SECTION_MAX_CHUNKS:
                 return documents
             if doc.id not in seen and characters + len(doc.page_content) <= SECTION_MAX_CHARS:
-                documents.append(doc)
+                documents.append(doc.model_copy(deep=True))
                 seen.add(doc.id)
                 characters += len(doc.page_content)
     return documents
