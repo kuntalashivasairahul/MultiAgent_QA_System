@@ -11,8 +11,8 @@
   "coverage": {
     "correctness": {
       "eligible": 4,
-      "scored": 3,
-      "missing": 1
+      "scored": 4,
+      "missing": 0
     },
     "answerable_correctness": {
       "eligible": 2,
@@ -41,8 +41,8 @@
     },
     "refusal_rate": {
       "eligible": 2,
-      "scored": 1,
-      "missing": 1
+      "scored": 2,
+      "missing": 0
     },
     "false_refusal_rate": {
       "eligible": 2,
@@ -56,23 +56,23 @@
     },
     "unsupported_answer_rate": {
       "eligible": 4,
-      "scored": 3,
-      "missing": 1
+      "scored": 4,
+      "missing": 0
     }
   },
-  "generation_errors": 1,
-  "correctness": 0.333,
+  "generation_errors": 0,
+  "correctness": 0.5,
   "answerable_correctness": 0.5,
   "faithfulness": 1.0,
   "recall_at_k": 1.0,
   "all_sources_rate": 1.0,
   "any_source_rate": 1.0,
-  "refusal_rate": 0.0,
+  "refusal_rate": 0.5,
   "false_refusal_rate": 0.0,
   "supported_correct_rate": 0.5,
   "unsupported_answer_rate": 0.0,
   "unjudged": 0,
-  "status": "incomplete",
+  "status": "complete",
   "buckets": {
     "direct": {
       "n": 1,
@@ -86,11 +86,11 @@
     },
     "unanswerable": {
       "n": 2,
-      "correct": 0,
-      "judged": 1
+      "correct": 1,
+      "judged": 2
     }
   },
-  "mean_generation_seconds": 4.431,
+  "mean_generation_seconds": 4.625,
   "generation_usage": [
     {
       "openai/gpt-oss-120b": {
@@ -128,6 +128,15 @@
         }
       }
     },
-    {}
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 1655,
+        "output_tokens": 146,
+        "total_tokens": 1801,
+        "output_token_details": {
+          "reasoning": 121
+        }
+      }
+    }
   ]
 }

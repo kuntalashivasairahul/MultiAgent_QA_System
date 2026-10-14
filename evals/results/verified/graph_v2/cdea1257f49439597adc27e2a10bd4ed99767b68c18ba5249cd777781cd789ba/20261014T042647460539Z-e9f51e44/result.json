@@ -11,90 +11,145 @@
   "coverage": {
     "correctness": {
       "eligible": 4,
-      "scored": 0,
-      "missing": 4
+      "scored": 4,
+      "missing": 0
     },
     "answerable_correctness": {
       "eligible": 2,
-      "scored": 0,
-      "missing": 2
+      "scored": 2,
+      "missing": 0
     },
     "faithfulness": {
       "eligible": 2,
-      "scored": 0,
-      "missing": 2
+      "scored": 2,
+      "missing": 0
     },
     "recall_at_k": {
       "eligible": 2,
-      "scored": 0,
-      "missing": 2
+      "scored": 2,
+      "missing": 0
     },
     "all_sources_rate": {
       "eligible": 2,
-      "scored": 0,
-      "missing": 2
+      "scored": 2,
+      "missing": 0
     },
     "any_source_rate": {
       "eligible": 2,
-      "scored": 0,
-      "missing": 2
+      "scored": 2,
+      "missing": 0
     },
     "refusal_rate": {
       "eligible": 2,
-      "scored": 0,
-      "missing": 2
+      "scored": 2,
+      "missing": 0
     },
     "false_refusal_rate": {
       "eligible": 2,
-      "scored": 0,
-      "missing": 2
+      "scored": 2,
+      "missing": 0
     },
     "supported_correct_rate": {
       "eligible": 2,
-      "scored": 0,
-      "missing": 2
+      "scored": 2,
+      "missing": 0
     },
     "unsupported_answer_rate": {
       "eligible": 4,
-      "scored": 0,
-      "missing": 4
+      "scored": 4,
+      "missing": 0
     }
   },
-  "generation_errors": 4,
-  "correctness": null,
-  "answerable_correctness": null,
-  "faithfulness": null,
-  "recall_at_k": null,
-  "all_sources_rate": null,
-  "any_source_rate": null,
-  "refusal_rate": null,
-  "false_refusal_rate": null,
-  "supported_correct_rate": null,
-  "unsupported_answer_rate": null,
-  "unjudged": 2,
-  "status": "incomplete",
+  "generation_errors": 0,
+  "correctness": 0.75,
+  "answerable_correctness": 0.5,
+  "faithfulness": 1.0,
+  "recall_at_k": 1.0,
+  "all_sources_rate": 1.0,
+  "any_source_rate": 1.0,
+  "refusal_rate": 1.0,
+  "false_refusal_rate": 0.5,
+  "supported_correct_rate": 0.5,
+  "unsupported_answer_rate": 0.0,
+  "unjudged": 0,
+  "status": "complete",
   "buckets": {
     "direct": {
       "n": 1,
-      "correct": 0,
-      "judged": 0
+      "correct": 1,
+      "judged": 1
     },
     "multihop": {
       "n": 1,
       "correct": 0,
-      "judged": 0
+      "judged": 1
     },
     "unanswerable": {
       "n": 2,
-      "correct": 0,
-      "judged": 0
+      "correct": 2,
+      "judged": 2
     }
   },
-  "mean_generation_seconds": 3.878,
+  "mean_generation_seconds": 695.048,
   "generation_usage": [
-    {},
-    {},
-    {},
-    {}
+    {
+      "openai/gpt-oss-20b": {
+        "output_token_details": {
+          "reasoning": 1102
+        },
+        "input_tokens": 2775,
+        "output_tokens": 1408,
+        "total_tokens": 4183
+      },
+      "openai/gpt-oss-120b": {
+        "input_tokens": 1653,
+        "output_tokens": 193,
+        "total_tokens": 1846,
+        "output_token_details": {
+          "reasoning": 147
+        }
+      }
+    },
+    {
+      "openai/gpt-oss-20b": {
+        "output_tokens": 1713,
+        "output_token_details": {
+          "reasoning": 1446
+        },
+        "input_tokens": 2019,
+        "total_tokens": 3732,
+        "input_token_details": {
+          "cache_read": 256
+        }
+      },
+      "openai/gpt-oss-120b": {
+        "input_tokens": 1131,
+        "output_tokens": 267,
+        "total_tokens": 1398,
+        "output_token_details": {
+          "reasoning": 217
+        }
+      }
+    },
+    {
+      "openai/gpt-oss-20b": {
+        "input_tokens": 1659,
+        "output_tokens": 249,
+        "total_tokens": 1908,
+        "output_token_details": {
+          "reasoning": 161
+        }
+      }
+    },
+    {
+      "openai/gpt-oss-20b": {
+        "input_tokens": 1716,
+        "output_tokens": 158,
+        "total_tokens": 1874,
+        "output_token_details": {
+          "reasoning": 89
+        }
+      }
+    }
   ]
 }

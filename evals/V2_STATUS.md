@@ -8,6 +8,8 @@ Verified locally: **49 tests passed**. [Live synthetic calibration](v2_calibrati
 
 The first fresh v2 answer is fully judged successfully: serialization runs the Payload Converter before the Payload Codec, with both gates passing, their quotes validated, and correctness/faithfulness judges both passing. Provider usage was 1,846 generator tokens plus 4,183 gate tokens on this single question. Its observed 587-second graph time includes a 573-second quota wait and cannot estimate intrinsic gate latency. The remaining three questions and completed replay comparison are still pending; this is not an aggregate quality result.
 
+Two more final outputs are now checkpointed. On retry, the heartbeat sufficiency check returned valid quotes for both SDKs, but the support check rejected the generated `RecordActivityHeartbeat` claim because that name was absent from the cited chunks. V2 retained the rejected draft and refused; correctness is false and faithfulness true for the refusal. For private Nova configuration, the sufficiency check explicitly rejected the public 30-second example as evidence of a private setting, skipped generation, and produced a correct refusal. The fourth private-configuration question and replay remain pending.
+
 ## Live comparison remains incomplete
 
 Both models reached provider quotas during the fresh comparison. Paid successful answers and completed replay checks are retained. External orchestration respects provider retry-after delays within the failed call, preserving completed graph nodes. It changes neither prompts nor models. Its source and quota observations are retained separately; quota waits affect observed latency and are not intrinsic graph overhead.
@@ -20,6 +22,14 @@ Both models reached provider quotas during the fresh comparison. Paid successful
 The first cross-SDK heartbeat invocation failed quote validation in the sufficiency check, before any generator call (1,822 grader tokens, no generator usage). It remains an operational error, not a refusal or a successful answer. The [observed resumption wrapper](results/quota_resume_v2_observed.txt) now writes immutable per-call receipts under `evals/results/v2_call_receipts/` so the exact returned quotes can be inspected on a retry. These receipts contain parsed model outputs **before** deterministic quote validation; a parsed `passed=true` receipt alone is not a successful graph verdict. Prompts, models, graph code, and index remain frozen.
 
 No full v1/v2 quality advantage or latency/token conclusion is established yet. [Judge review](JUDGE_REVIEW.md) records a confirmed scope false-positive and a disputed heartbeat API judgment in the fresh set. Preserve those limitations when interpreting any completed scores.
+
+During a running attempt, the durable `partial.jsonl` files beside each `result.json` contain the newest completed work; the summary is published after the attempt finishes. Inspect [v2's checkpoint](results/verified/graph_v2/cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba/20261014T042647460539Z-e9f51e44/partial.jsonl) for live progress.
+
+## Isolated short-code fix
+
+The known ingestion regression is prepared separately at `codex/preserve-short-code`, commit `87c7f89`, without modifying the benchmark worktree. It retains short fenced code while continuing to filter short prose noise. The candidate real index has 14,414 chunks, all 14,153 previous chunks are byte-for-byte unchanged, and the Worker command is now persisted. All 50 tests pass against that candidate index, and a second real build leaves its manifest/count unchanged.
+
+This fixes evidence availability, not the complete retrieval failure: the original Celery question still does not retrieve that command in its top five chunks. Broader retrieval coverage remains a separate experiment. The candidate has not yet been integrated into the frozen benchmark checkout.
 
 ## Next course
 

@@ -1,5 +1,7 @@
 # Verified evaluation results
 
+Frozen repaired baseline at `9dcd9ef`. These values describe that code/index snapshot, not the current v2 worktree. The original table and raw artifacts below are preserved.
+
 Dataset: golden.jsonl. Only current-input full evaluations appear here; missing metrics are visible below.
 
 | Version | n | Correct | Answerable correct | Faithful | Source recall@k | All sources@k | Exact refusal | Status |

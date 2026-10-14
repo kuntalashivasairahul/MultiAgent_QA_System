@@ -12,6 +12,36 @@
       "at": "20261014T052703572593Z",
       "model": "openai/gpt-oss-20b",
       "retry_after_seconds": 484.0
+    },
+    {
+      "at": "20261014T053512240754Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 257.0
+    },
+    {
+      "at": "20261014T053931050526Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 193.0
+    },
+    {
+      "at": "20261014T054246222448Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 543.0
+    },
+    {
+      "at": "20261014T055232335290Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 809.0
+    },
+    {
+      "at": "20261014T060613678137Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 389.0
+    },
+    {
+      "at": "20261014T061245173774Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 883.0
     }
   ]
 }

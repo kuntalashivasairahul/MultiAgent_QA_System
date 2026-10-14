@@ -56,8 +56,8 @@ The default v2 variant runs both checks; single-check variants are evaluation ab
 ## Evidence
 
 - [V2 status and next course](evals/V2_STATUS.md): frozen implementation, calibration, comparison limits, and prioritized retrieval follow-up.
-- [Current development results](evals/RESULTS_VERIFIED.md): 40 revised questions, per-metric coverage, raw evidence links.
-- [Holdout confirmation](evals/RESULTS_HOLDOUT.md): 10 additional questions excluded from development runs. Shared topics and authorship mean this is not an independent blind benchmark.
+- [Frozen development baseline](evals/RESULTS_VERIFIED.md): 40 revised questions at `9dcd9ef`, per-metric coverage, raw evidence links.
+- [Earlier confirmation, now a regression set](evals/RESULTS_HOLDOUT.md): 10 questions originally excluded from development runs, since inspected. Shared topics and authorship mean this is not an independent blind benchmark.
 - [Reference review](evals/REVIEW.md): SDK/sample-specific questions and required/alternative evidence groups. Source-audited by the coding assistant; independent human review is not claimed.
 - [Judge calibration](evals/calibration.json): positive, negative, and adversarial controls; a small calibration does not prove universal reliability.
 - [Actual judge review](evals/JUDGE_REVIEW.md): a confirmed correctness false-negative, scope errors in faithfulness judgments, and a disputed API label despite passing controls. Reported metrics are automated labels, not independently certified accuracy.
