@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph import END, START, StateGraph
@@ -49,6 +50,48 @@ class V2State(QAState):
     draft: dict | None
 
 
+def source_quote(text: str, source: str) -> str:
+    if text.strip() and text in source:
+        return text
+    # shortcut: recover simple prose formatting only; use a Markdown lexer for mixed fenced/indented code.
+    if any("```" in t or "~~~" in t or re.search(r"(?m)^(?: {4}|\t)", t) for t in (text, source)):
+        raise ValueError("Evidence check returned a non-verbatim quote")
+
+    def normalize(value: str, *, links: bool = False):
+        code = set()
+        for match in re.finditer(r"(`+)([^`\n]+)\1", value):
+            code.update(range(*match.span()))
+        if any(c == "`" and i not in code for i, c in enumerate(value)):
+            raise ValueError("Evidence check returned a non-verbatim quote")
+        removed = set()
+        for match in re.finditer(r"(?<!\w)\*\*(?=\S)[^*\n]*?\S\*\*(?!\w)", value):
+            if not code.intersection(range(*match.span())):
+                removed.update((match.start(), match.start() + 1, match.end() - 2, match.end() - 1))
+        if links:
+            for match in re.finditer(r"\[([^\]\n]+)\]\([^()\s]+\)", value):
+                if match.start() not in code:
+                    removed.add(match.start())
+                    removed.update(range(match.end(1), match.end()))
+        chars, offsets = [], []
+        for i, char in enumerate(value):
+            if i in removed:
+                continue
+            if char.isspace() and i not in code:
+                char = " "
+                if chars and chars[-1] == " ":
+                    continue
+            chars.append(char)
+            offsets.append(i)
+        return "".join(chars), offsets
+
+    needle = normalize(text)[0].strip()
+    haystack, offsets = normalize(source, links=True)
+    start = haystack.find(needle) if needle else -1
+    if start < 0:
+        raise ValueError("Evidence check returned a non-verbatim quote")
+    return source[offsets[start]:offsets[start + len(needle) - 1] + 1]
+
+
 def check(instruction: str, question: str, documents: list, *, answer: str | None = None,
           ids: list[int] | None = None) -> dict:
     records = json.loads(format_docs(documents))
@@ -61,10 +104,12 @@ def check(instruction: str, question: str, documents: list, *, answer: str | Non
     available = {r["id"]: r["text"] for r in records}
     if verdict.passed and not verdict.quotes:
         raise ValueError("A passing evidence check must include quotes")
-    for quote in verdict.quotes:
-        if not quote.text.strip() or quote.id not in available or quote.text not in available[quote.id]:
+    result = verdict.model_dump()
+    for quote in result["quotes"]:
+        if quote["id"] not in available:
             raise ValueError("Evidence check returned a non-verbatim quote or invalid document ID")
-    return verdict.model_dump()
+        quote["text"] = source_quote(quote["text"], available[quote["id"]])
+    return result
 
 
 def retrieve(state: V2State) -> V2State:
