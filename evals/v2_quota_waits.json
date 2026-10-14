@@ -1,0 +1,26 @@
+{
+  "scope": "observational wrapper; original prompts/model/retries unchanged",
+  "wrapper_sha256": "55ad8db78576ee3ce27ad6b1806d374dfd4bf875c72a4544d0c98d1b3fc2f383",
+  "events": [
+    {
+      "at": "2026-10-14T04:28:26.961372+00:00",
+      "retry_after_seconds": 735.0
+    },
+    {
+      "at": "2026-10-14T04:28:30.359124+00:00",
+      "retry_after_seconds": 891.0
+    },
+    {
+      "at": "2026-10-14T04:28:34.465820+00:00",
+      "retry_after_seconds": 662.0
+    },
+    {
+      "at": "2026-10-14T04:28:38.480569+00:00",
+      "retry_after_seconds": 859.0
+    },
+    {
+      "at": "2026-10-14T04:28:42.551995+00:00",
+      "retry_after_seconds": 880.0
+    }
+  ]
+}

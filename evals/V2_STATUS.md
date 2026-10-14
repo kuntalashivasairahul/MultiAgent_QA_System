@@ -6,6 +6,8 @@ Implemented: exact-question evidence sufficiency, generation through unchanged v
 
 Verified locally: **49 tests passed**. [Live synthetic calibration](v2_calibration.json): **8/8 passed**, balancing positive and negative controls, including partial multi-hop evidence, private scope, unsupported extra claims, and injections. These controls establish limited integration behavior, not corpus accuracy or injection immunity.
 
+The first fresh v2 graph answer is checkpointed successfully: serialization runs the Payload Converter before the Payload Codec, with both gates passing and their quotes validated. Provider usage was 1,846 generator tokens plus 4,183 gate tokens on this single question. Its observed 587-second graph time includes a 573-second quota wait and cannot estimate intrinsic gate latency. Independent evaluation judgments and the remaining questions are still pending; this is not an aggregate quality result.
+
 ## Live comparison remains incomplete
 
 Both models reached provider quotas during the fresh comparison. Paid successful answers and completed replay checks are retained. External orchestration respects provider retry-after delays within the failed call, preserving completed graph nodes. It changes neither prompts nor models. Its source and quota observations are retained separately; quota waits affect observed latency and are not intrinsic graph overhead.

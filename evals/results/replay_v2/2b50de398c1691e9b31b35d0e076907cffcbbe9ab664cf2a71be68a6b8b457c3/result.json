@@ -1,0 +1,55 @@
+{
+  "inputs": {
+    "scope": "fixed-v1-draft replay; no new generation or independent correctness judging",
+    "baseline": "evals/results/verified/graph_v1/c5a804ea77a0046438529e467b2b339d9cdb00902481995a02cd57e2e1bd33e8/20261014T034508791321Z-201b04a2/partial.jsonl",
+    "baseline_sha256": "2a37d421e7b02730689f3204989159d28087a14ab46d6ba8fbb7ffcc10977657",
+    "gate_model": "openai/gpt-oss-20b",
+    "max_retries": 8,
+    "requests_per_second": 0.25,
+    "code": {
+      "graph_v2.py": "2bdeeb2accc0292039922b4fb557ed97f5242880883e64742e08a471926dafdd",
+      "graph_v1.py": "4c637602288d7fee24d95bd1de0c269b00f879b99db512cee895c8062fcc1b9a",
+      "llm.py": "2076fc7f0a4b755124f07c713d4c9c848634f9a77614716405a191ed3e722943",
+      "retrieval.py": "dcf806a69da8939b45d5f5fbfa8eb8a8495375b8db01ca4a24c62bb32cd4a042",
+      "state.py": "751740ebc64a6cd0dda7578ffb650286da54d7f36e7d6eb692e591049a0c16d7",
+      "evals/replay_v2.py": "c178ba36ea4f07b9058be8d35d864a0909b3134c025b411e58d6e54303448fd9",
+      "evals/run_eval.py": "43b333eade85cca0e3d24934c4305235c1461894f9a7a73942187471a43506f8",
+      "uv.lock": "457f724fd053366f1aec29f94c0c67478667b44c0e5ad9c2313673151adbfd56"
+    }
+  },
+  "variants": {
+    "v1": {
+      "n": 10,
+      "scored": 10,
+      "missing": 0,
+      "correct_using_original_labels": 6,
+      "answerable_refusals": 2,
+      "unanswerable_answers": 1
+    },
+    "sufficiency": {
+      "n": 10,
+      "scored": 8,
+      "missing": 2,
+      "correct_using_original_labels": 4,
+      "answerable_refusals": 4,
+      "unanswerable_answers": 0
+    },
+    "support": {
+      "n": 10,
+      "scored": 7,
+      "missing": 3,
+      "correct_using_original_labels": 4,
+      "answerable_refusals": 2,
+      "unanswerable_answers": 0
+    },
+    "both": {
+      "n": 10,
+      "scored": 7,
+      "missing": 3,
+      "correct_using_original_labels": 3,
+      "answerable_refusals": 4,
+      "unanswerable_answers": 0
+    }
+  },
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/replay_v2/2b50de398c1691e9b31b35d0e076907cffcbbe9ab664cf2a71be68a6b8b457c3"
+}

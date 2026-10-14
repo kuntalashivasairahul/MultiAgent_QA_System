@@ -1,0 +1,27 @@
+{
+  "scope": "external quota orchestration; prompts/models/SDK retries unchanged; failed calls wait in place",
+  "wrapper_sha256": "b9abeb1b9ba7034f81be935d417a940a86a99d222c2c29a73c8bea4a3884bf0b",
+  "max_wait_window_seconds": 7200,
+  "events": [
+    {
+      "at": "2026-10-14T04:42:58.406272+00:00",
+      "retry_after_seconds": 572.0,
+      "model": "openai/gpt-oss-20b"
+    },
+    {
+      "at": "2026-10-14T04:52:35.520402+00:00",
+      "retry_after_seconds": 269.0,
+      "model": "openai/gpt-oss-20b"
+    },
+    {
+      "at": "2026-10-14T04:57:05.652022+00:00",
+      "retry_after_seconds": 95.0,
+      "model": "openai/gpt-oss-20b"
+    },
+    {
+      "at": "2026-10-14T04:58:45.721395+00:00",
+      "retry_after_seconds": 407.0,
+      "model": "openai/gpt-oss-20b"
+    }
+  ]
+}

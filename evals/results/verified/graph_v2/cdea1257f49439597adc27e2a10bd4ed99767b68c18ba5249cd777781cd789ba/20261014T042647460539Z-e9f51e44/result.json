@@ -1,0 +1,100 @@
+{
+  "graph": "graph_v2",
+  "variant": "both",
+  "fingerprint": "cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba",
+  "run_id": "20261014T042647460539Z-e9f51e44",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v2/cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba/20261014T042647460539Z-e9f51e44",
+  "dataset": "confirmation_v2.jsonl",
+  "n": 4,
+  "scope": "full",
+  "retrieval_k": 5,
+  "coverage": {
+    "correctness": {
+      "eligible": 4,
+      "scored": 0,
+      "missing": 4
+    },
+    "answerable_correctness": {
+      "eligible": 2,
+      "scored": 0,
+      "missing": 2
+    },
+    "faithfulness": {
+      "eligible": 2,
+      "scored": 0,
+      "missing": 2
+    },
+    "recall_at_k": {
+      "eligible": 2,
+      "scored": 0,
+      "missing": 2
+    },
+    "all_sources_rate": {
+      "eligible": 2,
+      "scored": 0,
+      "missing": 2
+    },
+    "any_source_rate": {
+      "eligible": 2,
+      "scored": 0,
+      "missing": 2
+    },
+    "refusal_rate": {
+      "eligible": 2,
+      "scored": 0,
+      "missing": 2
+    },
+    "false_refusal_rate": {
+      "eligible": 2,
+      "scored": 0,
+      "missing": 2
+    },
+    "supported_correct_rate": {
+      "eligible": 2,
+      "scored": 0,
+      "missing": 2
+    },
+    "unsupported_answer_rate": {
+      "eligible": 4,
+      "scored": 0,
+      "missing": 4
+    }
+  },
+  "generation_errors": 4,
+  "correctness": null,
+  "answerable_correctness": null,
+  "faithfulness": null,
+  "recall_at_k": null,
+  "all_sources_rate": null,
+  "any_source_rate": null,
+  "refusal_rate": null,
+  "false_refusal_rate": null,
+  "supported_correct_rate": null,
+  "unsupported_answer_rate": null,
+  "unjudged": 2,
+  "status": "incomplete",
+  "buckets": {
+    "direct": {
+      "n": 1,
+      "correct": 0,
+      "judged": 0
+    },
+    "multihop": {
+      "n": 1,
+      "correct": 0,
+      "judged": 0
+    },
+    "unanswerable": {
+      "n": 2,
+      "correct": 0,
+      "judged": 0
+    }
+  },
+  "mean_generation_seconds": 3.878,
+  "generation_usage": [
+    {},
+    {},
+    {},
+    {}
+  ]
+}
