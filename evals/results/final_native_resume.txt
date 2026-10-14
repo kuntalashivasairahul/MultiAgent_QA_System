@@ -1,4 +1,5 @@
 """Operational resumption only: unchanged inputs, no fresh attempts or verdict replacement."""
+import hashlib
 import json
 import sys
 import time
@@ -6,12 +7,61 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from evals.run_eval import run_eval, _load_partial
+import graph_v2_1 as v21
+from evals.run_eval import RESULTS, load_golden, run_inputs, run_eval, _load_partial, _evaluation_lock
 
-assert [float(value) for value in (None, "7", "1.5", "invalid")
-        if str(value or "").replace(".", "", 1).isdigit()] == [7.0, 1.5]
+def recovery_delay(rows):
+    details = [detail for row in rows
+               for detail in [row.get("generation_error_details") or {},
+                              *(j.get("error_details") or {} for j in row.get("judges", {}).values())]]
+    observed = [(detail, float(detail["retry_after"])) for detail in details
+                if str(detail.get("retry_after") or "").replace(".", "", 1).isdigit()]
+    # shortcut: this free profile refills ~8.3k tokens/hour; reserve 2h for quote repair, revisit for other budgets.
+    reserve = 7200 if any(d.get("validation_failures") and d.get("status_code") == 429 and seconds > 60
+                          for d, seconds in observed) else 35
+    return max([reserve, *(seconds + 5 for _, seconds in observed)])
+
+
+def wait_for_recovery(partial):
+    if not partial.exists():
+        return
+    while True:
+        try:
+            with _evaluation_lock(partial.parent / "owner.sqlite"):
+                rows = list(_load_partial(partial).values())
+                modified = partial.stat().st_mtime
+            break
+        except RuntimeError as exc:
+            if "This evaluation is already running" not in str(exc):
+                raise
+            print("Existing evaluation owns this checkpoint; waiting 30 seconds.", flush=True)
+            time.sleep(30)
+    if not any(r.get("generation_error") or any(j.get("error") for j in r.get("judges", {}).values()) for r in rows):
+        return
+    delay = max(0, recovery_delay(rows) - max(0, time.time() - modified))
+    if not delay:
+        return
+    print("Provider recovery wait seconds:", delay, "checkpoint:", str(partial), flush=True)
+    deadline = time.monotonic() + delay
+    while (remaining := deadline - time.monotonic()) > 0:
+        time.sleep(min(remaining, 60))
+
+
+assert recovery_delay([{"generation_error_details": None}]) == 35
+assert recovery_delay([{"generation_error_details": {"retry_after": "120"}}]) == 125
+assert recovery_delay([{"generation_error_details": {"status_code": 429, "retry_after": "1446",
+                                                    "validation_failures": [{}]}}]) == 7200
+assert recovery_delay([{"generation_error_details": {"status_code": 429, "retry_after": "20",
+                                                    "validation_failures": [{}]}}]) == 35
+assert recovery_delay([{"judges": {"correct": {"error_details": {"retry_after": "7.5"}}}}]) == 35
 assert (ROOT / "evals/confirmation_repaired_v21.jsonl").exists()
 for dataset in (ROOT / "evals/golden_current_v21.jsonl", ROOT / "evals/confirmation_repaired_v21.jsonl"):
+    inputs = {**run_inputs(v21, load_golden(dataset=dataset), dataset), "limit": None, "variant": None}
+    fingerprint = hashlib.sha256(json.dumps(inputs, sort_keys=True).encode()).hexdigest()
+    run_root = RESULTS / "verified" / "graph_v2_1" / fingerprint
+    attempts = sorted(p for p in run_root.glob("*") if p.is_dir())
+    if attempts:
+        wait_for_recovery(attempts[-1] / "partial.jsonl")
     identity = None
     for cycle in range(1, 65):
         while True:
@@ -31,15 +81,6 @@ for dataset in (ROOT / "evals/golden_current_v21.jsonl", ROOT / "evals/confirmat
                           "coverage": result["coverage"], "artifact_dir": result["artifact_dir"]}), flush=True)
         if result["status"] == "complete":
             break
-        rows = _load_partial(Path(result["artifact_dir"]) / "partial.jsonl").values()
-        delays = [float(details["retry_after"]) for row in rows
-                  for details in [row.get("generation_error_details", {}),
-                                  *(j.get("error_details") or {} for j in row.get("judges", {}).values())]
-                  if str(details.get("retry_after") or "").replace(".", "", 1).isdigit()]
-        delay = max([30, *delays]) + 5
-        print("Provider recovery wait seconds:", delay, flush=True)
-        deadline = time.monotonic() + delay
-        while (remaining := deadline - time.monotonic()) > 0:
-            time.sleep(min(remaining, 60))
+        wait_for_recovery(Path(result["artifact_dir"]) / "partial.jsonl")
     else:
         raise SystemExit("Still incomplete after 64 resumptions; preserve artifacts and inspect operational errors")

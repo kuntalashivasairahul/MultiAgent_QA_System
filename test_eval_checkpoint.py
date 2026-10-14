@@ -37,6 +37,43 @@ def test_judge_retains_usage_and_rate_limit_metadata_on_resume(monkeypatch):
     assert resumed["attempts"] == 2 and resumed["usage"]["judge"]["total_tokens"] == 35
 
 
+def test_operator_recovery_owns_checkpoint_read_and_releases_before_wait(tmp_path):
+    import ast
+    import os
+    source = Path(__file__).parent / "evals/results/final_native_resume.txt"
+    tree = ast.parse(source.read_text())
+    helpers = [n for n in tree.body if isinstance(n, ast.FunctionDef)
+               and n.name in {"recovery_delay", "wait_for_recovery"}]
+    partial = tmp_path / "partial.jsonl"
+    row = {"question": "q", "generation_error": "RateLimitError",
+           "generation_error_details": {"status_code": 429, "retry_after": "1446", "validation_failures": [{}]}}
+    partial.write_text(json.dumps(row) + "\n")
+    os.utime(partial, (1, 1))
+    held = False
+    @contextmanager
+    def ownership(path):
+        nonlocal held
+        assert path == partial.parent / "owner.sqlite"
+        held = True
+        try:
+            yield
+        finally:
+            held = False
+    def load(path):
+        assert path == partial and held, "A recovering read requires attempt ownership"
+        return {"q": row}
+    times = iter([0.0, 7200.0])
+    def monotonic():
+        assert not held, "Do not hold the writer lock during quota waiting"
+        return next(times)
+    namespace = {"_evaluation_lock": ownership, "_load_partial": load,
+                 "time": SimpleNamespace(time=lambda: 1, monotonic=monotonic, sleep=Mock())}
+    exec(compile(ast.Module(body=helpers, type_ignores=[]), str(source), "exec"), namespace)
+    namespace["wait_for_recovery"](partial)
+    assert not held
+    namespace["time"].sleep.assert_not_called()
+
+
 def checkpoint_graph(module, *, fail_support=True):
     calls = {name: 0 for name in ("retrieve", "sufficient", "generate", "support")}
     document = Document(id="a", page_content="Evidence A", metadata={"source": "a.mdx", "chunk_id": "a"})

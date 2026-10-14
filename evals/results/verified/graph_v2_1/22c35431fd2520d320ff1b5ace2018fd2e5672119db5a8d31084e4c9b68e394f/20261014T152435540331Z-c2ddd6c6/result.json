@@ -102,7 +102,7 @@
       "judged": 0
     }
   },
-  "mean_generation_seconds": 19.407,
+  "mean_generation_seconds": 26.285,
   "generation_usage": [
     {
       "openai/gpt-oss-120b": {
@@ -200,7 +200,13 @@
         "output_tokens": 295
       }
     },
-    {},
+    {
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 7466,
+        "input_tokens": 6582,
+        "output_tokens": 884
+      }
+    },
     {},
     {
       "openai/gpt-oss-120b": {

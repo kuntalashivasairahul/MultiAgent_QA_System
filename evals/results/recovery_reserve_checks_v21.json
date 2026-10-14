@@ -1,0 +1,77 @@
+{
+  "scope": "Offline operator scheduling checks and observed startup wait, not native answer accuracy or a guarantee of quota availability. The 2h refill heuristic applies to the observed free 200000-token/day profile and does not reserve tokens at the provider.",
+  "observed_at": "2026-10-14T17:45:00.765399+00:00",
+  "operator_source_sha256": "cbe4147780fee8cc661fe87916526f9576e9fb795875fbaec655fc48f3f95b17",
+  "native_fingerprint": "22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f",
+  "native_attempt": "evals/results/verified/graph_v2_1/22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f/20261014T152435540331Z-c2ddd6c6",
+  "cases": [
+    {
+      "case": "nullable",
+      "input": {
+        "generation_error_details": null
+      },
+      "expected_seconds": 35,
+      "actual_seconds": 35
+    },
+    {
+      "case": "ordinary-cooldown",
+      "input": {
+        "generation_error_details": {
+          "retry_after": "120"
+        }
+      },
+      "expected_seconds": 125,
+      "actual_seconds": 125.0
+    },
+    {
+      "case": "daily-quote-repair",
+      "input": {
+        "generation_error_details": {
+          "status_code": 429,
+          "retry_after": "1446",
+          "validation_failures": [
+            {}
+          ]
+        }
+      },
+      "expected_seconds": 7200,
+      "actual_seconds": 7200
+    },
+    {
+      "case": "minute-quote-repair",
+      "input": {
+        "generation_error_details": {
+          "status_code": 429,
+          "retry_after": "20",
+          "validation_failures": [
+            {}
+          ]
+        }
+      },
+      "expected_seconds": 35,
+      "actual_seconds": 35
+    },
+    {
+      "case": "judge-short-cooldown",
+      "input": {
+        "judges": {
+          "correct": {
+            "error_details": {
+              "retry_after": "7.5"
+            }
+          }
+        }
+      },
+      "expected_seconds": 35,
+      "actual_seconds": 35
+    }
+  ],
+  "native_pending_metadata_delay_seconds": 7200,
+  "approx_next_retry_utc": "2026-10-14T19:22:15.630516+00:00",
+  "reader_guard_regression": {
+    "test": "test_eval_checkpoint.py::test_operator_recovery_owns_checkpoint_read_and_releases_before_wait",
+    "before_fix": "Failed: recovering read was not under attempt ownership",
+    "after_fix": "Passed in full suite: 98 passed in 11.29s",
+    "scope": "The reader holds ownership while invoking the repairing loader, then releases it before quota waiting."
+  }
+}
