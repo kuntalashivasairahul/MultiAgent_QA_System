@@ -2,6 +2,7 @@ from pathlib import Path
 from unittest.mock import Mock
 
 import pytest
+from langchain_core.documents import Document
 from langchain_core.embeddings import Embeddings
 
 import ingest
@@ -75,7 +76,20 @@ def test_failed_build_keeps_previous_manifest(corpus, monkeypatch):
     assert (ingest.PERSIST / "manifest.json").read_bytes() == manifest
 
 
+@pytest.mark.integration
 def test_project_paths_work_from_another_directory(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     assert ingest.CORPUS.is_absolute() and Path(ingest.PERSIST).is_absolute()
     assert ingest.read_manifest()["chunks"] > 0
+
+
+def test_same_id_content_corruption_is_rejected_on_rebuild_and_read(corpus):
+    (corpus / "first.mdx").write_text('# First\n\n' + 'Canonical source text. ' * 8)
+    store = ingest.build_index()
+    original = store.get()
+    store.update_documents(ids=[original["ids"][0]], documents=[Document(
+        page_content="Corrupted content with the same ID", metadata=original["metadatas"][0])])
+    with pytest.raises(ValueError, match="canonical|integrity"):
+        ingest.build_index()
+    with pytest.raises(ValueError, match="canonical|integrity"):
+        ingest.get_vectorstore()

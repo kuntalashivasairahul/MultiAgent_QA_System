@@ -7,3 +7,4 @@ __pycache__/
 .pytest_cache/
 .corpus-fetch.*/
 .corpus-backup-*/
+evals/results/**/*.sqlite*

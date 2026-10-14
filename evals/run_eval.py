@@ -7,6 +7,8 @@ import importlib
 import json
 import os
 import re
+import sqlite3
+from contextlib import ExitStack, closing, contextmanager
 import sys
 import time
 import uuid
@@ -19,6 +21,8 @@ from groq import GroqError
 from langchain_core.callbacks import get_usage_metadata_callback
 from langchain_core.exceptions import OutputParserException
 from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages.ai import add_usage
+from langgraph.checkpoint.sqlite import SqliteSaver
 from pydantic import BaseModel, Field, ValidationError
 
 import llm
@@ -154,6 +158,7 @@ def run_inputs(module, rows: list[dict], dataset: Path) -> dict:
         "requests_per_second": llm.REQUESTS_PER_SECOND,
         "retrieval_k": getattr(module, "RETRIEVAL_K", None),
         "context_limits": dict(getattr(module, "CONTEXT_LIMITS", {})),
+        "checkpoint_policy": "sqlite-node-sync" if getattr(module, "SUPPORTS_CHECKPOINTS", False) else "answer-jsonl",
     }
 
 
@@ -165,8 +170,27 @@ def _messages(instruction: str, data: dict) -> list:
     ]
 
 
-def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | None = None,
-             fresh: bool = False, variant: str | None = None) -> dict:
+@contextmanager
+def _evaluation_lock(path: Path):
+    with closing(sqlite3.connect(path, timeout=0)) as connection:
+        try:
+            connection.execute("BEGIN IMMEDIATE")
+        except sqlite3.OperationalError as exc:
+            raise RuntimeError("This evaluation is already running") from exc
+        yield
+
+
+def _invoke_graph(graph, question: str, checkpointed: bool) -> dict:
+    if not checkpointed:
+        return graph.invoke({"question": question})
+    config = {"configurable": {"thread_id": hashlib.sha256(question.encode()).hexdigest()}}
+    snapshot = graph.get_state(config)
+    if snapshot.values and not snapshot.next:
+        return snapshot.values
+    return graph.invoke(None if snapshot.values else {"question": question}, config=config, durability="sync")
+
+def _run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | None = None,
+              fresh: bool = False, variant: str | None = None, stack: ExitStack) -> dict:
     if not re.fullmatch(r"graph_v[0-9]+(?:_[0-9]+)?", graph_module):
         raise ValueError("Expected a graph_vN module")
     module = importlib.import_module(graph_module)
@@ -176,19 +200,26 @@ def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | Non
         raise ValueError("Variants apply only to graph_v2")
     if graph_module == "graph_v2":
         variant = variant or "both"
-        graph = module.build_graph(variant)
-    else:
-        graph = module.graph
     dataset = Path(dataset or GOLDEN).resolve()
     rows = load_golden(limit, dataset=dataset)
     inputs = {**run_inputs(module, rows, dataset), "limit": limit, "variant": variant}
     fingerprint = hashlib.sha256(json.dumps(inputs, sort_keys=True).encode()).hexdigest()
     run_root = RESULTS / "verified" / graph_module / fingerprint
+    run_root.mkdir(parents=True, exist_ok=True)
+    if not fresh:
+        stack.enter_context(_evaluation_lock(run_root / "owner.sqlite"))
     attempts = sorted(p for p in run_root.glob("*") if p.is_dir())
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "-" + uuid.uuid4().hex[:8]
     attempt = run_root / run_id if fresh or not attempts else attempts[-1]
     attempt.mkdir(parents=True, exist_ok=True)
     run_id = attempt.name
+    stack.enter_context(_evaluation_lock(attempt / "owner.sqlite"))
+    checkpointed = bool(getattr(module, "SUPPORTS_CHECKPOINTS", False))
+    if checkpointed:
+        saver = stack.enter_context(SqliteSaver.from_conn_string(str(attempt / "graph.sqlite")))
+        graph = module.build_graph(checkpointer=saver, **({"variant": variant} if graph_module == "graph_v2" else {}))
+    else:
+        graph = module.build_graph(variant) if graph_module == "graph_v2" else module.graph
     write_json(attempt / "inputs.json", inputs)
     partial = attempt / "partial.jsonl"
     done = _load_partial(partial)
@@ -201,10 +232,13 @@ def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | Non
             try:
                 with get_usage_metadata_callback() as usage:
                     try:
-                        out = graph.invoke({"question": row["question"]})
+                        out = _invoke_graph(graph, row["question"], checkpointed)
                     finally:
-                        rec["generation_seconds"] = time.perf_counter() - started
-                        rec["generation_usage"] = usage.usage_metadata
+                        rec["generation_seconds"] = rec.get("generation_seconds", 0) + time.perf_counter() - started
+                        previous = rec.get("generation_usage", {})
+                        current = usage.usage_metadata
+                        rec["generation_usage"] = {model: add_usage(previous.get(model), current.get(model))
+                                                   for model in sorted(previous.keys() | current.keys())}
                 answer = out["generation"]
                 if not isinstance(answer, str) or not answer.strip():
                     raise ValueError("Graph returned empty/non-text answer")
@@ -212,8 +246,13 @@ def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | Non
                            documents=[{"id": d.id, "text": d.page_content, "metadata": d.metadata} for d in out.get("documents", [])])
                 rec["checks"] = {name: out[name] for name in ("sufficiency", "support", "draft") if name in out}
                 rec.pop("generation_error", None)
+                rec.pop("generation_error_details", None)
             except Exception as exc:
                 rec["generation_error"] = type(exc).__name__
+                rec["generation_error_details"] = {
+                    "status_code": getattr(exc, "status_code", None),
+                    "retry_after": getattr(getattr(exc, "response", None), "headers", {}).get("retry-after"),
+                }
                 _append(partial, rec)
                 done[row["question"]] = rec
                 print(f"[{i}/{len(rows)}] generation failed: {type(exc).__name__}", flush=True)
@@ -286,6 +325,8 @@ def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | Non
         "artifact_dir": str(attempt), "dataset": dataset.name, "n": len(scored),
         "scope": "sample" if limit is not None else "full", "retrieval_k": inputs.get("retrieval_k"),
         "coverage": {}, "generation_errors": sum("generation_error" in r for r in scored),
+        "graph_usage_scope": "Accumulated reported callbacks from persisted attempts; excludes lost writes and is not a billing ledger.",
+        "graph_time_scope": "Active graph-attempt wall time; excludes gaps between resumptions.",
     }
     for name, (key, eligible) in metrics.items():
         values = [r[key] for r in eligible if key in r]
@@ -303,6 +344,12 @@ def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | Non
     result["generation_usage"] = [r.get("generation_usage", {}) for r in scored]
     write_json(attempt / "result.json", result)
     return result
+
+
+def run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | None = None,
+             fresh: bool = False, variant: str | None = None) -> dict:
+    with ExitStack() as stack:
+        return _run_eval(graph_module, limit, dataset=dataset, fresh=fresh, variant=variant, stack=stack)
 
 
 if __name__ == "__main__":

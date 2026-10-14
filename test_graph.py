@@ -3,6 +3,8 @@
 Run: uv run pytest test_graph.py -v
  or: uv run python test_graph.py
 """
+import pytest
+
 from ingest import clean_mdx
 
 
@@ -28,6 +30,7 @@ def test_clean_mdx_preserves_generics_inside_code_fences():
     assert "List<String>" in out
 
 
+@pytest.mark.integration
 def test_retriever_finds_jargon_term():
     """Exact-identifier jargon is where dense-only retrieval typically fails."""
     from retrieval import get_retriever

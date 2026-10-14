@@ -1,0 +1,101 @@
+"""Development-only retrieval grid; never uses confirmation questions or model generation."""
+import hashlib
+import json
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from sklearn.feature_extraction.text import TfidfVectorizer
+from artifacts import write_json
+from ingest import load_chunks, get_vectorstore, read_manifest
+from evals.run_eval import load_golden, source_recall
+
+def normalize(text):
+    text = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", text)
+    return re.sub(r"[^a-z0-9]+", " ", text.lower())
+
+patterns = {"go": r"\bGo\b(?!\s+to\b)|(?i:\bin\s+go\b|\bgo\s+sdk\b)",
+            "python": r"(?i:\bpython\b)", "java": r"(?i:\bjava\b)",
+            "typescript": r"(?i:\btypescript\b)", "php": r"(?i:\bphp\b)",
+            "rust": r"(?i:\brust\b)", "dotnet": r"(?i:\.net\b|\bdotnet\b|(?<!\w)c#(?!\w))"}
+chunks = load_chunks()
+by_id = {d.id: d for d in chunks}
+store = get_vectorstore()
+texts = [normalize(d.metadata["source"] + " " + d.metadata["headings"] + " " + d.page_content) for d in chunks]
+vector = TfidfVectorizer(sublinear_tf=True, stop_words="english", ngram_range=(1, 2))
+matrix = vector.fit_transform(texts)
+labels_path = ROOT / "evals/retrieval_labels_v2.json"
+labels = {r["question"]: r for r in json.loads(labels_path.read_text())["records"]}
+rows = load_golden()
+output = {f"lex{weight}-reserve{reserve}": [] for weight in (1, 2) for reserve in (1, 2, 3)}
+for row in rows:
+    query = row["question"]
+    scores = (matrix @ vector.transform([normalize(query)]).T).toarray().ravel()
+    lexical = sorted(range(len(chunks)), key=lambda i: (-scores[i], chunks[i].id))
+    sdks = sorted([(re.search(pattern, query).start(), sdk) for sdk, pattern in patterns.items() if re.search(pattern, query)])
+    dense = store.similarity_search(query, k=100)
+    pools = {"global": ([chunks[i].id for i in lexical[:100]], [d.id for d in dense])}
+    for _, sdk in sdks:
+        source_set = sorted({d.metadata["source"] for d in chunks if d.metadata["source"].startswith("develop/" + sdk + "/")})
+        filtered_lex = [chunks[i].id for i in lexical if chunks[i].metadata["source"] in source_set][:100]
+        filtered_dense = store.similarity_search(query, k=20, filter={"source": {"$in": source_set}})
+        pools[sdk] = (filtered_lex, [d.id for d in filtered_dense])
+    for weight in (1, 2):
+        fused = {}
+        for name, (lexical_ids, dense_ids) in pools.items():
+            combined = {}
+            for multiplier, identifiers in ((weight, lexical_ids), (1, dense_ids)):
+                for rank, identifier in enumerate(identifiers, 1):
+                    combined[identifier] = combined.get(identifier, 0) + multiplier / (60 + rank)
+            fused[name] = sorted(combined, key=lambda identifier: (-combined[identifier], identifier))
+        for reserve in (1, 2, 3):
+            selected, used, characters = [], set(), 0
+            positions = {sdk: 0 for _, sdk in sdks}
+            def add(identifier):
+                global characters
+                if identifier in used or len(selected) == 10:
+                    return False
+                doc = by_id[identifier]
+                if characters + len(doc.page_content) > 8000:
+                    return False
+                selected.append(doc)
+                used.add(identifier)
+                characters += len(doc.page_content)
+                return True
+            for _ in range(reserve):
+                for _, sdk in sdks:
+                    candidates = fused[sdk]
+                    while positions[sdk] < len(candidates):
+                        identifier = candidates[positions[sdk]]
+                        positions[sdk] += 1
+                        if add(identifier):
+                            break
+            for identifier in fused["global"]:
+                if len(selected) == 10:
+                    break
+                add(identifier)
+            assert len(selected) <= 10 and characters <= 8000 and len(used) == len(selected)
+            result = {"id": row["id"], "question": query, "bucket": row["bucket"],
+                      "selected_ids": [d.id for d in selected], "characters": characters}
+            if row["bucket"] != "unanswerable":
+                result["source_recall"] = source_recall(row, [{"metadata": d.metadata} for d in selected])
+            if query in labels:
+                result["facts"] = [any(d.metadata["source"] == f["source"] and f["quote"] in d.page_content for d in selected) for f in labels[query]["facts"]]
+            output[f"lex{weight}-reserve{reserve}"].append(result)
+summary = {}
+for name, records in output.items():
+    answerable = [r for r in records if "source_recall" in r]
+    diagnosed = [r for r in records if "facts" in r]
+    summary[name] = {"source_recall": sum(r["source_recall"] for r in answerable) / len(answerable),
+                     "all_sources": sum(r["source_recall"] == 1 for r in answerable),
+                     "facts": sum(sum(r["facts"]) for r in diagnosed),
+                     "complete_diagnostic_questions": sum(all(r["facts"]) for r in diagnosed),
+                     "mean_characters": sum(r["characters"] for r in records) / len(records)}
+    print(name, summary[name], flush=True)
+write_json(ROOT / "evals/results/retrieval_prototype_v21.json", {
+    "scope": "Development-only grid over six generic lexical/dense fusion and SDK reservation choices; no confirmation data or native generation. Fixed ten-chunk/8000-text-character budget.",
+    "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+    "labels_sha256": hashlib.sha256(labels_path.read_bytes()).hexdigest(),
+    "manifest": read_manifest(), "summary": summary, "rows": output})

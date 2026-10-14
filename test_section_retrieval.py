@@ -125,6 +125,7 @@ def test_v21_rejects_bad_question_before_retrieval(monkeypatch):
     retrieve.assert_not_called()
 
 
+@pytest.mark.integration
 def test_real_section_expansion_recovers_worker_command_and_keeps_dense_anchors():
     question = "In the Celery-to-Standalone-Activity migration guide, what command starts the Python Worker?"
     anchors = r.get_retriever().invoke(question)

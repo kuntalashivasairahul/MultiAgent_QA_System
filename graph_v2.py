@@ -14,6 +14,7 @@ from retrieval import format_docs
 from state import QAState, question_text
 
 USES_RETRIEVAL = True
+SUPPORTS_CHECKPOINTS = True
 RETRIEVAL_K = graph_v1.RETRIEVAL_K
 REFUSAL = "I don't know."
 VARIANTS = ("both", "sufficiency", "support")
@@ -144,7 +145,7 @@ def refuse(state: V2State) -> V2State:
     return {"generation": REFUSAL, "citations": []}
 
 
-def build_graph(variant: str = "both", *, retrieve_node=retrieve):
+def build_graph(variant: str = "both", *, retrieve_node=retrieve, checkpointer=None):
     """Single-check variants exist only for component ablations."""
     if variant not in VARIANTS:
         raise ValueError(f"Unknown v2 variant: {variant}")
@@ -167,7 +168,7 @@ def build_graph(variant: str = "both", *, retrieve_node=retrieve):
         builder.add_edge("supported", END)
     else:
         builder.add_edge("generate", END)
-    return builder.compile()
+    return builder.compile(checkpointer=checkpointer)
 
 
 graph = build_graph()

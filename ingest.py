@@ -138,9 +138,29 @@ def _open_store(collection: str, persist: str) -> Chroma:
     )
 
 
+def _content_digest(records: list[dict]) -> str:
+    payload = json.dumps(sorted(records, key=lambda record: record["id"]), sort_keys=True)
+    return hashlib.sha256(payload.encode()).hexdigest()
+
+
+def _stored_records(store: Chroma) -> list[dict]:
+    stored = store.get(include=["documents", "metadatas"])
+    return [{"id": identifier, "text": text, "metadata": metadata}
+            for identifier, text, metadata in zip(stored["ids"], stored["documents"], stored["metadatas"], strict=True)]
+
+
+@lru_cache(maxsize=4)
+def _verified_store(collection: str, persist: str, expected_digest: str) -> Chroma:
+    store = _open_store(collection, persist)
+    if _content_digest(_stored_records(store)) != expected_digest:
+        raise ValueError("Index canonical content integrity check failed; rebuild the snapshot")
+    return store
+
 def get_vectorstore() -> Chroma:
     manifest = read_manifest()
-    store = _open_store(manifest["collection"], str(PERSIST))
+    if "content_sha256" not in manifest:
+        raise ValueError("Index lacks canonical content integrity metadata; run ingest.py")
+    store = _verified_store(manifest["collection"], str(PERSIST), manifest["content_sha256"])
     if store._collection.count() != manifest["chunks"]:
         raise ValueError("Index is incomplete; run ingest.py")
     return store
@@ -153,23 +173,28 @@ def build_index(batch_size: int = 256) -> Chroma:
     chunks = load_chunks()
     collection = "temporal_docs_" + spec["fingerprint"][:24]
     store = Chroma(collection_name=collection, embedding_function=get_embeddings(), persist_directory=str(PERSIST))
-    existing = set(store.get(include=[])["ids"])
-    wanted = {d.id for d in chunks}
+    stored = _stored_records(store)
+    existing = {record["id"] for record in stored}
+    canonical = {d.id: {"id": d.id, "text": d.page_content, "metadata": d.metadata} for d in chunks}
+    wanted = set(canonical)
     if existing - wanted:
         raise ValueError("Unexpected documents in immutable snapshot")
+    if _content_digest(stored) != _content_digest([canonical[identifier] for identifier in existing]):
+        raise ValueError("Existing index differs from canonical source content; old manifest preserved")
     pending = [d for d in chunks if d.id not in existing]
     print(f"chunks: {len(chunks)}; already indexed: {len(existing)}", flush=True)
     for i in range(0, len(pending), batch_size):
         batch = pending[i:i + batch_size]
         store.add_documents(batch, ids=[d.id for d in batch])
         print(f"  indexed {len(existing) + min(i + batch_size, len(pending))}/{len(chunks)}", flush=True)
-    if set(store.get(include=[])["ids"]) != wanted or index_spec() != spec:
+    content_digest = _content_digest(list(canonical.values()))
+    if _content_digest(_stored_records(store)) != content_digest or index_spec() != spec:
         raise ValueError("Corpus changed or indexing was incomplete; old manifest preserved")
     revision = subprocess.run(
         ["git", "-C", str(CORPUS.parent), "rev-parse", "HEAD"], capture_output=True, text=True,
     )
     write_json(Path(PERSIST) / "manifest.json", {
-        **spec, "collection": collection, "chunks": len(chunks),
+        **spec, "collection": collection, "chunks": len(chunks), "content_sha256": content_digest,
         "corpus_revision": revision.stdout.strip() if revision.returncode == 0 else None,
     })
     return store

@@ -10,8 +10,13 @@ dependencies = [
     "langchain-huggingface>=1.2.2",
     "langchain-text-splitters>=1.1.2",
     "langgraph>=1.2.11",
+    "langgraph-checkpoint-sqlite>=3.1.2",
     "langsmith>=0.11.2",
     "pytest>=9.1.1",
     "python-dotenv>=1.2.3",
+    "scikit-learn>=1.9.0",
     "sentence-transformers>=6.0.1",
 ]
+
+[tool.pytest.ini_options]
+markers = ["integration: requires the pinned corpus and a built local index"]
