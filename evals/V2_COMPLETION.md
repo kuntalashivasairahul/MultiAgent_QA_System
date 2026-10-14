@@ -1,0 +1,25 @@
+# V2 completion evidence
+
+Scope: the approved evidence-gated v2 experiment, component ablations, fresh confirmation, and evidence-driven retrieval diagnosis. The historical design's later corrective loops, hybrid retrieval, agents, memory, and production/private-data features are separate work. This checklist does not assert a general accuracy improvement.
+
+| Requirement | Authoritative evidence | Outcome |
+|---|---|---|
+| Freeze a reproducible repaired baseline | `9dcd9ef`; [development](RESULTS_VERIFIED.md), [regression](RESULTS_HOLDOUT.md); protected-file byte checks in [final verification](results/v2_final_verification.json) | Baseline results and v0/v1/shared-model contracts preserved |
+| Pre-generation evidence sufficiency for all parts and exact scope | `graph_v2.sufficient`, system rules, `test_v2.py`; [native controls](v2_calibration.json) and retained private-scope verdicts | Implemented and exercised; model enforcement remains fallible |
+| Post-generation claim support using only actual cited IDs | `graph_v2.supported`, `test_support_uses_only_cited_chunks_and_retains_original_ids` | Implemented; recorded false-positives explicitly reviewed |
+| Canonical refusal, retained rejected draft, reset audit, skip unnecessary calls | Graph routing and behavioral tests in `test_v2.py`; fresh heartbeat rejected draft and private-question prechecks | Verified locally and on recorded native outputs |
+| Strict verdict schema, real source quotes, invalid-ID/error handling | `EvidenceCheck`, `Quote`, `check`, `source_quote`; `test_v2.py`, 16 quote-format regressions | Exact source spans retained; changed facts/code/URLs rejected; provider errors propagate |
+| Separate single-component ablations | `build_graph`, variant fingerprints, `test_v2_eval.py`, `test_replay.py`; [native replay](results/replay_v2/2b50de398c1691e9b31b35d0e076907cffcbbe9ab664cf2a71be68a6b8b457c3/result.json) | Implemented; original incomplete coverage preserved rather than relabeled |
+| Finish analysis of replay's operational failures | [Offline revalidation](results/revalidated_v2.json), [reproduction source](results/revalidate_recorded_v2.txt), immutable native call receipts | Three formatting failures resolved; 10/10 per variant under new validator, unchanged native decisions; no new model calls |
+| Fresh questions authored after implementation freeze | `cd815e7`; [confirmation protocol](CONFIRMATION_V2.md), `confirmation_v2.jsonl` | Four questions; coding-assistant authorship and narrow sample disclosed |
+| Matched native v1/v2 confirmation and full metric coverage | Both run `inputs.json`/`result.json`, linked from [results](V2_STATUS.md); metadata equality and coverage assertions in offline audit | 4/4 each, zero missing eligible metrics and final graph errors; frozen 14,153-chunk index |
+| Preserve outputs, evidence, failures, metric denominators, usage and latency | Verified attempts' `partial.jsonl`, gate receipts, quota observations, `run_eval.py`, [results](V2_STATUS.md) | Retained; failed-call usage and quota distortion disclosed; no billing/intrinsic-latency claim |
+| Review correctness and grounding rather than trusting scores | [Judge review](JUDGE_REVIEW.md), source-audit rows in revalidation artifact | Original labels preserved; false-positive, false-negative, disputed-label and incomplete-answer cases disclosed |
+| Diagnose retrieval at answer-bearing chunk level | [Seven-refusal diagnosis](RETRIEVAL_DIAGNOSIS_V2.md), [exact labels](retrieval_labels_v2.json) | All seven omit a necessary selected fact; document recall alone is inadequate |
+| Repair confirmed short-code loss separately from frozen experiment | `8dc2fae`, `test_short_code.py`, [index verification](short_code_fix_verification.json), [post-integration verification](post_index_verification_v2.json) | 261 chunks added, all old chunks byte-identical; Worker command persisted, still missing from top five |
+| Validate current local integration and safe rebuild | [Final verification](results/v2_final_verification.json) | 66 tests pass; current 14,414-chunk rebuild leaves manifest unchanged; old 14,153-chunk collection preserved |
+| Give an evidence-based next course with explicit limits | [V2 results and next course](V2_STATUS.md), README, architecture | Bounded section expansion first, both-SDK coverage next, fresh reviewed confirmation before corrective retries |
+
+The final verification runs offline local tests and a real idempotent index rebuild. The quote fix is additionally checked against all saved confirmation gate outputs and eight saved native calibration controls. Revalidating saved native outputs verifies deterministic compatibility; it does not constitute a new native quality study on the upgraded code/index.
+
+The release does not establish a broad quality winner. Supported-correct counts do not improve in these small samples; refusal and token tradeoffs are material. No independent human adjudication, representative current-index benchmark, quota-free latency study, Windows runtime test, deployment, or private-source access-control claim is made. The next retrieval experiment is recommended, not implemented.

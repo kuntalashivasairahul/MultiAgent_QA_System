@@ -1,0 +1,64 @@
+{
+  "scope": "main-index structural and retrieval checks only; no new generation or judge benchmark",
+  "candidate_manifest_identical": true,
+  "new_collection": "temporal_docs_156bcfe9f86e66d5796e6b23",
+  "new_collection_chunks": 14414,
+  "old_benchmark_collection_preserved": "temporal_docs_c735db42b41daf5245699405",
+  "old_collection_chunks": 14153,
+  "worker_command_persisted": true,
+  "confirmation_contexts": [
+    {
+      "question": "According to the Payload Codec documentation, in what order are the Payload Converter and Payload Codec applied when serializing application objects?",
+      "ordered_context_unchanged": true,
+      "current_chunk_ids": [
+        "3db6851941faebce9acd2e944b7a785d3771b60f9236d1ec377ae466c324bdb1",
+        "493dacaf770c175a952578c51cc37211af658b5a1d061e08353ccacf8027546f",
+        "e79abe27c90b4c7ddadc7431e48843f2a9f0cdba57f704fa4bddbd1b9da853ce",
+        "219e69f3657204162249e90a2d129d65611ac30d7b9d6bf0ad44903d5add0bfa",
+        "77d26a50da51710424f670b694b80802e011506e235bff73c19485ba95078111"
+      ]
+    },
+    {
+      "question": "Which API records an Activity Heartbeat in Go, and which API records one in Python?",
+      "ordered_context_unchanged": true,
+      "current_chunk_ids": [
+        "087cce8646bb168bbbae5a9bce3b75d4004d75e6013a4c8de3669533e0258009",
+        "c19bf2c2e7afdf29bee6827fa5d10011cbd937f36110512fcac9218b261797eb",
+        "c64004c2f13197f16ee50e22ad7887796d593f4ab9acf40b5a2c21b1d5a85b2f",
+        "223e6560a628a3c1fceeb8fb35c1665cefeebb11a87dda80ec48638fe6a512a5",
+        "205958afffb0f7913a768f92daa288e2216db9ce5330445b71951c948e639a8e"
+      ]
+    },
+    {
+      "question": "What HeartbeatTimeout value is configured in our private Nova payments production Worker repository?",
+      "ordered_context_unchanged": true,
+      "current_chunk_ids": [
+        "4827a85ec7a55572d07c9c02b29aea1e45262089b0a439390ace02d1b1b19f21",
+        "a21859a42fbbf85c4019cc06fb9078a4746a3ea49a2ccb9b3beb58327257c0e6",
+        "b1e0d998a15aea0aed033e316fd8b0ce029cfc233c10be678f99b345e257c626",
+        "f33da6e73c411aa314515860088ef341a517f68ba150474a489453e01244c005",
+        "0ff5fd7c5fc31cc60479d95ba0a52963ca0593e88d464d6895f7cad10f17842c"
+      ]
+    },
+    {
+      "question": "Which KMS key ARN does our internal Orion deployment use for Payload Codec encryption?",
+      "ordered_context_unchanged": true,
+      "current_chunk_ids": [
+        "9b786f57f01c1e0a31367c9fc04cd8549ddd1a5f2a9d9f58c99a57bc4f1a0ae2",
+        "4ccb6a4baa73b163f796d0945b9ded4cba1b71ed2a09e5eeb4bffc97be91664e",
+        "ceb29cccfb0e4525467a8cf3124c9f882df606f59a4819e4414f1b15fc6aabcb",
+        "a8cee90ac443a3513e84ad52e26c73ad422c27cbd6b6c41b438bdd220933f77b",
+        "92bc759c20182d28bc37218d600dbd92e6cfd12f8546e575f99e4321bdfe4bd4"
+      ]
+    }
+  ],
+  "worker_retrieval_diagnostic": {
+    "command_in_top5": false,
+    "command_rank_in_100_candidate_sample": 50,
+    "anchor_source": "guides/celery-to-standalone-activity.mdx",
+    "anchor_headings": "Step 5: Run a Worker to process the Activity",
+    "section_chunks": 5,
+    "section_characters": 1434,
+    "command_present_in_same_section": true
+  }
+}

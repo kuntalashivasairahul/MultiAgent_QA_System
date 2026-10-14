@@ -42,6 +42,21 @@
       "at": "20261014T061245173774Z",
       "model": "openai/gpt-oss-20b",
       "retry_after_seconds": 883.0
+    },
+    {
+      "at": "20261014T062733141030Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 420.0
+    },
+    {
+      "at": "20261014T063439836530Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 820.0
+    },
+    {
+      "at": "20261014T064835946612Z",
+      "model": "openai/gpt-oss-20b",
+      "retry_after_seconds": 346.0
     }
   ]
 }

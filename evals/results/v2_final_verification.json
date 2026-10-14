@@ -1,0 +1,38 @@
+{
+  "scope": "local final verification; no provider calls or new accuracy benchmark",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q"
+  ],
+  "environment_overrides": {
+    "LANGSMITH_TRACING": "false",
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1"
+  },
+  "test_exit_code": 0,
+  "test_output": "..................................................................       [100%]\n66 passed in 5.88s\n",
+  "current_collection": "temporal_docs_156bcfe9f86e66d5796e6b23",
+  "current_chunks": 14414,
+  "main_rebuild_manifest_unchanged": true,
+  "old_benchmark_chunks_preserved": 14153,
+  "unchanged_from_baseline": [
+    "graph_v0.py",
+    "graph_v1.py",
+    "llm.py",
+    "retrieval.py",
+    "state.py",
+    "uv.lock",
+    "evals/golden.jsonl",
+    "evals/holdout.jsonl"
+  ],
+  "sha256": {
+    "graph_v2.py": "bfe8af51226a2db16c95d63a167cff765f523b592aa1f17c740ba14d44b6f18e",
+    "ingest.py": "eb08a6a18782ac657a9782ad9dfbb4b4f951f01dfcc1eaf29ce1723ec9c02fff",
+    "test_quote_format.py": "a397ca71a39ae13024210e81eb95f5d4958aedc302a8e2370a9310c88fcd6925",
+    "test_short_code.py": "135fe73f061d89a74a010b4582c1f1f62b5150e8d2b36ea3773798d2b24b9221",
+    "evals/results/revalidate_recorded_v2.txt": "9a2226667fa94d509b84522d9df3610b47836160ec363a3e3873c637b99ce0c9",
+    "evals/results/revalidated_v2.json": "2e484f9ac20f2d8ca53dabd576bd591957957174d1ed54152fefc82df44627e9"
+  }
+}

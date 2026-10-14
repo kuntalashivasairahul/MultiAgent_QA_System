@@ -1,41 +1,71 @@
-# Evidence-gated v2: implementation and verification status
+# Evidence-gated v2: results and next course
 
-Baseline freeze: `9dcd9ef`. V2 implementation freeze: `cd815e7`, before authoring the [new four-question confirmation set](CONFIRMATION_V2.md). No retrieval/index/model changes are bundled into v2.
+V2 is implemented and locally verified: **66 tests pass**. It checks evidence sufficiency before unchanged v1 generation, checks claims against cited chunks afterward, refuses on negative verdicts, and retains rejected drafts and gate evidence. Errors remain operational failures. This is a research upgrade with measured abstention tradeoffs, not a demonstrated general accuracy improvement.
 
-Implemented: exact-question evidence sufficiency, generation through unchanged v1, cited-claim support, canonical refusal on a negative semantic verdict, checked verbatim evidence quotes, retained rejected drafts, independent ablation identities, metric coverage, generation/gate token metadata and latency. Grader/provider/quote-validation errors remain operational errors.
+## Experiment boundaries
 
-Verified locally: **49 tests passed**. [Live synthetic calibration](v2_calibration.json): **8/8 passed**, balancing positive and negative controls, including partial multi-hop evidence, private scope, unsupported extra claims, and injections. These controls establish limited integration behavior, not corpus accuracy or injection immunity.
+- Repaired v0/v1 baseline: `9dcd9ef`, preserved in [development results](RESULTS_VERIFIED.md) and [earlier holdout results](RESULTS_HOLDOUT.md).
+- Semantic v2 implementation: frozen at `cd815e7` before authoring the [four-question confirmation set](CONFIRMATION_V2.md). Both fresh runs used the same code hashes, questions, model settings, and **14,153-chunk index**. Generation: `openai/gpt-oss-120b`; gates/judges: `openai/gpt-oss-20b`.
+- Subsequent fixes: short fenced-code retention (`8dc2fae`) and deterministic recovery of source-exact quotes after simple prose formatting changes (`2f70f3f`). Prompts, schemas, model settings, and semantic decisions were not tuned. Original live results remain unchanged.
+- Current index: **14,414 chunks**. All 14,153 old chunks are byte-identical; 261 short code chunks were added. The old collection remains available. [Index evidence](short_code_fix_verification.json), [post-integration verification](post_index_verification_v2.json).
 
-The first fresh v2 answer is fully judged successfully: serialization runs the Payload Converter before the Payload Codec, with both gates passing, their quotes validated, and correctness/faithfulness judges both passing. Provider usage was 1,846 generator tokens plus 4,183 gate tokens on this single question. Its observed 587-second graph time includes a 573-second quota wait and cannot estimate intrinsic gate latency. The remaining three questions and completed replay comparison are still pending; this is not an aggregate quality result.
+## Fresh confirmation: four questions
 
-Two more final outputs are now checkpointed. On retry, the heartbeat sufficiency check returned valid quotes for both SDKs, but the support check rejected the generated `RecordActivityHeartbeat` claim because that name was absent from the cited chunks. V2 retained the rejected draft and refused; correctness is false and faithfulness true for the refusal. For private Nova configuration, the sufficiency check explicitly rejected the public 30-second example as evidence of a private setting, skipped generation, and produced a correct refusal. The fourth private-configuration question and replay remain pending.
+| Metric | v1 | v2, both gates |
+|---|---:|---:|
+| Automated correctness | 2/4 | 3/4 |
+| Answerable correctness | 1/2 | 1/2 |
+| Correct private-fact refusals | 1/2 | 2/2 |
+| Answerable refusals | 0/2 | 1/2 |
+| Automated supported-correct answers | 1/2 | 1/2 |
+| Missing eligible metrics / final generation errors | 0 / 0 | 0 / 0 |
 
-## Live comparison remains incomplete
+Both answer the converter-before-codec question correctly. V2 prevents v1's unsupported private Nova timeout assertion and both refuse the private Orion key question. On the cross-SDK heartbeat question, the generator supplied the same draft in both runs; v2 rejected `RecordActivityHeartbeat` because its cited Go chunk only established `RecordHeartbeat`, and retained the draft before refusing.
 
-Both models reached provider quotas during the fresh comparison. Paid successful answers and completed replay checks are retained. External orchestration respects provider retry-after delays within the failed call, preserving completed graph nodes. It changes neither prompts nor models. Its source and quota observations are retained separately; quota waits affect observed latency and are not intrinsic graph overhead.
+The heartbeat correctness label is disputed: the question does not distinguish in-Activity from external heartbeats, and part of the judge rationale contradicts the reference. V1's private Nova assertion also received an erroneous positive faithfulness judgment. Thus both runs' automated unsupported-answer rate of zero is misleading. Original labels are preserved; [judge review](JUDGE_REVIEW.md) records the disagreements.
 
-- [Fresh v1 run](results/verified/graph_v1/180fba46b3a145e2b5f19ccced278f664e2c4a06b5b792f1605f8fd07c3d87be/20261014T042408031523Z-f93405a4/result.json).
-- [Fresh v2 run](results/verified/graph_v2/cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba/20261014T042647460539Z-e9f51e44/result.json).
-- Gate replay runs live under `evals/results/replay_v2/`: fixed v1 drafts and original correctness labels, never fresh generation accuracy. Initial replay also exposed three quote-validation errors; failed checks remain missing and retryable, rather than successful refusals.
-- [Initial quota observations](v2_quota_waits.json), [initial wrapper](results/quota_resume_v2.txt), [node-preserving wrapper](results/quota_resume_v2_nodes.txt). Node-preserving observations are written to `v2_node_quota_waits.json` when a quota wait occurs.
+This set has two answerable and two private-fact questions, authored and source-checked by the coding assistant after freezing implementation. It is not an independent human or blind representative benchmark. One question changes correctness by 25 percentage points. The apparent 50% to 75% gain does not establish broad superiority.
 
-The first cross-SDK heartbeat invocation failed quote validation in the sufficiency check, before any generator call (1,822 grader tokens, no generator usage). It remains an operational error, not a refusal or a successful answer. The [observed resumption wrapper](results/quota_resume_v2_observed.txt) now writes immutable per-call receipts under `evals/results/v2_call_receipts/` so the exact returned quotes can be inspected on a retry. These receipts contain parsed model outputs **before** deterministic quote validation; a parsed `passed=true` receipt alone is not a successful graph verdict. Prompts, models, graph code, and index remain frozen.
+Raw evidence: [v1 run](results/verified/graph_v1/180fba46b3a145e2b5f19ccced278f664e2c4a06b5b792f1605f8fd07c3d87be/20261014T042408031523Z-f93405a4/result.json), [v2 run](results/verified/graph_v2/cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba/20261014T042647460539Z-e9f51e44/result.json). Every eligible metric is scored. The current index returns exactly the same ordered chunks, text, and metadata for these four questions; this is a retrieval check, not a new native evaluation.
 
-No full v1/v2 quality advantage or latency/token conclusion is established yet. [Judge review](JUDGE_REVIEW.md) records a confirmed scope false-positive and a disputed heartbeat API judgment in the fresh set. Preserve those limitations when interpreting any completed scores.
+## Component ablations: ten fixed v1 drafts
 
-During a running attempt, the durable `partial.jsonl` files beside each `result.json` contain the newest completed work; the summary is published after the attempt finishes. Inspect [v2's checkpoint](results/verified/graph_v2/cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba/20261014T042647460539Z-e9f51e44/partial.jsonl) for live progress.
+This regression replay reuses saved v1 answers and original correctness labels. It measures rejection behavior, not fresh end-to-end generation accuracy. The [original native replay](results/replay_v2/2b50de398c1691e9b31b35d0e076907cffcbbe9ab664cf2a71be68a6b8b457c3/result.json) ended with coverage 10/10 for v1, 9/10 for sufficiency, and 8/10 for support and both. Three checks failed because quotes collapsed newlines, omitted bold, or rendered a Markdown link label.
 
-## Isolated short-code fix
+The formatter fix restores exact source spans for those changes while preserving inline code, document IDs, and each recorded verdict/reason. Changed numbers, API names, URLs, and code still fail validation. Fenced/indented code requires literal quotes; complex Markdown recovery is deliberately unsupported. [Offline revalidation](results/revalidated_v2.json) applies the new validator to the recorded native outputs with exact receipt/input checks. All three missing stages now validate; previously accepted stages, all four confirmation outputs' gate verdicts, and eight recorded calibration controls remain unchanged. **No new model calls or correctness judgments occurred during revalidation.**
 
-The known ingestion regression is prepared separately at `codex/preserve-short-code`, commit `87c7f89`, without modifying the benchmark worktree. It retains short fenced code while continuing to filter short prose noise. The candidate real index has 14,414 chunks, all 14,153 previous chunks are byte-for-byte unchanged, and the Worker command is now persisted. All 50 tests pass against that candidate index, and a second real build leaves its manifest/count unchanged.
+The completed revalidation gives:
 
-This fixes evidence availability, not the complete retrieval failure: the original Celery question still does not retrieve that command in its top five chunks. Broader retrieval coverage remains a separate experiment. The candidate has not yet been integrated into the frozen benchmark checkout.
+| Fixed-draft variant | Scored | Correct, original labels | Answerable refusals | Private-fact answers | Source-audited supported-correct | Source-audited unsupported answers |
+|---|---:|---:|---:|---:|---:|---:|
+| v1 | 10/10 | 6/10 | 2/8 | 1/2 | 4/8 | 2/10 |
+| Sufficiency only | 10/10 | 6/10 | 4/8 | 0/2 | 4/8 | 0/10 |
+| Support only | 10/10 | 6/10 | 2/8 | 1/2 | 4/8 | 2/10 |
+| Both | 10/10 | 6/10 | 4/8 | 0/2 | 4/8 | 0/10 |
 
-## Next course
+Source-audited columns use the coding assistant's explicit cited-claim review stored in the artifact, not independent human labels or substituted automated faithfulness scores. The two unsupported answers are private Acme configuration inferred from a public sample, and a correct retention explanation whose cited chunk supports the deletion remedy but omits the causal timer claim. Refusals make no factual claims. The Activity Execution draft has supported facts but answers the wrong definition; support-only accepted it too.
 
-1. Complete quota-limited comparisons and inspect gate errors and false refusals; choose gates from measured tradeoffs.
-2. V2.1: preserve meaningful short code chunks. The current index drops the 28-character `python worker.py` block, making one known answer unavailable regardless of retrieval k.
-3. Measure answer-bearing chunk coverage and multi-SDK coverage with a larger candidate pool and bounded context; then test lexical/hybrid retrieval if identifier misses persist.
-4. Add a bounded corrective retrieval loop only for demonstrated residual failure types. Multiple agents and memory have no demonstrated need yet.
+Sufficiency catches missing evidence and scope here. Support-only misses all three semantic problems above despite passing synthetic controls. Adding support provides no incremental fixed-draft benefit in this sample; it also rejected the disputed heartbeat draft in fresh confirmation. Keep both as the implemented research reference, but compare sufficiency-only on new, independently reviewed questions before deciding whether the extra check earns its cost. These inspected regression rows must not become a new blind holdout.
 
-The [seven-refusal diagnosis](RETRIEVAL_DIAGNOSIS_V2.md) and [exact labels](retrieval_labels_v2.json) support that order. The short-code ingestion defect remains unfixed in the shared comparison index.
+Reproduce the offline audit, including provenance hashes and assert-based checks:
+
+~~~sh
+LANGSMITH_TRACING=false .venv/bin/python evals/results/revalidate_recorded_v2.txt
+~~~
+
+## Usage and latency
+
+Fresh v1's four final graph outputs report **6,917 generator tokens**. Fresh v2 reports **3,244 generator plus 11,697 gate tokens**, with generation skipped for both private-fact questions. An earlier failed heartbeat gate used another 1,822 tokens, retained in raw history and excluded from those final-output totals. Evaluation judges, other failed/retried calls, calibration, and earlier experiments are outside these counts. Different models have different billing; token totals are not a monetary cost comparison or billing ledger.
+
+Observed mean graph time is 4.625 seconds for v1 and 695.048 seconds for v2. V2's time includes long provider quota waits, so it cannot estimate intrinsic gate overhead. The wrapper obeyed provider retry-after delays and preserved completed nodes without switching models. [Call receipts](results/v2_call_receipts/), [wrapper](results/quota_resume_v2_observed.txt), [quota observations](v2_observed_quota_waits.json) retain the evidence.
+
+For the conditional fixed-draft replay, selected final gate attempts report 18,260 tokens for sufficiency-only, 10,959 for support-only, and 23,192 for both. These are retrospective sums of applicable recorded stages; the original replay ran stages independently. They exclude v1 generation and earlier attempts, and are not measured full-workflow cost or latency.
+
+## Recommended next version
+
+1. **Measure bounded expansion within a retrieved section.** The repaired `python worker.py` chunk is indexed but still absent from top five; it ranks 50th in a 100-candidate diagnostic. Its exact source/heading already appears in top five. That section totals only five chunks and 1,434 characters, including the command. Expand from those anchors with explicit context limits and stable citations, then compare answer-bearing coverage, supported correctness, false refusals, and token use on development data.
+2. **Measure both-SDK coverage.** The [seven-refusal diagnosis](RETRIEVAL_DIAGNOSIS_V2.md) shows every selected refusal omitted a necessary fact, including three with perfect document-level recall. Preserve chunk-level labels. Test lexical/hybrid retrieval only if bounded context still misses identifiers or a second SDK.
+3. **Confirm the selected retrieval change on new reviewed questions.** Keep the old four-question confirmation and ten-question regression artifacts fixed. Broaden source review and judge adjudication; include both answerable and private-scope cases.
+4. **Then consider one corrective retrieval retry** for demonstrated residual failures, with a strict attempt/context budget. Agents and memory have no demonstrated need for this task yet.
+
+No bounded section expansion, hybrid retrieval, corrective loop, private-data ACLs, deployment, or Windows runtime verification is claimed by this release. The installed v2's broader quality on the upgraded index remains unmeasured. [Completion evidence](V2_COMPLETION.md) distinguishes implemented requirements from the next experiments.

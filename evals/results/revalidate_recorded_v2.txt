@@ -1,0 +1,215 @@
+"""One-off, offline audit of recorded native verdicts; never calls a provider."""
+import hashlib
+import json
+import sys
+from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from langchain_core.documents import Document
+import graph_v2 as v2
+from artifacts import write_json
+from evals.run_eval import is_refusal
+
+REPLAY = ROOT / "evals/results/replay_v2/2b50de398c1691e9b31b35d0e076907cffcbbe9ab664cf2a71be68a6b8b457c3"
+inputs = json.loads((REPLAY / "inputs.json").read_text())
+baseline = ROOT / inputs["baseline"]
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+assert sha(baseline) == inputs["baseline_sha256"]
+used = {p.relative_to(ROOT).as_posix(): sha(p) for p in
+        (baseline, REPLAY / "partial.jsonl", REPLAY / "inputs.json", ROOT / "graph_v2.py", Path(__file__))}
+
+def rows(path):
+    result = {}
+    for line in path.read_bytes().splitlines(keepends=True):
+        assert line.endswith(b"\n"), "Audit requires a completed checkpoint"
+        if line.strip():
+            row = json.loads(line)
+            result[row["question"]] = row
+    return result
+
+records = list(rows(baseline).values())
+done = rows(REPLAY / "partial.jsonl")
+assert len(records) == len(done) == 10
+receipts = {}
+for path in sorted((ROOT / "evals/results/v2_call_receipts").glob("*.json")):
+    receipt = json.loads(path.read_text())
+    if receipt.get("schema") != "EvidenceCheck" or not isinstance(receipt.get("output"), dict):
+        continue
+    data = json.loads(receipt["messages"][1]["content"])
+    stage = "sufficiency" if data["answer"] is None else "support"
+    receipts[data["question"], stage] = path, receipt
+
+revalidated = []
+for record in records:
+    old = done[record["question"]]
+    docs = [Document(id=d.get("id"), page_content=d["text"], metadata=d["metadata"])
+            for d in record["documents"]]
+    state = {"question": record["question"], "documents": docs,
+             "generation": record["answer"], "citations": record["citations"]}
+    row = {"question": record["question"], "stages": {}}
+    for stage, fn in (("sufficiency", v2.sufficient), ("support", v2.supported)):
+        recovered = stage not in old
+        receipt = None
+        if recovered:
+            path, receipt = receipts[record["question"], stage]
+            raw = receipt["output"]
+            used[path.relative_to(ROOT).as_posix()] = sha(path)
+        else:
+            raw = old[stage]
+        invoked = []
+        def invoke(messages):
+            invoked.append(True)
+            if receipt is not None:
+                assert [{"type": m.type, "content": m.content} for m in messages] == receipt["messages"]
+            return v2.EvidenceCheck.model_validate(raw)
+        with patch.object(v2, "structured", lambda *a, **kw: SimpleNamespace(invoke=invoke)):
+            validated = fn(state)[stage]
+        assert bool(invoked) == (raw is not None)
+        if raw is not None:
+            assert validated["passed"] == raw["passed"] and validated["reason"] == raw["reason"]
+            assert len(validated["quotes"]) == len(raw["quotes"])
+            for quote in validated["quotes"]:
+                assert quote["text"] in docs[quote["id"] - 1].page_content
+                if stage == "support":
+                    assert quote["id"] in [c["id"] for c in record["citations"]]
+        if not recovered:
+            assert validated == raw, "Previously accepted verdicts must be unchanged"
+        row["stages"][stage] = {"raw": raw, "validated": validated,
+                                 "format_recovered": recovered,
+                                 "original_error": old.get(stage + "_error"),
+                                 "native_final_attempt_usage": old[stage + "_usage"],
+                                 "native_final_attempt_seconds": old[stage + "_seconds"]}
+    revalidated.append(row)
+assert sum(s["format_recovered"] for r in revalidated for s in r["stages"].values()) == 3
+
+# Source judgments below are the coding assistant's review, not independent human labels.
+labels = [
+    (True, "Minimum of 1 day is explicit.", [(1, "The minimum Retention Period is 1 day.")]),
+    (True, "Default five-second timeout is explicit.", [(1, "within five seconds by default")]),
+    (True, "The queue is automatically named and exclusively shared with the accepting Worker.",
+     [(2, "which the Temporal Service shares exclusively with that specific Worker."),
+      (2, "This queue, which has an automatically-generated name, is known as a **Sticky Queue**.")]),
+    (True, "The factual claims about customization are supported, but they do not answer the required chain-of-task-executions definition.",
+     [(1, "The SDK provides APIs to customize the behavior of an Activity Execution."),
+      (1, "Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion.")]),
+    (True, "Refusal makes no factual claim; the full corpus answers the question.", []),
+    (True, "Refusal makes no factual claim; the full corpus answers the question.", []),
+    (True, "Both the timeout and rescheduling to the original queue are explicit.",
+     [(1, "within five seconds by default"),
+      (1, "When stickiness is disabled, the Temporal Service reschedules the Workflow Task in the original queue, allowing any Worker to pick it up and continue the Workflow Execution.")]),
+    (False, "The cited manual-cleanup chunk supports deletion, but does not establish that already closed executions retain their original timers.",
+     [(5, "This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs.")]),
+    (True, "Refusal makes no factual claim; private configuration is absent.", []),
+    (False, "A public PaymentWorkflow sample cannot establish the private Acme repository's configuration.",
+     [(5, "MaximumAttempts: 3,")]),
+]
+audit = []
+for record, (supported, reason, quotes) in zip(records, labels, strict=True):
+    for doc_id, text in quotes:
+        assert doc_id in [c["id"] for c in record["citations"]]
+        assert text in record["documents"][doc_id - 1]["text"]
+    audit.append({"question": record["question"], "answer": record["answer"],
+                  "original_correct": record["correct"], "original_grounded": record.get("grounded"),
+                  "cited_claims_supported": supported, "reason": reason,
+                  "quotes": [{"id": i, "text": t} for i, t in quotes]})
+
+variants = {}
+for variant in ("v1", "sufficiency", "support", "both"):
+    outcomes, tokens, seconds = [], 0, 0
+    for record, row, source_audit in zip(records, revalidated, audit, strict=True):
+        stages = [] if variant == "v1" else (["sufficiency", "support"] if variant == "both" else [variant])
+        blocked = False
+        for stage in stages:
+            s = row["stages"][stage]
+            tokens += sum(u["total_tokens"] for u in s["native_final_attempt_usage"].values())
+            seconds += s["native_final_attempt_seconds"]
+            if s["validated"] is not None and not s["validated"]["passed"]:
+                blocked = True
+                break
+        refused = blocked or is_refusal(record["answer"])
+        answerable = record["bucket"] != "unanswerable"
+        correct = (not refused and record["correct"]) if answerable else refused
+        outcomes.append({"question": record["question"], "answerable": answerable,
+                         "refused": refused, "correct_using_original_label": correct,
+                         "source_audited_supported_correct": answerable and correct and not refused and source_audit["cited_claims_supported"],
+                         "source_audited_unsupported_answer": not refused and not source_audit["cited_claims_supported"]})
+    variants[variant] = {"n": 10, "scored": 10, "missing": 0,
+                         "correct_using_original_labels": sum(o["correct_using_original_label"] for o in outcomes),
+                         "answerable_refusals": sum(o["answerable"] and o["refused"] for o in outcomes),
+                         "unanswerable_answers": sum(not o["answerable"] and not o["refused"] for o in outcomes),
+                         "source_audited_supported_correct": {"count": sum(o["source_audited_supported_correct"] for o in outcomes), "denominator": 8},
+                         "source_audited_unsupported_answers": {"count": sum(o["source_audited_unsupported_answer"] for o in outcomes), "denominator": 10},
+                         "selected_gate_final_attempt_tokens": tokens,
+                         "selected_gate_final_attempt_seconds_including_quota": seconds,
+                         "outcomes": outcomes}
+assert variants["v1"]["correct_using_original_labels"] == 6
+assert variants["both"]["unanswerable_answers"] == 0
+assert variants["both"]["source_audited_supported_correct"]["count"] == 4
+
+fresh = {}
+for graph, relative in (
+    ("graph_v1", "graph_v1/180fba46b3a145e2b5f19ccced278f664e2c4a06b5b792f1605f8fd07c3d87be/20261014T042408031523Z-f93405a4"),
+    ("graph_v2", "graph_v2/cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba/20261014T042647460539Z-e9f51e44"),
+):
+    directory = ROOT / "evals/results/verified" / relative
+    for name in ("inputs.json", "result.json", "partial.jsonl"):
+        path = directory / name
+        used[path.relative_to(ROOT).as_posix()] = sha(path)
+    metadata = json.loads((directory / "inputs.json").read_text())
+    result = json.loads((directory / "result.json").read_text())
+    assert result["status"] == "complete" and result["n"] == 4 and result["generation_errors"] == 0
+    assert all(c["missing"] == 0 for c in result["coverage"].values())
+    totals = {}
+    fresh_rows = list(rows(directory / "partial.jsonl").values())
+    assert len(fresh_rows) == 4
+    for record in fresh_rows:
+        for model, usage in record["generation_usage"].items():
+            totals[model] = totals.get(model, 0) + usage["total_tokens"]
+        if graph == "graph_v2":
+            docs = [Document(id=d.get("id"), page_content=d["text"], metadata=d["metadata"])
+                    for d in record["documents"]]
+            draft = record["checks"]["draft"]
+            state = {"question": record["question"], "documents": docs,
+                     "generation": draft["generation"] if draft else record["answer"],
+                     "citations": draft["citations"] if draft else record["citations"]}
+            for stage, fn in (("sufficiency", v2.sufficient), ("support", v2.supported)):
+                native = record["checks"][stage]
+                with patch.object(v2, "structured", lambda *a, **kw: SimpleNamespace(
+                        invoke=lambda messages: v2.EvidenceCheck.model_validate(native))):
+                    assert fn(state)[stage] == native
+    fresh[graph] = {"result": result, "metadata": metadata, "provider_reported_final_graph_tokens": totals}
+for key in fresh["graph_v1"]["metadata"]:
+    if key not in ("graph", "variant"):
+        assert fresh["graph_v1"]["metadata"][key] == fresh["graph_v2"]["metadata"][key]
+fresh = {graph: {"result_path": item["result"]["artifact_dir"].split(str(ROOT) + "/", 1)[1] + "/result.json",
+                 "correct": round(item["result"]["correctness"] * 4),
+                 "provider_reported_final_graph_tokens": item["provider_reported_final_graph_tokens"],
+                 "mean_observed_graph_seconds_including_quota": item["result"]["mean_generation_seconds"],
+                 "recorded_gate_outputs_unchanged_under_new_validator": graph == "graph_v2"}
+         for graph, item in fresh.items()}
+
+calibration_path = ROOT / "evals/v2_calibration.json"
+calibration = json.loads(calibration_path.read_text())
+used[calibration_path.relative_to(ROOT).as_posix()] = sha(calibration_path)
+controls = []
+for case in calibration["records"]:
+    docs = [Document(page_content=t, metadata={"source": f"synthetic-{i}.txt"}) for i, t in enumerate(case["texts"])]
+    native = v2.EvidenceCheck.model_validate(case["verdict"])
+    with patch.object(v2, "structured", lambda *a, **kw: SimpleNamespace(invoke=lambda messages: native)):
+        result = v2.check("Offline revalidation only.", case["question"], docs, answer=case["answer"])
+    assert result == case["verdict"] and result["passed"] == case["expected"]
+    controls.append({"name": case["name"], "unchanged": True})
+assert len(controls) == 8
+
+output = {"scope": "Offline revalidation of recorded native gate outputs with the new source-span validator; no model calls, new generation, or new correctness judgments.",
+          "reviewer": "coding assistant; not independent human review",
+          "inputs_sha256": used, "original_graph_sha256": inputs["code"]["graph_v2.py"],
+          "revalidated_graph_sha256": sha(ROOT / "graph_v2.py"),
+          "cost_scope": "Selected final native gate attempts in a conditional replay; includes quota waits, excludes earlier attempts, v1 generation, and evaluation judging. Not a bill or end-to-end latency measurement.",
+          "variants": variants, "stages": revalidated, "source_audit": audit, "fresh_confirmation": fresh,
+          "recorded_calibration_revalidation": controls}
+write_json(ROOT / "evals/results/revalidated_v2.json", output)
+print(json.dumps({k: {x: y for x, y in v.items() if x != "outcomes"} for k, v in variants.items()}, indent=2))

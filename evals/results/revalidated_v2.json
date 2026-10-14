@@ -1,0 +1,1297 @@
+{
+  "scope": "Offline revalidation of recorded native gate outputs with the new source-span validator; no model calls, new generation, or new correctness judgments.",
+  "reviewer": "coding assistant; not independent human review",
+  "inputs_sha256": {
+    "evals/results/verified/graph_v1/c5a804ea77a0046438529e467b2b339d9cdb00902481995a02cd57e2e1bd33e8/20261014T034508791321Z-201b04a2/partial.jsonl": "2a37d421e7b02730689f3204989159d28087a14ab46d6ba8fbb7ffcc10977657",
+    "evals/results/replay_v2/2b50de398c1691e9b31b35d0e076907cffcbbe9ab664cf2a71be68a6b8b457c3/partial.jsonl": "ad05e5c6a135b1fc2a62185ece2f993b2dacdc5f1dbdb50648f6fb48e289373f",
+    "evals/results/replay_v2/2b50de398c1691e9b31b35d0e076907cffcbbe9ab664cf2a71be68a6b8b457c3/inputs.json": "928d8a678d934ece9eba34c621147c3493f008451907f36efdaa62411f56172f",
+    "graph_v2.py": "bfe8af51226a2db16c95d63a167cff765f523b592aa1f17c740ba14d44b6f18e",
+    "evals/results/revalidate_recorded_v2.txt": "9a2226667fa94d509b84522d9df3610b47836160ec363a3e3873c637b99ce0c9",
+    "evals/results/v2_call_receipts/20261014T061243732518Z-4a670a42.json": "2da2a5fc9050b14b2f9429a14ab7aba0fdfd525cc736c474c7763dc2e6242e19",
+    "evals/results/v2_call_receipts/20261014T062731797867Z-ce23a2e4.json": "b1b6cd4cb6f59534d7888aa07639572fa31c8058bf5c767217d6f991e1583cda",
+    "evals/results/v2_call_receipts/20261014T063436889792Z-e303d42a.json": "415dc084e9088cf41f644f4a3f72896850cbea2feb5bb0ae52b37b8f9e86146b",
+    "evals/results/verified/graph_v1/180fba46b3a145e2b5f19ccced278f664e2c4a06b5b792f1605f8fd07c3d87be/20261014T042408031523Z-f93405a4/inputs.json": "277821611da8c30d9256db6e10bd9dc3c5ceebba50cb850b24592db359dd3ebd",
+    "evals/results/verified/graph_v1/180fba46b3a145e2b5f19ccced278f664e2c4a06b5b792f1605f8fd07c3d87be/20261014T042408031523Z-f93405a4/result.json": "43150db6a0cc3f46a6c918fcccb873d1383af696e1ba31cbf7dd3e57dd9e8437",
+    "evals/results/verified/graph_v1/180fba46b3a145e2b5f19ccced278f664e2c4a06b5b792f1605f8fd07c3d87be/20261014T042408031523Z-f93405a4/partial.jsonl": "54c63acf8fa04811a602dec5ec58ff4825d5a146deafcfc576ac8cb73f772547",
+    "evals/results/verified/graph_v2/cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba/20261014T042647460539Z-e9f51e44/inputs.json": "7a98fc80afdf21fe2c06dca6c4af3e76c06937f4e1208882e835f566d3d8cd25",
+    "evals/results/verified/graph_v2/cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba/20261014T042647460539Z-e9f51e44/result.json": "ddffce68742e401be4468e1ddb3ba896d67f134e7064420df55ecba28245e8bd",
+    "evals/results/verified/graph_v2/cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba/20261014T042647460539Z-e9f51e44/partial.jsonl": "8ad545564025687a41cf9e4e271a6d5c5c857a97bf84d57d0234cb776077fd18",
+    "evals/v2_calibration.json": "245c54a2d7537c8c1cea2ea3b223520790b0c2cd66b455fe98da6e44d2988762"
+  },
+  "original_graph_sha256": "2bdeeb2accc0292039922b4fb557ed97f5242880883e64742e08a471926dafdd",
+  "revalidated_graph_sha256": "bfe8af51226a2db16c95d63a167cff765f523b592aa1f17c740ba14d44b6f18e",
+  "cost_scope": "Selected final native gate attempts in a conditional replay; includes quota waits, excludes earlier attempts, v1 generation, and evaluation judging. Not a bill or end-to-end latency measurement.",
+  "variants": {
+    "v1": {
+      "n": 10,
+      "scored": 10,
+      "missing": 0,
+      "correct_using_original_labels": 6,
+      "answerable_refusals": 2,
+      "unanswerable_answers": 1,
+      "source_audited_supported_correct": {
+        "count": 4,
+        "denominator": 8
+      },
+      "source_audited_unsupported_answers": {
+        "count": 2,
+        "denominator": 10
+      },
+      "selected_gate_final_attempt_tokens": 0,
+      "selected_gate_final_attempt_seconds_including_quota": 0,
+      "outcomes": [
+        {
+          "question": "What is the minimum Namespace Retention Period permitted by the documented Temporal Service?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "For Sticky Execution, what is the default time within which a Worker must start a Sticky Queue Workflow Task before stickiness is disabled?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What is a Sticky Queue, and which Worker polls it?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What does an Activity Execution consist of in Temporal?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Which Go and Python Workflow APIs allow specifying a Parent Close Policy for Child Workflows?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Before Continue-As-New, how do Java and Python Workflows check whether the server suggests starting a new Run?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Why did a Workflow Task return to the ordinary queue after its Sticky Queue Worker was slow to start it?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "I shortened Namespace retention, but old closed Workflows did not disappear sooner. Why?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": true
+        },
+        {
+          "question": "Which Temporal Namespace is used by our private Acme payroll production Worker?",
+          "answerable": false,
+          "refused": true,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What retry policy is configured in our private Acme billing Workflow repository?",
+          "answerable": false,
+          "refused": false,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": true
+        }
+      ]
+    },
+    "sufficiency": {
+      "n": 10,
+      "scored": 10,
+      "missing": 0,
+      "correct_using_original_labels": 6,
+      "answerable_refusals": 4,
+      "unanswerable_answers": 0,
+      "source_audited_supported_correct": {
+        "count": 4,
+        "denominator": 8
+      },
+      "source_audited_unsupported_answers": {
+        "count": 0,
+        "denominator": 10
+      },
+      "selected_gate_final_attempt_tokens": 18260,
+      "selected_gate_final_attempt_seconds_including_quota": 1822.510051332998,
+      "outcomes": [
+        {
+          "question": "What is the minimum Namespace Retention Period permitted by the documented Temporal Service?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "For Sticky Execution, what is the default time within which a Worker must start a Sticky Queue Workflow Task before stickiness is disabled?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What is a Sticky Queue, and which Worker polls it?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What does an Activity Execution consist of in Temporal?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Which Go and Python Workflow APIs allow specifying a Parent Close Policy for Child Workflows?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Before Continue-As-New, how do Java and Python Workflows check whether the server suggests starting a new Run?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Why did a Workflow Task return to the ordinary queue after its Sticky Queue Worker was slow to start it?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "I shortened Namespace retention, but old closed Workflows did not disappear sooner. Why?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Which Temporal Namespace is used by our private Acme payroll production Worker?",
+          "answerable": false,
+          "refused": true,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What retry policy is configured in our private Acme billing Workflow repository?",
+          "answerable": false,
+          "refused": true,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        }
+      ]
+    },
+    "support": {
+      "n": 10,
+      "scored": 10,
+      "missing": 0,
+      "correct_using_original_labels": 6,
+      "answerable_refusals": 2,
+      "unanswerable_answers": 1,
+      "source_audited_supported_correct": {
+        "count": 4,
+        "denominator": 8
+      },
+      "source_audited_unsupported_answers": {
+        "count": 2,
+        "denominator": 10
+      },
+      "selected_gate_final_attempt_tokens": 10959,
+      "selected_gate_final_attempt_seconds_including_quota": 1196.6874763780015,
+      "outcomes": [
+        {
+          "question": "What is the minimum Namespace Retention Period permitted by the documented Temporal Service?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "For Sticky Execution, what is the default time within which a Worker must start a Sticky Queue Workflow Task before stickiness is disabled?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What is a Sticky Queue, and which Worker polls it?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What does an Activity Execution consist of in Temporal?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Which Go and Python Workflow APIs allow specifying a Parent Close Policy for Child Workflows?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Before Continue-As-New, how do Java and Python Workflows check whether the server suggests starting a new Run?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Why did a Workflow Task return to the ordinary queue after its Sticky Queue Worker was slow to start it?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "I shortened Namespace retention, but old closed Workflows did not disappear sooner. Why?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": true
+        },
+        {
+          "question": "Which Temporal Namespace is used by our private Acme payroll production Worker?",
+          "answerable": false,
+          "refused": true,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What retry policy is configured in our private Acme billing Workflow repository?",
+          "answerable": false,
+          "refused": false,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": true
+        }
+      ]
+    },
+    "both": {
+      "n": 10,
+      "scored": 10,
+      "missing": 0,
+      "correct_using_original_labels": 6,
+      "answerable_refusals": 4,
+      "unanswerable_answers": 0,
+      "source_audited_supported_correct": {
+        "count": 4,
+        "denominator": 8
+      },
+      "source_audited_unsupported_answers": {
+        "count": 0,
+        "denominator": 10
+      },
+      "selected_gate_final_attempt_tokens": 23192,
+      "selected_gate_final_attempt_seconds_including_quota": 2236.7658343350013,
+      "outcomes": [
+        {
+          "question": "What is the minimum Namespace Retention Period permitted by the documented Temporal Service?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "For Sticky Execution, what is the default time within which a Worker must start a Sticky Queue Workflow Task before stickiness is disabled?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What is a Sticky Queue, and which Worker polls it?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What does an Activity Execution consist of in Temporal?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Which Go and Python Workflow APIs allow specifying a Parent Close Policy for Child Workflows?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Before Continue-As-New, how do Java and Python Workflows check whether the server suggests starting a new Run?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Why did a Workflow Task return to the ordinary queue after its Sticky Queue Worker was slow to start it?",
+          "answerable": true,
+          "refused": false,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": true,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "I shortened Namespace retention, but old closed Workflows did not disappear sooner. Why?",
+          "answerable": true,
+          "refused": true,
+          "correct_using_original_label": false,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "Which Temporal Namespace is used by our private Acme payroll production Worker?",
+          "answerable": false,
+          "refused": true,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        },
+        {
+          "question": "What retry policy is configured in our private Acme billing Workflow repository?",
+          "answerable": false,
+          "refused": true,
+          "correct_using_original_label": true,
+          "source_audited_supported_correct": false,
+          "source_audited_unsupported_answer": false
+        }
+      ]
+    }
+  },
+  "stages": [
+    {
+      "question": "What is the minimum Namespace Retention Period permitted by the documented Temporal Service?",
+      "stages": {
+        "sufficiency": {
+          "raw": {
+            "passed": true,
+            "reason": "The documents explicitly state that the minimum Namespace Retention Period is 1 day.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The minimum Retention Period is 1 day."
+              },
+              {
+                "id": 3,
+                "text": "You can set the Retention Period between 1 and 90 days."
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "The documents explicitly state that the minimum Namespace Retention Period is 1 day.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The minimum Retention Period is 1 day."
+              },
+              {
+                "id": 3,
+                "text": "You can set the Retention Period between 1 and 90 days."
+              }
+            ]
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1402,
+              "output_tokens": 457,
+              "total_tokens": 1859,
+              "output_token_details": {
+                "reasoning": 378
+              }
+            }
+          },
+          "native_final_attempt_seconds": 5.241008708000663
+        },
+        "support": {
+          "raw": {
+            "passed": true,
+            "reason": "The answer correctly states the minimum Namespace Retention Period as 1 day, which is directly supported by the cited document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The minimum Retention Period is 1 day."
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "The answer correctly states the minimum Namespace Retention Period as 1 day, which is directly supported by the cited document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The minimum Retention Period is 1 day."
+              }
+            ]
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 821,
+              "output_tokens": 257,
+              "total_tokens": 1078,
+              "output_token_details": {
+                "reasoning": 192
+              }
+            }
+          },
+          "native_final_attempt_seconds": 3.6523600000000442
+        }
+      }
+    },
+    {
+      "question": "For Sticky Execution, what is the default time within which a Worker must start a Sticky Queue Workflow Task before stickiness is disabled?",
+      "stages": {
+        "sufficiency": {
+          "raw": {
+            "passed": true,
+            "reason": "The document states that the default time is five seconds.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "If the Worker fails to start a Workflow Task in the Sticky Queue shortly after it's scheduled (within five seconds by default), the Temporal Service disables stickiness for that Workflow Execution."
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "The document states that the default time is five seconds.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "If the Worker fails to start a Workflow Task in the Sticky Queue shortly after it's scheduled (within five seconds by default), the Temporal Service disables stickiness for that Workflow Execution."
+              }
+            ]
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1641,
+              "output_tokens": 388,
+              "total_tokens": 2029,
+              "output_token_details": {
+                "reasoning": 311
+              }
+            }
+          },
+          "native_final_attempt_seconds": 4.19296441699953
+        },
+        "support": {
+          "raw": {
+            "passed": true,
+            "reason": "The answer correctly states the default time of five seconds, which is directly supported by the cited document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "If the Worker fails to start a Workflow Task in the Sticky Queue shortly after it's scheduled (within five seconds by default), the Temporal Service disables stickiness for that Workflow Execution."
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "The answer correctly states the default time of five seconds, which is directly supported by the cited document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "If the Worker fails to start a Workflow Task in the Sticky Queue shortly after it's scheduled (within five seconds by default), the Temporal Service disables stickiness for that Workflow Execution."
+              }
+            ]
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 699,
+              "output_tokens": 203,
+              "total_tokens": 902,
+              "output_token_details": {
+                "reasoning": 117
+              }
+            }
+          },
+          "native_final_attempt_seconds": 3.9230002090007474
+        }
+      }
+    },
+    {
+      "question": "What is a Sticky Queue, and which Worker polls it?",
+      "stages": {
+        "sufficiency": {
+          "raw": {
+            "passed": true,
+            "reason": "The documents provide a definition of a Sticky Queue and identify the Worker that polls it.",
+            "quotes": [
+              {
+                "id": 2,
+                "text": "This queue, which has an automatically-generated name, is known as a **Sticky Queue**."
+              },
+              {
+                "id": 2,
+                "text": "The Worker that picks up this Workflow Task will continue polling the original Task Queue, but will also begin polling an additional Task Queue, which the Temporal Service shares exclusively with that specific Worker."
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "The documents provide a definition of a Sticky Queue and identify the Worker that polls it.",
+            "quotes": [
+              {
+                "id": 2,
+                "text": "This queue, which has an automatically-generated name, is known as a **Sticky Queue**."
+              },
+              {
+                "id": 2,
+                "text": "The Worker that picks up this Workflow Task will continue polling the original Task Queue, but will also begin polling an additional Task Queue, which the Temporal Service shares exclusively with that specific Worker."
+              }
+            ]
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1721,
+              "output_tokens": 411,
+              "total_tokens": 2132,
+              "output_token_details": {
+                "reasoning": 300
+              }
+            }
+          },
+          "native_final_attempt_seconds": 4.167782624999745
+        },
+        "support": {
+          "raw": {
+            "passed": true,
+            "reason": "The answer correctly defines a Sticky Queue as an automatically-generated, worker-specific Task Queue and states that the same Worker that initially picked up the Workflow Task polls it, which is fully supported by the cited document.",
+            "quotes": [
+              {
+                "id": 2,
+                "text": "The Worker that picks up this Workflow Task will continue polling the original Task Queue, but will also begin polling an additional Task Queue, which the Temporal Service shares exclusively with that specific Worker. This queue, which has an automatically-generated name, is known as a Sticky Queue."
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "The answer correctly defines a Sticky Queue as an automatically-generated, worker-specific Task Queue and states that the same Worker that initially picked up the Workflow Task polls it, which is fully supported by the cited document.",
+            "quotes": [
+              {
+                "id": 2,
+                "text": "The Worker that picks up this Workflow Task will continue polling the original Task Queue, but will also begin polling an additional Task Queue, which the Temporal Service shares exclusively with that specific Worker.\nThis queue, which has an automatically-generated name, is known as a **Sticky Queue**."
+              }
+            ]
+          },
+          "format_recovered": true,
+          "original_error": "ValueError",
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 769,
+              "output_tokens": 802,
+              "total_tokens": 1571,
+              "output_token_details": {
+                "reasoning": 676
+              }
+            }
+          },
+          "native_final_attempt_seconds": 391.49135058400134
+        }
+      }
+    },
+    {
+      "question": "What does an Activity Execution consist of in Temporal?",
+      "stages": {
+        "sufficiency": {
+          "raw": {
+            "passed": false,
+            "reason": "The provided documents do not contain explicit information describing the components or constituents of an Activity Execution in Temporal. None of the excerpts mention what an Activity Execution consists of, such as its phases, steps, or internal structure. Therefore, there is insufficient evidence to answer the question.",
+            "quotes": []
+          },
+          "validated": {
+            "passed": false,
+            "reason": "The provided documents do not contain explicit information describing the components or constituents of an Activity Execution in Temporal. None of the excerpts mention what an Activity Execution consists of, such as its phases, steps, or internal structure. Therefore, there is insufficient evidence to answer the question.",
+            "quotes": []
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1375,
+              "output_tokens": 320,
+              "total_tokens": 1695,
+              "output_token_details": {
+                "reasoning": 243
+              }
+            }
+          },
+          "native_final_attempt_seconds": 27.998893124999086
+        },
+        "support": {
+          "raw": {
+            "passed": true,
+            "reason": "The answer accurately reflects the content of the provided document, stating that an Activity Execution is the run of an Activity and that its behavior can be customized via SDK APIs to control timeouts, retry policy, heartbeat monitoring, and asynchronous completion. The document explicitly mentions these points.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "Activities in Temporal are individual units of work that often represent non-deterministic parts of the code logic, such as querying a database or calling an external service. The SDK provides APIs to customize the behavior of an Activity Execution."
+              },
+              {
+                "id": 1,
+                "text": "Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion."
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "The answer accurately reflects the content of the provided document, stating that an Activity Execution is the run of an Activity and that its behavior can be customized via SDK APIs to control timeouts, retry policy, heartbeat monitoring, and asynchronous completion. The document explicitly mentions these points.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "Activities in Temporal are individual units of work that often represent non-deterministic parts of the code logic, such as querying a database or calling an external service. The SDK provides APIs to customize the behavior of an Activity Execution."
+              },
+              {
+                "id": 1,
+                "text": "Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion."
+              }
+            ]
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 711,
+              "output_tokens": 1071,
+              "total_tokens": 1782,
+              "output_token_details": {
+                "reasoning": 911
+              }
+            }
+          },
+          "native_final_attempt_seconds": 7.7551113329991495
+        }
+      }
+    },
+    {
+      "question": "Which Go and Python Workflow APIs allow specifying a Parent Close Policy for Child Workflows?",
+      "stages": {
+        "sufficiency": {
+          "raw": {
+            "passed": false,
+            "reason": "The documents provide evidence that in Go the Parent Close Policy can be specified via the `ParentClosePolicy` field of `workflow.ChildWorkflowOptions` and applied with `workflow.WithChildOptions` and `workflow.ExecuteChildWorkflow`. However, none of the supplied documents contain any evidence that a Python Workflow API allows specifying a Parent Close Policy for Child Workflows.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "In Go, a Parent Close Policy is set on the `ParentClosePolicy` field of an instance of [`workflow.ChildWorkflowOptions`](https://pkg.go.dev/go.temporal.io/sdk/workflow#ChildWorkflowOptions)."
+              }
+            ]
+          },
+          "validated": {
+            "passed": false,
+            "reason": "The documents provide evidence that in Go the Parent Close Policy can be specified via the `ParentClosePolicy` field of `workflow.ChildWorkflowOptions` and applied with `workflow.WithChildOptions` and `workflow.ExecuteChildWorkflow`. However, none of the supplied documents contain any evidence that a Python Workflow API allows specifying a Parent Close Policy for Child Workflows.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "In Go, a Parent Close Policy is set on the `ParentClosePolicy` field of an instance of [`workflow.ChildWorkflowOptions`](https://pkg.go.dev/go.temporal.io/sdk/workflow#ChildWorkflowOptions)."
+              }
+            ]
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1398,
+              "output_tokens": 465,
+              "total_tokens": 1863,
+              "output_token_details": {
+                "reasoning": 319
+              }
+            }
+          },
+          "native_final_attempt_seconds": 20.09562695800014
+        },
+        "support": {
+          "raw": null,
+          "validated": null,
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {},
+          "native_final_attempt_seconds": 4.6499999371008016e-05
+        }
+      }
+    },
+    {
+      "question": "Before Continue-As-New, how do Java and Python Workflows check whether the server suggests starting a new Run?",
+      "stages": {
+        "sufficiency": {
+          "raw": {
+            "passed": false,
+            "reason": "The documents provide evidence that Python workflows check whether the server suggests starting a new Run using `workflow.info().is_continue_as_new_suggested()`, but there is no evidence in the supplied documents that Java workflows perform a similar check before invoking Continue-As-New.",
+            "quotes": [
+              {
+                "id": 5,
+                "text": "```python\ndef should_continue_as_new(self) -> bool:\n    if workflow.info().is_continue_as_new_suggested():\n        return True\n    # For testing\n    if (\n        self.max_history_length\n        and workflow.info().get_current_history_length() > self.max_history_length\n    ):\n        return True\n    return False\n```"
+              }
+            ]
+          },
+          "validated": {
+            "passed": false,
+            "reason": "The documents provide evidence that Python workflows check whether the server suggests starting a new Run using `workflow.info().is_continue_as_new_suggested()`, but there is no evidence in the supplied documents that Java workflows perform a similar check before invoking Continue-As-New.",
+            "quotes": [
+              {
+                "id": 5,
+                "text": "```python\ndef should_continue_as_new(self) -> bool:\n    if workflow.info().is_continue_as_new_suggested():\n        return True\n    # For testing\n    if (\n        self.max_history_length\n        and workflow.info().get_current_history_length() > self.max_history_length\n    ):\n        return True\n    return False\n```"
+              }
+            ]
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1376,
+              "output_tokens": 522,
+              "total_tokens": 1898,
+              "output_token_details": {
+                "reasoning": 362
+              }
+            }
+          },
+          "native_final_attempt_seconds": 14.11754354200093
+        },
+        "support": {
+          "raw": null,
+          "validated": null,
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {},
+          "native_final_attempt_seconds": 3.433399979257956e-05
+        }
+      }
+    },
+    {
+      "question": "Why did a Workflow Task return to the ordinary queue after its Sticky Queue Worker was slow to start it?",
+      "stages": {
+        "sufficiency": {
+          "raw": {
+            "passed": true,
+            "reason": "The documents provide explicit statements that when a Sticky Queue Worker is slow to start a Workflow Task, stickiness is disabled and the task is rescheduled to the original queue.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "If the Worker fails to start a Workflow Task in the Sticky Queue shortly after it's scheduled (within five seconds by default), the Temporal Service disables stickiness for that Workflow Execution. When stickiness is disabled, the Temporal Service reschedules the Workflow Task in the original queue, allowing any Worker to pick it up and continue the Workflow Execution."
+              },
+              {
+                "id": 1,
+                "text": "If a Workflow Task fails, the Worker removes that Workflow Execution from its cache (as it's now in an unknown state), which invalidates the Sticky Execution. The Workflow Task is then put back into the original Task Queue."
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "The documents provide explicit statements that when a Sticky Queue Worker is slow to start a Workflow Task, stickiness is disabled and the task is rescheduled to the original queue.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "If the Worker fails to start a Workflow Task in the Sticky Queue shortly after it's scheduled (within five seconds by default), the Temporal Service disables stickiness for that Workflow Execution.\nWhen stickiness is disabled, the Temporal Service reschedules the Workflow Task in the original queue, allowing any Worker to pick it up and continue the Workflow Execution."
+              },
+              {
+                "id": 1,
+                "text": "If a Workflow Task fails, the Worker removes that Workflow Execution from its cache (as it's now in an unknown state), which invalidates the Sticky Execution.\nThe Workflow Task is then put back into the original Task Queue."
+              }
+            ]
+          },
+          "format_recovered": true,
+          "original_error": "ValueError",
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1777,
+              "output_tokens": 689,
+              "total_tokens": 2466,
+              "output_token_details": {
+                "reasoning": 506
+              }
+            }
+          },
+          "native_final_attempt_seconds": 887.9602383749989
+        },
+        "support": {
+          "raw": {
+            "passed": true,
+            "reason": "The answer correctly states that the worker failed to start the task within the five‑second default timeout, causing Temporal to disable stickiness and reschedule the task to the original queue. This is directly supported by the cited document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "If the Worker fails to start a Workflow Task in the Sticky Queue shortly after it's scheduled (within five seconds by default), the Temporal Service disables stickiness for that Workflow Execution."
+              },
+              {
+                "id": 1,
+                "text": "When stickiness is disabled, the Temporal Service reschedules the Workflow Task in the original queue, allowing any Worker to pick it up and continue the Workflow Execution."
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "The answer correctly states that the worker failed to start the task within the five‑second default timeout, causing Temporal to disable stickiness and reschedule the task to the original queue. This is directly supported by the cited document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "If the Worker fails to start a Workflow Task in the Sticky Queue shortly after it's scheduled (within five seconds by default), the Temporal Service disables stickiness for that Workflow Execution."
+              },
+              {
+                "id": 1,
+                "text": "When stickiness is disabled, the Temporal Service reschedules the Workflow Task in the original queue, allowing any Worker to pick it up and continue the Workflow Execution."
+              }
+            ]
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 743,
+              "output_tokens": 638,
+              "total_tokens": 1381,
+              "input_token_details": {
+                "cache_read": 256
+              },
+              "output_token_details": {
+                "reasoning": 488
+              }
+            }
+          },
+          "native_final_attempt_seconds": 15.189072209001097
+        }
+      }
+    },
+    {
+      "question": "I shortened Namespace retention, but old closed Workflows did not disappear sooner. Why?",
+      "stages": {
+        "sufficiency": {
+          "raw": {
+            "passed": false,
+            "reason": "The provided documents do not contain any information explaining why old closed workflows did not disappear sooner after shortening the namespace retention period. They only describe what retention is and how it determines the storage duration, but they do not mention the timing of automatic deletion or any background cleanup process that could delay removal.",
+            "quotes": []
+          },
+          "validated": {
+            "passed": false,
+            "reason": "The provided documents do not contain any information explaining why old closed workflows did not disappear sooner after shortening the namespace retention period. They only describe what retention is and how it determines the storage duration, but they do not mention the timing of automatic deletion or any background cleanup process that could delay removal.",
+            "quotes": []
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1043,
+              "output_tokens": 267,
+              "total_tokens": 1310,
+              "output_token_details": {
+                "reasoning": 186
+              }
+            }
+          },
+          "native_final_attempt_seconds": 7.849632458000997
+        },
+        "support": {
+          "raw": {
+            "passed": true,
+            "reason": "All factual claims in the answer are supported by the cited document. The document states that manual cleanup is required to delete closed workflows before their retention timer expires and that reducing the retention period is useful for cleaning up previously closed workflows, implying that the retention period controls the deletion timer. This supports the claims that reducing the retention period only changes the timer for future deletions, does not automatically purge existing closed workflows, and that manual deletion is required.",
+            "quotes": [
+              {
+                "id": 5,
+                "text": "For cases where you need to remove closed Workflow Executions before their retention timer expires, you can use `temporal workflow delete` or the `DeleteWorkflowExecution` command. This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "All factual claims in the answer are supported by the cited document. The document states that manual cleanup is required to delete closed workflows before their retention timer expires and that reducing the retention period is useful for cleaning up previously closed workflows, implying that the retention period controls the deletion timer. This supports the claims that reducing the retention period only changes the timer for future deletions, does not automatically purge existing closed workflows, and that manual deletion is required.",
+            "quotes": [
+              {
+                "id": 5,
+                "text": "For cases where you need to remove closed Workflow Executions before their retention timer expires, you can use [`temporal workflow delete`](/cli/command-reference/workflow#delete) or the `DeleteWorkflowExecution` command.\nThis is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+              }
+            ]
+          },
+          "format_recovered": true,
+          "original_error": "ValueError",
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 708,
+              "output_tokens": 2263,
+              "total_tokens": 2971,
+              "output_token_details": {
+                "reasoning": 2085
+              }
+            }
+          },
+          "native_final_attempt_seconds": 426.6928384999992
+        }
+      }
+    },
+    {
+      "question": "Which Temporal Namespace is used by our private Acme payroll production Worker?",
+      "stages": {
+        "sufficiency": {
+          "raw": {
+            "passed": false,
+            "reason": "The provided documents do not contain any mention of a specific Temporal Namespace used by a private Acme payroll production Worker. They only provide general CLI commands and references to namespaces, but no concrete namespace name or context related to Acme payroll production.",
+            "quotes": []
+          },
+          "validated": {
+            "passed": false,
+            "reason": "The provided documents do not contain any mention of a specific Temporal Namespace used by a private Acme payroll production Worker. They only provide general CLI commands and references to namespaces, but no concrete namespace name or context related to Acme payroll production.",
+            "quotes": []
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 977,
+              "output_tokens": 200,
+              "total_tokens": 1177,
+              "output_token_details": {
+                "reasoning": 129
+              }
+            }
+          },
+          "native_final_attempt_seconds": 14.781551832998957
+        },
+        "support": {
+          "raw": null,
+          "validated": null,
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {},
+          "native_final_attempt_seconds": 0.00010241700147162192
+        }
+      }
+    },
+    {
+      "question": "What retry policy is configured in our private Acme billing Workflow repository?",
+      "stages": {
+        "sufficiency": {
+          "raw": {
+            "passed": false,
+            "reason": "The provided documents do not contain any explicit mention of the retry policy configured in the private Acme billing Workflow repository. They only describe general retry policy concepts and give an example with MaximumAttempts set to 3, but there is no evidence linking that example to the specific repository in question.",
+            "quotes": []
+          },
+          "validated": {
+            "passed": false,
+            "reason": "The provided documents do not contain any explicit mention of the retry policy configured in the private Acme billing Workflow repository. They only describe general retry policy concepts and give an example with MaximumAttempts set to 3, but there is no evidence linking that example to the specific repository in question.",
+            "quotes": []
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 1621,
+              "output_tokens": 210,
+              "total_tokens": 1831,
+              "input_token_details": {
+                "cache_read": 256
+              },
+              "output_token_details": {
+                "reasoning": 130
+              }
+            }
+          },
+          "native_final_attempt_seconds": 836.1048092919991
+        },
+        "support": {
+          "raw": {
+            "passed": true,
+            "reason": "The answer correctly identifies the retry policy configured in the provided document.",
+            "quotes": [
+              {
+                "id": 5,
+                "text": "RetryPolicy: &temporal.RetryPolicy{\n            MaximumAttempts: 3,\n        }"
+              }
+            ]
+          },
+          "validated": {
+            "passed": true,
+            "reason": "The answer correctly identifies the retry policy configured in the provided document.",
+            "quotes": [
+              {
+                "id": 5,
+                "text": "RetryPolicy: &temporal.RetryPolicy{\n            MaximumAttempts: 3,\n        }"
+              }
+            ]
+          },
+          "format_recovered": false,
+          "original_error": null,
+          "native_final_attempt_usage": {
+            "openai/gpt-oss-20b": {
+              "input_tokens": 864,
+              "output_tokens": 410,
+              "total_tokens": 1274,
+              "output_token_details": {
+                "reasoning": 345
+              }
+            }
+          },
+          "native_final_attempt_seconds": 347.9835602919993
+        }
+      }
+    }
+  ],
+  "source_audit": [
+    {
+      "question": "What is the minimum Namespace Retention Period permitted by the documented Temporal Service?",
+      "answer": "The minimum Namespace Retention Period is 1 day.",
+      "original_correct": true,
+      "original_grounded": true,
+      "cited_claims_supported": true,
+      "reason": "Minimum of 1 day is explicit.",
+      "quotes": [
+        {
+          "id": 1,
+          "text": "The minimum Retention Period is 1 day."
+        }
+      ]
+    },
+    {
+      "question": "For Sticky Execution, what is the default time within which a Worker must start a Sticky Queue Workflow Task before stickiness is disabled?",
+      "answer": "The default time is five seconds.",
+      "original_correct": true,
+      "original_grounded": true,
+      "cited_claims_supported": true,
+      "reason": "Default five-second timeout is explicit.",
+      "quotes": [
+        {
+          "id": 1,
+          "text": "within five seconds by default"
+        }
+      ]
+    },
+    {
+      "question": "What is a Sticky Queue, and which Worker polls it?",
+      "answer": "A Sticky Queue is an automatically‑generated, worker‑specific Task Queue that the Temporal Service uses to deliver subsequent Workflow Tasks for a given Workflow Execution. The same Worker that initially picked up the Workflow Task polls this Sticky Queue.",
+      "original_correct": true,
+      "original_grounded": true,
+      "cited_claims_supported": true,
+      "reason": "The queue is automatically named and exclusively shared with the accepting Worker.",
+      "quotes": [
+        {
+          "id": 2,
+          "text": "which the Temporal Service shares exclusively with that specific Worker."
+        },
+        {
+          "id": 2,
+          "text": "This queue, which has an automatically-generated name, is known as a **Sticky Queue**."
+        }
+      ]
+    },
+    {
+      "question": "What does an Activity Execution consist of in Temporal?",
+      "answer": "An Activity Execution is the run of an Activity whose behavior can be customized via SDK APIs, allowing developers to control timeouts, a retry policy, heartbeat monitoring, and asynchronous completion.",
+      "original_correct": false,
+      "original_grounded": true,
+      "cited_claims_supported": true,
+      "reason": "The factual claims about customization are supported, but they do not answer the required chain-of-task-executions definition.",
+      "quotes": [
+        {
+          "id": 1,
+          "text": "The SDK provides APIs to customize the behavior of an Activity Execution."
+        },
+        {
+          "id": 1,
+          "text": "Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion."
+        }
+      ]
+    },
+    {
+      "question": "Which Go and Python Workflow APIs allow specifying a Parent Close Policy for Child Workflows?",
+      "answer": "I don't know.",
+      "original_correct": false,
+      "original_grounded": true,
+      "cited_claims_supported": true,
+      "reason": "Refusal makes no factual claim; the full corpus answers the question.",
+      "quotes": []
+    },
+    {
+      "question": "Before Continue-As-New, how do Java and Python Workflows check whether the server suggests starting a new Run?",
+      "answer": "I don't know.",
+      "original_correct": false,
+      "original_grounded": true,
+      "cited_claims_supported": true,
+      "reason": "Refusal makes no factual claim; the full corpus answers the question.",
+      "quotes": []
+    },
+    {
+      "question": "Why did a Workflow Task return to the ordinary queue after its Sticky Queue Worker was slow to start it?",
+      "answer": "Because the worker didn’t start the Workflow Task in the Sticky Queue within the short timeout (five seconds by default), the Temporal Service disables stickiness for that execution and reschedules the task back to the original (ordinary) queue so any worker can pick it up.",
+      "original_correct": true,
+      "original_grounded": true,
+      "cited_claims_supported": true,
+      "reason": "Both the timeout and rescheduling to the original queue are explicit.",
+      "quotes": [
+        {
+          "id": 1,
+          "text": "within five seconds by default"
+        },
+        {
+          "id": 1,
+          "text": "When stickiness is disabled, the Temporal Service reschedules the Workflow Task in the original queue, allowing any Worker to pick it up and continue the Workflow Execution."
+        }
+      ]
+    },
+    {
+      "question": "I shortened Namespace retention, but old closed Workflows did not disappear sooner. Why?",
+      "answer": "Reducing the namespace retention period only changes the timer for future deletions; it does not automatically purge workflow histories that were already closed under the previous retention setting. Existing closed workflows must be removed manually (e.g., with `temporal workflow delete`) if you want them gone sooner.",
+      "original_correct": true,
+      "original_grounded": true,
+      "cited_claims_supported": false,
+      "reason": "The cited manual-cleanup chunk supports deletion, but does not establish that already closed executions retain their original timers.",
+      "quotes": [
+        {
+          "id": 5,
+          "text": "This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+        }
+      ]
+    },
+    {
+      "question": "Which Temporal Namespace is used by our private Acme payroll production Worker?",
+      "answer": "I don't know.",
+      "original_correct": true,
+      "original_grounded": null,
+      "cited_claims_supported": true,
+      "reason": "Refusal makes no factual claim; private configuration is absent.",
+      "quotes": []
+    },
+    {
+      "question": "What retry policy is configured in our private Acme billing Workflow repository?",
+      "answer": "The workflow configures a RetryPolicy with MaximumAttempts set to 3.",
+      "original_correct": false,
+      "original_grounded": null,
+      "cited_claims_supported": false,
+      "reason": "A public PaymentWorkflow sample cannot establish the private Acme repository's configuration.",
+      "quotes": [
+        {
+          "id": 5,
+          "text": "MaximumAttempts: 3,"
+        }
+      ]
+    }
+  ],
+  "fresh_confirmation": {
+    "graph_v1": {
+      "result_path": "evals/results/verified/graph_v1/180fba46b3a145e2b5f19ccced278f664e2c4a06b5b792f1605f8fd07c3d87be/20261014T042408031523Z-f93405a4/result.json",
+      "correct": 2,
+      "provider_reported_final_graph_tokens": {
+        "openai/gpt-oss-120b": 6917
+      },
+      "mean_observed_graph_seconds_including_quota": 4.625,
+      "recorded_gate_outputs_unchanged_under_new_validator": false
+    },
+    "graph_v2": {
+      "result_path": "evals/results/verified/graph_v2/cdea1257f49439597adc27e2a10bd4ed99767b68c18ba5249cd777781cd789ba/20261014T042647460539Z-e9f51e44/result.json",
+      "correct": 3,
+      "provider_reported_final_graph_tokens": {
+        "openai/gpt-oss-20b": 11697,
+        "openai/gpt-oss-120b": 3244
+      },
+      "mean_observed_graph_seconds_including_quota": 695.048,
+      "recorded_gate_outputs_unchanged_under_new_validator": true
+    }
+  },
+  "recorded_calibration_revalidation": [
+    {
+      "name": "public-sample",
+      "unchanged": true
+    },
+    {
+      "name": "private-scope",
+      "unchanged": true
+    },
+    {
+      "name": "complete-multihop",
+      "unchanged": true
+    },
+    {
+      "name": "partial-multihop",
+      "unchanged": true
+    },
+    {
+      "name": "supported-answer",
+      "unchanged": true
+    },
+    {
+      "name": "unsupported-extra-claim",
+      "unchanged": true
+    },
+    {
+      "name": "question-injection",
+      "unchanged": true
+    },
+    {
+      "name": "source-injection",
+      "unchanged": true
+    }
+  ]
+}

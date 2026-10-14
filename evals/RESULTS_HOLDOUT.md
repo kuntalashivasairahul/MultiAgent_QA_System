@@ -2,7 +2,7 @@
 
 Frozen repaired baseline at `9dcd9ef`. These ten questions have since been inspected and are now regression examples, not a fresh blind holdout. The original table and raw artifacts below are preserved.
 
-Dataset: holdout.jsonl. Only current-input full evaluations appear here; missing metrics are visible below.
+Dataset: holdout.jsonl. These full evaluations matched inputs at the frozen baseline; metric coverage is visible below.
 
 | Version | n | Correct | Answerable correct | Faithful | Source recall@k | All sources@k | Exact refusal | Status |
 |---|---|---|---|---|---|---|---|---|

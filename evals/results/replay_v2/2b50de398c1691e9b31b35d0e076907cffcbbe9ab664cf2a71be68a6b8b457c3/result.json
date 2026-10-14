@@ -28,25 +28,25 @@
     },
     "sufficiency": {
       "n": 10,
-      "scored": 8,
-      "missing": 2,
-      "correct_using_original_labels": 4,
+      "scored": 9,
+      "missing": 1,
+      "correct_using_original_labels": 5,
       "answerable_refusals": 4,
       "unanswerable_answers": 0
     },
     "support": {
       "n": 10,
-      "scored": 7,
-      "missing": 3,
+      "scored": 8,
+      "missing": 2,
       "correct_using_original_labels": 4,
       "answerable_refusals": 2,
-      "unanswerable_answers": 0
+      "unanswerable_answers": 1
     },
     "both": {
       "n": 10,
-      "scored": 7,
-      "missing": 3,
-      "correct_using_original_labels": 3,
+      "scored": 8,
+      "missing": 2,
+      "correct_using_original_labels": 4,
       "answerable_refusals": 4,
       "unanswerable_answers": 0
     }
