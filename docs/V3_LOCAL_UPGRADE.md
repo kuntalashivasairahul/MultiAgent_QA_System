@@ -30,7 +30,8 @@ After the rejected trials, the upgrade's downloaded 3B Llama and Qwen3-4B-Instru
 flowchart LR
     Q[Validated question] --> R[Retrieval role]
     R --> G[Reasoning role]
-    G --> J[Judge role]
+    G --> S[Judge: cited support]
+    S --> J[Judge: context veto or skip]
     J -->|supported and score meets threshold| A[Cited answer]
     J -->|below threshold, retry available| R
     J -->|retry exhausted| F[Canonical refusal]
@@ -40,6 +41,7 @@ flowchart LR
 - Judge returns `passed`, `confidence`, `reason`, literal evidence quotes and a missing-aspect query. `confidence` is an **uncalibrated rubric quality score**, not the probability that the answer is correct. The initial threshold is 0.8; it is configurable and fingerprinted, not an empirically optimized accuracy threshold.
 - Retry combines the original question with the missing aspect and excludes previously retrieved chunk IDs when obtaining fresh evidence. Fresh and retained evidence share the existing 12-chunk/8,000-document-text-character input cap. Per-attempt history retains queries, documents, drafts, citations and verdicts.
 - High scores cannot override a failed semantic support verdict or invalid citations/quotes. Persistent malformed outputs and provider outages remain errors. Failed final quality produces `I don't know.` with no citations.
+- The Judge first checks cited support, then permits background context only to veto acceptance or lower the score. Both verdicts are retained in attempt history. Completed cited-support work has its own checkpoint so a later context outage does not repeat that paid assessment. The final API quality value keeps the more restrictive result; model rationales are fallible audit text.
 - Existing generation/citation validation and quote-validation correction are reused through optional injected model chains. Calls from v0/v1/v2/v2.1 keep their default behavior. Dependency/code changes intentionally select new evaluation/index fingerprints.
 - Evaluation retains v3 quality/history/attempt counts, model settings and local weight identity. Synchronous SQLite recovery preserves completed nodes. Local native evaluation requires `LMSTUDIO_MODEL_SHA256`; use a new model identifier/hash and restart when replacing weights behind an alias. The declared hash records operator-supplied provenance; the API cannot independently prove that a different server has loaded those same bytes.
 
@@ -101,8 +103,8 @@ Switching back to stable v2.1 also restores its dependency lock and retrieval co
 
 ## Evidence and limits
 
-- 171 tests pass locally, including five real corpus/index integration tests. Tests exercise score validation, low/high-score branches, actual fresh retrieval, retained cited evidence, the retry bound, forged quotes and altered URLs, durable node recovery, per-role routing/fingerprints, API validation, isolation, safe failures and concurrency. See the scorecard for each frozen verification scope.
-- An isolated source snapshot also passed 166 offline tests with five integration tests deselected, without credentials, `.env`, corpus or index. It included the retained JSON evidence fixtures and reused the installed locked interpreter; this was not a fresh dependency installation or a Windows test.
+- 176 tests pass locally, including five real corpus/index integration tests. Tests exercise score validation, low/high-score branches, actual fresh retrieval, retained cited evidence, the retry bound, forged quotes and altered URLs, durable node/control recovery, per-role routing/fingerprints, API validation, isolation, safe failures and concurrency. See the scorecard for each frozen verification scope.
+- An isolated source snapshot also passed 171 offline tests with five integration tests deselected, without credentials, `.env`, corpus or index. It included the retained JSON evidence fixtures and reused the installed locked interpreter; this was not a fresh dependency installation or a Windows test.
 - [Initial local native controls](../evals/results/v3_local_controls.json) retain four historical 3B outcomes. Broader controls subsequently rejected that self-Judge; the initial smoke is not independent accuracy certification.
 - [Initial local HTTP smoke](../evals/results/v3_local_http_smoke.json) and [initial Groq HTTP smoke](../evals/results/v3_groq_http_smoke.json) retain actual outcomes for the earlier implementation/profiles. They do not establish current hybrid accuracy. Current validation belongs in the stability scorecard.
 - The [initial verification record](../evals/results/v3_verification.json) and [historical native evaluator trace](../evals/results/verified/graph_v3/382007d5488a25f85565c47b31a247f6f58484a0daf4ccf1c69370166e61bdce/20261018T082905708564Z-d0d379f1/partial.jsonl) retain the original implementation: two 12-chunk attempts, six genuinely new retry chunks and a final private-fact refusal. Later repairs changed code fingerprints. This one inspected question establishes historical trace/retry behavior, not current answerable-question accuracy.

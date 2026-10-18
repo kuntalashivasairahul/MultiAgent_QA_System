@@ -1,0 +1,56 @@
+{
+  "scope": "Cited-support-first development checkpoint, not stable promotion or an accuracy estimate",
+  "at": "2026-10-18T20:25:33.863961+00:00",
+  "code_sha256": {
+    "graph_v3.py": "4f35e892dce7daf4c1f9f66080b6939cf36476ecba5cbd42b3bc23b7810fa01d",
+    "evals/calibrate_v3.py": "ff95e256d4d6204a4004f7d762ad059406a68bcb22b233b0fe65a906bddf0c64",
+    "api.py": "f594a8f9514ec8debddeb6e7b84e655c8ace794a67ada06d031df365472b4ecc",
+    "v3_llm.py": "97ecd0deea696d681dde5b6992b05d489cf477836e908f6b0f49d8941ad5b41d",
+    "uv.lock": "165747edf565242f46a1576e6ef679bfb3f211ee43043e85fe64a0c939484456",
+    "test_v3.py": "ddfcddf14ccb3d3f6474b6cf22644b434c121f8c5c93f2cb75ad40c9b72a2122",
+    "test_v3_calibration.py": "efa41e92c954ac748e67f610e2f270a6447e64b4d8003f8c35710dea0ea69462"
+  },
+  "full_tests": {
+    "passed": 176,
+    "seconds": 21.11,
+    "integration": 5
+  },
+  "isolated_offline": {
+    "passed": 171,
+    "seconds": 13.7,
+    "integration_deselected": 5,
+    "no_env_corpus_or_index": true,
+    "provider_credentials_removed": true,
+    "installed_locked_interpreter_reused": true
+  },
+  "before_fix": {
+    "new_regressions_failed": 4,
+    "new_regressions_passed": 1
+  },
+  "native_controls": {
+    "artifact": "evals/results/calibration_v3/156111c64aa8b0d3c886819efb2149b764f74e0da7555305f9f2f8308e63f672/result.json",
+    "n": 17,
+    "scored": 2,
+    "passed": 2,
+    "missing": 15,
+    "missing_reason": "RateLimitError"
+  },
+  "native_component_probe": {
+    "artifact": "evals/results/v3_cited_support_probe.json",
+    "disposition": "Rejects the unsupported answer; rationale is not endorsed as factual"
+  },
+  "source_snapshot": "evals/results/calibration_v3/156111c64aa8b0d3c886819efb2149b764f74e0da7555305f9f2f8308e63f672/code_snapshot.json",
+  "remaining": [
+    "Changed-code Linux CI",
+    "Complete fixed17 native controls",
+    "Complete fixed12 native study and source review",
+    "V3 and overall rubric assessment"
+  ],
+  "current_http_smoke": "evals/results/v3_two_check_http_private.json",
+  "operator": {
+    "source": "v3_validation_worker_source.txt",
+    "self_checks": "v3_validation_worker_checks.json",
+    "launch_observation": "v3_validation_schedule.json",
+    "scope": "Complete17 then fixed12; no final score or goal completion"
+  }
+}

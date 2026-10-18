@@ -27,9 +27,9 @@ v2: START → retrieve → sufficiency → generate → support → END
                           ↓ insufficient          ↓ unsupported
                        refusal                 refusal + retained draft
 v2.1: same v2 graph with bounded hybrid/SDK/section retrieval
-v3: START → initialize → retrieval → reasoning → judge → finish → END
-                          ↑                       ↓
-                          └──── one quality retry ┘
+v3: START → initialize → retrieval → reasoning → judge_support → judge → finish → END
+                          ↑                                       ↓
+                          └──────── one quality retry ────────────┘
 ~~~
 
 v0 measures model-only answering, not training-data provenance. v1 uses a system instruction and JSON-encoded untrusted question/documents in a human message. Structured output contains answer text and numeric citation IDs. Non-refusal answers must cite actually retrieved IDs; refusals must have no citations. Empty retrieval refuses without a provider call. Invalid citations fail explicitly.
@@ -76,5 +76,7 @@ Duration depends on account-specific token limits and response sizes. Tracing is
 V3 implements the quality-triggered retrieval loop through three named roles and shared typed state. Judge scores are uncalibrated rubric values; acceptance also requires a supported verdict and validated citations/quotes. One retry excludes earlier chunk IDs when seeking fresh evidence, then mixes fresh and retained context under the existing caps. Per-attempt evidence is retained, and synchronous SQLite evaluation recovery is supported. See the [v3 implementation and local runtime guide](V3_LOCAL_UPGRADE.md).
 
 The v3 Judge receives the bounded retrieved context as untrusted background to detect contradictions and operation/scope mismatches. Positive support and literal quote IDs remain restricted to the answer's cited chunks. Legacy v2/v2.1 calls retain their cited-only input. This repairs an observed limitation of judging a plausible command in isolation; it is not a guarantee of semantic correctness. FastAPI's quality response also retains optional rejected-verdict validation audits after a successful correction.
+
+The Judge role now has two checkpointed steps. `judge_support` first assesses only cited evidence; `judge` can then use background context to veto acceptance or lower the score. A negative first verdict skips the second model assessment. Neither a negative verdict nor a lower first score can be overridden by the other check. Per-attempt `quality_checks` retains both assessments when both run. The synchronous node boundary preserves completed cited-support work across a context-check outage; native-control JSON records cache that assessment separately as well. A model rationale remains a fallible audit, not a verified factual answer. This adds up to one model assessment per generation compared with the previous combined Judge; native token/latency and false-refusal tradeoffs require measurement.
 
 FastAPI validates each request, starts fresh graph state and allows one active inference per application process. Health is process-only. The v3 candidate uses local Llama 3.1 8B Reasoning through loopback LM Studio and a Groq Qwen Judge; per-role backend/model/retry/rate settings are recorded. Its cloud profile uses GPT-OSS/Qwen. Experimental self-judging on local 3B/8B models failed controls. The default Judge and separate evaluation grading send public inputs to Groq; external grading settings are fingerprinted separately. Reflection, ACLs and conversational memory remain proposals; broader accuracy and deployment claims require separate evidence.

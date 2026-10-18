@@ -1,0 +1,7 @@
+{
+  "id": "incomplete-definition",
+  "error": "RateLimitError",
+  "passed": false,
+  "usage": {},
+  "seconds": 10.000442333002866
+}

@@ -1,0 +1,11 @@
+{
+  "scope": "Operator self-checks with fake clock, no model calls",
+  "checks": [
+    "Only RateLimitError can schedule recovery",
+    "Default reserve is two hours",
+    "Longer provider retry header is respected",
+    "Every sleep is at most30seconds",
+    "Non-quota errors require review",
+    "Exact source snapshot saved"
+  ]
+}

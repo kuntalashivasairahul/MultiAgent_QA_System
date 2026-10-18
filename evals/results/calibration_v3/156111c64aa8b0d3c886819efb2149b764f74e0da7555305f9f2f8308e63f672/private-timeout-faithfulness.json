@@ -1,0 +1,7 @@
+{
+  "id": "private-timeout-faithfulness",
+  "error": "RateLimitError",
+  "passed": false,
+  "usage": {},
+  "seconds": 10.085770750003576
+}

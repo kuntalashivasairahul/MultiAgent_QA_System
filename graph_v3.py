@@ -27,6 +27,21 @@ class QualityVerdict(graph_v2.EvidenceCheck):
     retry_query: str = Field(max_length=256, description="Missing aspect to search; empty if none")
 
 
+JUDGE_INSTRUCTION = (
+    "Assess answer quality for the ORIGINAL question using ONLY the cited documents. "
+    "passed is true only if the answer completely addresses the exact question and EVERY factual claim "
+    "is entailed by the cited documents for the requested entity/SDK/scope. "
+    "Advice about a workaround does not establish a causal mechanism or timing rule. "
+    "Each explanatory claim needs evidence, not just a related recommendation. "
+    "Score confidence as rubric quality: 1.0 fully supported and complete; 0.5 partial coverage; 0.0 unsupported/wrong scope. "
+    "This score is not a probability. Public examples cannot establish private configuration. "
+    "A concise answer can be complete; do not require details the question did not ask for. "
+    "A similar command or term does not prove the requested operation or scope. "
+    "retry_query must be search keywords for missing evidence, or empty if none; never copy these instructions. "
+    "Quote literal evidence supporting your decision; a high score cannot excuse unsupported claims."
+)
+
+
 class V3State(QAState, total=False):
     attempt_count: int
     retrieval_query: str
@@ -39,7 +54,8 @@ class V3State(QAState, total=False):
 
 def runtime_inputs() -> dict:
     return {**v3_llm.profile(), "quality_threshold": THRESHOLD, "max_attempts": MAX_ATTEMPTS,
-            "score_scope": "uncalibrated rubric quality, not probability", "retry_policy": "missing-aspect-new-evidence"}
+            "score_scope": "uncalibrated rubric quality, not probability", "retry_policy": "missing-aspect-new-evidence",
+            "judge_policy": "cited-support-then-context-veto"}
 
 
 def initialize(state: V3State) -> dict:
@@ -82,23 +98,25 @@ def reason(state: V3State) -> dict:
     return graph_v1.generate(state, chain=v3_llm.structured(graph_v1.GroundedAnswer))
 
 
-def judge(state: V3State) -> dict:
+def judge_support(state: V3State) -> dict:
     if state["generation"] == graph_v2.REFUSAL:
         quality = QualityVerdict(passed=False, confidence=0.0, reason="No supported answer was generated.",
                                  quotes=[], retry_query=state["question"][:256]).model_dump()
     else:
         quality = graph_v2.check(
-            "Assess answer quality for the ORIGINAL question using ONLY the cited documents. "
-            "passed is true only if the answer completely addresses the exact question and EVERY factual claim "
-            "is entailed by the cited documents for the requested entity/SDK/scope. "
-            "Advice about a workaround does not establish a causal mechanism or timing rule. "
-            "Each explanatory claim needs evidence, not just a related recommendation. "
-            "Score confidence as rubric quality: 1.0 fully supported and complete; 0.5 partial coverage; 0.0 unsupported/wrong scope. "
-            "This score is not a probability. Public examples cannot establish private configuration. "
-            "A concise answer can be complete; do not require details the question did not ask for. "
-            "A similar command or term does not prove the requested operation or scope. "
-            "retry_query must be search keywords for missing evidence, or empty if none; never copy these instructions. "
-            "Quote literal evidence supporting your decision; a high score cannot excuse unsupported claims."
+            JUDGE_INSTRUCTION, state["question"], state["documents"], answer=state["generation"],
+            ids=[c["id"] for c in state["citations"]],
+            chain=v3_llm.structured(QualityVerdict, judge=True),
+        )
+    return {"support": quality}
+
+
+def judge(state: V3State) -> dict:
+    quality = state["support"]
+    checks = [{"stage": "cited_support", "verdict": quality}]
+    if quality["passed"]:
+        contextual = graph_v2.check(
+            JUDGE_INSTRUCTION +
             " Other retrieved documents are background context for detecting contradictions or a mismatch of operation/scope. "
             "They cannot support acceptance unless cited. Validate the proposed answer against the cited documents AND "
             "reject it if the background distinguishes it from the requested operation. "
@@ -107,10 +125,13 @@ def judge(state: V3State) -> dict:
             ids=[c["id"] for c in state["citations"]],
             chain=v3_llm.structured(QualityVerdict, judge=True), include_context=True,
         )
+        checks.append({"stage": "context_consistency", "verdict": contextual})
+        if not contextual["passed"] or contextual["confidence"] < quality["confidence"]:
+            quality = contextual
     audit = {"attempt": state["attempt_count"], "query": state["retrieval_query"],
              "documents": [{"id": d.id, "text": d.page_content, "metadata": d.metadata} for d in state["documents"]],
              "generation": state["generation"], "citations": state["citations"], "quality": quality,
-             "new_document_ids": state["new_document_ids"]}
+             "quality_checks": checks, "new_document_ids": state["new_document_ids"]}
     return {"quality": quality, "history": [*state["history"], audit]}
 
 
@@ -135,12 +156,13 @@ def build_graph(*, checkpointer=None, threshold: float = THRESHOLD):
 
     builder = StateGraph(V3State)
     for name, node in (("initialize", initialize), ("retrieval", retrieve), ("reasoning", reason),
-                       ("judge", judge), ("finish", finish)):
+                       ("judge_support", judge_support), ("judge", judge), ("finish", finish)):
         builder.add_node(name, node)
     builder.add_edge(START, "initialize")
     builder.add_edge("initialize", "retrieval")
     builder.add_edge("retrieval", "reasoning")
-    builder.add_edge("reasoning", "judge")
+    builder.add_edge("reasoning", "judge_support")
+    builder.add_edge("judge_support", "judge")
     builder.add_conditional_edges("judge", route, {"retrieval": "retrieval", "finish": "finish"})
     builder.add_edge("finish", END)
     return builder.compile(checkpointer=checkpointer)

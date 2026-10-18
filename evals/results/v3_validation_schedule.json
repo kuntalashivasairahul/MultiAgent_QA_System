@@ -1,0 +1,23 @@
+{
+  "scope": "Point-in-time observation of the local operator process, not a permanent liveness claim",
+  "observed_at": "2026-10-18T20:36:24.695707+00:00",
+  "pid": 63426,
+  "tool_session_id": 58069,
+  "phase": "waiting_for_quota",
+  "next_attempt_at": "2026-10-18T22:23:39.332690+00:00",
+  "source": "v3_validation_worker_source.txt",
+  "state_file": "/tmp/qa-v3-validation-worker.json",
+  "log_file": "/tmp/qa-v3-validation-worker.log",
+  "targets": [
+    "all17 fixed native controls",
+    "fixed12 native regression with limit12"
+  ],
+  "stops_on": [
+    "failed valid control",
+    "non-quota operational failure",
+    "evaluation code or input change",
+    "another local chat model occupying the slot",
+    "recovery limit"
+  ],
+  "does_not_award_scores": true
+}

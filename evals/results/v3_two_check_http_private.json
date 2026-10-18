@@ -1,0 +1,63 @@
+{
+  "scope": "One real private-fact HTTP request through the new two-check Judge policy; not answerable accuracy",
+  "at": "2026-10-18T20:35:11.269900+00:00",
+  "status": 200,
+  "seconds": 12.317805874998157,
+  "response": {
+    "answer": "I don't know.",
+    "refused": true,
+    "citations": [],
+    "quality": {
+      "passed": false,
+      "reason": "No supported answer was generated.",
+      "quotes": [],
+      "confidence": 0.0,
+      "retry_query": "What is our company Wi-Fi password?",
+      "validation_failures": []
+    },
+    "attempt_count": 2,
+    "model_profile": {
+      "backend": "lmstudio",
+      "generation_model": "llama-3.1-8b-instruct",
+      "judge_model": "qwen/qwen3.8-27b",
+      "judge_backend": "groq",
+      "base_url": "http://127.0.0.1:1234/v1",
+      "judge_base_url": "https://api.groq.com/openai/v1",
+      "temperature": 0,
+      "max_tokens": 2048,
+      "timeout": 120,
+      "structured_output": "json_schema",
+      "judge_max_tokens": 2048,
+      "judge_timeout": 120,
+      "max_retries": 0,
+      "judge_max_retries": 1,
+      "judge_requests_per_second": 0.1,
+      "judge_structured_output": "json_object+pydantic",
+      "schema_parse_attempts": 2,
+      "model_weights_sha256": "f2be3e1a239c12c9f3f01a962b11fb2807f8032fdb63b0a5502ea42ddef55e44",
+      "judge_weights_sha256": null,
+      "quality_threshold": 0.8,
+      "max_attempts": 2,
+      "score_scope": "uncalibrated rubric quality, not probability",
+      "retry_policy": "missing-aspect-new-evidence",
+      "judge_policy": "cited-support-then-context-veto"
+    },
+    "seconds": 12.312730792000366,
+    "usage": {
+      "llama-3.1-8b-instruct": {
+        "input_tokens": 5195,
+        "total_tokens": 5227,
+        "output_token_details": {
+          "reasoning": 0
+        },
+        "input_token_details": {},
+        "output_tokens": 32
+      }
+    }
+  },
+  "code_sha256": {
+    "api.py": "f594a8f9514ec8debddeb6e7b84e655c8ace794a67ada06d031df365472b4ecc",
+    "graph_v3.py": "4f35e892dce7daf4c1f9f66080b6939cf36476ecba5cbd42b3bc23b7810fa01d",
+    "v3_llm.py": "97ecd0deea696d681dde5b6992b05d489cf477836e908f6b0f49d8941ad5b41d"
+  }
+}

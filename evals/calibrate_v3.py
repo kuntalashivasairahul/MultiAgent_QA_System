@@ -41,7 +41,13 @@ def main():
                         state.update(documents=[Document(id=d["id"], page_content=d["text"], metadata=d["metadata"])
                                                 for d in case["documents"]],
                                      generation=case["answer"], citations=case["citations"], attempt_count=1)
-                        verdict = v3.judge(state)["quality"]
+                        if "cited_support" not in record:
+                            record["cited_support"] = v3.judge_support(state)["support"]
+                            write_json(path, record)
+                        state["support"] = record["cited_support"]
+                        output = v3.judge(state)
+                        verdict = output["quality"]
+                        record["quality_checks"] = output["history"][-1]["quality_checks"]
                         actual = v3.accepted({**state, "quality": verdict}, v3.THRESHOLD)
                         record.update(verdict=verdict, actual=actual, expected=case["expected_accept"],
                                       passed=actual is case["expected_accept"])

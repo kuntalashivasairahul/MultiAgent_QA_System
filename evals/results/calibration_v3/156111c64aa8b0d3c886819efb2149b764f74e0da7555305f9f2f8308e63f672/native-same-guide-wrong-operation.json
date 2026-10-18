@@ -1,0 +1,7 @@
+{
+  "id": "native-same-guide-wrong-operation",
+  "error": "RateLimitError",
+  "passed": false,
+  "usage": {},
+  "seconds": 10.045097249996616
+}

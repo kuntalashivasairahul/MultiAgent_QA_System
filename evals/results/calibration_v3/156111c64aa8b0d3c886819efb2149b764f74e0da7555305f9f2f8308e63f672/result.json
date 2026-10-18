@@ -1,0 +1,240 @@
+{
+  "scope": "Inspected development controls, not held-out accuracy or calibrated probabilities",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/calibration_v3/156111c64aa8b0d3c886819efb2149b764f74e0da7555305f9f2f8308e63f672",
+  "n": 17,
+  "scored": 2,
+  "passed": 2,
+  "missing": 15,
+  "records": [
+    {
+      "id": "supported-answer",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer correctly identifies that the public example sets MaximumAttempts to 3, which is directly supported by the provided document.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly identifies that the public example sets MaximumAttempts to 3, which is directly supported by the provided document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The public example sets MaximumAttempts to 3."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The cited document explicitly states that the public example sets MaximumAttempts to 3, which directly and completely answers the question.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The public example sets MaximumAttempts to 3."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies that the public example sets MaximumAttempts to 3, which is directly supported by the provided document.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "qwen/qwen3.8-27b": {
+          "output_tokens": 199,
+          "total_tokens": 1780,
+          "input_tokens": 1581
+        }
+      },
+      "seconds": 20.528910208005982
+    },
+    {
+      "id": "unsupported-extra-claim",
+      "cited_support": {
+        "passed": false,
+        "reason": "The answer includes an unsupported claim that the example 'encrypts all payloads.' The provided document only states that MaximumAttempts is set to 3 and contains no information regarding payload encryption.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 0.5,
+        "retry_query": "public example encrypts payloads"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The answer includes an unsupported claim that the example 'encrypts all payloads.' The provided document only states that MaximumAttempts is set to 3 and contains no information regarding payload encryption.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The public example sets MaximumAttempts to 3."
+              }
+            ],
+            "confidence": 0.5,
+            "retry_query": "public example encrypts payloads"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The answer includes an unsupported claim that the example 'encrypts all payloads.' The provided document only states that MaximumAttempts is set to 3 and contains no information regarding payload encryption.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 0.5,
+        "retry_query": "public example encrypts payloads"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "qwen/qwen3.8-27b": {
+          "input_tokens": 745,
+          "output_tokens": 115,
+          "total_tokens": 860
+        }
+      },
+      "seconds": 10.142871458003356
+    },
+    {
+      "id": "question-injection",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 9.607806790998438
+    },
+    {
+      "id": "source-injection",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.11789895799302
+    },
+    {
+      "id": "incomplete-definition",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.000442333002866
+    },
+    {
+      "id": "unsupported-retention-cause",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 9.97861712500162
+    },
+    {
+      "id": "private-retry-scope",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.038596582999162
+    },
+    {
+      "id": "judge-4",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.01897441699839
+    },
+    {
+      "id": "judge-5",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.042132750000746
+    },
+    {
+      "id": "judge-6",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.024626291997265
+    },
+    {
+      "id": "judge-7",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.021635958000843
+    },
+    {
+      "id": "private-timeout-faithfulness",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.085770750003576
+    },
+    {
+      "id": "native-supported-access",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.02269683299528
+    },
+    {
+      "id": "native-wrong-worker-command",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 9.994228959003522
+    },
+    {
+      "id": "native-outside-workflow-scope",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.048295416003384
+    },
+    {
+      "id": "native-same-guide-wrong-operation",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.045097249996616
+    },
+    {
+      "id": "native-same-guide-correct-worker",
+      "error": "RateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 10.066487875003077
+    }
+  ]
+}

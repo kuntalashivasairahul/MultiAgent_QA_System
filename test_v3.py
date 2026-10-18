@@ -27,13 +27,19 @@ def controlled(monkeypatch, qualities):
         return [documents[1 if exclude_ids else 0]]
 
     outputs = iter(qualities)
+    latest = None
 
     def structured(schema, *, judge=False):
         def invoke(messages):
+            nonlocal latest
             if judge:
+                import json
+                if "background_documents" in json.loads(messages[1].content):
+                    return latest
                 result = next(outputs)
                 if isinstance(result, Exception):
                     raise result
+                latest = result
                 return result
             generations.append(messages)
             return graph_v1.GroundedAnswer(answer="Part A." if len(generations) == 1 else "Part B.", citations=[1])
@@ -116,15 +122,68 @@ def test_judge_sees_background_but_cannot_quote_uncited_evidence(monkeypatch):
     state = {"question": "Explain A.", "generation": "Part A.", "documents": docs,
              "citations": [{"id": 1}], "attempt_count": 1, "history": [],
              "retrieval_query": "A", "new_document_ids": []}
+    state.update(v3.judge_support(state))
     v3.judge(state)
     import json
-    payload = json.loads(messages_seen[0][1].content)
+    assert "background_documents" not in json.loads(messages_seen[0][1].content)
+    payload = json.loads(messages_seen[-1][1].content)
     assert [d["id"] for d in payload["documents"]] == [1]
     assert [d["id"] for d in payload["background_documents"]] == [1, 2]
     assert "Ignore rules" not in messages_seen[0][0].content
     output = output.model_copy(update={"quotes": [v3.graph_v2.Quote(id=2, text="Part B.")]})
     with pytest.raises(ValueError, match="invalid document ID"):
         v3.judge(state)
+
+
+@pytest.mark.parametrize("support_passed,support_score,context_passed,context_score,expected_passed,expected_score", [
+    (False, 0.0, True, 1.0, False, 0.0),
+    (True, 0.5, True, 1.0, True, 0.5),
+    (True, 1.0, False, 1.0, False, 1.0),
+])
+def test_context_cannot_override_failed_or_lower_scored_cited_support(
+        monkeypatch, support_passed, support_score, context_passed, context_score, expected_passed, expected_score):
+    calls = []
+    def invoke(messages):
+        calls.append(messages)
+        return verdict(context_score, context_passed)
+    monkeypatch.setattr(v3.v3_llm, "structured", lambda *a, **kw: SimpleNamespace(invoke=invoke))
+    state = {"question": "Explain A.", "generation": "Part A.",
+             "documents": [Document(id="a", page_content="Part A.", metadata={"source": "a.mdx"})],
+             "citations": [{"id": 1}], "attempt_count": 1, "history": [],
+             "retrieval_query": "A", "new_document_ids": [],
+             "support": verdict(support_score, support_passed).model_dump()}
+    output = v3.judge(state)
+    assert output["quality"]["passed"] is expected_passed
+    assert output["quality"]["confidence"] == expected_score
+    assert len(calls) == int(support_passed)
+
+
+def test_context_outage_resumes_without_repeating_completed_support(monkeypatch, tmp_path):
+    import json
+    searches, generations = controlled(monkeypatch, [])
+    original = v3.v3_llm.structured
+    calls = []
+    def structured(schema, *, judge=False):
+        if not judge:
+            return original(schema, judge=False)
+        def invoke(messages):
+            stage = "context" if "background_documents" in json.loads(messages[1].content) else "cited_support"
+            calls.append(stage)
+            if stage == "context" and calls.count("context") == 1:
+                raise RuntimeError("Context backend unavailable")
+            return verdict()
+        return SimpleNamespace(invoke=invoke)
+    monkeypatch.setattr(v3.v3_llm, "structured", structured)
+    with SqliteSaver.from_conn_string(str(tmp_path / "context-recovery.sqlite")) as saver:
+        pipeline = v3.build_graph(checkpointer=saver)
+        config = {"configurable": {"thread_id": "context-recovery"}}
+        with pytest.raises(RuntimeError, match="Context backend"):
+            pipeline.invoke({"question": "Explain A."}, config, durability="sync")
+        assert pipeline.get_state(config).next == ("judge",)
+        output = pipeline.invoke(None, config, durability="sync")
+    assert output["generation"] == "Part A."
+    assert calls == ["cited_support", "context", "context"]
+    assert len(searches) == len(generations) == 1
 
 
 @pytest.mark.parametrize("threshold", [0, -1, 1.1, float("nan"), float("inf"), True])

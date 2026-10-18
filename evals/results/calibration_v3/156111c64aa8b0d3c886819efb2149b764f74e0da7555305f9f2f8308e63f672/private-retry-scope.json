@@ -1,0 +1,7 @@
+{
+  "id": "private-retry-scope",
+  "error": "RateLimitError",
+  "passed": false,
+  "usage": {},
+  "seconds": 10.038596582999162
+}

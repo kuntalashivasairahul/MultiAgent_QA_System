@@ -1,0 +1,70 @@
+{
+  "id": "supported-answer",
+  "cited_support": {
+    "passed": true,
+    "reason": "The answer correctly identifies that the public example sets MaximumAttempts to 3, which is directly supported by the provided document.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies that the public example sets MaximumAttempts to 3, which is directly supported by the provided document.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "stage": "context_consistency",
+      "verdict": {
+        "passed": true,
+        "reason": "The cited document explicitly states that the public example sets MaximumAttempts to 3, which directly and completely answers the question.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    }
+  ],
+  "verdict": {
+    "passed": true,
+    "reason": "The answer correctly identifies that the public example sets MaximumAttempts to 3, which is directly supported by the provided document.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "output_tokens": 199,
+      "total_tokens": 1780,
+      "input_tokens": 1581
+    }
+  },
+  "seconds": 20.528910208005982
+}

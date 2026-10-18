@@ -1,0 +1,7 @@
+{
+  "id": "native-wrong-worker-command",
+  "error": "RateLimitError",
+  "passed": false,
+  "usage": {},
+  "seconds": 9.994228959003522
+}

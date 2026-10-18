@@ -1,0 +1,137 @@
+"""Resume only the frozen v3 controls and fixed12 study; never promote a score."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import time
+from datetime import datetime, timezone
+
+ROOT = Path.cwd()
+CONTROL_FP = "156111c64aa8b0d3c886819efb2149b764f74e0da7555305f9f2f8308e63f672"
+CONTROL_DIR = ROOT / "evals/results/calibration_v3" / CONTROL_FP
+FROZEN = json.loads((CONTROL_DIR / "inputs.json").read_text())
+assert hashlib.sha256(json.dumps(FROZEN, sort_keys=True).encode()).hexdigest() == CONTROL_FP
+PROFILE = FROZEN["graph_runtime"]
+DATASET = ROOT / "evals/v3_stability_regression.jsonl"
+DATASET_SHA = hashlib.sha256(DATASET.read_bytes()).hexdigest()
+STATE = Path("/tmp/qa-v3-validation-worker.json")
+os.environ.update(LANGSMITH_TRACING="false", QA_BACKEND=PROFILE["backend"],
+                  QA_MODEL=PROFILE["generation_model"], QA_JUDGE_BACKEND=PROFILE["judge_backend"],
+                  QA_JUDGE_MODEL=PROFILE["judge_model"], QA_QUALITY_THRESHOLD=str(PROFILE["quality_threshold"]),
+                  LMSTUDIO_MODEL_SHA256=PROFILE["model_weights_sha256"], LMSTUDIO_BASE_URL=PROFILE["base_url"],
+                  GROQ_JUDGE_MODEL=FROZEN["evaluation_judge"]["model"],
+                  GROQ_MAX_RETRIES=str(FROZEN["evaluation_judge"]["max_retries"]),
+                  GROQ_RPS=str(FROZEN["evaluation_judge"]["requests_per_second"]))
+sys.path.insert(0, str(ROOT))
+from artifacts import write_json
+from evals import calibrate_v3
+from evals.run_eval import run_eval, run_inputs, _evaluation_lock, _load_partial
+import graph_v3 as v3
+
+
+def publish(phase, **details):
+    state = {"pid": os.getpid(), "phase": phase, "at": datetime.now(timezone.utc).isoformat(), **details}
+    write_json(STATE, state)
+    print(json.dumps(state), flush=True)
+
+
+def frozen():
+    for name, digest in FROZEN["code"].items():
+        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, "Runtime code changed"
+    assert hashlib.sha256(DATASET.read_bytes()).hexdigest() == DATASET_SHA, "Study references changed"
+    assert hashlib.sha256(calibrate_v3.CASES.read_bytes()).hexdigest() == FROZEN["dataset_sha256"]
+
+
+def rate_only(errors):
+    return bool(errors) and set(errors) == {"RateLimitError"}
+
+
+def reserve(modified, stage, errors, details=()):
+    assert rate_only(errors), "Non-quota failure requires review"
+    seconds = [float(d["retry_after"]) + 5 for d in details
+               if str(d.get("retry_after") or "").replace(".", "", 1).isdigit()]
+    # shortcut: reserve two hours for this observed free quota, not just one funded request.
+    deadline = modified + max([7200, *seconds])
+    publish("waiting_for_quota", stage=stage,
+            next_attempt_at=datetime.fromtimestamp(deadline, timezone.utc).isoformat())
+    while (remaining := deadline - time.time()) > 0:
+        frozen()
+        time.sleep(min(30, remaining))
+
+
+def local_model():
+    lms = str(Path.home() / ".lmstudio/bin/lms")
+    loaded = json.loads(subprocess.check_output([lms, "ps", "--json"], text=True, timeout=30))
+    assert not any(m["type"] == "llm" and m.get("identifier") != PROFILE["generation_model"]
+                   for m in loaded), "Another local chat model is loaded; no automatic eviction"
+    weights = Path.home() / ".lmstudio/models/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+    with weights.open("rb") as stream:
+        assert hashlib.file_digest(stream, "sha256").hexdigest() == PROFILE["model_weights_sha256"]
+    if not any(m.get("identifier") == PROFILE["generation_model"] for m in loaded):
+        subprocess.run([lms, "load", "meta-llama-3.1-8b-instruct", "--context-length", "8192",
+                        "--gpu", "max", "--parallel", "1", "--identifier", PROFILE["generation_model"],
+                        "--ttl", "3600"], check=True, timeout=120, stdout=subprocess.DEVNULL)
+        loaded = json.loads(subprocess.check_output([lms, "ps", "--json"], text=True, timeout=30))
+    match = next(m for m in loaded if m.get("identifier") == PROFILE["generation_model"])
+    assert match["modelKey"] == "meta-llama-3.1-8b-instruct" and match["contextLength"] == 8192 and match["parallel"] == 1
+
+
+def main():
+    for cycle in range(16):
+        frozen()
+        result = json.loads((CONTROL_DIR / "result.json").read_text())
+        assert not any("verdict" in r and not r["passed"] for r in result["records"]), "Valid control failed"
+        if result["passed"] == result["n"]:
+            break
+        reserve((CONTROL_DIR / "result.json").stat().st_mtime, "controls",
+                [r.get("error") for r in result["records"] if "verdict" not in r])
+        cases = json.loads(calibrate_v3.CASES.read_text())["records"]
+        assert run_inputs(v3, cases, calibrate_v3.CASES) == FROZEN, "Control inputs changed"
+        publish("running_controls", cycle=cycle + 1)
+        try:
+            calibrate_v3.main()
+        except SystemExit as exc:
+            assert str(exc) == "Failed or missing Judge controls; do not promote this profile"
+        result = json.loads((CONTROL_DIR / "result.json").read_text())
+        if result["passed"] == result["n"]:
+            break
+    else:
+        raise RuntimeError("Control recovery limit reached")
+
+    previous, identity = None, None
+    for cycle in range(16):
+        frozen()
+        if previous:
+            partial = Path(previous["artifact_dir"]) / "partial.jsonl"
+            with _evaluation_lock(partial.parent / "owner.sqlite"):
+                rows = list(_load_partial(partial).values())
+                modified = partial.stat().st_mtime
+            errors = [r["generation_error"] for r in rows if r.get("generation_error")]
+            errors += [j["error"] for r in rows for j in r.get("judges", {}).values()
+                       if j.get("output") is None and j.get("error")]
+            details = [d for r in rows for d in [r.get("generation_error_details") or {},
+                       *(j.get("error_details") or {} for j in r.get("judges", {}).values())]]
+            reserve(modified, "fixed12", errors, details)
+        if previous is None or previous["generation_errors"]:
+            local_model()
+        publish("running_fixed12", cycle=cycle + 1)
+        previous = run_eval("graph_v3", 12, dataset=DATASET)
+        current = (previous["fingerprint"], previous["run_id"])
+        identity = identity or current
+        assert current == identity, "Study inputs or attempt changed"
+        if previous["status"] == "complete":
+            publish("awaiting_source_review", artifact_dir=previous["artifact_dir"],
+                    fingerprint=previous["fingerprint"], run_id=previous["run_id"])
+            return
+    raise RuntimeError("Study recovery limit reached")
+
+
+assert rate_only(["RateLimitError", "RateLimitError"])
+assert not rate_only([]) and not rate_only(["ValueError"]) and not rate_only(["RateLimitError", "RuntimeError"])
+try:
+    main()
+except Exception as exc:
+    publish("stopped_for_review", error=type(exc).__name__)
+    raise SystemExit(1) from None
