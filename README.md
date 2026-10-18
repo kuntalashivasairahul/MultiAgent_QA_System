@@ -4,6 +4,8 @@ A versioned LangGraph experiment over a pinned snapshot of public Temporal docum
 
 Model-only performance measures answering without supplied documents. It cannot establish whether training data contained Temporal documentation.
 
+**Stable v2.1 checkpoint, 18 October 2026:** accepted engineering assessment **8.63/10**; **110 automated tests pass**, including four corpus/index integration tests. The owner stopped the 9/10 improvement run and its queued evaluator. Current full native accuracy remains unverified after the final code fix. FastAPI endpoints, a numeric quality/confidence threshold and quality-triggered retrieval retries are planned for v3. See the [résumé claim audit](docs/RESUME_AUDIT.md), [implementation plan](docs/V3_RESUME_ALIGNMENT_PLAN.md) and [verification status](evals/V21_FINAL_STATUS.md).
+
 ## Setup
 
 Python 3.12 is selected by .python-version. Corpus fetching requires Bash; use WSL or Git Bash on Windows.
@@ -62,7 +64,7 @@ The default v2 variant runs both checks; single-check variants are evaluation ab
 ## Evidence
 
 - [Current audit and improvement scorecard](evals/V21_SCORECARD.md): fixed weighted rubric, reproduced failures, repair cycles and completion gates. Historical results below retain the code/model/snapshot they actually measured.
-- [Final verification status](evals/V21_FINAL_STATUS.md): selected freeze, current native coverage, provider-quota wait and exact recovery commands.
+- [Final verification status](evals/V21_FINAL_STATUS.md): stable freeze, test evidence, incomplete native coverage and stopped evaluator; manual recovery commands are retained.
 - [Reference erratum](evals/REFERENCE_ERRATA_V21.md): the frozen benchmark incorrectly labels its pricing question unanswerable. Current runs default to a versioned corrected reference file; historical automated labels remain preserved.
 - [V2.1 initial results](evals/V21_STATUS.md): 82 passing tests, all-40-question retrieval comparison, one successful paired native development regression, and the incomplete fresh confirmation. Selected fact coverage rises from 3/11 to 5/11 while context nearly doubles; six of seven diagnosed questions still lack a necessary fact.
 - [V2 results and next course](evals/V2_STATUS.md): 66 passing tests, four-question native comparison, fixed-draft ablations, usage, judge errors, and prioritized retrieval follow-up. The native study uses the frozen 14,153-chunk index; the current short-code fix yields 14,414 chunks. Post-fix recorded-output revalidation is labeled separately from native evaluation.

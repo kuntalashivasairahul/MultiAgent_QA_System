@@ -1,6 +1,6 @@
 # V2.1 audit and improvement scorecard
 
-Target requested: finish the version, test/review it, fix findings, and repeat until the overall project score reaches 9/10. The score retains the original audit's research-prototype scope and weights. It is an engineering assessment by the coding assistant, not an independently certified rating or a claim of 90% future answer accuracy. Measured answer quality is reported separately.
+Original target: finish the version, test/review it, fix findings, and repeat until the overall project score reaches 9/10. On 18 October 2026 the owner stopped that target and accepted 8.63/10 as the current stable assessment. The queued evaluator was stopped before its next native run. This file retains the original rubric and iteration evidence; it does not claim the 9/10 gate was completed. The score retains the original audit's research-prototype scope and weights. It is an engineering assessment by the coding assistant, not an independently certified rating or a claim of 90% future answer accuracy. Measured answer quality is reported separately.
 
 ## Fixed rubric
 
@@ -107,3 +107,10 @@ The preceding UTF8 native run is preserved as **21/40 scored, 19 missing**. A so
 [Current frozen-code retrieval](results/section_retrieval/148bcae8cb7adc92f512094583b7046ad96604e01b3cfbe87d8ab64e4eb97874/result.json) on corrected development references recovers **11/11 diagnostic facts, 7/7 complete contexts and 33/33 all-required-source groups**; dense-twelve reaches 6/11, 2/7 and 31/33. The extra answerable source group comes from the pricing erratum. The policy remains development-tuned and these labels do not establish general accuracy.
 
 All three preceding replacement-confirmation sets were withdrawn before inference when implementation changed. [Twelve new questions](confirmation_prose_v21.jsonl) were authored/source-reviewed after `b024062`, with [provenance](confirmation_prose_v21_provenance.json) and explicit shared-authorship/topic limits. The final supervisor waits for the prior native cooldown, then runs corrected development and this fresh confirmation. **Overall remains 8.63/10**: all areas provisionally 9.0 except evaluation validity 7.5. Final native coverage, adjudication and a renewed fixed-rubric assessment remain required; no partial-score promotion is made.
+
+
+## Stable checkpoint and résumé audit — owner stopped the 9/10 target
+
+The owner accepted **8.63/10**, stopped the improvement/evaluation run, and requested a claim audit and stable GitHub publication. The queued supervisor exited 130 after SIGINT, before the final current-code native runs started. No provider inference was requested for the release audit. Fresh full-suite validation remains **110 passing tests in 12.51s**, including all four corpus/index integration tests; locked dependencies and both CLI help commands also pass.
+
+The [supplied résumé claims](../docs/RESUME_AUDIT.md) overstate the stable feature set: typed state handoff and conditional branching exist, but a numeric confidence/quality threshold, a semantic retrieval-retry edge and FastAPI REST endpoints do not. Initial Git history did configure LLaMA; the current tested profile uses GPT-OSS-120B and Qwen3.8-27B through Groq. The supplied 2025 project year is not corroborated by available Git history. The [v3 plan](../docs/V3_RESUME_ALIGNMENT_PLAN.md) addresses missing behavior with acceptance tests; it is not shipped functionality. These planned features do not retroactively expand the original stable research-prototype scoring rubric. The retained 8.63 score is not a model-accuracy metric.

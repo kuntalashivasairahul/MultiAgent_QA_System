@@ -1,0 +1,62 @@
+{
+  "scope": "Stable v2.1 release audit for the owner-supplied resume project excerpt. No new native inference or v3 feature implementation.",
+  "recorded_at": "2026-10-18T07:35:33.090418+00:00",
+  "implementation_commit": "b0240629613d2482500a27c3e334108779f493b0",
+  "accepted_engineering_score": 8.63,
+  "score_is_accuracy": false,
+  "nine_point_goal": "stopped by owner; not achieved",
+  "local_tests": {
+    "command": "LANGSMITH_TRACING=false HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 .venv/bin/python -m pytest -q",
+    "passed": 110,
+    "seconds": 12.51,
+    "integration_tests_included": 4
+  },
+  "locked_environment": {
+    "command": "uv sync --frozen",
+    "packages_checked": 124,
+    "fresh_install": false
+  },
+  "cli_smoke": {
+    "run_eval_help": "passed",
+    "compare_help": "passed"
+  },
+  "compiled_graph_checks": {
+    "generation_refusal_conditional_branch": true,
+    "downstream_retrieval_retry_edge": false,
+    "evidence_verdict_fields": [
+      "passed",
+      "reason",
+      "quotes"
+    ],
+    "numeric_quality_confidence_field": false
+  },
+  "resume_audit": "docs/RESUME_AUDIT.md",
+  "future_plan": "docs/V3_RESUME_ALIGNMENT_PLAN.md",
+  "native_operator": {
+    "owner_requested_stop": true,
+    "pid": 13293,
+    "tool_session": 91670,
+    "exit_code": 130,
+    "stopped_before_scheduled_launch": true,
+    "remaining_native_workers_observed": 0,
+    "current_final_development_started": false,
+    "current_confirmation_started": false
+  },
+  "publication_check": {
+    "unpushed_commit_snapshots_pattern_scanned": 25,
+    "credential_pattern_matching_paths": 0,
+    "scope_limit": "Known credential/private-key patterns in tracked snapshots; not a guarantee that arbitrary secrets cannot exist. Local .env/corpus/index and SQLite recovery files are excluded by Git."
+  },
+  "github": {
+    "repository": "https://github.com/kuntalashivasairahul/MultiAgent_QA_System",
+    "target_branch": "main",
+    "status": "pending_at_recording",
+    "hosted_ci": "pending_first_push"
+  },
+  "unchecked": [
+    "Windows runtime",
+    "independent human/field validation",
+    "production deployment",
+    "complete final-current-code native answer accuracy"
+  ]
+}
