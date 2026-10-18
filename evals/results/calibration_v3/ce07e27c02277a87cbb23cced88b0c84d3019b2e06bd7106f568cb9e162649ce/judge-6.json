@@ -1,0 +1,29 @@
+{
+  "id": "judge-6",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "reason": "The document confirms that the timeout is 5 seconds, which the answer states correctly. However, the answer also claims that \"retries are unlimited,\" a fact not present in the provided document. Because the answer includes an unsupported claim, it does not fully satisfy the question. Hence the answer is only partially supported.",
+    "confidence": 0.5,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 892,
+      "output_tokens": 533,
+      "total_tokens": 1425,
+      "output_token_details": {
+        "reasoning": 425
+      }
+    }
+  },
+  "seconds": 10.185250125003222
+}

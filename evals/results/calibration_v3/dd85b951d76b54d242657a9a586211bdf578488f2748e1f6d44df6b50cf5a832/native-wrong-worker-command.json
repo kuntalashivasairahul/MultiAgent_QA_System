@@ -1,0 +1,30 @@
+{
+  "id": "native-wrong-worker-command",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "uv run hello_standalone_activity/start_activity.py"
+      }
+    ],
+    "reason": "The answer completely addresses the exact question and every factual claim is entailed by the cited documents for the requested entity/SDK/scope.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 609,
+      "output_tokens": 90,
+      "total_tokens": 699,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 5.592373334002332
+}

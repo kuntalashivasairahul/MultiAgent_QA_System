@@ -1,0 +1,140 @@
+{
+  "scope": "Four inspected native-schema protocol comparison probes; not model promotion",
+  "model": "openai/gpt-oss-120b",
+  "protocol": "json_schema",
+  "records": [
+    {
+      "case": "private-retry-scope",
+      "expected_accept": false,
+      "quality": {
+        "quotes": [
+          {
+            "id": 5,
+            "text": "RetryPolicy: &temporal.RetryPolicy{\n            MaximumAttempts: 3,\n        }"
+          }
+        ],
+        "reason": "The provided document (id 5) shows the workflow's ActivityOptions include a RetryPolicy where the only explicitly set field is MaximumAttempts set to 3. The answer states exactly that the workflow configures a RetryPolicy with MaximumAttempts set to 3, which is directly supported by the evidence. No other retry policy details are present in the document, and the answer does not claim any unsupported information.",
+        "confidence": 1.0,
+        "passed": true,
+        "retry_query": ""
+      },
+      "actual_accept": true,
+      "seconds": 12.344554625000455,
+      "usage": {
+        "openai/gpt-oss-120b": {
+          "input_tokens": 1147,
+          "output_tokens": 342,
+          "total_tokens": 1489,
+          "output_token_details": {
+            "reasoning": 199
+          }
+        }
+      }
+    },
+    {
+      "case": "native-wrong-worker-command",
+      "expected_accept": false,
+      "quality": {
+        "quotes": [
+          {
+            "id": 1,
+            "text": "```bash\nuv run hello_standalone_activity/start_activity.py\n```"
+          }
+        ],
+        "reason": "The answer exactly matches the command shown in the provided document for starting the Python Worker: the document contains the line \"uv run hello_standalone_activity/start_activity.py\" which is the command requested.",
+        "confidence": 1.0,
+        "passed": true,
+        "retry_query": ""
+      },
+      "actual_accept": true,
+      "seconds": 8.929719416002627,
+      "usage": {
+        "openai/gpt-oss-120b": {
+          "input_tokens": 876,
+          "output_tokens": 311,
+          "total_tokens": 1187,
+          "output_token_details": {
+            "reasoning": 215
+          }
+        }
+      }
+    },
+    {
+      "case": "unsupported-retention-cause",
+      "expected_accept": false,
+      "quality": {
+        "quotes": [
+          {
+            "id": 5,
+            "text": "For cases where you need to remove closed Workflow Executions before their retention timer expires, you can use [`temporal workflow delete`](/cli/command-reference/workflow#delete) or the `DeleteWorkflowExecution` command.\nThis is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+          }
+        ],
+        "reason": "The answer states that shortening the namespace retention period does not automatically delete already\u2011closed workflows and that they must be removed manually (e.g., with `temporal workflow delete`). Document\u202f5 explains that manual cleanup is needed and is useful together with reducing the Retention Period to clean up previously closed Workflow Executions, confirming that the retention change alone does not purge existing closed workflows.",
+        "confidence": 1.0,
+        "passed": true,
+        "retry_query": "",
+        "validation_failures": [
+          {
+            "error": "Evidence check returned a non-verbatim quote",
+            "verdict": {
+              "quotes": [
+                {
+                  "id": 5,
+                  "text": "For cases where you need to remove closed Workflow Executions before their retention timer expires, you can use [`temporal workflow delete`] ... This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions ..."
+                }
+              ],
+              "reason": "The answer correctly states that shortening the namespace retention period does not automatically delete already\u2011closed workflows; they must be removed manually. Document 5 explains that manual cleanup (e.g., using `temporal workflow delete`) is useful together with reducing the retention period to clean up previously closed workflow executions, confirming that the retention change alone does not purge existing closed workflows.",
+              "confidence": 1.0,
+              "passed": true,
+              "retry_query": ""
+            }
+          }
+        ]
+      },
+      "actual_accept": true,
+      "seconds": 21.714812917001836,
+      "usage": {
+        "openai/gpt-oss-120b": {
+          "input_tokens": 2236,
+          "output_token_details": {
+            "reasoning": 1252
+          },
+          "total_tokens": 3835,
+          "output_tokens": 1599
+        }
+      }
+    },
+    {
+      "case": "incomplete-definition",
+      "expected_accept": false,
+      "quality": {
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The SDK provides APIs to customize the behavior of an Activity Execution."
+          },
+          {
+            "id": 1,
+            "text": "Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion."
+          }
+        ],
+        "reason": "The answer correctly states that an Activity Execution is the execution (run) of an Activity and that its behavior can be customized via SDK APIs, allowing control over timeouts, a retry policy, heartbeat monitoring, and asynchronous completion. The provided document supports these points: it notes that \"The SDK provides APIs to customize the behavior of an Activity Execution\" and that \"Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion.\" Both claims in the answer are directly entailed by the cited text.",
+        "confidence": 1.0,
+        "passed": true,
+        "retry_query": ""
+      },
+      "actual_accept": true,
+      "seconds": 9.4225478330045,
+      "usage": {
+        "openai/gpt-oss-120b": {
+          "input_tokens": 997,
+          "output_tokens": 900,
+          "total_tokens": 1897,
+          "output_token_details": {
+            "reasoning": 707
+          }
+        }
+      }
+    }
+  ]
+}

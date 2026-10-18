@@ -1,0 +1,25 @@
+{
+  "id": "private-retry-scope",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer does not specify the retry policy is configured in our private Acme billing Workflow repository.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "private configuration,Acme billing Workflow repository"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 814,
+      "output_tokens": 56,
+      "total_tokens": 870,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 5.115863999999419
+}

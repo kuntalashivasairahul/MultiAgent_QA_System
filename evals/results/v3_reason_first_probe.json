@@ -1,0 +1,98 @@
+{
+  "scope": "Three inspected native Judge-only schema-order repair probes, not broad accuracy",
+  "schema": {
+    "$defs": {
+      "Quote": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "text": {
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text"
+        ],
+        "title": "Quote",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "reason": {
+        "description": "Check each factual claim against the cited evidence, including causal explanations; identify any missing support before deciding.",
+        "minLength": 1,
+        "title": "Reason",
+        "type": "string"
+      },
+      "quotes": {
+        "items": {
+          "$ref": "#/$defs/Quote"
+        },
+        "title": "Quotes",
+        "type": "array"
+      },
+      "passed": {
+        "title": "Passed",
+        "type": "boolean"
+      },
+      "confidence": {
+        "description": "Rubric quality score, not a calibrated probability",
+        "maximum": 1,
+        "minimum": 0,
+        "title": "Confidence",
+        "type": "number"
+      },
+      "retry_query": {
+        "description": "Missing aspect to search; empty if none",
+        "maxLength": 256,
+        "title": "Retry Query",
+        "type": "string"
+      }
+    },
+    "required": [
+      "reason",
+      "quotes",
+      "passed",
+      "confidence",
+      "retry_query"
+    ],
+    "title": "QualityVerdict",
+    "type": "object"
+  },
+  "base_graph_sha256": "a8549d7dfda8dbd42a2d97d7eda5fc4ae111e21104f2e1075cf5e6551f5c63da",
+  "selected_control_ids": [
+    "unsupported-retention-cause",
+    "native-same-guide-wrong-operation",
+    "native-same-guide-correct-worker"
+  ],
+  "records": [
+    {
+      "id": "unsupported-retention-cause",
+      "expected": false,
+      "error": "RateLimitError",
+      "passed": false,
+      "seconds": 10.248003166998387
+    },
+    {
+      "id": "native-same-guide-wrong-operation",
+      "expected": false,
+      "error": "RateLimitError",
+      "passed": false,
+      "seconds": 9.98894554200524
+    },
+    {
+      "id": "native-same-guide-correct-worker",
+      "expected": true,
+      "error": "RateLimitError",
+      "passed": false,
+      "seconds": 10.04002495900204
+    }
+  ]
+}

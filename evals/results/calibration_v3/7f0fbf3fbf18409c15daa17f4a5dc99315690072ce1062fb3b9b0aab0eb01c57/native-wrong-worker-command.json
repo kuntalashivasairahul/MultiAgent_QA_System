@@ -1,0 +1,17 @@
+{
+  "id": "native-wrong-worker-command",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 611,
+      "output_tokens": 243,
+      "total_tokens": 854,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 242
+      }
+    }
+  },
+  "seconds": 9.985887333001301
+}

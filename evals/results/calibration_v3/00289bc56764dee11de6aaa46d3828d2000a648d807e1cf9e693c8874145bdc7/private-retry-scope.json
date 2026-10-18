@@ -1,0 +1,25 @@
+{
+  "id": "private-retry-scope",
+  "verdict": {
+    "quotes": [],
+    "reason": "The question asks about the retry policy in a private Acme billing Workflow repository. The provided document describes a PaymentWorkflow in a payments package, but it does not mention any workflow related to 'Acme billing' or a private repository. Furthermore, while the document shows a RetryPolicy with MaximumAttempts set to 3, this is within a generic 'payments' workflow and not specifically tied to an Acme billing Workflow repository. There is no evidence in the documents that links the retry policy to the Acme billing Workflow or confirms its presence in a private repository. Therefore, the factual claim about the configuration cannot be verified for the specific entity requested.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 879,
+      "output_tokens": 168,
+      "total_tokens": 1047,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 6.095727207997697
+}

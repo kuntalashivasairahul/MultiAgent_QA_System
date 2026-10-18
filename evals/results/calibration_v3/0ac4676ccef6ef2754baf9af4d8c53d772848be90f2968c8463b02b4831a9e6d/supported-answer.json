@@ -1,0 +1,29 @@
+{
+  "id": "supported-answer",
+  "verdict": {
+    "passed": true,
+    "reason": "The answer directly matches the statement in the document.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 817,
+      "output_tokens": 280,
+      "total_tokens": 1097,
+      "output_token_details": {
+        "reasoning": 222
+      }
+    }
+  },
+  "seconds": 11.25970850000158
+}

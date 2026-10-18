@@ -1,0 +1,32 @@
+{
+  "id": "private-timeout-faithfulness",
+  "verdict": {
+    "passed": true,
+    "reason": "The document explicitly states that the heartbeat_timeout is set to 30 seconds, directly answering the question.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "- **Worker crashes mid-Activity** → Detected by `heartbeat_timeout` (30s) → Exception caught by try/except → Workflow retries on new Worker"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 978,
+      "output_tokens": 408,
+      "total_tokens": 1386,
+      "input_token_details": {
+        "cache_read": 512
+      },
+      "output_token_details": {
+        "reasoning": 314
+      }
+    }
+  },
+  "seconds": 10.375983541001915
+}

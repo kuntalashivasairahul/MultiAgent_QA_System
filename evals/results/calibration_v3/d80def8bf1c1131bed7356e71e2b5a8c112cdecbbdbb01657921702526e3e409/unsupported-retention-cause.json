@@ -1,0 +1,64 @@
+{
+  "id": "unsupported-retention-cause",
+  "error": "ValueError",
+  "passed": false,
+  "validation_failures": [
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer accurately explains why old closed Workflows did not disappear sooner after shortening Namespace retention.",
+        "quotes": [
+          {
+            "id": 5,
+            "text": "Reducing the namespace retention period only changes the timer for future deletions; it does not automatically purge workflow histories that were already closed under the previous retention setting."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": false,
+        "reason": "Non-verbatim quote in original evidence",
+        "quotes": [
+          {
+            "id": 5,
+            "text": "Reducing the namespace retention period only changes the timer for future deletions; it does not automatically purge workflow histories that were already closed under the previous retention setting."
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "evidence of manual cleanup"
+      }
+    },
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": false,
+        "reason": "Non-verbatim quote in original evidence",
+        "quotes": [
+          {
+            "id": 5,
+            "text": "Reducing the namespace retention period only changes the timer for future deletions; it does not automatically purge workflow histories that were already closed under the previous retention setting."
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "evidence of manual cleanup"
+      }
+    }
+  ],
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_token_details": {},
+      "input_tokens": 2431,
+      "output_token_details": {
+        "reasoning": 0
+      },
+      "output_tokens": 253,
+      "total_tokens": 2684
+    }
+  },
+  "seconds": 17.035665666997375
+}

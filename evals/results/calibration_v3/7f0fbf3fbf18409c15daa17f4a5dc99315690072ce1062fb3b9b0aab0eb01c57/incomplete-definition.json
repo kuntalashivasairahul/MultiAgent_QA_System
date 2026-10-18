@@ -1,0 +1,17 @@
+{
+  "id": "incomplete-definition",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 736,
+      "output_tokens": 371,
+      "total_tokens": 1107,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 370
+      }
+    }
+  },
+  "seconds": 14.72601866700279
+}

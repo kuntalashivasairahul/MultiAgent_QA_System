@@ -1,0 +1,34 @@
+{
+  "id": "incomplete-definition",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "Activities in Temporal are individual units of work that often represent non-deterministic parts of the code logic, such as querying a database or calling an external service. The SDK provides APIs to customize the behavior of an Activity Execution."
+      },
+      {
+        "id": 1,
+        "text": "However, Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion."
+      }
+    ],
+    "reason": "The answer correctly identifies that an Activity Execution is the run of an Activity and that its behavior can be customized via SDK APIs. It accurately lists the customizable aspects: timeouts, retry policy, heartbeat monitoring, and asynchronous completion—all of which are explicitly mentioned in Document 1. The claim about 'behavior being customized via SDK APIs' is directly supported by the text 'The SDK provides APIs to customize the behavior of an Activity Execution.' The mention of 'retry policy,' 'heartbeat monitoring,' and 'asynchronous completion' is also directly cited. All factual claims in the answer are entailed by the provided document.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 728,
+      "output_tokens": 265,
+      "total_tokens": 993,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 8.282984917001158
+}

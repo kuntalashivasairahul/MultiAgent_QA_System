@@ -1,0 +1,35 @@
+{
+  "scope": "Native structured-output compatibility probes; not semantic calibration",
+  "records": [
+    {
+      "setting": "reasoning-off",
+      "parsed": null,
+      "error": "ValueError",
+      "content_length": 0,
+      "usage": {
+        "input_tokens": 87,
+        "output_tokens": 93,
+        "total_tokens": 180,
+        "input_token_details": {},
+        "output_token_details": {
+          "reasoning": 92
+        }
+      }
+    },
+    {
+      "setting": "template-thinking-off",
+      "parsed": null,
+      "error": "ValueError",
+      "content_length": 0,
+      "usage": {
+        "input_tokens": 87,
+        "output_tokens": 93,
+        "total_tokens": 180,
+        "input_token_details": {},
+        "output_token_details": {
+          "reasoning": 92
+        }
+      }
+    }
+  ]
+}

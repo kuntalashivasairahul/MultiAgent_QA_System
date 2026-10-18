@@ -162,6 +162,8 @@ def run_inputs(module, rows: list[dict], dataset: Path) -> dict:
     runtime = module.runtime_inputs() if hasattr(module, "runtime_inputs") else {}
     if runtime.get("backend") == "lmstudio" and not re.fullmatch(r"[0-9a-f]{64}", runtime.get("model_weights_sha256") or ""):
         raise ValueError("Local evaluation requires LMSTUDIO_MODEL_SHA256 for the loaded model weights")
+    if runtime.get("judge_backend") == "lmstudio" and not re.fullmatch(r"[0-9a-f]{64}", runtime.get("judge_weights_sha256") or ""):
+        raise ValueError("Local Judge evaluation requires LMSTUDIO_JUDGE_MODEL_SHA256 for its loaded weights")
     return {
         "schema": 2, "graph": module.__name__, "rows": rows,
         "dataset": dataset.name, "dataset_sha256": hashlib.sha256(dataset.read_bytes()).hexdigest(),
@@ -176,6 +178,9 @@ def run_inputs(module, rows: list[dict], dataset: Path) -> dict:
         "retrieval_k": getattr(module, "RETRIEVAL_K", None),
         "context_limits": dict(getattr(module, "CONTEXT_LIMITS", {})),
         "graph_runtime": runtime,
+        "evaluation_judge": {"backend": "groq", "model": JUDGE_MODEL, "max_tokens": 4096,
+                             "timeout": 120, "max_retries": llm.MAX_RETRIES,
+                             "requests_per_second": llm.REQUESTS_PER_SECOND},
         "checkpoint_policy": "sqlite-node-sync" if getattr(module, "SUPPORTS_CHECKPOINTS", False) else "answer-jsonl",
     }
 

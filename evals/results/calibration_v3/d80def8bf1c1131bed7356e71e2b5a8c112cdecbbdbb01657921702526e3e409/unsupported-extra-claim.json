@@ -1,0 +1,30 @@
+{
+  "id": "unsupported-extra-claim",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer includes an unsupported claim about encryption.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "confidence": 0.5,
+    "retry_query": "encryption"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 477,
+      "output_tokens": 75,
+      "total_tokens": 552,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 4.682690500005265
+}

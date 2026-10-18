@@ -1,0 +1,62 @@
+{
+  "id": "unsupported-retention-cause",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 5,
+        "text": "This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+      }
+    ],
+    "reason": "The answer claims that existing closed workflows must be removed manually if you want them gone sooner. However, this is not supported by the provided evidence. The text only mentions cleaning up previously closed workflow executions as a useful action when reducing the retention period, but it does not explicitly state that old closed Workflows do not disappear sooner after shortening Namespace retention.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": "missing evidence for 'old closed Workflows did not disappear sooner'",
+    "validation_failures": [
+      {
+        "error": "Evidence check returned a non-verbatim quote",
+        "verdict": {
+          "quotes": [
+            {
+              "id": 5,
+              "text": "Reducing the namespace retention period only changes the timer for future deletions; it does not automatically purge workflow histories that were already closed under the previous retention setting. Existing closed workflows must be removed manually (e.g., with `temporal workflow delete`) if you want them gone sooner."
+            }
+          ],
+          "reason": "The answer correctly explains why old closed Workflows did not disappear sooner after shortening Namespace retention.",
+          "confidence": 1.0,
+          "passed": true,
+          "retry_query": ""
+        }
+      },
+      {
+        "error": "Evidence check returned a non-verbatim quote",
+        "verdict": {
+          "quotes": [
+            {
+              "id": 5,
+              "text": "Reducing the namespace retention period only changes the timer for future deletions; it does not automatically purge workflow histories that were already closed under the previous retention setting. Existing closed workflows must be removed manually (e.g., with `temporal workflow delete`) if you want them gone sooner."
+            }
+          ],
+          "reason": "The answer correctly explains why old closed Workflows did not disappear sooner after shortening Namespace retention.",
+          "confidence": 0.5,
+          "passed": false,
+          "retry_query": "missing evidence for 'timer for future deletions' and 'previous retention setting'"
+        }
+      }
+    ]
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "output_token_details": {
+        "reasoning": 0
+      },
+      "output_tokens": 390,
+      "total_tokens": 3110,
+      "input_tokens": 2720,
+      "input_token_details": {}
+    }
+  },
+  "seconds": 26.385980375001964
+}

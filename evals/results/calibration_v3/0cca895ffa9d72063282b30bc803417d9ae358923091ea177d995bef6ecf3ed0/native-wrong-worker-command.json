@@ -1,0 +1,26 @@
+{
+  "id": "native-wrong-worker-command",
+  "verdict": {
+    "passed": false,
+    "reason": "The cited document (id 1) provides the command 'uv run hello_standalone_activity/start_activity.py', which is for starting an activity, not the Python Worker. The background documents (specifically id 6 from the same migration guide) indicate that the command to start the Worker is 'python worker.py'. The answer cites the wrong command for the requested operation.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "uv run hello_standalone_activity/start_activity.py"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": "Celery-to-Standalone-Activity migration guide start Python Worker command"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 3296,
+      "output_tokens": 161,
+      "total_tokens": 3457
+    }
+  },
+  "seconds": 27.7623098749973
+}

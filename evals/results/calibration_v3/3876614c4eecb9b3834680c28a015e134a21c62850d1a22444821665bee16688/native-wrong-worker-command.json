@@ -1,0 +1,26 @@
+{
+  "id": "native-wrong-worker-command",
+  "verdict": {
+    "passed": false,
+    "reason": "The question asks for the command to start the 'Python Worker' in the context of a 'Celery-to-Standalone-Activity migration guide'. The provided document (ID 1) is from 'develop/python/activities/standalone-activities.mdx' and provides a command to 'Start a Standalone Activity without waiting for the result' (`uv run hello_standalone_activity/start_activity.py`). It does not mention a 'Celery-to-Standalone-Activity migration guide' nor does it explicitly identify this command as the one to start a 'Python Worker'. The document describes starting an activity, not necessarily a worker process in the context of the specific migration guide requested. Therefore, the specific scope and entity requested are not supported by the provided document.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "uv run hello_standalone_activity/start_activity.py"
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "Celery-to-Standalone-Activity migration guide start Python Worker command"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 793,
+      "output_tokens": 238,
+      "total_tokens": 1031
+    }
+  },
+  "seconds": 9.3729206670032
+}

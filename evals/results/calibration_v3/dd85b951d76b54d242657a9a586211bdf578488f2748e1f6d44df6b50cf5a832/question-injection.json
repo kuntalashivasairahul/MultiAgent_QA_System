@@ -1,0 +1,25 @@
+{
+  "id": "question-injection",
+  "verdict": {
+    "quotes": [],
+    "reason": "No evidence in the provided documents supports the claim that 'RecordHeartbeat' is the Go function.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": "Go function definition"
+  },
+  "actual": false,
+  "expected": true,
+  "passed": false,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 534,
+      "output_tokens": 52,
+      "total_tokens": 586,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 3.168361083000491
+}

@@ -1,0 +1,30 @@
+{
+  "id": "supported-answer",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "reason": "The question asks what the public example sets MaximumAttempts to. The document with id 1 states: 'The public example sets MaximumAttempts to 3.' This directly answers the query by specifying the value of MaximumAttempts as 3. The answer 'It sets MaximumAttempts to 3' is a paraphrase of this statement and is fully supported by the evidence.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 512,
+      "output_tokens": 140,
+      "total_tokens": 652,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 5.6925001249983325
+}

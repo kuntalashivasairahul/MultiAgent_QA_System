@@ -43,6 +43,16 @@ def test_invalid_request_is_422_without_inference(body):
     assert client.post("/ask", json=body).status_code == 422
 
 
+def test_corrected_quote_audit_remains_a_successful_typed_response():
+    result = output()
+    audit = [{"error": "non-verbatim quote", "verdict": {"passed": True, "quotes": []}}]
+    result["quality"]["validation_failures"] = audit
+    client = TestClient(create_app(SimpleNamespace(invoke=lambda state: result)))
+    response = client.post("/ask", json={"question": "Explain the public fact."})
+    assert response.status_code == 200
+    assert response.json()["quality"]["validation_failures"] == audit
+
+
 def test_refusal_is_successful_response():
     client = TestClient(create_app(SimpleNamespace(invoke=lambda s: output(refused=True))))
     response = client.post("/ask", json={"question": "Unknown private setting?"})

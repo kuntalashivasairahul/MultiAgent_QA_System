@@ -1,0 +1,25 @@
+{
+  "id": "native-outside-workflow-scope",
+  "verdict": {
+    "quotes": [],
+    "reason": "The answer does not provide any evidence from the supplied documents.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": "evidence of eliminating a workflow with one Nexus operation"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 873,
+      "output_tokens": 51,
+      "total_tokens": 924,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 4.474760291996063
+}

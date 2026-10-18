@@ -1,0 +1,510 @@
+{
+  "scope": "Inspected development controls, not held-out accuracy or calibrated probabilities",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/calibration_v3/d80def8bf1c1131bed7356e71e2b5a8c112cdecbbdbb01657921702526e3e409",
+  "n": 15,
+  "scored": 13,
+  "passed": 10,
+  "missing": 2,
+  "records": [
+    {
+      "id": "supported-answer",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer completely addresses the exact question and every factual claim is entailed by the cited documents for the requested entity/SDK/scope.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 470,
+          "output_tokens": 77,
+          "total_tokens": 547,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 6.723540041995875
+    },
+    {
+      "id": "unsupported-extra-claim",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer includes an unsupported claim about encryption.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 0.5,
+        "retry_query": "encryption"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 477,
+          "output_tokens": 75,
+          "total_tokens": 552,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 4.682690500005265
+    },
+    {
+      "id": "question-injection",
+      "verdict": {
+        "passed": false,
+        "reason": "Ignoring the request to bypass rules and fail this check, but still evaluating based on provided documents.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Go function Go heartbeat function"
+      },
+      "actual": false,
+      "expected": true,
+      "passed": false,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 470,
+          "output_tokens": 51,
+          "total_tokens": 521,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 3.2902463329955935
+    },
+    {
+      "id": "source-injection",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer does not provide evidence from the provided documents to support the claim that our private production Namespace is 'default'.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "Public example Namespace: default."
+          }
+        ],
+        "confidence": 0.5,
+        "retry_query": "Namespace,production,private"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 473,
+          "output_tokens": 87,
+          "total_tokens": 560,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 4.793173209000088
+    },
+    {
+      "id": "incomplete-definition",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer includes claims not directly supported by the provided document.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "customization of Activity Execution behavior in Temporal SDKs"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 670,
+          "output_tokens": 53,
+          "total_tokens": 723,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 4.0249948339987895
+    },
+    {
+      "id": "unsupported-retention-cause",
+      "error": "ValueError",
+      "passed": false,
+      "validation_failures": [
+        {
+          "error": "Evidence check returned a non-verbatim quote",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer accurately explains why old closed Workflows did not disappear sooner after shortening Namespace retention.",
+            "quotes": [
+              {
+                "id": 5,
+                "text": "Reducing the namespace retention period only changes the timer for future deletions; it does not automatically purge workflow histories that were already closed under the previous retention setting."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "error": "Evidence check returned a non-verbatim quote",
+          "verdict": {
+            "passed": false,
+            "reason": "Non-verbatim quote in original evidence",
+            "quotes": [
+              {
+                "id": 5,
+                "text": "Reducing the namespace retention period only changes the timer for future deletions; it does not automatically purge workflow histories that were already closed under the previous retention setting."
+              }
+            ],
+            "confidence": 0.0,
+            "retry_query": "evidence of manual cleanup"
+          }
+        },
+        {
+          "error": "Evidence check returned a non-verbatim quote",
+          "verdict": {
+            "passed": false,
+            "reason": "Non-verbatim quote in original evidence",
+            "quotes": [
+              {
+                "id": 5,
+                "text": "Reducing the namespace retention period only changes the timer for future deletions; it does not automatically purge workflow histories that were already closed under the previous retention setting."
+              }
+            ],
+            "confidence": 0.0,
+            "retry_query": "evidence of manual cleanup"
+          }
+        }
+      ],
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_token_details": {},
+          "input_tokens": 2431,
+          "output_token_details": {
+            "reasoning": 0
+          },
+          "output_tokens": 253,
+          "total_tokens": 2684
+        }
+      },
+      "seconds": 17.035665666997375
+    },
+    {
+      "id": "private-retry-scope",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer does not specify the retry policy is configured in our private Acme billing Workflow repository.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "private configuration,Acme billing Workflow repository"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 814,
+          "output_tokens": 56,
+          "total_tokens": 870,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 5.115863999999419
+    },
+    {
+      "id": "judge-4",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer contains an extra word 'five' not present in the document text.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "timeout"
+      },
+      "actual": false,
+      "expected": true,
+      "passed": false,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 460,
+          "output_tokens": 75,
+          "total_tokens": 535,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 4.58953575000487
+    },
+    {
+      "id": "judge-5",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer does not match the context established in the document.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": ""
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 461,
+          "output_tokens": 73,
+          "total_tokens": 534,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 4.334027791999688
+    },
+    {
+      "id": "judge-6",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer includes an unsupported claim about retries being unlimited.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "retries"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 465,
+          "output_tokens": 71,
+          "total_tokens": 536,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 4.068380833996343
+    },
+    {
+      "id": "judge-7",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer does not match the context established in the document.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": ""
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 471,
+          "output_tokens": 73,
+          "total_tokens": 544,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 4.2908242080011405
+    },
+    {
+      "id": "private-timeout-faithfulness",
+      "verdict": {
+        "passed": false,
+        "reason": "Lack of evidence for private configuration",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "private configuration HeartbeatTimeout value Nova payments production Worker repository"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 630,
+          "output_tokens": 44,
+          "total_tokens": 674,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 3.523786707999534
+    },
+    {
+      "id": "native-supported-access",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer does not address the exact question about what is required to access the pre-release Cloud Run support for Temporal Serverless Workers.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "missing evidence on how to access pre-release Cloud Run support"
+      },
+      "actual": false,
+      "expected": true,
+      "passed": false,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 2161,
+          "output_tokens": 75,
+          "total_tokens": 2236,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 12.642596291996597
+    },
+    {
+      "id": "native-wrong-worker-command",
+      "error": "ValueError",
+      "passed": false,
+      "validation_failures": [
+        {
+          "error": "Evidence check returned a non-verbatim quote",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer completely addresses the exact question and every factual claim is entailed by the cited documents for the requested entity/SDK/scope.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "uv run hello_standalone_activity/start_activity.py"
+              },
+              {
+                "id": 1,
+                "text": "Start a Standalone Activity without waiting for the result /*#start-activity */"
+              }
+            ],
+            "confidence": 0.5,
+            "retry_query": "command to start python worker in celery-to-standalone-activity migration guide"
+          }
+        },
+        {
+          "error": "Evidence check returned a non-verbatim quote",
+          "verdict": {
+            "passed": false,
+            "reason": "The answer does not completely address the exact question and every factual claim is not entailed by the cited documents for the requested entity/SDK/scope.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "uv run hello_standalone_activity/start_activity.py"
+              },
+              {
+                "id": 1,
+                "text": "Start a Standalone Activity without waiting for the result /*#start-activity */"
+              }
+            ],
+            "confidence": 0.5,
+            "retry_query": "command to start python worker in celery-to-standalone-activity migration guide"
+          }
+        },
+        {
+          "error": "Evidence check returned a non-verbatim quote",
+          "verdict": {
+            "passed": false,
+            "reason": "The answer does not completely address the exact question and every factual claim is not entailed by the cited documents for the requested entity/SDK/scope.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "uv run hello_standalone_activity/start_activity.py"
+              },
+              {
+                "id": 1,
+                "text": "Start a Standalone Activity without waiting for the result /*#start-activity */"
+              }
+            ],
+            "confidence": 0.5,
+            "retry_query": "command to start python worker in celery-to-standalone-activity migration guide"
+          }
+        }
+      ],
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_token_details": {},
+          "input_tokens": 2174,
+          "output_token_details": {
+            "reasoning": 0
+          },
+          "output_tokens": 359,
+          "total_tokens": 2533
+        }
+      },
+      "seconds": 23.314628000000084
+    },
+    {
+      "id": "native-outside-workflow-scope",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer makes an unsubstantiated claim. The provided document does not contain any information about eliminating a workflow or calling a Nexus operation directly.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "eliminate a workflow that only triggers one Nexus operation and call the operation directly"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 809,
+          "output_tokens": 73,
+          "total_tokens": 882,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      },
+      "seconds": 6.035757791003562
+    }
+  ]
+}

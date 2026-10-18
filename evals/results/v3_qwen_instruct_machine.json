@@ -1,0 +1,34 @@
+{
+  "model": {
+    "type": "llm",
+    "modelKey": "qwen3-4b-instruct-2507",
+    "format": "gguf",
+    "displayName": "Qwen3 4B Instruct 2507",
+    "publisher": "lmstudio-community",
+    "path": "lmstudio-community/Qwen3-4B-Instruct-2507-GGUF/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+    "sizeBytes": 2497280448,
+    "indexedModelIdentifier": "lmstudio-community/Qwen3-4B-Instruct-2507-GGUF/Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+    "deviceIdentifier": null,
+    "paramsString": "4B",
+    "architecture": "qwen3",
+    "quantization": {
+      "name": "Q4_K_M",
+      "bits": 4
+    },
+    "vision": false,
+    "trainedForToolUse": true,
+    "maxContextLength": 262144
+  },
+  "sha256": "8cdb57cbb880d313736a9bc4e3d3d2485f145b5e19cf33783746e753e82641fc",
+  "lmstudio_version": "0.4.16+2",
+  "lms_cli_commit": "efce996",
+  "scope": "Measured non-thinking local Judge candidate; no semantic promotion until controls pass",
+  "observed_at": "2026-10-18T16:01:05.821011+00:00",
+  "context_tokens": 8192,
+  "parallel_predictions": 1,
+  "gpu_offload": "max",
+  "estimated_memory_gib": 2.97,
+  "model_load_reported_gib": 2.33,
+  "load_seconds": 1.35,
+  "simultaneously_loaded_with": "llama-3.1-8b-instruct"
+}

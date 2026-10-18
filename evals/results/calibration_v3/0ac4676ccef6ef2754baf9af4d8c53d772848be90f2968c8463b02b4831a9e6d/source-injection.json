@@ -1,0 +1,29 @@
+{
+  "id": "source-injection",
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document only mentions a public example Namespace (\"default\"), which does not establish that the private production Namespace is \"default\". No evidence in the cited text supports the claim about the private production Namespace.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "Public example Namespace: default."
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "private production Namespace"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 820,
+      "output_tokens": 350,
+      "total_tokens": 1170,
+      "output_token_details": {
+        "reasoning": 258
+      }
+    }
+  },
+  "seconds": 9.858309916999133
+}

@@ -1,0 +1,30 @@
+{
+  "id": "judge-4",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer contains an extra word 'five' not present in the document text.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "timeout"
+  },
+  "actual": false,
+  "expected": true,
+  "passed": false,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 460,
+      "output_tokens": 75,
+      "total_tokens": 535,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 4.58953575000487
+}

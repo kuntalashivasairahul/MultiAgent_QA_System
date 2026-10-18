@@ -1,0 +1,17 @@
+{
+  "id": "private-timeout-faithfulness",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 701,
+      "output_tokens": 268,
+      "total_tokens": 969,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 267
+      }
+    }
+  },
+  "seconds": 10.60462704100064
+}

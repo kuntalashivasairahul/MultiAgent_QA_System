@@ -1,0 +1,30 @@
+{
+  "id": "unsupported-extra-claim",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "reason": "The question asks what the public example sets MaximumAttempts to. The document at id 1 states: 'The public example sets MaximumAttempts to 3.' This directly answers the specific query about MaximumAttempts. However, the answer includes an additional claim that 'it encrypts all payloads,' which is not supported by any evidence in the provided documents. There is no mention of encryption or payload handling in the text. Therefore, this factual claim is unsupported and must be excluded.",
+    "confidence": 0.5,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 519,
+      "output_tokens": 161,
+      "total_tokens": 680,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 4.675952833000338
+}

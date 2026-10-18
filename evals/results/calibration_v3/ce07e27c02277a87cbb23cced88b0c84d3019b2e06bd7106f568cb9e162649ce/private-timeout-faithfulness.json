@@ -1,0 +1,29 @@
+{
+  "id": "private-timeout-faithfulness",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "Detected by `heartbeat_timeout` (30s)"
+      }
+    ],
+    "reason": "The only provided document shows a generic Temporal worker configuration where heartbeat_timeout is set to 30 seconds. The question specifically asks for the HeartbeatTimeout value configured in the private Nova payments production Worker repository, which is not addressed by the public documentation. Therefore, the answer cannot be verified as correct for the private repository.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": "Nova payments production Worker HeartbeatTimeout"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 1058,
+      "output_tokens": 463,
+      "total_tokens": 1521,
+      "output_token_details": {
+        "reasoning": 319
+      }
+    }
+  },
+  "seconds": 10.10888941599842
+}

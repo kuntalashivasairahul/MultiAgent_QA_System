@@ -1,0 +1,26 @@
+{
+  "id": "private-timeout-faithfulness",
+  "verdict": {
+    "passed": false,
+    "reason": "The cited document is a public guide describing a generic implementation example, not the user's private 'Nova payments production Worker repository'. Public examples cannot establish an organization's private configuration. The document does not contain evidence of the specific configuration in the requested private repository.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "Worker crashes mid-Activity** → Detected by `heartbeat_timeout` (30s) → Exception caught by try/except → Workflow retries on new Worker"
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "Nova payments production Worker repository HeartbeatTimeout configuration"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 1196,
+      "output_tokens": 155,
+      "total_tokens": 1351
+    }
+  },
+  "seconds": 10.109321500000078
+}

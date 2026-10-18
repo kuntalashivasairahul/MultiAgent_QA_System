@@ -1,0 +1,25 @@
+{
+  "id": "incomplete-definition",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer includes claims not directly supported by the provided document.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "customization of Activity Execution behavior in Temporal SDKs"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 670,
+      "output_tokens": 53,
+      "total_tokens": 723,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 4.0249948339987895
+}

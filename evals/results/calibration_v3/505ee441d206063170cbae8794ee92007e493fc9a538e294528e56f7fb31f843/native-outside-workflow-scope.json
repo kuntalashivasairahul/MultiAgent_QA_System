@@ -1,0 +1,21 @@
+{
+  "id": "native-outside-workflow-scope",
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document only shows a code example of how to call a Nexus operation from within a workflow. It does not contain any information stating whether it is possible to eliminate the workflow and call the operation directly, nor does it provide guidance on direct invocation outside of a workflow context.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "call Nexus operation directly without workflow"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 1102,
+      "output_tokens": 102,
+      "total_tokens": 1204
+    }
+  },
+  "seconds": 10.06490599999961
+}

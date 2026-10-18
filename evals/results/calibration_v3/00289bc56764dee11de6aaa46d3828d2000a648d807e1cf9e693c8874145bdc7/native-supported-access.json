@@ -1,0 +1,38 @@
+{
+  "id": "native-supported-access",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 3,
+        "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+      },
+      {
+        "id": 8,
+        "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+      },
+      {
+        "id": 9,
+        "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+      }
+    ],
+    "reason": "The question asks what is required to access pre-release Cloud Run support for Temporal Serverless Workers. The documents consistently state that to request access, one must create a support ticket or contact their account team, and sign up for updates to hear when Cloud Run reaches Public Preview. This requirement is explicitly mentioned in multiple sources (IDs 3, 8, and 9), confirming the accuracy of the provided answer. All factual claims in the answer are directly supported by the cited documents.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 2326,
+      "output_tokens": 337,
+      "total_tokens": 2663,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 16.767726666999806
+}

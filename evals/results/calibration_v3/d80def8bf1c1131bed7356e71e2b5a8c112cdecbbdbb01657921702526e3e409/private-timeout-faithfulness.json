@@ -1,0 +1,25 @@
+{
+  "id": "private-timeout-faithfulness",
+  "verdict": {
+    "passed": false,
+    "reason": "Lack of evidence for private configuration",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "private configuration HeartbeatTimeout value Nova payments production Worker repository"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 630,
+      "output_tokens": 44,
+      "total_tokens": 674,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 3.523786707999534
+}

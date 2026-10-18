@@ -1,0 +1,110 @@
+{
+  "scope": "Real local HTTP process and validation checks, no inference claim",
+  "at": "2026-10-18T19:43:31.576508+00:00",
+  "code_sha256": {
+    "api.py": "f594a8f9514ec8debddeb6e7b84e655c8ace794a67ada06d031df365472b4ecc",
+    "graph_v3.py": "a8549d7dfda8dbd42a2d97d7eda5fc4ae111e21104f2e1075cf5e6551f5c63da",
+    "graph_v2.py": "72e9e00299aec037f9fefa468031b6bb3389543e54b536e57a62eae773277ba0",
+    "v3_llm.py": "97ecd0deea696d681dde5b6992b05d489cf477836e908f6b0f49d8941ad5b41d"
+  },
+  "checks": [
+    {
+      "path": "/health",
+      "status": 200,
+      "response": {
+        "status": "ok",
+        "scope": "process_only",
+        "version": "3.0",
+        "model_profile": {
+          "backend": "lmstudio",
+          "generation_model": "llama-3.1-8b-instruct",
+          "judge_model": "qwen/qwen3.8-27b",
+          "judge_backend": "groq",
+          "base_url": "http://127.0.0.1:1234/v1",
+          "judge_base_url": "https://api.groq.com/openai/v1",
+          "temperature": 0,
+          "max_tokens": 2048,
+          "timeout": 120,
+          "structured_output": "json_schema",
+          "judge_max_tokens": 2048,
+          "judge_timeout": 120,
+          "max_retries": 0,
+          "judge_max_retries": 1,
+          "judge_requests_per_second": 0.1,
+          "judge_structured_output": "json_object+pydantic",
+          "schema_parse_attempts": 2,
+          "model_weights_sha256": "f2be3e1a239c12c9f3f01a962b11fb2807f8032fdb63b0a5502ea42ddef55e44",
+          "judge_weights_sha256": null
+        }
+      }
+    },
+    {
+      "path": "/ask",
+      "request": {
+        "question": ""
+      },
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "type": "string_too_short",
+            "loc": [
+              "body",
+              "question"
+            ],
+            "msg": "String should have at least 1 character",
+            "input": "",
+            "ctx": {
+              "min_length": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/ask",
+      "request": {
+        "question": 42
+      },
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "type": "string_type",
+            "loc": [
+              "body",
+              "question"
+            ],
+            "msg": "Input should be a valid string",
+            "input": 42
+          }
+        ]
+      }
+    },
+    {
+      "path": "/ask",
+      "request": {
+        "question": "public question",
+        "extra": "forbidden"
+      },
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "type": "extra_forbidden",
+            "loc": [
+              "body",
+              "extra"
+            ],
+            "msg": "Extra inputs are not permitted",
+            "input": "forbidden"
+          }
+        ]
+      }
+    }
+  ],
+  "openapi_paths": [
+    "/health",
+    "/ask"
+  ]
+}

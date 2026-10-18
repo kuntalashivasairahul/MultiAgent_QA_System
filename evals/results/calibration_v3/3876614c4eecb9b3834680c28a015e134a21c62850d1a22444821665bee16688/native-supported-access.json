@@ -1,0 +1,72 @@
+{
+  "id": "native-supported-access",
+  "error": "ValueError",
+  "passed": false,
+  "validation_failures": [
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies the requirements for accessing the pre-release Cloud Run support as stated in the documents: creating a support ticket or contacting the account team, and signing up for updates.",
+        "quotes": [
+          {
+            "id": 3,
+            "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+          },
+          {
+            "id": 8,
+            "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies the requirements for accessing the pre-release Cloud Run support as stated in the documents: creating a support ticket or contacting the account team, and signing up for updates.",
+        "quotes": [
+          {
+            "id": 3,
+            "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+          },
+          {
+            "id": 8,
+            "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies the requirements for accessing the pre-release Cloud Run support as stated in the documents: creating a support ticket or contacting the account team, and signing up for updates.",
+        "quotes": [
+          {
+            "id": 3,
+            "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+          },
+          {
+            "id": 8,
+            "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    }
+  ],
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "total_tokens": 8918,
+      "input_tokens": 8323,
+      "output_tokens": 595
+    }
+  },
+  "seconds": 32.124063707997266
+}

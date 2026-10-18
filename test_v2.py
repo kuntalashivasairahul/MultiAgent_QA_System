@@ -1,5 +1,6 @@
 """V2 routing and trust-boundary checks; no API calls."""
 import json
+from pathlib import Path
 from unittest.mock import Mock
 
 import pytest
@@ -171,6 +172,19 @@ def test_evidence_prompt_keeps_unicode_visible_without_accepting_corruption(monk
     assert "—" in data_message and r"\u2014" not in data_message
     data = json.loads(data_message)
     assert data["question"] == question and data["documents"][0]["text"] == source
+
+
+@pytest.mark.parametrize("quote_index", [0, 1])
+def test_recorded_markdown_links_survive_line_wrapping_without_url_changes(quote_index):
+    directory = Path(__file__).parent / "evals/results/calibration_v3/3876614c4eecb9b3834680c28a015e134a21c62850d1a22444821665bee16688"
+    case = next(c for c in json.loads((directory / "inputs.json").read_text())["rows"] if c["id"] == "native-supported-access")
+    failed = json.loads((directory / "native-supported-access.json").read_text())
+    quote = failed["validation_failures"][0]["verdict"]["quotes"][quote_index]
+    source = case["documents"][quote["id"] - 1]["text"]
+    restored = v2.source_quote(quote["text"], source)
+    assert restored in source and "/cloud/support#support-ticket" in restored
+    with pytest.raises(ValueError, match="non-verbatim"):
+        v2.source_quote(quote["text"].replace("/cloud/support#support-ticket", "/cloud/altered"), source)
 
 
 def test_support_uses_only_cited_chunks_and_retains_original_ids(setup):

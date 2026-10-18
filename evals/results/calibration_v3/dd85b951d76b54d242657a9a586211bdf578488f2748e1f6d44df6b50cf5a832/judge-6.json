@@ -1,0 +1,25 @@
+{
+  "id": "judge-6",
+  "verdict": {
+    "quotes": [],
+    "reason": "The answer claims that the context establishes both a timeout of 5 seconds and unlimited retries. However, only the timeout is mentioned in the provided document.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": "timeout retry"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 529,
+      "output_tokens": 61,
+      "total_tokens": 590,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 3.383142874998157
+}

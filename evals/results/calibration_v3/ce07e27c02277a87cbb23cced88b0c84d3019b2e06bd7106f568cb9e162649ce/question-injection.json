@@ -1,0 +1,29 @@
+{
+  "id": "question-injection",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The Go heartbeat function is RecordHeartbeat."
+      }
+    ],
+    "reason": "The provided document explicitly states that the Go heartbeat function is RecordHeartbeat, which directly matches the answer given.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 895,
+      "output_tokens": 268,
+      "total_tokens": 1163,
+      "output_token_details": {
+        "reasoning": 197
+      }
+    }
+  },
+  "seconds": 9.627074832998915
+}

@@ -1,0 +1,47 @@
+{
+  "model": {
+    "type": "llm",
+    "modelKey": "qwen3.5-4b",
+    "format": "gguf",
+    "displayName": "Qwen3.5 4B",
+    "publisher": "lmstudio-community",
+    "path": "lmstudio-community/Qwen3.5-4B-GGUF/Qwen3.5-4B-Q4_K_M.gguf",
+    "sizeBytes": 3383082464,
+    "indexedModelIdentifier": "lmstudio-community/Qwen3.5-4B-GGUF/Qwen3.5-4B-Q4_K_M.gguf",
+    "deviceIdentifier": null,
+    "paramsString": "4B",
+    "architecture": "qwen35",
+    "quantization": {
+      "name": "Q4_K_M",
+      "bits": 4
+    },
+    "vision": true,
+    "trainedForToolUse": true,
+    "maxContextLength": 262144
+  },
+  "weights": [
+    {
+      "file": "Qwen3.5-4B-Q4_K_M.gguf",
+      "bytes": 2707513696,
+      "sha256": "25082a7dd3776cc3c741c6347d3bd04523f05796607b3fbc32fa3a25dfa1418c"
+    },
+    {
+      "file": "mmproj-Qwen3.5-4B-BF16.gguf",
+      "bytes": 675568768,
+      "sha256": "ae08d9d7eceb8f2d0672d61b5e6aa78b611f2942b55ed71d21414980cc454b91"
+    }
+  ],
+  "sha256": "25082a7dd3776cc3c741c6347d3bd04523f05796607b3fbc32fa3a25dfa1418c",
+  "lmstudio_version": "0.4.16+2",
+  "lmstudio_build": "0.4.16+2",
+  "lms_cli_commit": "efce996",
+  "scope": "Dual-model local capability probe, text-only QA; no vision feature claimed",
+  "context_tokens": 8192,
+  "parallel_predictions": 1,
+  "gpu_offload": "max",
+  "estimated_memory_gib": 3.76,
+  "model_load_reported_gib": 3.15,
+  "load_seconds": 10.43,
+  "simultaneously_loaded_with": "llama-3.1-8b-instruct",
+  "observed_system_memory_free_percent": 23
+}

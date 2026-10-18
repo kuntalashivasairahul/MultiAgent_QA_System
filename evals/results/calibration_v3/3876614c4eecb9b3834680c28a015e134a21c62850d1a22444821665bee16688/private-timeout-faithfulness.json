@@ -1,0 +1,21 @@
+{
+  "id": "private-timeout-faithfulness",
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document is a public guide ('guides/worker-execution-affinity.mdx') and does not contain information about the user's private 'Nova payments production Worker repository'. Public examples cannot establish private configuration. The document mentions a 30s heartbeat_timeout in a generic failure scenario context, but this does not prove the specific configuration of the private repository requested.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "Nova payments production Worker repository HeartbeatTimeout configuration"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 883,
+      "output_tokens": 124,
+      "total_tokens": 1007
+    }
+  },
+  "seconds": 10.379647917005059
+}

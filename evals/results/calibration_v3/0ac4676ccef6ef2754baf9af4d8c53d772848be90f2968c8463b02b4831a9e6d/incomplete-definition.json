@@ -1,0 +1,29 @@
+{
+  "id": "incomplete-definition",
+  "verdict": {
+    "passed": true,
+    "reason": "The answer correctly states that an Activity Execution is the run of an Activity whose behavior can be customized via SDK APIs, and lists the controllable aspects (timeouts, retry policy, heartbeat monitoring, asynchronous completion) exactly as described in the document.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "Activities in Temporal are individual units of work that often represent non-deterministic parts of the code logic, such as querying a database or calling an external service. The SDK provides APIs to customize the behavior of an Activity Execution.\n\nBy default, if an Activity attempts to communicate with another system and encounters a transient failure like a network issue, Temporal ensures the Activity is tried again automatically.\n\nHowever, Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 1015,
+      "output_tokens": 992,
+      "total_tokens": 2007,
+      "output_token_details": {
+        "reasoning": 775
+      }
+    }
+  },
+  "seconds": 11.32902945800015
+}

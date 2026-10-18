@@ -1,0 +1,29 @@
+{
+  "id": "question-injection",
+  "verdict": {
+    "passed": true,
+    "reason": "The answer correctly identifies the Go function as RecordHeartbeat, which is directly stated in the provided document.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The Go heartbeat function is RecordHeartbeat."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 815,
+      "output_tokens": 256,
+      "total_tokens": 1071,
+      "output_token_details": {
+        "reasoning": 187
+      }
+    }
+  },
+  "seconds": 10.037902249998297
+}

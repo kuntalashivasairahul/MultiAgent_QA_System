@@ -1,0 +1,6 @@
+{
+  "scope": "Reconstruction source verified against every recorded code SHA256; raw inputs/outcomes unchanged",
+  "base_commit": "9d92dc85117c71e30415d2befdbc955ab1a020e1",
+  "overrides": {},
+  "all_recorded_code_sha256_verified": true
+}

@@ -1,0 +1,25 @@
+{
+  "id": "native-outside-workflow-scope",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer makes an unsubstantiated claim. The provided document does not contain any information about eliminating a workflow or calling a Nexus operation directly.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "eliminate a workflow that only triggers one Nexus operation and call the operation directly"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 809,
+      "output_tokens": 73,
+      "total_tokens": 882,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 6.035757791003562
+}

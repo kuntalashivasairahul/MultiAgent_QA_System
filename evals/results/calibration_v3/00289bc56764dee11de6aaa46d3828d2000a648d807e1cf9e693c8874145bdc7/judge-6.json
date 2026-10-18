@@ -1,0 +1,25 @@
+{
+  "id": "judge-6",
+  "verdict": {
+    "quotes": [],
+    "reason": "The question asks what the context establishes, but the only document provided states 'The timeout is 5 seconds.' The answer includes an additional claim about 'retries are unlimited,' which is not supported by any evidence in the documents. Since this factual claim is unsupported and not entailed by the cited text, the answer introduces information that was not established in the context.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 507,
+      "output_tokens": 112,
+      "total_tokens": 619,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 3.4200553330010734
+}

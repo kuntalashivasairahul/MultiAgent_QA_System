@@ -1,0 +1,30 @@
+{
+  "id": "private-retry-scope",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 5,
+        "text": "RetryPolicy: &temporal.RetryPolicy{\n            MaximumAttempts: 3,\n        }"
+      }
+    ],
+    "reason": "The answer is partially correct. The provided code snippet does contain a RetryPolicy with MaximumAttempts set to 3.",
+    "confidence": 0.5,
+    "passed": false,
+    "retry_query": "workflow retry policy configuration in private Acme billing repository"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 878,
+      "output_tokens": 94,
+      "total_tokens": 972,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 7.364338458006387
+}

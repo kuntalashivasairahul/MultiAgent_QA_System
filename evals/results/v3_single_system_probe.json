@@ -1,0 +1,57 @@
+{
+  "scope": "One inspected development Judge probe after consolidating the schema into one SystemMessage; not a model promotion",
+  "case": "private-retry-scope",
+  "expected_accept": false,
+  "profile": {
+    "backend": "lmstudio",
+    "generation_model": "llama-3.1-8b-instruct",
+    "judge_model": "openai/gpt-oss-120b",
+    "judge_backend": "groq",
+    "base_url": "http://127.0.0.1:1234/v1",
+    "judge_base_url": "https://api.groq.com/openai/v1",
+    "temperature": 0,
+    "max_tokens": 2048,
+    "timeout": 120,
+    "max_retries": 0,
+    "judge_max_retries": 1,
+    "judge_requests_per_second": 0.1,
+    "structured_output": "json_schema",
+    "judge_structured_output": "json_object+pydantic",
+    "schema_parse_attempts": 2,
+    "model_weights_sha256": "f2be3e1a239c12c9f3f01a962b11fb2807f8032fdb63b0a5502ea42ddef55e44",
+    "judge_weights_sha256": null,
+    "quality_threshold": 0.8,
+    "max_attempts": 2,
+    "score_scope": "uncalibrated rubric quality, not probability",
+    "retry_policy": "missing-aspect-new-evidence"
+  },
+  "code_sha256": {
+    "v3_llm.py": "ca49631c76518e64cac41003b747ee0b15d22d9f67d0427b9e8346ce75d1ecda",
+    "graph_v3.py": "239bc580b0760e4647025f5f685d857aae4abc57240e1a8abd32d2cf082bb34d",
+    "graph_v2.py": "a3dac0ea99f165f03c9376aa5348d101e95e8bd43dfc3bb6926e5e468c11de56"
+  },
+  "quality": {
+    "quotes": [
+      {
+        "id": 5,
+        "text": "RetryPolicy: &temporal.RetryPolicy{\n            MaximumAttempts: 3,\n        }"
+      }
+    ],
+    "reason": "The answer states that the workflow configures a RetryPolicy with MaximumAttempts set to 3. The provided document (id 5) contains the code snippet where the RetryPolicy is defined with \"MaximumAttempts: 3\". This directly supports the answer and no other retry policy details are required by the question.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual_accept": true,
+  "seconds": 11.580872500002442,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 1238,
+      "output_tokens": 359,
+      "total_tokens": 1597,
+      "output_token_details": {
+        "reasoning": 234
+      }
+    }
+  }
+}

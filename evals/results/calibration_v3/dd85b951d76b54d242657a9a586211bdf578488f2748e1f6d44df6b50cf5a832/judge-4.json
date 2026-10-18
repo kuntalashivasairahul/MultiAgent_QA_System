@@ -1,0 +1,34 @@
+{
+  "id": "judge-4",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      },
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "reason": "The answer claim 'five' is a paraphrased form of the exact number '5' in the document text.",
+    "confidence": 0.5,
+    "passed": false,
+    "retry_query": "timeout duration"
+  },
+  "actual": false,
+  "expected": true,
+  "passed": false,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 524,
+      "output_tokens": 96,
+      "total_tokens": 620,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 5.77652804099489
+}

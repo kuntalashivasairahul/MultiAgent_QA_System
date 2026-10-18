@@ -1,0 +1,50 @@
+{
+  "id": "native-supported-access",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 3,
+        "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+      },
+      {
+        "id": 4,
+        "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+      },
+      {
+        "id": 5,
+        "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+      },
+      {
+        "id": 6,
+        "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+      },
+      {
+        "id": 8,
+        "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+      },
+      {
+        "id": 9,
+        "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+      }
+    ],
+    "reason": "The answer is correct. The provided documents mention that GCP Cloud Run support is in Pre-release and its APIs may change in backwards-incompatible ways.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 2225,
+      "output_tokens": 445,
+      "total_tokens": 2670,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 35.19004775000212
+}

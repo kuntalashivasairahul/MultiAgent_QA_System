@@ -1,0 +1,29 @@
+{
+  "id": "private-retry-scope",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 5,
+        "text": "MaximumAttempts: 3,"
+      }
+    ],
+    "reason": "The provided document (id 5) contains the workflow code where the RetryPolicy is defined with \"MaximumAttempts: 3\". This directly supports the answer that the workflow configures a RetryPolicy with MaximumAttempts set to 3. No other claims are made, and the answer is fully entailed by the evidence.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 1245,
+      "output_tokens": 341,
+      "total_tokens": 1586,
+      "output_token_details": {
+        "reasoning": 229
+      }
+    }
+  },
+  "seconds": 9.14488587500091
+}

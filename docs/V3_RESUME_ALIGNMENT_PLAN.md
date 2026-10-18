@@ -59,4 +59,4 @@ That wording requires passing retry behavior tests, API contract tests and actua
 3. Add the thin FastAPI interface and its contract/isolation tests.
 4. Complete measured validation, then update the résumé to match shipped behavior.
 
-The stable v2.1 push completed item 1. The current development work implements items 2 and 3 with 152 passing tests, local native controls and real HTTP smoke evidence. Item 4's complete matched quality comparison and fresh confirmation remain future work; no numerical accuracy improvement is claimed.
+The stable v2.1 push completed item 1. The initial v3 implementation completed items 2 and 3 with 152 passing tests, local native controls and real HTTP smoke evidence. Refinement now has 171 passing tests, independent role backends and additional evidence/protocol repairs. Native validation still reproduces a semantic scope failure, so the candidate is not promoted. Item 4's complete matched quality comparison and fresh confirmation remain future work; no numerical accuracy improvement is claimed. The [upgrade roadmap](V3_UPGRADE_ROADMAP.md) gives the next acceptance criteria and learning sequence.

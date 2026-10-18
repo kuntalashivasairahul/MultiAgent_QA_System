@@ -1,0 +1,74 @@
+{
+  "id": "native-outside-workflow-scope",
+  "error": "ValueError",
+  "passed": false,
+  "validation_failures": [
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document only shows how to call a Nexus operation from within a workflow (e.g., using ctx.start_nexus_operation). It does not contain any information about eliminating a workflow that only triggers a Nexus operation or invoking the operation directly without a workflow, so the answer's claim is unsupported.",
+        "quotes": [
+          {
+            "id": 7,
+            "text": "Call a Nexus Operation from a Workflow ... ctx.start_nexus_operation(...)"
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "directly invoke Nexus operation without workflow"
+      }
+    },
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document only shows how to invoke a Nexus operation from within a workflow (e.g., using ctx.start_nexus_operation) and does not contain any information about eliminating the workflow or calling the operation directly without a workflow.",
+        "quotes": [
+          {
+            "id": 7,
+            "text": "Call a Nexus Operation from a Workflow"
+          },
+          {
+            "id": 7,
+            "text": "ctx.start_nexus_operation(...)"
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "invoke Nexus operation without workflow"
+      }
+    },
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": false,
+        "reason": "The supplied document (id 7) only demonstrates how to call a Nexus operation from within a workflow (e.g., the heading \"Call a Nexus Operation from a Workflow\" and the use of ctx.start_nexus_operation). It contains no information about eliminating a workflow that only triggers a Nexus operation or invoking the operation directly without a workflow, so the answer's claim is unsupported.",
+        "quotes": [
+          {
+            "id": 7,
+            "text": "Call a Nexus Operation from a Workflow"
+          },
+          {
+            "id": 7,
+            "text": "ctx.start_nexus_operation(...)"
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "invoke Nexus operation without workflow"
+      }
+    }
+  ],
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "output_tokens": 1208,
+      "input_tokens": 4009,
+      "total_tokens": 5217,
+      "input_token_details": {
+        "cache_read": 1280
+      },
+      "output_token_details": {
+        "reasoning": 834
+      }
+    }
+  },
+  "seconds": 31.011847166002553
+}

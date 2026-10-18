@@ -24,11 +24,15 @@ class Citation(BaseModel):
     chunk_id: str
 
 
+class AnswerQuality(graph_v3.QualityVerdict):
+    validation_failures: list[dict] = Field(default_factory=list)
+
+
 class AskResponse(BaseModel):
     answer: str
     refused: bool
     citations: list[Citation]
-    quality: graph_v3.QualityVerdict
+    quality: AnswerQuality
     attempt_count: int = Field(ge=1, le=2)
     model_profile: dict
     seconds: float

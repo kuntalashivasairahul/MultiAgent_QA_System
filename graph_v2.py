@@ -107,19 +107,23 @@ def source_quote(text: str, source: str) -> str:
         # shortcut: nested Markdown fences stay literal; use a lexer if recovery is needed.
         if "```" in span or "~~~" in span:
             continue
-        haystack, offsets = normalize(span, links=True)
-        start = haystack.find(needle) if needle else -1
-        if start >= 0:
-            return span[offsets[start]:offsets[start + len(needle) - 1] + 1]
+        for links in (False, True):
+            haystack, offsets = normalize(span, links=links)
+            start = haystack.find(needle) if needle else -1
+            if start >= 0:
+                return span[offsets[start]:offsets[start + len(needle) - 1] + 1]
     raise ValueError("Evidence check returned a non-verbatim quote")
 
 
 def check(instruction: str, question: str, documents: list, *, answer: str | None = None,
-          ids: list[int] | None = None, chain=None) -> dict:
+          ids: list[int] | None = None, chain=None, include_context: bool = False) -> dict:
     records = json.loads(format_docs(documents))
     if ids is not None:
         records = [r for r in records if r["id"] in ids]
-    data = HumanMessage(json.dumps({"question": question, "documents": records, "answer": answer}, ensure_ascii=False))
+    payload = {"question": question, "documents": records, "answer": answer}
+    if include_context:
+        payload["background_documents"] = json.loads(format_docs(documents))
+    data = HumanMessage(json.dumps(payload, ensure_ascii=False))
     messages = [SystemMessage(instruction + "\n" + RULES), data]
     available = {r["id"]: r["text"] for r in records}
     failures = []

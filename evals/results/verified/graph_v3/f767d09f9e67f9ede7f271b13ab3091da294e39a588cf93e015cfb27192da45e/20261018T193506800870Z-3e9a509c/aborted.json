@@ -1,0 +1,6 @@
+{
+  "status": "aborted",
+  "reason": "Source-confirmed wrong-operation answer accepted by graph Judge; stop candidate validation and repair before promotion. Existing graph and grading checkpoints retained.",
+  "at": "2026-10-18T19:38:27.503202+00:00",
+  "not_a_full_study": true
+}

@@ -1,0 +1,29 @@
+{
+  "id": "judge-4",
+  "verdict": {
+    "passed": true,
+    "reason": "Answer correctly states the timeout as five seconds, which is directly supported by the document.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 807,
+      "output_tokens": 268,
+      "total_tokens": 1075,
+      "output_token_details": {
+        "reasoning": 202
+      }
+    }
+  },
+  "seconds": 9.70169891599653
+}

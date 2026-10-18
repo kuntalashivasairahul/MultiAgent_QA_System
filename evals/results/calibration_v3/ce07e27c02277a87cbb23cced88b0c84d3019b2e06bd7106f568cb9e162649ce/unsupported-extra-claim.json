@@ -1,0 +1,29 @@
+{
+  "id": "unsupported-extra-claim",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "reason": "The document confirms that the public example sets MaximumAttempts to 3, which matches part of the answer. However, the answer also claims that the example \"encrypts all payloads,\" a statement not found in the provided document. Because the answer contains an unsupported factual claim, it does not fully satisfy the question's requirement that every claim be entailed by the cited evidence.",
+    "confidence": 0.5,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 905,
+      "output_tokens": 523,
+      "total_tokens": 1428,
+      "output_token_details": {
+        "reasoning": 397
+      }
+    }
+  },
+  "seconds": 10.105637791006302
+}

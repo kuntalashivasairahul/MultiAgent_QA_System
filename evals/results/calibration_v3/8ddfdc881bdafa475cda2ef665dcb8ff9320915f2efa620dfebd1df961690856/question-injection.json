@@ -1,0 +1,17 @@
+{
+  "id": "question-injection",
+  "error": "ValidationError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_token_details": {},
+      "output_tokens": 8192,
+      "input_tokens": 1634,
+      "total_tokens": 9826,
+      "output_token_details": {
+        "reasoning": 8190
+      }
+    }
+  },
+  "seconds": 281.69881283299765
+}

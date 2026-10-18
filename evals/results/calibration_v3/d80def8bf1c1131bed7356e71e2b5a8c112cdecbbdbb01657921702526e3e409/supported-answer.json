@@ -1,0 +1,30 @@
+{
+  "id": "supported-answer",
+  "verdict": {
+    "passed": true,
+    "reason": "The answer completely addresses the exact question and every factual claim is entailed by the cited documents for the requested entity/SDK/scope.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 470,
+      "output_tokens": 77,
+      "total_tokens": 547,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 6.723540041995875
+}

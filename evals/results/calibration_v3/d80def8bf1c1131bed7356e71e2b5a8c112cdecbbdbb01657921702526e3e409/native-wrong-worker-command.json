@@ -1,0 +1,76 @@
+{
+  "id": "native-wrong-worker-command",
+  "error": "ValueError",
+  "passed": false,
+  "validation_failures": [
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer completely addresses the exact question and every factual claim is entailed by the cited documents for the requested entity/SDK/scope.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "uv run hello_standalone_activity/start_activity.py"
+          },
+          {
+            "id": 1,
+            "text": "Start a Standalone Activity without waiting for the result /*#start-activity */"
+          }
+        ],
+        "confidence": 0.5,
+        "retry_query": "command to start python worker in celery-to-standalone-activity migration guide"
+      }
+    },
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer does not completely address the exact question and every factual claim is not entailed by the cited documents for the requested entity/SDK/scope.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "uv run hello_standalone_activity/start_activity.py"
+          },
+          {
+            "id": 1,
+            "text": "Start a Standalone Activity without waiting for the result /*#start-activity */"
+          }
+        ],
+        "confidence": 0.5,
+        "retry_query": "command to start python worker in celery-to-standalone-activity migration guide"
+      }
+    },
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer does not completely address the exact question and every factual claim is not entailed by the cited documents for the requested entity/SDK/scope.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "uv run hello_standalone_activity/start_activity.py"
+          },
+          {
+            "id": 1,
+            "text": "Start a Standalone Activity without waiting for the result /*#start-activity */"
+          }
+        ],
+        "confidence": 0.5,
+        "retry_query": "command to start python worker in celery-to-standalone-activity migration guide"
+      }
+    }
+  ],
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_token_details": {},
+      "input_tokens": 2174,
+      "output_token_details": {
+        "reasoning": 0
+      },
+      "output_tokens": 359,
+      "total_tokens": 2533
+    }
+  },
+  "seconds": 23.314628000000084
+}

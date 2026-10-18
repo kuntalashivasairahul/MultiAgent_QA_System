@@ -1,0 +1,26 @@
+{
+  "id": "judge-7",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer claims the timeout is 60 seconds, but the cited document explicitly states the timeout is 5 seconds. The answer contradicts the provided evidence.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 740,
+      "output_tokens": 77,
+      "total_tokens": 817
+    }
+  },
+  "seconds": 9.725980750001327
+}

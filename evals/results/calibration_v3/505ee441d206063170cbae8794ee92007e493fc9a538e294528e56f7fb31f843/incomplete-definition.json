@@ -1,0 +1,30 @@
+{
+  "id": "incomplete-definition",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer claims that an Activity Execution is 'the run of an Activity'. The provided document defines Activities as 'individual units of work' and states that SDKs provide APIs to customize the behavior of an Activity Execution, but it does not explicitly define an Activity Execution as a 'run' of an Activity. While the list of customizable behaviors (timeouts, retry policy, heartbeat, async completion) is supported, the core definition of what an Activity Execution *is* (specifically the 'run' aspect) is not entailed by the text, which only describes what can be customized about it.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The SDK provides APIs to customize the behavior of an Activity Execution."
+      },
+      {
+        "id": 1,
+        "text": "However, Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion."
+      }
+    ],
+    "confidence": 0.5,
+    "retry_query": "Temporal Activity Execution definition run"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 954,
+      "output_tokens": 247,
+      "total_tokens": 1201
+    }
+  },
+  "seconds": 5.252815542000462
+}

@@ -1,0 +1,17 @@
+{
+  "id": "native-supported-access",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 2334,
+      "output_tokens": 589,
+      "total_tokens": 2923,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 588
+      }
+    }
+  },
+  "seconds": 26.63566174999869
+}

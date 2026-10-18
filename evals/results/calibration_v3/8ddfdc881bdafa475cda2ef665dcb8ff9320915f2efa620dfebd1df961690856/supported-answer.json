@@ -1,0 +1,30 @@
+{
+  "id": "supported-answer",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "reason": "The question asks for the value of MaximumAttempts set by 'the public example'. Document ID 1 explicitly states: 'The public example sets MaximumAttempts to 3.' The answer provided ('It sets MaximumAttempts to 3.') is fully supported by this document text, matching both the entity and the specific value requested without requiring external knowledge or private configuration assumptions.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 817,
+      "output_tokens": 2588,
+      "total_tokens": 3405,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 2441
+      }
+    }
+  },
+  "seconds": 90.02150145899941
+}

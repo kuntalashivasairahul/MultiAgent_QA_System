@@ -1,0 +1,30 @@
+{
+  "id": "judge-7",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer does not match the context established in the document.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 471,
+      "output_tokens": 73,
+      "total_tokens": 544,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 4.2908242080011405
+}

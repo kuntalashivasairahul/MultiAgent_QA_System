@@ -1,0 +1,17 @@
+{
+  "id": "unsupported-retention-cause",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 731,
+      "output_tokens": 285,
+      "total_tokens": 1016,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 284
+      }
+    }
+  },
+  "seconds": 11.31403679199866
+}

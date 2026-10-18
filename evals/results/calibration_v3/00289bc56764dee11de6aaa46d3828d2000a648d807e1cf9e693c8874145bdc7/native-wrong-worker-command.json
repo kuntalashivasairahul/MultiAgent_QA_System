@@ -1,0 +1,30 @@
+{
+  "id": "native-wrong-worker-command",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "```bash\nuv run hello_standalone_activity/start_activity.py\n```"
+      }
+    ],
+    "reason": "The question asks for the command that starts the Python Worker in the Celery-to-Standalone-Activity migration guide. The provided document titled 'Start a Standalone Activity without waiting for the result' includes a bash command: `uv run hello_standalone_activity/start_activity.py`. This command is directly cited and matches the requested action of starting a standalone activity, which corresponds to the Python Worker in this context. The answer accurately reflects the exact command as stated in the document.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 603,
+      "output_tokens": 166,
+      "total_tokens": 769,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 5.597464124999533
+}

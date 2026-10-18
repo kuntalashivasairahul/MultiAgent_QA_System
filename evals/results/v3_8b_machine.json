@@ -1,0 +1,48 @@
+{
+  "model": {
+    "type": "llm",
+    "modelKey": "meta-llama-3.1-8b-instruct",
+    "format": "gguf",
+    "displayName": "Meta Llama 3.1 8B Instruct",
+    "publisher": "lmstudio-community",
+    "path": "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
+    "sizeBytes": 4920739168,
+    "indexedModelIdentifier": "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
+    "deviceIdentifier": null,
+    "paramsString": "8B",
+    "architecture": "llama",
+    "quantization": {
+      "name": "Q4_K_M",
+      "bits": 4
+    },
+    "vision": false,
+    "trainedForToolUse": true,
+    "maxContextLength": 131072
+  },
+  "sha256": "f2be3e1a239c12c9f3f01a962b11fb2807f8032fdb63b0a5502ea42ddef55e44",
+  "lmstudio_version": "0.4.16+2",
+  "scope": "Measured local 8B candidate capability; hardware fit does not establish Judge quality or broad answer accuracy",
+  "observed_at": "2026-10-18T14:43:13.155584+00:00",
+  "hardware": {
+    "chip": "Apple M4",
+    "cpu_cores": 10,
+    "gpu_cores": 10,
+    "unified_memory_gib": 16
+  },
+  "runtime": {
+    "context_length": 8192,
+    "parallel_predictions": 1,
+    "gpu_offload": "max",
+    "loaded_model_identifier": "llama-3.1-8b-instruct",
+    "estimated_total_gpu_memory_gib": 5.44,
+    "model_load_report_gib": 4.58,
+    "model_load_seconds": 2.56,
+    "observed_system_memory_free_percent": [
+      53,
+      41
+    ]
+  },
+  "free_disk_gib_approx": 12,
+  "lmstudio_build": "0.4.16+2",
+  "lms_cli_commit": "efce996"
+}

@@ -1,0 +1,55 @@
+{
+  "scope": "Exact reconstruction of retained trial code against recorded SHA256 values; not a native rerun",
+  "base_commit": "9d92dc85117c71e30415d2befdbc955ab1a020e1",
+  "verified": [
+    {
+      "snapshot": "evals/results/calibration_v3/3876614c4eecb9b3834680c28a015e134a21c62850d1a22444821665bee16688/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/0e4561c2bb8bf48ecb76148baeb9e082c14b4c785d4b6232d4bb785ddc8b0b73/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/177c834171d81c05615c44dc4346451e4f5feafb379f7a4bd1e2574a47430145/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/8ddfdc881bdafa475cda2ef665dcb8ff9320915f2efa620dfebd1df961690856/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/ce07e27c02277a87cbb23cced88b0c84d3019b2e06bd7106f568cb9e162649ce/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/0ac4676ccef6ef2754baf9af4d8c53d772848be90f2968c8463b02b4831a9e6d/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/d80def8bf1c1131bed7356e71e2b5a8c112cdecbbdbb01657921702526e3e409/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/505ee441d206063170cbae8794ee92007e493fc9a538e294528e56f7fb31f843/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/00289bc56764dee11de6aaa46d3828d2000a648d807e1cf9e693c8874145bdc7/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/7f0fbf3fbf18409c15daa17f4a5dc99315690072ce1062fb3b9b0aab0eb01c57/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/dd85b951d76b54d242657a9a586211bdf578488f2748e1f6d44df6b50cf5a832/code_snapshot.json",
+      "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/verified/graph_v3/f767d09f9e67f9ede7f271b13ab3091da294e39a588cf93e015cfb27192da45e/20261018T193506800870Z-3e9a509c/code_snapshot.json",
+      "code_files_checked": 21
+    }
+  ],
+  "at": "2026-10-18T19:42:49.329092+00:00"
+}

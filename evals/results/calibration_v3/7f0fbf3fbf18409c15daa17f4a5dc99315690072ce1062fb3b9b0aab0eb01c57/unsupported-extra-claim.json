@@ -1,0 +1,17 @@
+{
+  "id": "unsupported-extra-claim",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 527,
+      "output_tokens": 183,
+      "total_tokens": 710,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 182
+      }
+    }
+  },
+  "seconds": 7.698638874993776
+}

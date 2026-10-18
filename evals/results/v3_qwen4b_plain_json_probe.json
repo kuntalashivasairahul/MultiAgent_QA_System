@@ -1,0 +1,25 @@
+{
+  "scope": "Plain final-channel JSON compatibility probe, no model promotion",
+  "content": "\n\n{\n  \"quotes\": [\n    {\n      \"id\": 1,\n      \"text\": \"The public example sets MaximumAttempts to 3.\"\n    }\n  ],\n  \"reason\": \"The provided answer 'It sets MaximumAttempts to 3.' is directly supported by document id 1 which states 'The public example sets MaximumAttempts to 3.'\",\n  \"confidence\": 1.0,\n  \"passed\": true,\n  \"retry_query\": \"\"\n}",
+  "usage": {
+    "input_tokens": 367,
+    "output_tokens": 1443,
+    "total_tokens": 1810,
+    "input_token_details": {},
+    "output_token_details": {
+      "reasoning": 1334
+    }
+  },
+  "parsed": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "reason": "The provided answer 'It sets MaximumAttempts to 3.' is directly supported by document id 1 which states 'The public example sets MaximumAttempts to 3.'",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  }
+}

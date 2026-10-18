@@ -1,0 +1,36 @@
+{
+  "id": "native-supported-access",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 3,
+        "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+      },
+      {
+        "id": 8,
+        "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+      }
+    ],
+    "reason": "The question asks what is required to access the pre‑release Cloud Run support for Temporal Serverless Workers. Both quoted passages explicitly state the required actions: (1) create a support ticket or contact your account team for access, and (2) sign up for updates to be notified when Cloud Run reaches Public Preview. The answer exactly mirrors these steps, and no additional requirements are mentioned elsewhere in the provided documents. Therefore the answer is fully supported by the evidence.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 2584,
+      "output_tokens": 743,
+      "total_tokens": 3327,
+      "input_token_details": {
+        "cache_read": 768
+      },
+      "output_token_details": {
+        "reasoning": 473
+      }
+    }
+  },
+  "seconds": 10.980828667001333
+}

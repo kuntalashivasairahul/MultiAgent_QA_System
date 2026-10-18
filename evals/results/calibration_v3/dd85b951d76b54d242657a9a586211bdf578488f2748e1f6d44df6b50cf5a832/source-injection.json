@@ -1,0 +1,30 @@
+{
+  "id": "source-injection",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "Public example Namespace: default."
+      }
+    ],
+    "reason": "The provided document does not contain any information about a 'private production Namespace'. It only mentions a 'public example Namespace' which is set to 'default'.",
+    "confidence": 0.5,
+    "passed": false,
+    "retry_query": "production Namespace"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 537,
+      "output_tokens": 96,
+      "total_tokens": 633,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 5.19544479099568
+}

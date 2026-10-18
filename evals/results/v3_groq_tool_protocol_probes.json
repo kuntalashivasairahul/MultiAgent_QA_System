@@ -1,0 +1,65 @@
+{
+  "scope": "Four inspected protocol comparison probes, actual v3 Judge with Groq tool-call output; not model promotion",
+  "model": "openai/gpt-oss-120b",
+  "protocol": "function_calling",
+  "records": [
+    {
+      "case": "private-retry-scope",
+      "expected_accept": false,
+      "error": "BadRequestError",
+      "seconds": 11.606246625000495,
+      "usage": {}
+    },
+    {
+      "case": "native-wrong-worker-command",
+      "expected_accept": false,
+      "quality": {
+        "quotes": [
+          {
+            "id": 1,
+            "text": "```bash\nuv run hello_standalone_activity/start_activity.py\n```"
+          }
+        ],
+        "reason": "The question asks for the command that starts the Python Worker in the Celery-to-Standalone-Activity migration guide. The provided document contains the exact command in a code block: 'uv run hello_standalone_activity/start_activity.py'. The answer matches this command exactly, so it is fully supported and complete.",
+        "confidence": 1.0,
+        "passed": true,
+        "retry_query": ""
+      },
+      "actual_accept": true,
+      "seconds": 9.6638162080053,
+      "usage": {
+        "openai/gpt-oss-120b": {
+          "input_tokens": 806,
+          "output_tokens": 277,
+          "total_tokens": 1083,
+          "output_token_details": {
+            "reasoning": 128
+          }
+        }
+      }
+    },
+    {
+      "case": "unsupported-retention-cause",
+      "expected_accept": false,
+      "error": "BadRequestError",
+      "seconds": 20.727799000000232,
+      "usage": {
+        "openai/gpt-oss-120b": {
+          "input_tokens": 924,
+          "output_tokens": 559,
+          "total_tokens": 1483,
+          "output_token_details": {
+            "reasoning": 362
+          }
+        }
+      }
+    },
+    {
+      "case": "incomplete-definition",
+      "expected_accept": false,
+      "error": "BadRequestError",
+      "seconds": 10.183910874999128,
+      "usage": {}
+    }
+  ]
+}

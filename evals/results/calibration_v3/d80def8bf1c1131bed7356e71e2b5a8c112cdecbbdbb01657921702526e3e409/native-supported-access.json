@@ -1,0 +1,25 @@
+{
+  "id": "native-supported-access",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer does not address the exact question about what is required to access the pre-release Cloud Run support for Temporal Serverless Workers.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "missing evidence on how to access pre-release Cloud Run support"
+  },
+  "actual": false,
+  "expected": true,
+  "passed": false,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 2161,
+      "output_tokens": 75,
+      "total_tokens": 2236,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 12.642596291996597
+}

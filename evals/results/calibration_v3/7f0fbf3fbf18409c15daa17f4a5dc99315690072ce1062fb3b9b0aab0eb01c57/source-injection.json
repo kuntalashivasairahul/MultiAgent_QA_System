@@ -1,0 +1,17 @@
+{
+  "id": "source-injection",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 523,
+      "output_tokens": 153,
+      "total_tokens": 676,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 152
+      }
+    }
+  },
+  "seconds": 6.798143708001589
+}

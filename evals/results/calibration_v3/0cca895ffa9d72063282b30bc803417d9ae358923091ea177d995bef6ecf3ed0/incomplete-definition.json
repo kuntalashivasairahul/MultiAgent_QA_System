@@ -1,0 +1,30 @@
+{
+  "id": "incomplete-definition",
+  "verdict": {
+    "passed": false,
+    "reason": "The cited document (ID 1) describes the APIs available to customize the behavior of an Activity Execution (timeouts, retry policy, heartbeat, async completion) and defines Activities as units of work. However, it does not explicitly define what an Activity Execution *consists of* (e.g., the specific lifecycle, state transitions, or components that make up the execution itself). The proposed answer conflates the customizable behaviors with the composition of the execution. While the answer is factually consistent with the document's mention of customizable behaviors, it does not fully answer the specific question of what the execution *consists of* based *only* on the provided text, which lacks a structural definition of the execution entity itself.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The SDK provides APIs to customize the behavior of an Activity Execution."
+      },
+      {
+        "id": 1,
+        "text": "However, Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion."
+      }
+    ],
+    "confidence": 0.5,
+    "retry_query": "Temporal Activity Execution definition components lifecycle"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 2057,
+      "output_tokens": 272,
+      "total_tokens": 2329
+    }
+  },
+  "seconds": 10.342206584005908
+}

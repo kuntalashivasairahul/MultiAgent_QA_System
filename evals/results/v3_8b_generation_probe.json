@@ -1,0 +1,346 @@
+{
+  "scope": "Inspected development probes of actual retrieval and local Llama Reasoning only; no Judge, no final pipeline acceptance or general accuracy claim",
+  "profile": {
+    "backend": "lmstudio",
+    "generation_model": "llama-3.1-8b-instruct",
+    "judge_model": "openai/gpt-oss-120b",
+    "judge_backend": "groq",
+    "base_url": "http://127.0.0.1:1234/v1",
+    "judge_base_url": "https://api.groq.com/openai/v1",
+    "temperature": 0,
+    "max_tokens": 2048,
+    "timeout": 120,
+    "max_retries": 0,
+    "judge_max_retries": 1,
+    "judge_requests_per_second": 0.1,
+    "structured_output": "json_schema",
+    "judge_structured_output": "json_object+pydantic",
+    "schema_parse_attempts": 2,
+    "model_weights_sha256": "f2be3e1a239c12c9f3f01a962b11fb2807f8032fdb63b0a5502ea42ddef55e44",
+    "quality_threshold": 0.8,
+    "max_attempts": 2,
+    "score_scope": "uncalibrated rubric quality, not probability",
+    "retry_policy": "missing-aspect-new-evidence"
+  },
+  "rows": [
+    {
+      "question": "What is the default Namespace name in Temporal?",
+      "answer": "default",
+      "citations": [
+        {
+          "id": 4,
+          "source": "production-deployment/self-hosted-guide/namespaces.mdx",
+          "chunk_id": "eb2cfd96d40e22dabb3fb570cf335ecca7083805acedd96692ada9310745d7ea"
+        },
+        {
+          "id": 6,
+          "source": "tctl-v1/index.mdx",
+          "chunk_id": "88b8eb4f086e38d86c404b494b479d3bc1444fecedf54057c2f022e6b28789ac"
+        }
+      ],
+      "documents": [
+        {
+          "id": "640650fb25328e3d4e89d81c15c3fdbc7140546421c285de3458535bdf13d59e",
+          "text": "## `TEMPORAL_DEFAULT_NAMESPACE`\n\nThe default [Namespace](/namespaces) that the Web UI opens first.\n\n",
+          "metadata": {
+            "source": "references/web-ui-environment-variables.mdx",
+            "title": "Temporal Web UI environment variables reference",
+            "headings": "`TEMPORAL_DEFAULT_NAMESPACE`",
+            "chunk_id": "640650fb25328e3d4e89d81c15c3fdbc7140546421c285de3458535bdf13d59e",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "dc76f7b7e3ac9e442f2b74bd2eccb3843fc68c59e2ee508249c0381e253823f1",
+          "text": "```\ntemporal operator namespace describe \\\n    --namespace YourNamespaceName\n```\n",
+          "metadata": {
+            "source": "cli/command-reference/operator.mdx",
+            "title": "Temporal CLI operator command reference",
+            "headings": "namespace > describe",
+            "chunk_id": "dc76f7b7e3ac9e442f2b74bd2eccb3843fc68c59e2ee508249c0381e253823f1",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "c4e17d6eb374a22b244ca842c4a276a2e3c05ce777a8aa2455bbe74d2b6e365e",
+          "text": "```\ntemporal operator namespace create \\\n    --namespace YourNewNamespaceName\n```\n",
+          "metadata": {
+            "source": "cli/command-reference/operator.mdx",
+            "title": "Temporal CLI operator command reference",
+            "headings": "namespace",
+            "chunk_id": "c4e17d6eb374a22b244ca842c4a276a2e3c05ce777a8aa2455bbe74d2b6e365e",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "eb2cfd96d40e22dabb3fb570cf335ecca7083805acedd96692ada9310745d7ea",
+          "text": "### The default Namespace\n\nIf no Namespace is specified, SDKs and CLI use the `default` Namespace. You must register this Namespace before using\nit.\n\nFor local development, the [`temporal server start-dev`](/cli/command-reference/server#start-dev) command automatically creates the\n`default` Namespace.\n\nFor all other deployment methods, create the `default` Namespace manually using the Temporal CLI:\n\n",
+          "metadata": {
+            "source": "production-deployment/self-hosted-guide/namespaces.mdx",
+            "title": "Managing Namespaces",
+            "headings": "Create a Namespace > The default Namespace",
+            "chunk_id": "eb2cfd96d40e22dabb3fb570cf335ecca7083805acedd96692ada9310745d7ea",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "19d79703e1bfc0483daf77b8c776c515f8f16880f1829eefd5689078b14bff67",
+          "text": "```bash\ntemporal operator namespace create --namespace default\n```\n",
+          "metadata": {
+            "source": "production-deployment/self-hosted-guide/namespaces.mdx",
+            "title": "Managing Namespaces",
+            "headings": "Create a Namespace > The default Namespace",
+            "chunk_id": "19d79703e1bfc0483daf77b8c776c515f8f16880f1829eefd5689078b14bff67",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "88b8eb4f086e38d86c404b494b479d3bc1444fecedf54057c2f022e6b28789ac",
+          "text": "### TEMPORAL_CLI_NAMESPACE\n\nSpecify a Namespace.\nBy setting this variable, you don't need to specify a `--namespace` modifier in a tctl command.\nThe default Namespace is `default`.\n\n",
+          "metadata": {
+            "source": "tctl-v1/index.mdx",
+            "title": "tctl v1.17 command reference",
+            "headings": "Environment variables > TEMPORAL_CLI_NAMESPACE",
+            "chunk_id": "88b8eb4f086e38d86c404b494b479d3bc1444fecedf54057c2f022e6b28789ac",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "31ab36681f02b01b716c4fa7e6f16a081583f1531f7424150b0f56ad703b8791",
+          "text": "```\ntemporal operator namespace describe \\\n    --namespace-id YourNamespaceId\n```\n",
+          "metadata": {
+            "source": "cli/command-reference/operator.mdx",
+            "title": "Temporal CLI operator command reference",
+            "headings": "namespace > describe",
+            "chunk_id": "31ab36681f02b01b716c4fa7e6f16a081583f1531f7424150b0f56ad703b8791",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "e1f24ef65a4037e57b320e6df4bbda11f52c8eac488442a7e16ef965ff5a4aae",
+          "text": "```\ntemporal operator namespace [command] [command options]\n```\n",
+          "metadata": {
+            "source": "cli/command-reference/operator.mdx",
+            "title": "Temporal CLI operator command reference",
+            "headings": "namespace",
+            "chunk_id": "e1f24ef65a4037e57b320e6df4bbda11f52c8eac488442a7e16ef965ff5a4aae",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "de6eb49f7aab18c4192ff6f980438097b2d5d9d0b99aee14417ac446ef1f2e79",
+          "text": "\nNamespace registration takes up to 15 seconds to complete. Wait for this process to finish before making calls to the\nNamespace.\n\n",
+          "metadata": {
+            "source": "production-deployment/self-hosted-guide/namespaces.mdx",
+            "title": "Managing Namespaces",
+            "headings": "Create a Namespace > The default Namespace",
+            "chunk_id": "de6eb49f7aab18c4192ff6f980438097b2d5d9d0b99aee14417ac446ef1f2e79",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "3a6c71de6d5c40bff0724bbd19f091de3d152e698e389835893f1228ff0be740",
+          "text": "\nUse the following options to change the behavior of this command. You can also use any of the [global flags](#global-flags) that apply to all subcommands.\n\n| Flag | Required | Description |\n|------|----------|-------------|\n| `--namespace-id` | No | **string** Namespace ID. |\n\n",
+          "metadata": {
+            "source": "cli/command-reference/operator.mdx",
+            "title": "Temporal CLI operator command reference",
+            "headings": "namespace > describe",
+            "chunk_id": "3a6c71de6d5c40bff0724bbd19f091de3d152e698e389835893f1228ff0be740",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "caab251bac881bfee9af90e967ebc31a0ddc432cb53c8fe5eff9e02295a45135",
+          "text": "## namespace\n\nManage Temporal Cluster (Service) Namespaces:\n\n",
+          "metadata": {
+            "source": "cli/command-reference/operator.mdx",
+            "title": "Temporal CLI operator command reference",
+            "headings": "namespace",
+            "chunk_id": "caab251bac881bfee9af90e967ebc31a0ddc432cb53c8fe5eff9e02295a45135",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "55b5cb3c2579785b361fc5faaa3f3d760756bac0eef446167737cabc675be8ea",
+          "text": "### describe\n\nProvide long-form information about a Namespace identified by its ID or name:\n\n",
+          "metadata": {
+            "source": "cli/command-reference/operator.mdx",
+            "title": "Temporal CLI operator command reference",
+            "headings": "namespace > describe",
+            "chunk_id": "55b5cb3c2579785b361fc5faaa3f3d760756bac0eef446167737cabc675be8ea",
+            "permitted_roles": "all"
+          }
+        }
+      ],
+      "seconds": 13.924945250000746,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 1521,
+          "output_tokens": 17,
+          "total_tokens": 1538,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      }
+    },
+    {
+      "question": "In the Celery-to-Standalone-Activity migration guide, what command starts the Python Worker?",
+      "answer": "python start_activity.py",
+      "citations": [
+        {
+          "id": 3,
+          "source": "guides/celery-to-standalone-activity.mdx",
+          "chunk_id": "c9d3cdac113e0060cde28a816b03b6280a854367e145a9da84bb78a9790c39fb"
+        }
+      ],
+      "documents": [
+        {
+          "id": "3233eb934e7a9d2944fb3f95fcfea4ec96ac3b3c816e0aff2539b1897f991d4b",
+          "text": "```bash\nuv run hello_standalone_activity/start_activity.py\n```\n",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities.mdx",
+            "title": "Standalone Activities Feature Guide",
+            "headings": "Start a Standalone Activity without waiting for the result {/* #start-activity */}",
+            "chunk_id": "3233eb934e7a9d2944fb3f95fcfea4ec96ac3b3c816e0aff2539b1897f991d4b",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "2b0acca396fd1efa76881f827532ea7d8de6b2c185ad43142fb76182ab056fb8",
+          "text": "\n\nfrom hello_standalone_activity.my_activity import compose_greeting\n\n\nasync def main():\n    connect_config = ClientConfig.load_client_connect_config()\n    connect_config.setdefault(\"target_host\", \"localhost:7233\")\n    client = await Client.connect(**connect_config)\n    worker = Worker(\n        client,\n        task_queue=\"my-standalone-activity-task-queue\",\n        activities=[compose_greeting],\n        activity_executor=ThreadPoolExecutor(5),\n    )\n    print(\"worker running...\", end=\"\", flush=True)\n    await worker.run()\n\n\nif __name__ == \"__main__\":\n    asyncio.run(main())`}\n\n\n{`uv run hello_standalone_activity/worker.py`}\n\n</>\n}>\n\n",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities-quickstart.mdx",
+            "title": "Standalone Activities Python Quickstart",
+            "headings": "Quickstart > Write an Activity function",
+            "chunk_id": "2b0acca396fd1efa76881f827532ea7d8de6b2c185ad43142fb76182ab056fb8",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "c9d3cdac113e0060cde28a816b03b6280a854367e145a9da84bb78a9790c39fb",
+          "text": "```bash\npython start_activity.py\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 7: Start an Activity in place of `.delay()`",
+            "chunk_id": "c9d3cdac113e0060cde28a816b03b6280a854367e145a9da84bb78a9790c39fb",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "a07ba433d029ad1942a47df5b2ae228d8faa26938c05af54dd2ab1d99f5a5675",
+          "text": "```\ntemporal-standalone/\n\u251c\u2500\u2500 my_activity.py        # The Activity (your former Celery task)\n\u251c\u2500\u2500 worker.py             # Runs the Worker\n\u251c\u2500\u2500 execute_activity.py   # Runs the Activity and waits for the result\n\u251c\u2500\u2500 start_activity.py     # Starts the Activity without waiting\n\u2514\u2500\u2500 inspect_activities.py # Lists and counts Activities\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 1: Set up your project directory",
+            "chunk_id": "a07ba433d029ad1942a47df5b2ae228d8faa26938c05af54dd2ab1d99f5a5675",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "bf4d9193246d8d5e678ed5fb4858833ac2f20439d5e2b2616025aabdec5b8e15",
+          "text": "\n\nIn this guide, you will migrate a Celery task to a Temporal Standalone Activity. You will convert the task into an Activity, run a Worker to process it, execute it both synchronously and fire-and-forget in place of your `.get()` and `.delay()` calls, migrate its retries to a Retry Policy, and inspect running Activities in place of Flower. By the end, you will have a working Temporal Application that reproduces the behavior of your Celery app with no Workflow code.\n\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "chunk_id": "bf4d9193246d8d5e678ed5fb4858833ac2f20439d5e2b2616025aabdec5b8e15",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "3e13fcc9458017176faa923a8073649a4233294f0928854f030d2e271656e915",
+          "text": "```bash\npython worker.py\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 5: Run a Worker to process the Activity",
+            "chunk_id": "3e13fcc9458017176faa923a8073649a4233294f0928854f030d2e271656e915",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "0d853c46c42c5ccc9b90963ba737d4f67405b3b86cb135049418ccebb5777b1b",
+          "text": "\nWith the Temporal Server and Worker running, open a new terminal in the `samples-python` directory and run:\n\n",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities.mdx",
+            "title": "Standalone Activities Feature Guide",
+            "headings": "Start a Standalone Activity without waiting for the result {/* #start-activity */}",
+            "chunk_id": "0d853c46c42c5ccc9b90963ba737d4f67405b3b86cb135049418ccebb5777b1b",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "defdd7a9b2ac3ef8d6272f5002fb41c38e4e2d1c6d8f760be02baa6136c7f5e0",
+          "text": "## Write an Activity function\n\nAn Activity in the Temporal Python SDK is just a normal function with the `@activity.defn`\ndecorator. It can optionally be an `async def`. The way you write a Standalone Activity is identical\nto how you write an Activity to be orchestrated by a Workflow. In fact, an Activity can be executed\nboth as a Standalone Activity and as a Workflow Activity.\n\nCreate [hello_standalone_activity/my_activity.py](https://github.com/temporalio/samples-python/blob/main/hello_standalone_activity/my_activity.py).\n\n\n\n\n\n{`import asyncio\nfrom concurrent.futures import ThreadPoolExecutor\n\nfrom temporalio.client import Client\nfrom temporalio.envconfig import ClientConfig\nfrom temporalio.worker import Worker\n\nfrom hello_standalone_activity.my_activity import compose_greeting",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities-quickstart.mdx",
+            "title": "Standalone Activities Python Quickstart",
+            "headings": "Quickstart > Write an Activity function",
+            "chunk_id": "defdd7a9b2ac3ef8d6272f5002fb41c38e4e2d1c6d8f760be02baa6136c7f5e0",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "2f85f0845def8a60244caefbdc8f64653bfc4464ad69f817ab62da40da51c317",
+          "text": "```python\n# start_activity.py\nimport asyncio\nfrom datetime import timedelta\n\nfrom temporalio.client import Client\n\nfrom my_activity import WelcomeEmailInput, send_welcome_email\n\n\nasync def main():\n    client = await Client.connect(\"localhost:7233\")\n\n    handle = await client.start_activity(\n        send_welcome_email,\n        args=[WelcomeEmailInput(42)],\n        id=\"welcome-email-delay\",\n        task_queue=\"email-tasks\",\n        start_to_close_timeout=timedelta(seconds=30),\n    )\n    print(\"Activity started\")\n\n    # Later, when you actually need the value, await the handle:\n    result = await handle.result()\n    print(f\"Result: {result}\")\n\n\nif __name__ == \"__main__\":\n    asyncio.run(main())\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 7: Start an Activity in place of `.delay()`",
+            "chunk_id": "2f85f0845def8a60244caefbdc8f64653bfc4464ad69f817ab62da40da51c317",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "2907cac835d72aebf4184140a07017e05808cbe82116f529a2014bdbf6a0373b",
+          "text": "\nYour project will grow into the following files as you work through the tutorial:\n\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 1: Set up your project directory",
+            "chunk_id": "2907cac835d72aebf4184140a07017e05808cbe82116f529a2014bdbf6a0373b",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "695807ec9c0302dd6a8d5fef2aaaba2d1f79131934e4cf3cd4e9ece0feb5e545",
+          "text": "\n\n\n\n[Celery](https://docs.celeryq.dev/en/stable/) is a distributed task queue that runs background jobs by pushing messages through a broker (such as Redis or RabbitMQ) to a pool of worker processes. Most Celery tasks are self-contained: send one email, resize one image, call one API. For that kind of single-step job, you want Durable Execution and automatic retries without having to stand up an orchestration layer around each task.\n\n[**Standalone Activities**](/standalone-activity) fit that need. A Standalone Activity is an Activity you start directly from a Temporal Client, without wrapping it in a Workflow. You get Temporal's durability, retries, timeouts, and visibility for an individual unit of work, which maps almost one-to-one onto a Celery task. Because there is no Workflow to run a single Activity, Standalone Activities also use fewer resources than orchestrating one Activity through a Workflow.",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "chunk_id": "695807ec9c0302dd6a8d5fef2aaaba2d1f79131934e4cf3cd4e9ece0feb5e545",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "c1ee6b6973ba5f7f639d2994202d73d631072831204dd2dc4f2c690fa69fb987",
+          "text": "\nThe `task_queue` name is the routing key that ties your Worker and your invocation scripts together, similar to a Celery queue name. Because your Activity is a synchronous function, you pass a `ThreadPoolExecutor` as the `activity_executor`; `max_workers` controls how many Activities run concurrently, much like Celery's `--concurrency` flag.\n\nStart the Worker:\n\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 5: Run a Worker to process the Activity",
+            "chunk_id": "c1ee6b6973ba5f7f639d2994202d73d631072831204dd2dc4f2c690fa69fb987",
+            "permitted_roles": "all"
+          }
+        }
+      ],
+      "seconds": 11.316690416999336,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 2381,
+          "output_tokens": 17,
+          "total_tokens": 2398,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "judge-4",
+  "verdict": {
+    "quotes": [],
+    "reason": "The question asks 'What does the context establish?' but the only document provided contains the statement 'The timeout is 5 seconds.' This does not explicitly state what the context establishes; it merely provides a fact about a timeout. The answer 'The timeout is five seconds' rephrases a detail from the text, but fails to address the broader question of what the context establishes. There is no evidence in the document that identifies or explains the scope, purpose, or content of the context itself. Therefore, the claim that the context establishes something is not supported by the provided information.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": true,
+  "passed": false,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 502,
+      "output_tokens": 155,
+      "total_tokens": 657,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 4.687127000004693
+}

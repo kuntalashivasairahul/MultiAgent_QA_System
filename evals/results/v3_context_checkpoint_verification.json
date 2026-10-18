@@ -1,0 +1,35 @@
+{
+  "scope": "Context-aware v3 development checkpoint, not stable promotion or accuracy certification",
+  "at": "2026-10-18T19:45:43.902313+00:00",
+  "code_sha256": {
+    "api.py": "f594a8f9514ec8debddeb6e7b84e655c8ace794a67ada06d031df365472b4ecc",
+    "graph_v3.py": "a8549d7dfda8dbd42a2d97d7eda5fc4ae111e21104f2e1075cf5e6551f5c63da",
+    "graph_v2.py": "72e9e00299aec037f9fefa468031b6bb3389543e54b536e57a62eae773277ba0",
+    "v3_llm.py": "97ecd0deea696d681dde5b6992b05d489cf477836e908f6b0f49d8941ad5b41d",
+    "evals/run_eval.py": "29a59431bda6ecd7d81c9f36b720e34cee96ceb31f3f8b702dca54d21b43006e",
+    "evals/calibrate_v3.py": "e4220c9715c05a17f239d0920f846d49a7c823109e0bd520d804e829aa5a2031",
+    "uv.lock": "165747edf565242f46a1576e6ef679bfb3f211ee43043e85fe64a0c939484456"
+  },
+  "full_suite": {
+    "passed": 171,
+    "seconds": 21.52,
+    "integration_tests": 5
+  },
+  "isolated_offline": {
+    "passed": 166,
+    "deselected_integration": 5,
+    "seconds": 13.41,
+    "no_env_file": true,
+    "no_corpus_or_index": true,
+    "provider_credentials_removed": true,
+    "installed_locked_interpreter_reused": true
+  },
+  "regression_before_fix": "New background/citation test failed with missing background_documents; passes after repair, with uncited quote rejection preserved.",
+  "native_study": "Context-aware fixed controls: 17 eligible, 15 scored, 14 passed, one unsupported causal explanation accepted, two RateLimitError gaps. Earlier fixed-12 candidate was aborted after wrong-operation acceptance. No stable or 8.5 promotion.",
+  "preflight_errata": [
+    "Incorrect supplied local weight hash rejected before inference.",
+    "Initial isolated snapshot omitted JSON fixtures; corrected snapshot passes with unchanged source.",
+    "Expanded control fixture has 17 cases; fixed-count assertion updated from 15 before inference."
+  ],
+  "claim_status": "Three roles, quality-threshold retrieval retry, FastAPI and genuine local Llama implemented; Groq-hosted generative Llama unavailable; date2025 unverified."
+}

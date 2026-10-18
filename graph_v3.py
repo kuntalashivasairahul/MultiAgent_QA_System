@@ -89,16 +89,23 @@ def judge(state: V3State) -> dict:
     else:
         quality = graph_v2.check(
             "Assess answer quality for the ORIGINAL question using ONLY the cited documents. "
-            "passed is true only if the answer completely addresses the exact entity/SDK/scope and EVERY claim is supported. "
+            "passed is true only if the answer completely addresses the exact question and EVERY factual claim "
+            "is entailed by the cited documents for the requested entity/SDK/scope. "
+            "Advice about a workaround does not establish a causal mechanism or timing rule. "
+            "Each explanatory claim needs evidence, not just a related recommendation. "
             "Score confidence as rubric quality: 1.0 fully supported and complete; 0.5 partial coverage; 0.0 unsupported/wrong scope. "
             "This score is not a probability. Public examples cannot establish private configuration. "
             "A concise answer can be complete; do not require details the question did not ask for. "
             "A similar command or term does not prove the requested operation or scope. "
             "retry_query must be search keywords for missing evidence, or empty if none; never copy these instructions. "
-            "Quote literal evidence supporting your decision; a high score cannot excuse unsupported claims.",
+            "Quote literal evidence supporting your decision; a high score cannot excuse unsupported claims."
+            " Other retrieved documents are background context for detecting contradictions or a mismatch of operation/scope. "
+            "They cannot support acceptance unless cited. Validate the proposed answer against the cited documents AND "
+            "reject it if the background distinguishes it from the requested operation. "
+            "Quotes must still come only from cited documents.",
             state["question"], state["documents"], answer=state["generation"],
             ids=[c["id"] for c in state["citations"]],
-            chain=v3_llm.structured(QualityVerdict, judge=True),
+            chain=v3_llm.structured(QualityVerdict, judge=True), include_context=True,
         )
     audit = {"attempt": state["attempt_count"], "query": state["retrieval_query"],
              "documents": [{"id": d.id, "text": d.page_content, "metadata": d.metadata} for d in state["documents"]],

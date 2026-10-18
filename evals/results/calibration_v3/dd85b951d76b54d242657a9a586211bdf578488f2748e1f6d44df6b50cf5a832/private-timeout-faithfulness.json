@@ -1,0 +1,34 @@
+{
+  "id": "private-timeout-faithfulness",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "- **Worker crashes mid-Activity** → Detected by `heartbeat_timeout` (30s)"
+      },
+      {
+        "id": 1,
+        "text": "→ Exception caught by try/except"
+      }
+    ],
+    "reason": "The answer is partially correct but lacks evidence that the configuration is for a private Nova payments production Worker repository.",
+    "confidence": 0.5,
+    "passed": false,
+    "retry_query": "HeartbeatTimeout value configured in private Nova payments production Worker repository"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 694,
+      "output_tokens": 113,
+      "total_tokens": 807,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 7.572555374994408
+}

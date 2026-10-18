@@ -1,0 +1,25 @@
+{
+  "id": "native-outside-workflow-scope",
+  "verdict": {
+    "quotes": [],
+    "reason": "The provided document describes how to trigger a Nexus operation from within a workflow using the `start_nexus_operation` method. However, it does not contain any information about whether it is possible to eliminate a workflow that triggers one Nexus operation and instead call the operation directly. The text only shows the syntax for initiating a Nexus operation inside a workflow, but provides no evidence or guidance on eliminating workflows or calling operations directly outside of them. Therefore, the claim in the answer cannot be supported by the document.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 876,
+      "output_tokens": 138,
+      "total_tokens": 1014,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 5.35425070799829
+}

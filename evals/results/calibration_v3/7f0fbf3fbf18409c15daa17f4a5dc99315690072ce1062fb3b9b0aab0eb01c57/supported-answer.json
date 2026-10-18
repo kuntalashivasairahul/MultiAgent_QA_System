@@ -1,0 +1,17 @@
+{
+  "id": "supported-answer",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 520,
+      "output_tokens": 173,
+      "total_tokens": 693,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 172
+      }
+    }
+  },
+  "seconds": 8.115766208000423
+}

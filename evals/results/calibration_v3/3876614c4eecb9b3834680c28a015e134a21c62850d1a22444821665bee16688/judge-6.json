@@ -1,0 +1,26 @@
+{
+  "id": "judge-6",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer claims that 'retries are unlimited,' but the provided document only states that 'The timeout is 5 seconds.' There is no evidence in the document to support the claim about unlimited retries.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "retries unlimited"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 697,
+      "output_tokens": 114,
+      "total_tokens": 811
+    }
+  },
+  "seconds": 9.495622708003793
+}

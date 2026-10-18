@@ -1,0 +1,17 @@
+{
+  "id": "private-retry-scope",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 887,
+      "output_tokens": 564,
+      "total_tokens": 1451,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 563
+      }
+    }
+  },
+  "seconds": 21.177613084000768
+}

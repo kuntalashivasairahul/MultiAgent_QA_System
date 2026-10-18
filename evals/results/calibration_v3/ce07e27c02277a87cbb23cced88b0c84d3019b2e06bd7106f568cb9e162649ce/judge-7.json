@@ -1,0 +1,29 @@
+{
+  "id": "judge-7",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "reason": "The document states the timeout is 5 seconds, while the answer claims it is 60 seconds. This contradicts the provided evidence, so the answer is not supported by the context.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 898,
+      "output_tokens": 368,
+      "total_tokens": 1266,
+      "output_token_details": {
+        "reasoning": 260
+      }
+    }
+  },
+  "seconds": 9.72399829099595
+}

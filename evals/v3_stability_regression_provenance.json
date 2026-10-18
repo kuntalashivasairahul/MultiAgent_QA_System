@@ -1,0 +1,23 @@
+{
+  "scope": "Fixed inspected development regression set for the 8.5 engineering release; not representative accuracy, fresh confirmation or the complete 40-question dataset",
+  "selection_before_native_execution": true,
+  "selection_rationale": "Three direct questions including wrong Worker command and pricing erratum; three concepts including prior quote failure; three multi-SDK cases; unsupported Nexus scope; two unknown/private facts",
+  "original_dataset": "golden_current_v21.jsonl",
+  "selected_ids": [
+    "dev-01",
+    "dev-02",
+    "dev-32",
+    "dev-13",
+    "dev-15",
+    "dev-16",
+    "dev-20",
+    "dev-21",
+    "dev-24",
+    "dev-30",
+    "dev-37",
+    "dev-38"
+  ],
+  "n": 12,
+  "no_question_or_reference_changes": true,
+  "nine_point_gate": "Complete final 40-question development and fresh source-reviewed confirmation remain outstanding"
+}

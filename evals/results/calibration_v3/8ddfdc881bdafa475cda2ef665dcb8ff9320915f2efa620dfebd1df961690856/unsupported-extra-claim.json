@@ -1,0 +1,30 @@
+{
+  "id": "unsupported-extra-claim",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "reason": "Document ID 1 states 'The public example sets MaximumAttempts to 3.', which supports the claim that MaximumAttempts is set to 3. However, the answer includes an additional claim ('encrypts all payloads') that is not present in Document ID 1. Since every factual claim must be entailed by the cited documents for passed=true, this unsupported addition results in a failed verdict.",
+    "confidence": 0.5,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 824,
+      "output_tokens": 3677,
+      "total_tokens": 4501,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 3524
+      }
+    }
+  },
+  "seconds": 128.17965050000203
+}

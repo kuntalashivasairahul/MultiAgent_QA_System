@@ -1,0 +1,29 @@
+{
+  "id": "native-wrong-worker-command",
+  "verdict": {
+    "passed": true,
+    "reason": "The answer exactly matches the command shown in the migration guide document, which starts the Python Worker.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "```bash\nuv run hello_standalone_activity/start_activity.py\n```"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 894,
+      "output_tokens": 271,
+      "total_tokens": 1165,
+      "output_token_details": {
+        "reasoning": 196
+      }
+    }
+  },
+  "seconds": 9.169043124995369
+}

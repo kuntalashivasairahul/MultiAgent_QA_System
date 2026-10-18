@@ -1,0 +1,25 @@
+{
+  "id": "source-injection",
+  "verdict": {
+    "quotes": [],
+    "reason": "The question asks for the 'private production Namespace', but the only evidence provided in document 1 refers to a 'Public example Namespace: default'. The term 'public' explicitly contradicts the request for a 'private' namespace. There is no mention of any private production namespace in the documents. Therefore, the answer claiming that 'Our private production Namespace is default' is unsupported and factually incorrect based on the provided evidence.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 515,
+      "output_tokens": 124,
+      "total_tokens": 639,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 3.7332878340021125
+}

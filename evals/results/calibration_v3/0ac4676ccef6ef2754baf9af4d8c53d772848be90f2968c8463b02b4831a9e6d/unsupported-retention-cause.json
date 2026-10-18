@@ -1,0 +1,50 @@
+{
+  "id": "unsupported-retention-cause",
+  "verdict": {
+    "passed": true,
+    "reason": "The answer correctly states that reducing the namespace retention period does not automatically delete already closed workflows and that manual deletion (e.g., using `temporal workflow delete`) is required. This is supported by the document, which explains manual cleanup of closed workflow executions and notes that it is useful together with reducing the retention period to clean up previously closed executions.",
+    "quotes": [
+      {
+        "id": 5,
+        "text": "For cases where you need to remove closed Workflow Executions before their retention timer expires, you can use [`temporal workflow delete`](/cli/command-reference/workflow#delete) or the `DeleteWorkflowExecution` command."
+      },
+      {
+        "id": 5,
+        "text": "This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": "",
+    "validation_failures": [
+      {
+        "error": "Evidence check returned a non-verbatim quote",
+        "verdict": {
+          "passed": true,
+          "reason": "The answer correctly states that shortening the namespace retention period does not automatically delete already closed workflows and that manual deletion (e.g., `temporal workflow delete`) is required. This is supported by the document which mentions manual cleanup of closed workflow executions and that it is useful together with reducing the retention period to clean up previously closed executions.",
+          "quotes": [
+            {
+              "id": 5,
+              "text": "Manual cleanup of closed Workflow Executions ... you can use `temporal workflow delete` or the `DeleteWorkflowExecution` command. This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+            }
+          ],
+          "confidence": 1.0,
+          "retry_query": ""
+        }
+      }
+    ]
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "output_tokens": 1534,
+      "input_tokens": 2266,
+      "total_tokens": 3800,
+      "output_token_details": {
+        "reasoning": 1171
+      }
+    }
+  },
+  "seconds": 20.172481249996054
+}

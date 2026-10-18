@@ -19,7 +19,7 @@ CASES = Path(__file__).with_name("v3_judge_controls.json")
 
 def main():
     cases = json.loads(CASES.read_text())["records"]
-    assert len(cases) == 15 and len({c["id"] for c in cases}) == 15
+    assert len(cases) == 17 and len({c["id"] for c in cases}) == 17
     for case in cases:
         assert type(case["expected_accept"]) is bool and case["question"].strip()
         assert case["citations"] and all(1 <= c["id"] <= len(case["documents"]) for c in case["citations"])

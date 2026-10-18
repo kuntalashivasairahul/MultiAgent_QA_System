@@ -1,0 +1,26 @@
+{
+  "id": "native-wrong-worker-command",
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 829,
+      "output_tokens": 161,
+      "total_tokens": 990
+    }
+  },
+  "seconds": 20.486515124001016,
+  "verdict": {
+    "passed": false,
+    "reason": "The cited document describes how to start a standalone activity (client-side execution) using `uv run hello_standalone_activity/start_activity.py`. It does not contain a migration guide from Celery to Standalone Activities, nor does it provide a command to start a Python Worker (server-side). The answer confuses the command for running an activity with the command for starting a worker.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "uv run hello_standalone_activity/start_activity.py"
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "Celery to Standalone Activity migration guide start Python Worker command"
+  },
+  "actual": false,
+  "expected": false
+}

@@ -1,0 +1,21 @@
+{
+  "id": "private-retry-scope",
+  "verdict": {
+    "passed": false,
+    "reason": "The question asks for the retry policy in a specific private repository ('Acme billing Workflow'). The provided document (id 5) is a generic design pattern example for a 'payments' package and does not identify itself as the 'Acme billing Workflow' repository. Public examples or generic code snippets cannot establish the configuration of a specific private organization's repository. Therefore, the answer is not supported by the cited documents for the requested scope.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "Acme billing Workflow repository retry policy configuration"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 2419,
+      "output_tokens": 136,
+      "total_tokens": 2555
+    }
+  },
+  "seconds": 10.009559499994793
+}

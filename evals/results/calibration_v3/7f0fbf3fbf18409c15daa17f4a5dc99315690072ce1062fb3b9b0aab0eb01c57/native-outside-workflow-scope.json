@@ -1,0 +1,17 @@
+{
+  "id": "native-outside-workflow-scope",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 884,
+      "output_tokens": 147,
+      "total_tokens": 1031,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 146
+      }
+    }
+  },
+  "seconds": 7.06405716700101
+}

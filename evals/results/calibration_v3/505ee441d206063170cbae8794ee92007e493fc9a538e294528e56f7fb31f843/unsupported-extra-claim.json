@@ -1,0 +1,26 @@
+{
+  "id": "unsupported-extra-claim",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer includes an unsupported claim that the example 'encrypts all payloads.' The provided document only states that MaximumAttempts is set to 3 and contains no information regarding payload encryption.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "confidence": 0.5,
+    "retry_query": "public example encrypts payloads"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 745,
+      "output_tokens": 115,
+      "total_tokens": 860
+    }
+  },
+  "seconds": 11.23759970899846
+}

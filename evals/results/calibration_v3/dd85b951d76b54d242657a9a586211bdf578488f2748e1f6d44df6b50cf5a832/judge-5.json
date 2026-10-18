@@ -1,0 +1,25 @@
+{
+  "id": "judge-5",
+  "verdict": {
+    "quotes": [],
+    "reason": "The answer claim 'The timeout is 60 seconds' is not supported by the provided document. The document text only mentions a timeout of 5 seconds, but does not provide any information about it being 60 seconds.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.1-8b-instruct": {
+      "input_tokens": 525,
+      "output_tokens": 76,
+      "total_tokens": 601,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 4.425153291005699
+}

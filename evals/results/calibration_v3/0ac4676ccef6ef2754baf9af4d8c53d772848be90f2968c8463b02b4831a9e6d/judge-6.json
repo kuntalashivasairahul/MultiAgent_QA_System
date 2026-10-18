@@ -1,0 +1,29 @@
+{
+  "id": "judge-6",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer adds a claim that \"retries are unlimited,\" which is not present in the provided document. Only the timeout statement is supported.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "retries"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 812,
+      "output_tokens": 308,
+      "total_tokens": 1120,
+      "output_token_details": {
+        "reasoning": 234
+      }
+    }
+  },
+  "seconds": 10.316008875000989
+}

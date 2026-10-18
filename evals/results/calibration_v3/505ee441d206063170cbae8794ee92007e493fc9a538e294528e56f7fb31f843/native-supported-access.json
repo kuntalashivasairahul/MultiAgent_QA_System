@@ -1,0 +1,30 @@
+{
+  "id": "native-supported-access",
+  "verdict": {
+    "passed": true,
+    "reason": "The answer correctly identifies the requirements for accessing the pre-release Cloud Run support as stated in the documents: creating a support ticket or contacting the account team, and signing up for updates.",
+    "quotes": [
+      {
+        "id": 3,
+        "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+      },
+      {
+        "id": 8,
+        "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 2552,
+      "output_tokens": 221,
+      "total_tokens": 2773
+    }
+  },
+  "seconds": 10.773988875000214
+}

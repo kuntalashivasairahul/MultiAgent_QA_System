@@ -1,0 +1,30 @@
+{
+  "id": "unsupported-retention-cause",
+  "verdict": {
+    "passed": true,
+    "reason": "The answer correctly explains that reducing the retention period does not automatically delete existing closed workflows, which aligns with the document stating that manual cleanup is required for cases where you need to remove closed Workflow Executions before their retention timer expires. The document explicitly mentions using `temporal workflow delete` for this purpose, supporting the answer's recommendation.",
+    "quotes": [
+      {
+        "id": 5,
+        "text": "For cases where you need to remove closed Workflow Executions before their retention timer expires, you can use [`temporal workflow delete`](/cli/command-reference/workflow#delete) or the `DeleteWorkflowExecution` command."
+      },
+      {
+        "id": 5,
+        "text": "This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 913,
+      "output_tokens": 184,
+      "total_tokens": 1097
+    }
+  },
+  "seconds": 10.2086175000004
+}

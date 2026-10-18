@@ -1,0 +1,25 @@
+{
+  "id": "judge-5",
+  "verdict": {
+    "quotes": [],
+    "reason": "The question asks what the context establishes, but the only document provided states 'The timeout is 5 seconds.' The answer claims 'The timeout is 60 seconds,' which contradicts the evidence in the document. There is no support in the text for a 60-second timeout. Therefore, the answer is factually incorrect and not entailed by the documents.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 504,
+      "output_tokens": 113,
+      "total_tokens": 617,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 3.3527273750005406
+}

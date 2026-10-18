@@ -271,7 +271,7 @@
         },
         {
           "id": "1ab2742f9df0d45c0b02bcb0e8fec862bd8499aeabf53b92a76ffb1d08deea53",
-          "text": "## Best practices\n\n- **Match the cap to the cost model.** If the API charges per call, set `maximum_attempts` to the maximum number of calls you are willing to pay for per Workflow execution.\n- **Combine with `StartToCloseTimeout`.** A per-attempt timeout prevents a slow response from consuming the entire retry budget on a single hanging call.\n- **Catch `ActivityError` in the Workflow.** Handle the exhausted-retries case explicitly — log, alert, compensate, or escalate — rather than letting it fail the Workflow silently.\n- **Use idempotency keys.** When retrying, it's vital to have downstream systems detect and discard duplicate calls to avoid duplicate downstream effects.\n- **Prefer non-retryable errors for structural failures.** If the failure is not transient (for example, invalid input), mark it as non-retryable rather than relying solely on `maximum_attempts`.\n\n",
+          "text": "## Best practices\n\n- **Match the cap to the cost model.** If the API charges per call, set `maximum_attempts` to the maximum number of calls you are willing to pay for per Workflow execution.\n- **Combine with `StartToCloseTimeout`.** A per-attempt timeout prevents a slow response from consuming the entire retry budget on a single hanging call.\n- **Catch `ActivityError` in the Workflow.** Handle the exhausted-retries case explicitly \u2014 log, alert, compensate, or escalate \u2014 rather than letting it fail the Workflow silently.\n- **Use idempotency keys.** When retrying, it's vital to have downstream systems detect and discard duplicate calls to avoid duplicate downstream effects.\n- **Prefer non-retryable errors for structural failures.** If the failure is not transient (for example, invalid input), mark it as non-retryable rather than relying solely on `maximum_attempts`.\n\n",
           "metadata": {
             "source": "design-patterns/fixed-count-retries.mdx",
             "headings": "Best practices",
@@ -282,7 +282,7 @@
         },
         {
           "id": "bd408edbb520038494a518093899aba59d6437a36c7ae5cd5d7f99064e2fe92c",
-          "text": "```go\n// workflow.go\npackage payments\n\nimport (\n    \"errors\"\n    \"time\"\n\n    enumspb \"go.temporal.io/api/enums/v1\"\n    \"go.temporal.io/sdk/temporal\"\n    \"go.temporal.io/sdk/workflow\"\n)\n\nfunc PaymentWorkflow(ctx workflow.Context, orderID string) (string, error) {\n    ao := workflow.ActivityOptions{\n        StartToCloseTimeout: 10 * time.Second,\n        RetryPolicy: &temporal.RetryPolicy{\n            MaximumAttempts: 3,\n        },\n    }\n    ctx = workflow.WithActivityOptions(ctx, ao)\n\n    var result string\n    err := workflow.ExecuteActivity(ctx, ChargePaymentAPI, orderID).Get(ctx, &result)\n    if err != nil {\n        var actErr *temporal.ActivityError\n        if errors.As(err, &actErr) && actErr.RetryState() == enumspb.RETRY_STATE_MAXIMUM_ATTEMPTS_REACHED {\n            // All retries exhausted — handle the failure here.\n            // Options: alert on-call, trigger a compensation activity, or escalate to a human.\n            workflow.GetLogger(ctx).Error(\"Payment failed: all 3 attempts exhausted\",\n                \"orderID\", orderID)\n        }\n        return \"\", err\n    }\n    return result, nil\n}\n```\n",
+          "text": "```go\n// workflow.go\npackage payments\n\nimport (\n    \"errors\"\n    \"time\"\n\n    enumspb \"go.temporal.io/api/enums/v1\"\n    \"go.temporal.io/sdk/temporal\"\n    \"go.temporal.io/sdk/workflow\"\n)\n\nfunc PaymentWorkflow(ctx workflow.Context, orderID string) (string, error) {\n    ao := workflow.ActivityOptions{\n        StartToCloseTimeout: 10 * time.Second,\n        RetryPolicy: &temporal.RetryPolicy{\n            MaximumAttempts: 3,\n        },\n    }\n    ctx = workflow.WithActivityOptions(ctx, ao)\n\n    var result string\n    err := workflow.ExecuteActivity(ctx, ChargePaymentAPI, orderID).Get(ctx, &result)\n    if err != nil {\n        var actErr *temporal.ActivityError\n        if errors.As(err, &actErr) && actErr.RetryState() == enumspb.RETRY_STATE_MAXIMUM_ATTEMPTS_REACHED {\n            // All retries exhausted \u2014 handle the failure here.\n            // Options: alert on-call, trigger a compensation activity, or escalate to a human.\n            workflow.GetLogger(ctx).Error(\"Payment failed: all 3 attempts exhausted\",\n                \"orderID\", orderID)\n        }\n        return \"\", err\n    }\n    return result, nil\n}\n```\n",
           "metadata": {
             "title": "Fixed Count of Retries",
             "permitted_roles": "all",
@@ -397,7 +397,7 @@
       "documents": [
         {
           "id": "0ff5fd7c5fc31cc60479d95ba0a52963ca0593e88d464d6895f7cad10f17842c",
-          "text": "\n\n**Failure Scenarios:**\n\n- **Worker crashes mid-Activity** → Detected by `heartbeat_timeout` (30s) → Exception caught by try/except → Workflow retries on new Worker\n- **Worker crashes before picking up Task** → Detected by `schedule_to_start_timeout` (5 min) → Exception caught → Workflow retries on new Worker\n- **All Workers fail** → Loop exhausts max attempts → Workflow fails after 3 attempts (configurable)\n\n**Enhanced Workflow with fallback:**\n\n",
+          "text": "\n\n**Failure Scenarios:**\n\n- **Worker crashes mid-Activity** \u2192 Detected by `heartbeat_timeout` (30s) \u2192 Exception caught by try/except \u2192 Workflow retries on new Worker\n- **Worker crashes before picking up Task** \u2192 Detected by `schedule_to_start_timeout` (5 min) \u2192 Exception caught \u2192 Workflow retries on new Worker\n- **All Workers fail** \u2192 Loop exhausts max attempts \u2192 Workflow fails after 3 attempts (configurable)\n\n**Enhanced Workflow with fallback:**\n\n",
           "metadata": {
             "permitted_roles": "all",
             "source": "guides/worker-execution-affinity.mdx",
@@ -417,7 +417,7 @@
     },
     {
       "id": "native-supported-access",
-      "question": "What is required to access the pre‑release Cloud Run support for Temporal Serverless Workers?",
+      "question": "What is required to access the pre\u2011release Cloud Run support for Temporal Serverless Workers?",
       "answer": "Create a support ticket or contact your account team for access, and sign up for updates to hear when Cloud Run reaches Public Preview.",
       "documents": [
         {
@@ -628,7 +628,7 @@
         },
         {
           "id": "a07ba433d029ad1942a47df5b2ae228d8faa26938c05af54dd2ab1d99f5a5675",
-          "text": "```\ntemporal-standalone/\n├── my_activity.py        # The Activity (your former Celery task)\n├── worker.py             # Runs the Worker\n├── execute_activity.py   # Runs the Activity and waits for the result\n├── start_activity.py     # Starts the Activity without waiting\n└── inspect_activities.py # Lists and counts Activities\n```\n",
+          "text": "```\ntemporal-standalone/\n\u251c\u2500\u2500 my_activity.py        # The Activity (your former Celery task)\n\u251c\u2500\u2500 worker.py             # Runs the Worker\n\u251c\u2500\u2500 execute_activity.py   # Runs the Activity and waits for the result\n\u251c\u2500\u2500 start_activity.py     # Starts the Activity without waiting\n\u2514\u2500\u2500 inspect_activities.py # Lists and counts Activities\n```\n",
           "metadata": {
             "source": "guides/celery-to-standalone-activity.mdx",
             "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
@@ -776,7 +776,7 @@
         },
         {
           "id": "ec6250598ee8574c5030739b4ba3e5305d5f24c155403bb956825b4f8c763f41",
-          "text": "\nOpen the [Temporal Web UI](http://localhost:8233) and switch between Namespaces to see both Workflow Executions.\nIn `my-caller-namespace`, find the `NexusCallerWorkflow` execution — you should see `NexusOperationScheduled`, `NexusOperationStarted`, and `NexusOperationCompleted` events in its history.\nIn `default`, find the `SayHelloWorkflow` execution that was started by the Nexus Operation.\n\n\n\n\n",
+          "text": "\nOpen the [Temporal Web UI](http://localhost:8233) and switch between Namespaces to see both Workflow Executions.\nIn `my-caller-namespace`, find the `NexusCallerWorkflow` execution \u2014 you should see `NexusOperationScheduled`, `NexusOperationStarted`, and `NexusOperationCompleted` events in its history.\nIn `default`, find the `SayHelloWorkflow` execution that was started by the Nexus Operation.\n\n\n\n\n",
           "metadata": {
             "source": "develop/java/nexus/quickstart.mdx",
             "title": "Nexus Java Quickstart",
@@ -787,7 +787,7 @@
         },
         {
           "id": "00b361a932d818d75214ace973c480a303ac0ae5c465a5729720d09033bce462",
-          "text": "\n\n\n  Requires Go SDK `v1.46.0` or above. All APIs are experimental and may be subject to backwards-incompatible changes.\n\n\n[Standalone Nexus Operations](/standalone-nexus-operation) let you run Nexus Operation Executions independently, without\nbeing orchestrated by a Workflow. Instead of calling a Nexus Operation from within a Workflow Definition using\n`workflow.NewNexusClient()`, you execute a Standalone Nexus Operation directly from a Nexus Client created using\n`client.NewNexusClient()`.\n\nStandalone Nexus Operations use the same Nexus Service contract, Operation handlers, and Worker setup as\nWorkflow-driven Operations — only the execution path differs. See the [Nexus feature guide](/develop/go/nexus/feature-guide) for details on\n[defining a Service contract](/develop/go/nexus/feature-guide#define-nexus-service-contract),\n[developing Operation handlers](/develop/go/nexus/feature-guide#develop-nexus-service-operation-handlers), and\n[registering a Service in a Worker](/develop/go/nexus/feature-guide#register-a-nexus-service-in-a-worker).\n\nThis page focuses on the client-side APIs that are unique to Standalone Nexus Operations:",
+          "text": "\n\n\n  Requires Go SDK `v1.46.0` or above. All APIs are experimental and may be subject to backwards-incompatible changes.\n\n\n[Standalone Nexus Operations](/standalone-nexus-operation) let you run Nexus Operation Executions independently, without\nbeing orchestrated by a Workflow. Instead of calling a Nexus Operation from within a Workflow Definition using\n`workflow.NewNexusClient()`, you execute a Standalone Nexus Operation directly from a Nexus Client created using\n`client.NewNexusClient()`.\n\nStandalone Nexus Operations use the same Nexus Service contract, Operation handlers, and Worker setup as\nWorkflow-driven Operations \u2014 only the execution path differs. See the [Nexus feature guide](/develop/go/nexus/feature-guide) for details on\n[defining a Service contract](/develop/go/nexus/feature-guide#define-nexus-service-contract),\n[developing Operation handlers](/develop/go/nexus/feature-guide#develop-nexus-service-operation-handlers), and\n[registering a Service in a Worker](/develop/go/nexus/feature-guide#register-a-nexus-service-in-a-worker).\n\nThis page focuses on the client-side APIs that are unique to Standalone Nexus Operations:",
           "metadata": {
             "source": "develop/go/nexus/standalone-operations.mdx",
             "title": "Standalone Nexus Operations - Go SDK",
@@ -820,7 +820,7 @@
         },
         {
           "id": "f9ab34c84bf363353e1f1d21d7ea102c06662e5aec88a667d05cd4baa8bc91a5",
-          "text": "## What is a Standalone Nexus Operation? {/* #standalone-nexus-operation */}\n\nA Standalone Nexus Operation is a top-level [Nexus Operation Execution](/nexus/operations) started\ndirectly by a [Client](/encyclopedia/architecture/temporal-sdks#temporal-client), without using a caller\nWorkflow. Instead of calling a Nexus Operation from within a Workflow Definition, you execute it\ndirectly from a Nexus Client created from the Temporal SDK Client and bound to a\n[Nexus Endpoint](/nexus/endpoints) and Service.\n\n<div style={{textAlign: 'center', margin: '2rem 0'}}>\n  <a href=\"/diagrams/standalone-nexus-operations-vs-workflowlight.svg\" target=\"_blank\" rel=\"noopener noreferrer\">\n    \n  </a>\n</div>\n\nStandalone Nexus Operations use the same Service contract, Operation handlers, and Worker setup as\nWorkflow-driven Operations — only the caller side differs. The same Operation can be executed as a\nStandalone Nexus Operation and as a Workflow-driven Nexus Operation with no handler code changes.",
+          "text": "## What is a Standalone Nexus Operation? {/* #standalone-nexus-operation */}\n\nA Standalone Nexus Operation is a top-level [Nexus Operation Execution](/nexus/operations) started\ndirectly by a [Client](/encyclopedia/architecture/temporal-sdks#temporal-client), without using a caller\nWorkflow. Instead of calling a Nexus Operation from within a Workflow Definition, you execute it\ndirectly from a Nexus Client created from the Temporal SDK Client and bound to a\n[Nexus Endpoint](/nexus/endpoints) and Service.\n\n<div style={{textAlign: 'center', margin: '2rem 0'}}>\n  <a href=\"/diagrams/standalone-nexus-operations-vs-workflowlight.svg\" target=\"_blank\" rel=\"noopener noreferrer\">\n    \n  </a>\n</div>\n\nStandalone Nexus Operations use the same Service contract, Operation handlers, and Worker setup as\nWorkflow-driven Operations \u2014 only the caller side differs. The same Operation can be executed as a\nStandalone Nexus Operation and as a Workflow-driven Nexus Operation with no handler code changes.",
           "metadata": {
             "source": "encyclopedia/nexus/standalone-nexus-operation.mdx",
             "title": "Standalone Nexus Operation",
@@ -883,6 +883,302 @@
       ],
       "expected_accept": false,
       "origin": "Inspected native 3B failure: cited Rust code calls Nexus from inside a Workflow and does not establish eliminating the Workflow."
+    },
+    {
+      "id": "native-same-guide-wrong-operation",
+      "question": "In the Celery-to-Standalone-Activity migration guide, what command starts the Python Worker?",
+      "answer": "python start_activity.py",
+      "documents": [
+        {
+          "id": "3233eb934e7a9d2944fb3f95fcfea4ec96ac3b3c816e0aff2539b1897f991d4b",
+          "text": "```bash\nuv run hello_standalone_activity/start_activity.py\n```\n",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities.mdx",
+            "title": "Standalone Activities Feature Guide",
+            "headings": "Start a Standalone Activity without waiting for the result {/* #start-activity */}",
+            "chunk_id": "3233eb934e7a9d2944fb3f95fcfea4ec96ac3b3c816e0aff2539b1897f991d4b",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "2b0acca396fd1efa76881f827532ea7d8de6b2c185ad43142fb76182ab056fb8",
+          "text": "\n\nfrom hello_standalone_activity.my_activity import compose_greeting\n\n\nasync def main():\n    connect_config = ClientConfig.load_client_connect_config()\n    connect_config.setdefault(\"target_host\", \"localhost:7233\")\n    client = await Client.connect(**connect_config)\n    worker = Worker(\n        client,\n        task_queue=\"my-standalone-activity-task-queue\",\n        activities=[compose_greeting],\n        activity_executor=ThreadPoolExecutor(5),\n    )\n    print(\"worker running...\", end=\"\", flush=True)\n    await worker.run()\n\n\nif __name__ == \"__main__\":\n    asyncio.run(main())`}\n\n\n{`uv run hello_standalone_activity/worker.py`}\n\n</>\n}>\n\n",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities-quickstart.mdx",
+            "title": "Standalone Activities Python Quickstart",
+            "headings": "Quickstart > Write an Activity function",
+            "chunk_id": "2b0acca396fd1efa76881f827532ea7d8de6b2c185ad43142fb76182ab056fb8",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "c9d3cdac113e0060cde28a816b03b6280a854367e145a9da84bb78a9790c39fb",
+          "text": "```bash\npython start_activity.py\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 7: Start an Activity in place of `.delay()`",
+            "chunk_id": "c9d3cdac113e0060cde28a816b03b6280a854367e145a9da84bb78a9790c39fb",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "a07ba433d029ad1942a47df5b2ae228d8faa26938c05af54dd2ab1d99f5a5675",
+          "text": "```\ntemporal-standalone/\n\u251c\u2500\u2500 my_activity.py        # The Activity (your former Celery task)\n\u251c\u2500\u2500 worker.py             # Runs the Worker\n\u251c\u2500\u2500 execute_activity.py   # Runs the Activity and waits for the result\n\u251c\u2500\u2500 start_activity.py     # Starts the Activity without waiting\n\u2514\u2500\u2500 inspect_activities.py # Lists and counts Activities\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 1: Set up your project directory",
+            "chunk_id": "a07ba433d029ad1942a47df5b2ae228d8faa26938c05af54dd2ab1d99f5a5675",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "bf4d9193246d8d5e678ed5fb4858833ac2f20439d5e2b2616025aabdec5b8e15",
+          "text": "\n\nIn this guide, you will migrate a Celery task to a Temporal Standalone Activity. You will convert the task into an Activity, run a Worker to process it, execute it both synchronously and fire-and-forget in place of your `.get()` and `.delay()` calls, migrate its retries to a Retry Policy, and inspect running Activities in place of Flower. By the end, you will have a working Temporal Application that reproduces the behavior of your Celery app with no Workflow code.\n\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "chunk_id": "bf4d9193246d8d5e678ed5fb4858833ac2f20439d5e2b2616025aabdec5b8e15",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "3e13fcc9458017176faa923a8073649a4233294f0928854f030d2e271656e915",
+          "text": "```bash\npython worker.py\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 5: Run a Worker to process the Activity",
+            "chunk_id": "3e13fcc9458017176faa923a8073649a4233294f0928854f030d2e271656e915",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "0d853c46c42c5ccc9b90963ba737d4f67405b3b86cb135049418ccebb5777b1b",
+          "text": "\nWith the Temporal Server and Worker running, open a new terminal in the `samples-python` directory and run:\n\n",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities.mdx",
+            "title": "Standalone Activities Feature Guide",
+            "headings": "Start a Standalone Activity without waiting for the result {/* #start-activity */}",
+            "chunk_id": "0d853c46c42c5ccc9b90963ba737d4f67405b3b86cb135049418ccebb5777b1b",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "defdd7a9b2ac3ef8d6272f5002fb41c38e4e2d1c6d8f760be02baa6136c7f5e0",
+          "text": "## Write an Activity function\n\nAn Activity in the Temporal Python SDK is just a normal function with the `@activity.defn`\ndecorator. It can optionally be an `async def`. The way you write a Standalone Activity is identical\nto how you write an Activity to be orchestrated by a Workflow. In fact, an Activity can be executed\nboth as a Standalone Activity and as a Workflow Activity.\n\nCreate [hello_standalone_activity/my_activity.py](https://github.com/temporalio/samples-python/blob/main/hello_standalone_activity/my_activity.py).\n\n\n\n\n\n{`import asyncio\nfrom concurrent.futures import ThreadPoolExecutor\n\nfrom temporalio.client import Client\nfrom temporalio.envconfig import ClientConfig\nfrom temporalio.worker import Worker\n\nfrom hello_standalone_activity.my_activity import compose_greeting",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities-quickstart.mdx",
+            "title": "Standalone Activities Python Quickstart",
+            "headings": "Quickstart > Write an Activity function",
+            "chunk_id": "defdd7a9b2ac3ef8d6272f5002fb41c38e4e2d1c6d8f760be02baa6136c7f5e0",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "2f85f0845def8a60244caefbdc8f64653bfc4464ad69f817ab62da40da51c317",
+          "text": "```python\n# start_activity.py\nimport asyncio\nfrom datetime import timedelta\n\nfrom temporalio.client import Client\n\nfrom my_activity import WelcomeEmailInput, send_welcome_email\n\n\nasync def main():\n    client = await Client.connect(\"localhost:7233\")\n\n    handle = await client.start_activity(\n        send_welcome_email,\n        args=[WelcomeEmailInput(42)],\n        id=\"welcome-email-delay\",\n        task_queue=\"email-tasks\",\n        start_to_close_timeout=timedelta(seconds=30),\n    )\n    print(\"Activity started\")\n\n    # Later, when you actually need the value, await the handle:\n    result = await handle.result()\n    print(f\"Result: {result}\")\n\n\nif __name__ == \"__main__\":\n    asyncio.run(main())\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 7: Start an Activity in place of `.delay()`",
+            "chunk_id": "2f85f0845def8a60244caefbdc8f64653bfc4464ad69f817ab62da40da51c317",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "2907cac835d72aebf4184140a07017e05808cbe82116f529a2014bdbf6a0373b",
+          "text": "\nYour project will grow into the following files as you work through the tutorial:\n\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 1: Set up your project directory",
+            "chunk_id": "2907cac835d72aebf4184140a07017e05808cbe82116f529a2014bdbf6a0373b",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "695807ec9c0302dd6a8d5fef2aaaba2d1f79131934e4cf3cd4e9ece0feb5e545",
+          "text": "\n\n\n\n[Celery](https://docs.celeryq.dev/en/stable/) is a distributed task queue that runs background jobs by pushing messages through a broker (such as Redis or RabbitMQ) to a pool of worker processes. Most Celery tasks are self-contained: send one email, resize one image, call one API. For that kind of single-step job, you want Durable Execution and automatic retries without having to stand up an orchestration layer around each task.\n\n[**Standalone Activities**](/standalone-activity) fit that need. A Standalone Activity is an Activity you start directly from a Temporal Client, without wrapping it in a Workflow. You get Temporal's durability, retries, timeouts, and visibility for an individual unit of work, which maps almost one-to-one onto a Celery task. Because there is no Workflow to run a single Activity, Standalone Activities also use fewer resources than orchestrating one Activity through a Workflow.",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "chunk_id": "695807ec9c0302dd6a8d5fef2aaaba2d1f79131934e4cf3cd4e9ece0feb5e545",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "c1ee6b6973ba5f7f639d2994202d73d631072831204dd2dc4f2c690fa69fb987",
+          "text": "\nThe `task_queue` name is the routing key that ties your Worker and your invocation scripts together, similar to a Celery queue name. Because your Activity is a synchronous function, you pass a `ThreadPoolExecutor` as the `activity_executor`; `max_workers` controls how many Activities run concurrently, much like Celery's `--concurrency` flag.\n\nStart the Worker:\n\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 5: Run a Worker to process the Activity",
+            "chunk_id": "c1ee6b6973ba5f7f639d2994202d73d631072831204dd2dc4f2c690fa69fb987",
+            "permitted_roles": "all"
+          }
+        }
+      ],
+      "citations": [
+        {
+          "id": 3,
+          "source": "guides/celery-to-standalone-activity.mdx",
+          "chunk_id": "c9d3cdac113e0060cde28a816b03b6280a854367e145a9da84bb78a9790c39fb"
+        }
+      ],
+      "expected_accept": false,
+      "origin": "Inspected hybrid native regression; same-guide wrong-operation failure and source-verified positive counterpart, not fresh confirmation."
+    },
+    {
+      "id": "native-same-guide-correct-worker",
+      "question": "In the Celery-to-Standalone-Activity migration guide, what command starts the Python Worker?",
+      "answer": "python worker.py",
+      "documents": [
+        {
+          "id": "3233eb934e7a9d2944fb3f95fcfea4ec96ac3b3c816e0aff2539b1897f991d4b",
+          "text": "```bash\nuv run hello_standalone_activity/start_activity.py\n```\n",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities.mdx",
+            "title": "Standalone Activities Feature Guide",
+            "headings": "Start a Standalone Activity without waiting for the result {/* #start-activity */}",
+            "chunk_id": "3233eb934e7a9d2944fb3f95fcfea4ec96ac3b3c816e0aff2539b1897f991d4b",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "2b0acca396fd1efa76881f827532ea7d8de6b2c185ad43142fb76182ab056fb8",
+          "text": "\n\nfrom hello_standalone_activity.my_activity import compose_greeting\n\n\nasync def main():\n    connect_config = ClientConfig.load_client_connect_config()\n    connect_config.setdefault(\"target_host\", \"localhost:7233\")\n    client = await Client.connect(**connect_config)\n    worker = Worker(\n        client,\n        task_queue=\"my-standalone-activity-task-queue\",\n        activities=[compose_greeting],\n        activity_executor=ThreadPoolExecutor(5),\n    )\n    print(\"worker running...\", end=\"\", flush=True)\n    await worker.run()\n\n\nif __name__ == \"__main__\":\n    asyncio.run(main())`}\n\n\n{`uv run hello_standalone_activity/worker.py`}\n\n</>\n}>\n\n",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities-quickstart.mdx",
+            "title": "Standalone Activities Python Quickstart",
+            "headings": "Quickstart > Write an Activity function",
+            "chunk_id": "2b0acca396fd1efa76881f827532ea7d8de6b2c185ad43142fb76182ab056fb8",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "c9d3cdac113e0060cde28a816b03b6280a854367e145a9da84bb78a9790c39fb",
+          "text": "```bash\npython start_activity.py\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 7: Start an Activity in place of `.delay()`",
+            "chunk_id": "c9d3cdac113e0060cde28a816b03b6280a854367e145a9da84bb78a9790c39fb",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "a07ba433d029ad1942a47df5b2ae228d8faa26938c05af54dd2ab1d99f5a5675",
+          "text": "```\ntemporal-standalone/\n\u251c\u2500\u2500 my_activity.py        # The Activity (your former Celery task)\n\u251c\u2500\u2500 worker.py             # Runs the Worker\n\u251c\u2500\u2500 execute_activity.py   # Runs the Activity and waits for the result\n\u251c\u2500\u2500 start_activity.py     # Starts the Activity without waiting\n\u2514\u2500\u2500 inspect_activities.py # Lists and counts Activities\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 1: Set up your project directory",
+            "chunk_id": "a07ba433d029ad1942a47df5b2ae228d8faa26938c05af54dd2ab1d99f5a5675",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "bf4d9193246d8d5e678ed5fb4858833ac2f20439d5e2b2616025aabdec5b8e15",
+          "text": "\n\nIn this guide, you will migrate a Celery task to a Temporal Standalone Activity. You will convert the task into an Activity, run a Worker to process it, execute it both synchronously and fire-and-forget in place of your `.get()` and `.delay()` calls, migrate its retries to a Retry Policy, and inspect running Activities in place of Flower. By the end, you will have a working Temporal Application that reproduces the behavior of your Celery app with no Workflow code.\n\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "chunk_id": "bf4d9193246d8d5e678ed5fb4858833ac2f20439d5e2b2616025aabdec5b8e15",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "3e13fcc9458017176faa923a8073649a4233294f0928854f030d2e271656e915",
+          "text": "```bash\npython worker.py\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 5: Run a Worker to process the Activity",
+            "chunk_id": "3e13fcc9458017176faa923a8073649a4233294f0928854f030d2e271656e915",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "0d853c46c42c5ccc9b90963ba737d4f67405b3b86cb135049418ccebb5777b1b",
+          "text": "\nWith the Temporal Server and Worker running, open a new terminal in the `samples-python` directory and run:\n\n",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities.mdx",
+            "title": "Standalone Activities Feature Guide",
+            "headings": "Start a Standalone Activity without waiting for the result {/* #start-activity */}",
+            "chunk_id": "0d853c46c42c5ccc9b90963ba737d4f67405b3b86cb135049418ccebb5777b1b",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "defdd7a9b2ac3ef8d6272f5002fb41c38e4e2d1c6d8f760be02baa6136c7f5e0",
+          "text": "## Write an Activity function\n\nAn Activity in the Temporal Python SDK is just a normal function with the `@activity.defn`\ndecorator. It can optionally be an `async def`. The way you write a Standalone Activity is identical\nto how you write an Activity to be orchestrated by a Workflow. In fact, an Activity can be executed\nboth as a Standalone Activity and as a Workflow Activity.\n\nCreate [hello_standalone_activity/my_activity.py](https://github.com/temporalio/samples-python/blob/main/hello_standalone_activity/my_activity.py).\n\n\n\n\n\n{`import asyncio\nfrom concurrent.futures import ThreadPoolExecutor\n\nfrom temporalio.client import Client\nfrom temporalio.envconfig import ClientConfig\nfrom temporalio.worker import Worker\n\nfrom hello_standalone_activity.my_activity import compose_greeting",
+          "metadata": {
+            "source": "develop/python/activities/standalone-activities-quickstart.mdx",
+            "title": "Standalone Activities Python Quickstart",
+            "headings": "Quickstart > Write an Activity function",
+            "chunk_id": "defdd7a9b2ac3ef8d6272f5002fb41c38e4e2d1c6d8f760be02baa6136c7f5e0",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "2f85f0845def8a60244caefbdc8f64653bfc4464ad69f817ab62da40da51c317",
+          "text": "```python\n# start_activity.py\nimport asyncio\nfrom datetime import timedelta\n\nfrom temporalio.client import Client\n\nfrom my_activity import WelcomeEmailInput, send_welcome_email\n\n\nasync def main():\n    client = await Client.connect(\"localhost:7233\")\n\n    handle = await client.start_activity(\n        send_welcome_email,\n        args=[WelcomeEmailInput(42)],\n        id=\"welcome-email-delay\",\n        task_queue=\"email-tasks\",\n        start_to_close_timeout=timedelta(seconds=30),\n    )\n    print(\"Activity started\")\n\n    # Later, when you actually need the value, await the handle:\n    result = await handle.result()\n    print(f\"Result: {result}\")\n\n\nif __name__ == \"__main__\":\n    asyncio.run(main())\n```\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 7: Start an Activity in place of `.delay()`",
+            "chunk_id": "2f85f0845def8a60244caefbdc8f64653bfc4464ad69f817ab62da40da51c317",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "2907cac835d72aebf4184140a07017e05808cbe82116f529a2014bdbf6a0373b",
+          "text": "\nYour project will grow into the following files as you work through the tutorial:\n\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 1: Set up your project directory",
+            "chunk_id": "2907cac835d72aebf4184140a07017e05808cbe82116f529a2014bdbf6a0373b",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "695807ec9c0302dd6a8d5fef2aaaba2d1f79131934e4cf3cd4e9ece0feb5e545",
+          "text": "\n\n\n\n[Celery](https://docs.celeryq.dev/en/stable/) is a distributed task queue that runs background jobs by pushing messages through a broker (such as Redis or RabbitMQ) to a pool of worker processes. Most Celery tasks are self-contained: send one email, resize one image, call one API. For that kind of single-step job, you want Durable Execution and automatic retries without having to stand up an orchestration layer around each task.\n\n[**Standalone Activities**](/standalone-activity) fit that need. A Standalone Activity is an Activity you start directly from a Temporal Client, without wrapping it in a Workflow. You get Temporal's durability, retries, timeouts, and visibility for an individual unit of work, which maps almost one-to-one onto a Celery task. Because there is no Workflow to run a single Activity, Standalone Activities also use fewer resources than orchestrating one Activity through a Workflow.",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "chunk_id": "695807ec9c0302dd6a8d5fef2aaaba2d1f79131934e4cf3cd4e9ece0feb5e545",
+            "permitted_roles": "all"
+          }
+        },
+        {
+          "id": "c1ee6b6973ba5f7f639d2994202d73d631072831204dd2dc4f2c690fa69fb987",
+          "text": "\nThe `task_queue` name is the routing key that ties your Worker and your invocation scripts together, similar to a Celery queue name. Because your Activity is a synchronous function, you pass a `ThreadPoolExecutor` as the `activity_executor`; `max_workers` controls how many Activities run concurrently, much like Celery's `--concurrency` flag.\n\nStart the Worker:\n\n",
+          "metadata": {
+            "source": "guides/celery-to-standalone-activity.mdx",
+            "title": "Migrate a Celery task queue to a Temporal Standalone Activity",
+            "headings": "Step 5: Run a Worker to process the Activity",
+            "chunk_id": "c1ee6b6973ba5f7f639d2994202d73d631072831204dd2dc4f2c690fa69fb987",
+            "permitted_roles": "all"
+          }
+        }
+      ],
+      "citations": [
+        {
+          "id": 6,
+          "source": "guides/celery-to-standalone-activity.mdx",
+          "chunk_id": "3e13fcc9458017176faa923a8073649a4233294f0928854f030d2e271656e915"
+        }
+      ],
+      "expected_accept": true,
+      "origin": "Inspected hybrid native regression; same-guide wrong-operation failure and source-verified positive counterpart, not fresh confirmation."
     }
   ]
 }

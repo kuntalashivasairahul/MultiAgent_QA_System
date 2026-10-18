@@ -1,0 +1,17 @@
+{
+  "id": "judge-6",
+  "error": "ValueError",
+  "passed": false,
+  "usage": {
+    "qwen3.5-4b": {
+      "input_tokens": 515,
+      "output_tokens": 135,
+      "total_tokens": 650,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 134
+      }
+    }
+  },
+  "seconds": 5.539003249999951
+}

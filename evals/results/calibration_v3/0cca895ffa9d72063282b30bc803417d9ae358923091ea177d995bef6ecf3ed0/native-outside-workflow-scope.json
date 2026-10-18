@@ -1,0 +1,21 @@
+{
+  "id": "native-outside-workflow-scope",
+  "verdict": {
+    "passed": false,
+    "reason": "The cited document (id 7) only provides a code example of calling a Nexus operation from within a workflow. It does not contain any text stating that it is possible to eliminate the workflow and call the operation directly, nor does it mention 'Standalone Nexus Operations'. While background documents (id 2, 5, 8) confirm that Standalone Nexus Operations exist and allow executing operations without a workflow, the instructions strictly require that every factual claim be entailed by the *cited* documents. Since the cited document does not support the claim that the workflow can be eliminated, the answer is not supported by the provided citation.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "Standalone Nexus Operation eliminate workflow call directly"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 3712,
+      "output_tokens": 177,
+      "total_tokens": 3889
+    }
+  },
+  "seconds": 31.82924287499918
+}

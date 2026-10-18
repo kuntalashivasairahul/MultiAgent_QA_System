@@ -1,0 +1,32 @@
+{
+  "id": "judge-4",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "reason": "The answer restates the only fact presented in the document – that the timeout is five seconds – which directly answers the question \"What does the context establish?\". The paraphrase from numeric to word form is equivalent and fully supported by the quoted text.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 887,
+      "output_tokens": 281,
+      "total_tokens": 1168,
+      "input_token_details": {
+        "cache_read": 768
+      },
+      "output_token_details": {
+        "reasoning": 181
+      }
+    }
+  },
+  "seconds": 10.252123000005668
+}

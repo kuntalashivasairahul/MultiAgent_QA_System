@@ -1,0 +1,33 @@
+{
+  "id": "incomplete-definition",
+  "verdict": {
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The SDK provides APIs to customize the behavior of an Activity Execution."
+      },
+      {
+        "id": 1,
+        "text": "Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion."
+      }
+    ],
+    "reason": "The answer states that an Activity Execution is the run of an Activity whose behavior can be customized via SDK APIs, and that developers can control timeouts, a retry policy, heartbeat monitoring, and asynchronous completion. Both of these claims are directly supported by the provided document excerpts, which describe SDK APIs for customizing Activity Execution behavior and list the controllable aspects (timeouts, Retry Policy, Heartbeat monitoring, asynchronous completion). No unsupported or missing information is present.",
+    "confidence": 1.0,
+    "passed": true,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "openai/gpt-oss-120b": {
+      "input_tokens": 1095,
+      "output_tokens": 562,
+      "total_tokens": 1657,
+      "output_token_details": {
+        "reasoning": 388
+      }
+    }
+  },
+  "seconds": 10.293564332998358
+}

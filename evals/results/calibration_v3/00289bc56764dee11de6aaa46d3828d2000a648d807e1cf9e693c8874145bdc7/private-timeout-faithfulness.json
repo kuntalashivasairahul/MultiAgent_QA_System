@@ -1,0 +1,25 @@
+{
+  "id": "private-timeout-faithfulness",
+  "verdict": {
+    "quotes": [],
+    "reason": "The question asks for the HeartbeatTimeout value in a specific private Nova payments production Worker repository. The provided document discusses a general 'heartbeat_timeout' of 30 seconds in the context of worker execution affinity and failure scenarios, but it does not specify that this configuration applies to a private Nova payments production Worker repository. There is no mention of any private repository, Nova payments, or production environment in the text. Therefore, the factual claim that 'the configured heartbeat timeout is 30 seconds' cannot be verified as applicable to the exact entity and scope requested. The document's reference to 30s is general and not tied to a specific repository or business domain.",
+    "confidence": 0.0,
+    "passed": false,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "qwen3-4b-instruct-2507": {
+      "input_tokens": 693,
+      "output_tokens": 173,
+      "total_tokens": 866,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 6.067347666998103
+}

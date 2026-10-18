@@ -1,0 +1,265 @@
+{
+  "scope": "Inspected development controls, not held-out accuracy or calibrated probabilities",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/calibration_v3/7f0fbf3fbf18409c15daa17f4a5dc99315690072ce1062fb3b9b0aab0eb01c57",
+  "n": 15,
+  "scored": 0,
+  "passed": 0,
+  "missing": 15,
+  "records": [
+    {
+      "id": "supported-answer",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 520,
+          "output_tokens": 173,
+          "total_tokens": 693,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 172
+          }
+        }
+      },
+      "seconds": 8.115766208000423
+    },
+    {
+      "id": "unsupported-extra-claim",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 527,
+          "output_tokens": 183,
+          "total_tokens": 710,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 182
+          }
+        }
+      },
+      "seconds": 7.698638874993776
+    },
+    {
+      "id": "question-injection",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 520,
+          "output_tokens": 219,
+          "total_tokens": 739,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 218
+          }
+        }
+      },
+      "seconds": 8.99945141599892
+    },
+    {
+      "id": "source-injection",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 523,
+          "output_tokens": 153,
+          "total_tokens": 676,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 152
+          }
+        }
+      },
+      "seconds": 6.798143708001589
+    },
+    {
+      "id": "incomplete-definition",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 736,
+          "output_tokens": 371,
+          "total_tokens": 1107,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 370
+          }
+        }
+      },
+      "seconds": 14.72601866700279
+    },
+    {
+      "id": "unsupported-retention-cause",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 731,
+          "output_tokens": 285,
+          "total_tokens": 1016,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 284
+          }
+        }
+      },
+      "seconds": 11.31403679199866
+    },
+    {
+      "id": "private-retry-scope",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 887,
+          "output_tokens": 564,
+          "total_tokens": 1451,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 563
+          }
+        }
+      },
+      "seconds": 21.177613084000768
+    },
+    {
+      "id": "judge-4",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 510,
+          "output_tokens": 219,
+          "total_tokens": 729,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 218
+          }
+        }
+      },
+      "seconds": 8.52489708399662
+    },
+    {
+      "id": "judge-5",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 512,
+          "output_tokens": 122,
+          "total_tokens": 634,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 121
+          }
+        }
+      },
+      "seconds": 5.029048958000203
+    },
+    {
+      "id": "judge-6",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 515,
+          "output_tokens": 135,
+          "total_tokens": 650,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 134
+          }
+        }
+      },
+      "seconds": 5.539003249999951
+    },
+    {
+      "id": "judge-7",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 522,
+          "output_tokens": 122,
+          "total_tokens": 644,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 121
+          }
+        }
+      },
+      "seconds": 5.1125136249975185
+    },
+    {
+      "id": "private-timeout-faithfulness",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 701,
+          "output_tokens": 268,
+          "total_tokens": 969,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 267
+          }
+        }
+      },
+      "seconds": 10.60462704100064
+    },
+    {
+      "id": "native-supported-access",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 2334,
+          "output_tokens": 589,
+          "total_tokens": 2923,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 588
+          }
+        }
+      },
+      "seconds": 26.63566174999869
+    },
+    {
+      "id": "native-wrong-worker-command",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 611,
+          "output_tokens": 243,
+          "total_tokens": 854,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 242
+          }
+        }
+      },
+      "seconds": 9.985887333001301
+    },
+    {
+      "id": "native-outside-workflow-scope",
+      "error": "ValueError",
+      "passed": false,
+      "usage": {
+        "qwen3.5-4b": {
+          "input_tokens": 884,
+          "output_tokens": 147,
+          "total_tokens": 1031,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 146
+          }
+        }
+      },
+      "seconds": 7.06405716700101
+    }
+  ]
+}
