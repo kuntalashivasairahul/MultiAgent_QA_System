@@ -1,0 +1,13 @@
+{
+  "scope": "Actual first retrieval/local generation only; drafts are not final answers or scored results",
+  "fingerprint": "91edd6b1bb4b6ee1ed1db847453a0a2fb17e5ab5acdb7d34a999e102aa85d8be",
+  "run_id": "20261018T212538804662Z-0df5aa6c",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v3/91edd6b1bb4b6ee1ed1db847453a0a2fb17e5ab5acdb7d34a999e102aa85d8be/20261018T212538804662Z-0df5aa6c",
+  "dataset": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/v3_stability_regression.jsonl",
+  "n": 12,
+  "paused_before_judge": 12,
+  "generation_errors": 0,
+  "judge_or_external_grader_calls": 0,
+  "self_check": "Close/reopen SQLite and resume through the real evaluation helper without repeating retrieval/generation",
+  "native_completion_requires": "Resume the same graph checkpoints, then finish grading and source review"
+}

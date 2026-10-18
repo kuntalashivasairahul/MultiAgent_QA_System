@@ -1,0 +1,125 @@
+"""Run only the local first attempt of the frozen fixed12 study, then pause."""
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import tempfile
+import time
+from datetime import datetime, timezone
+from contextlib import ExitStack
+from types import SimpleNamespace
+import uuid
+import sys
+
+ROOT = Path.cwd()
+sys.path.insert(0, str(ROOT))
+from langchain_core.documents import Document
+from langchain_core.callbacks import get_usage_metadata_callback
+from langchain_core.messages.ai import add_usage
+from langgraph.checkpoint.sqlite import SqliteSaver
+import graph_v3 as v3
+import graph_v1
+from artifacts import write_json
+from evals.run_eval import RESULTS, load_golden, run_inputs, _invoke_graph, _evaluation_lock, _load_partial, _append
+from evals import calibrate_v3
+
+
+def check_interruption():
+    original_retrieval, original_structured = v3.get_hybrid_context, v3.v3_llm.structured
+    calls = []
+    question = "Operator checkpoint self-check"
+    config = {"configurable": {"thread_id": hashlib.sha256(question.encode()).hexdigest()}}
+    def retrieve(*args, **kwargs):
+        calls.append("retrieval")
+        return [Document(id="fixture", page_content="Supported fact.", metadata={"source": "fixture.mdx"})]
+    def structured(schema, *, judge=False):
+        def invoke(messages):
+            calls.append("judge" if judge else "generation")
+            if judge:
+                return v3.QualityVerdict(passed=True, confidence=1.0, reason="Supported.",
+                                        quotes=[{"id": 1, "text": "Supported fact."}], retry_query="")
+            return graph_v1.GroundedAnswer(answer="Supported fact.", citations=[1])
+        return SimpleNamespace(invoke=invoke)
+    try:
+        v3.get_hybrid_context, v3.v3_llm.structured = retrieve, structured
+        with tempfile.TemporaryDirectory(prefix="qa-v3-prestage-check-") as directory:
+            path = str(Path(directory) / "graph.sqlite")
+            with SqliteSaver.from_conn_string(path) as saver:
+                pipeline = v3.build_graph(checkpointer=saver)
+                pipeline.invoke({"question": question}, config, durability="sync", interrupt_before=["judge_support"])
+                assert pipeline.get_state(config).next == ("judge_support",)
+                assert calls == ["retrieval", "generation"]
+            with SqliteSaver.from_conn_string(path) as saver:
+                result = _invoke_graph(v3.build_graph(checkpointer=saver), question, True)
+                assert result["generation"] == "Supported fact."
+                assert calls == ["retrieval", "generation", "judge", "judge"]
+    finally:
+        v3.get_hybrid_context, v3.v3_llm.structured = original_retrieval, original_structured
+    assert v3.get_hybrid_context is original_retrieval and v3.v3_llm.structured is original_structured
+
+
+check_interruption()
+frozen = json.loads((ROOT / "evals/results/calibration_v3/156111c64aa8b0d3c886819efb2149b764f74e0da7555305f9f2f8308e63f672/inputs.json").read_text())
+assert run_inputs(v3, json.loads(calibrate_v3.CASES.read_text())["records"], calibrate_v3.CASES) == frozen
+profile = v3.runtime_inputs()
+assert profile["backend"] == "lmstudio" and profile["generation_model"] == "llama-3.1-8b-instruct"
+loaded = json.loads(subprocess.check_output([str(Path.home() / ".lmstudio/bin/lms"), "ps", "--json"], text=True))
+match = next(m for m in loaded if m.get("identifier") == profile["generation_model"])
+assert match["modelKey"] == "meta-llama-3.1-8b-instruct" and match["contextLength"] == 8192 and match["parallel"] == 1
+weights = Path.home() / ".lmstudio/models" / match["path"]
+with weights.open("rb") as stream:
+    assert hashlib.file_digest(stream, "sha256").hexdigest() == profile["model_weights_sha256"]
+
+dataset = (ROOT / "evals/v3_stability_regression.jsonl").resolve()
+rows = load_golden(12, dataset=dataset)
+inputs = {**run_inputs(v3, rows, dataset), "limit": 12, "variant": None}
+fingerprint = hashlib.sha256(json.dumps(inputs, sort_keys=True).encode()).hexdigest()
+run_root = RESULTS / "verified/graph_v3" / fingerprint
+run_root.mkdir(parents=True, exist_ok=True)
+with ExitStack() as stack:
+    stack.enter_context(_evaluation_lock(run_root / "owner.sqlite"))
+    attempts = sorted(p for p in run_root.iterdir() if p.is_dir())
+    assert not attempts, "Study already exists; inspect its checkpoints rather than starting another attempt"
+    attempt = run_root / (datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "-" + uuid.uuid4().hex[:8])
+    attempt.mkdir()
+    stack.enter_context(_evaluation_lock(attempt / "owner.sqlite"))
+    saver = stack.enter_context(SqliteSaver.from_conn_string(str(attempt / "graph.sqlite")))
+    pipeline = v3.build_graph(checkpointer=saver)
+    write_json(attempt / "inputs.json", inputs)
+    traces = []
+    for row in rows:
+        config = {"configurable": {"thread_id": hashlib.sha256(row["question"].encode()).hexdigest()}}
+        record = {"question": row["question"], "bucket": row["bucket"]}
+        started = time.perf_counter()
+        with get_usage_metadata_callback() as usage:
+            try:
+                pipeline.invoke({"question": row["question"]}, config, durability="sync", interrupt_before=["judge_support"])
+                snapshot = pipeline.get_state(config)
+                assert snapshot.next == ("judge_support",) and snapshot.values["attempt_count"] == 1
+                assert not snapshot.values["history"] and not snapshot.values["quality"]
+                state = snapshot.values
+                traces.append({"id": row["id"], "question": row["question"], "status": "paused_before_judge",
+                               "draft": state["generation"], "citations": state["citations"],
+                               "documents": [{"id": d.id, "text": d.page_content, "metadata": d.metadata} for d in state["documents"]]})
+            except Exception as exc:
+                record.update(generation_error=type(exc).__name__, generation_error_details={
+                    "status_code": getattr(exc, "status_code", None),
+                    "retry_after": getattr(getattr(exc, "response", None), "headers", {}).get("retry-after")})
+                traces.append({"id": row["id"], "question": row["question"], "status": "error", "error": type(exc).__name__})
+        record.update(generation_seconds=time.perf_counter() - started, generation_usage=usage.usage_metadata,
+                      prestaged_before_judge_support=True)
+        assert not any("qwen" in name.lower() or "gpt-oss" in name.lower() for name in usage.usage_metadata)
+        _append(attempt / "partial.jsonl", record)
+        write_json(attempt / "local_first_attempts.json", traces)
+        print(row["id"], traces[-1]["status"], flush=True)
+    assert {**run_inputs(v3, rows, dataset), "limit": 12, "variant": None} == inputs
+    assert len(_load_partial(attempt / "partial.jsonl")) == 12
+    summary = {"scope": "Actual first retrieval/local generation only; drafts are not final answers or scored results",
+               "fingerprint": fingerprint, "run_id": attempt.name, "artifact_dir": str(attempt),
+               "dataset": str(dataset), "n": 12, "paused_before_judge": sum(t["status"] == "paused_before_judge" for t in traces),
+               "generation_errors": sum(t["status"] == "error" for t in traces),
+               "judge_or_external_grader_calls": 0, "self_check": "Close/reopen SQLite and resume through the real evaluation helper without repeating retrieval/generation",
+               "native_completion_requires": "Resume the same graph checkpoints, then finish grading and source review"}
+    write_json(attempt / "prestage_summary.json", summary)
+    write_json(ROOT / "evals/results/v3_local_prestage.json", summary)
+    print(json.dumps(summary), flush=True)

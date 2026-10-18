@@ -1,0 +1,110 @@
+{
+  "scope": "Read-only checkpoint recovery/provenance check; no inference or final grading",
+  "at": "2026-10-18T21:35:36.048598+00:00",
+  "fingerprint": "91edd6b1bb4b6ee1ed1db847453a0a2fb17e5ab5acdb7d34a999e102aa85d8be",
+  "run_id": "20261018T212538804662Z-0df5aa6c",
+  "checkpoint_count": 12,
+  "same_inputs_as_normal_evaluator": true,
+  "latest_attempt_selected_by_normal_evaluator": true,
+  "partial_records_without_answer": 12,
+  "model_calls": 0,
+  "states": [
+    {
+      "id": "dev-01",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-02",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-32",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-13",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-15",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-16",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-20",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-21",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-24",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-30",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-37",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    },
+    {
+      "id": "dev-38",
+      "next": [
+        "judge_support"
+      ],
+      "attempt_count": 1,
+      "final_answer_scored": false
+    }
+  ],
+  "active_graph_seconds": 140.921
+}

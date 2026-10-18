@@ -65,5 +65,20 @@
     "integration_seconds": 11.54
   },
   "partial_source_review": "evals/results/v3_two_check_partial_review.json",
-  "compiled_contract_audit": "evals/results/v3_completion_contract_audit.json"
+  "compiled_contract_audit": "evals/results/v3_completion_contract_audit.json",
+  "source_oracle_audits": [
+    "evals/results/v3_stability_reference_audit.json",
+    "evals/results/v3_control_document_audit.json",
+    "evals/results/v3_control_oracle_audit.json"
+  ],
+  "native_study_progress": {
+    "artifact": "evals/results/v3_local_prestage.json",
+    "checkpoint_verification": "evals/results/v3_local_prestage_verification.json",
+    "operator_source": "evals/results/v3_local_prestage_source.txt",
+    "local_first_attempts": 12,
+    "generation_errors": 0,
+    "judge_or_external_grader_calls": 0,
+    "final_answers_scored": 0,
+    "scope": "Checkpointed local prefix only; full pipeline and source review remain incomplete"
+  }
 }

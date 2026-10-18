@@ -1,0 +1,244 @@
+{
+  "scope": "Pre-execution source audit for the current two-check fixed12 study. These are previously inspected development regressions, not fresh or blind confirmation. No model calls and no question/reference edits.",
+  "at": "2026-10-18T21:03:39.764879+00:00",
+  "audit_by": "Coding assistant; independent human review not claimed",
+  "dataset": "evals/v3_stability_regression.jsonl",
+  "dataset_sha256": "03e7dcf60c0616a040f3a9120fd19f3fd1c7ee4d0411c71cd9b05d685c4180e4",
+  "corpus_revision": "5b56ddca7d409a82f2d74e21f20edf35f29ad483",
+  "selected_rows_identical_to_golden_current_v21": true,
+  "n": 12,
+  "answerable_supported_references": 10,
+  "private_fact_refusal_cases": 2,
+  "records": [
+    {
+      "id": "dev-01",
+      "bucket": "direct",
+      "reference_unchanged": true,
+      "decision": "Reference substance is supported by the pinned source excerpts.",
+      "evidence": [
+        {
+          "source": "develop/java/best-practices/error-handling.mdx",
+          "file_sha256": "7cf5315682f8ec5d5f83cff2760f668a363b9f4215b64da1ba4efe9ed6b14163",
+          "quote": "If `e` is a checked exception, `wrap()` returns a `CheckedExceptionWrapper` around it.",
+          "line_start": 113
+        }
+      ]
+    },
+    {
+      "id": "dev-02",
+      "bucket": "direct",
+      "reference_unchanged": true,
+      "decision": "Reference substance is supported by the pinned source excerpts.",
+      "evidence": [
+        {
+          "source": "guides/celery-to-standalone-activity.mdx",
+          "file_sha256": "20424bd8f3022e07e27fffac38b6a2f35b0cd48620d0cf552a7f19f1f7503c59",
+          "quote": "## Step 5: Run a Worker to process the Activity",
+          "line_start": 185
+        },
+        {
+          "source": "guides/celery-to-standalone-activity.mdx",
+          "file_sha256": "20424bd8f3022e07e27fffac38b6a2f35b0cd48620d0cf552a7f19f1f7503c59",
+          "quote": "Start the Worker:\n\n```bash\npython worker.py\n```",
+          "line_start": 221
+        }
+      ]
+    },
+    {
+      "id": "dev-32",
+      "bucket": "direct",
+      "reference_unchanged": true,
+      "decision": "Reference substance is supported by the pinned source excerpts.",
+      "evidence": [
+        {
+          "source": "evaluate/temporal-cloud/pricing.mdx",
+          "file_sha256": "08189dc6a89d5f6faa08730bc5cf5df0a1e294c7cdeef7119254c132651c7d45",
+          "quote": "Actions pricing starts at &#36;50 per million Actions",
+          "line_start": 110
+        },
+        {
+          "source": "evaluate/temporal-cloud/pricing.mdx",
+          "file_sha256": "08189dc6a89d5f6faa08730bc5cf5df0a1e294c7cdeef7119254c132651c7d45",
+          "quote": "You gain progressive volume discounts as you scale.",
+          "line_start": 111
+        },
+        {
+          "source": "evaluate/temporal-cloud/pricing.mdx",
+          "file_sha256": "08189dc6a89d5f6faa08730bc5cf5df0a1e294c7cdeef7119254c132651c7d45",
+          "quote": "| First 5M              | &#36;50",
+          "line_start": 116
+        }
+      ],
+      "qualification": "Snapshot pricing reference, not a claim about live prices or total monthly charges."
+    },
+    {
+      "id": "dev-13",
+      "bucket": "jargon",
+      "reference_unchanged": true,
+      "decision": "Reference substance is supported by the pinned source excerpts.",
+      "evidence": [
+        {
+          "source": "glossary.md",
+          "file_sha256": "225db4fc0cd7cea264d75e6c1c92338b83ad421cbeb740d5c43c1d3bfe9791cb",
+          "quote": "The Frontend Service is a stateless gateway service that exposes a strongly typed Proto API. The Frontend Service is\nresponsible for rate limiting, authorizing, validating, and routing all inbound calls.",
+          "line_start": 252
+        }
+      ]
+    },
+    {
+      "id": "dev-15",
+      "bucket": "jargon",
+      "reference_unchanged": true,
+      "decision": "Reference substance is supported by the pinned source excerpts.",
+      "evidence": [
+        {
+          "source": "glossary.md",
+          "file_sha256": "225db4fc0cd7cea264d75e6c1c92338b83ad421cbeb740d5c43c1d3bfe9791cb",
+          "quote": "A Temporal Service is a Temporal Server paired with Persistence and Visibility stores.",
+          "line_start": 708
+        }
+      ]
+    },
+    {
+      "id": "dev-16",
+      "bucket": "jargon",
+      "reference_unchanged": true,
+      "decision": "Reference substance is supported by the pinned source excerpts.",
+      "evidence": [
+        {
+          "source": "glossary.md",
+          "file_sha256": "225db4fc0cd7cea264d75e6c1c92338b83ad421cbeb740d5c43c1d3bfe9791cb",
+          "quote": "A Local Activity is an Activity Execution that executes in the same process as the Workflow Execution that spawns it.",
+          "line_start": 326
+        }
+      ]
+    },
+    {
+      "id": "dev-20",
+      "bucket": "multihop",
+      "reference_unchanged": true,
+      "decision": "Reference substance is supported by the pinned source excerpts.",
+      "evidence": [
+        {
+          "source": "develop/java/workflows/continue-as-new.mdx",
+          "file_sha256": "b1666abaf1f348af659abae28c66f9776e7258446b78775c2c409f599af7621e",
+          "quote": "Workflow.continueAsNew(",
+          "line_start": 54
+        },
+        {
+          "source": "develop/python/workflows/continue-as-new.mdx",
+          "file_sha256": "b0081a3adc051d95375f435dc7793c4242a1928c2973131c9bd4831728ce0478",
+          "quote": "workflow.continue_as_new(",
+          "line_start": 54
+        }
+      ]
+    },
+    {
+      "id": "dev-21",
+      "bucket": "multihop",
+      "reference_unchanged": true,
+      "decision": "Reference substance is supported by the pinned source excerpts.",
+      "evidence": [
+        {
+          "source": "develop/go/best-practices/data-handling/external-storage.mdx",
+          "file_sha256": "6c0b340cac3d2ecaa871b0bbf7e5349dd301bda5e8c425b5b4a4adb3d7692c6d",
+          "quote": "Permission to write objects on processes that store payloads, and to read objects on processes that retrieve them.\n  Storing also requires read permission, because the drivers check whether an object already exists before uploading.",
+          "line_start": 42
+        },
+        {
+          "source": "develop/typescript/best-practices/data-handling/external-storage.mdx",
+          "file_sha256": "05b28610ac380d936c3eb5bef762cf07e079fe9cd1a4b8a03224772e10506684",
+          "quote": "Credentials with permission to write objects on components that store payloads, and to read objects on components\n  that retrieve them. Components that only retrieve payloads do not need write access, and the reverse is also true.",
+          "line_start": 39
+        }
+      ],
+      "qualification": "Compare only what the prerequisite documents state. Do not infer a universal runtime permission rule for all TypeScript drivers from omitted wording."
+    },
+    {
+      "id": "dev-24",
+      "bucket": "multihop",
+      "reference_unchanged": true,
+      "decision": "Reference substance is supported by the pinned source excerpts.",
+      "evidence": [
+        {
+          "source": "develop/go/workflows/child-workflows.mdx",
+          "file_sha256": "8fbc652debd9ced5ae0ca1b0ebbba818f8a5b426febd353c93f7d71ebd20ea5b",
+          "quote": "`ParentClosePolicy` field of an instance of [`workflow.ChildWorkflowOptions`]",
+          "line_start": 108
+        },
+        {
+          "source": "develop/go/workflows/child-workflows.mdx",
+          "file_sha256": "8fbc652debd9ced5ae0ca1b0ebbba818f8a5b426febd353c93f7d71ebd20ea5b",
+          "quote": "ParentClosePolicy: enums.PARENT_CLOSE_POLICY_ABANDON,",
+          "line_start": 82
+        },
+        {
+          "source": "develop/python/workflows/child-workflows.mdx",
+          "file_sha256": "2081b9bc0475bfcdf70bbcb2cd35fd951bd3c74456813a0114acacd1464549d1",
+          "quote": "Set the `parent_close_policy` parameter inside the [`start_child_workflow`]",
+          "line_start": 70
+        },
+        {
+          "source": "develop/python/workflows/child-workflows.mdx",
+          "file_sha256": "2081b9bc0475bfcdf70bbcb2cd35fd951bd3c74456813a0114acacd1464549d1",
+          "quote": "parent_close_policy=ParentClosePolicy.ABANDON,",
+          "line_start": 60
+        }
+      ],
+      "qualification": "The question asks for fields/parameters and enum values, not the complete procedure for ensuring that a child starts before its parent exits."
+    },
+    {
+      "id": "dev-30",
+      "bucket": "ambiguous",
+      "reference_unchanged": true,
+      "decision": "Reference substance is supported by the pinned source excerpts.",
+      "evidence": [
+        {
+          "source": "encyclopedia/nexus/standalone-nexus-operation.mdx",
+          "file_sha256": "2afd869126928ca6bc44bd8a5cb54a3ca8d396661a4a14f710c40f1a9fe9ece2",
+          "quote": "A common pattern is a caller Workflow whose only purpose is to invoke a single Nexus Operation.\nWhen that's all the Workflow does, you can drop the caller Workflow entirely and call the\nOperation as a Standalone Nexus Operation.",
+          "line_start": 90
+        },
+        {
+          "source": "encyclopedia/nexus/standalone-nexus-operation.mdx",
+          "file_sha256": "2afd869126928ca6bc44bd8a5cb54a3ca8d396661a4a14f710c40f1a9fe9ece2",
+          "quote": "If the caller Workflow does more than one Operation call, or has business logic between calls,\n  keep the Workflow.",
+          "line_start": 97
+        },
+        {
+          "source": "encyclopedia/nexus/standalone-nexus-operation.mdx",
+          "file_sha256": "2afd869126928ca6bc44bd8a5cb54a3ca8d396661a4a14f710c40f1a9fe9ece2",
+          "quote": "Pick a stable Operation ID if you previously relied on Workflow ID reuse semantics for\n  deduplication.",
+          "line_start": 100
+        },
+        {
+          "source": "encyclopedia/nexus/standalone-nexus-operation.mdx",
+          "file_sha256": "2afd869126928ca6bc44bd8a5cb54a3ca8d396661a4a14f710c40f1a9fe9ece2",
+          "quote": "Update Visibility queries that filtered by caller Workflow attributes.",
+          "line_start": 102
+        }
+      ],
+      "qualification": "The direct standalone-operation answer is the required substance. Migration caveats are conditional advice: stable Operation ID applies when replacing Workflow ID reuse deduplication, and Visibility-query changes apply only to queries relying on caller Workflow attributes. Do not require unrelated migration details for this yes/no question."
+    },
+    {
+      "id": "dev-37",
+      "bucket": "unanswerable",
+      "reference_unchanged": true,
+      "decision": "Refusal is appropriate: no authoritative company-private data or identity is supplied; public technical examples cannot establish the requested private fact.",
+      "evidence": []
+    },
+    {
+      "id": "dev-38",
+      "bucket": "unanswerable",
+      "reference_unchanged": true,
+      "decision": "Refusal is appropriate: no authoritative company-private data or identity is supplied; public technical examples cannot establish the requested private fact.",
+      "evidence": []
+    }
+  ],
+  "limits": [
+    "Reference support does not prove retrieval completeness, generation accuracy, Judge reliability or live Temporal product facts.",
+    "Future generated answers still require source review, including additional factual claims."
+  ],
+  "selected_source_files_match_pinned_git": true,
+  "distinct_source_files_checked": 11
+}
