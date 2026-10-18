@@ -1,0 +1,25 @@
+{
+  "id": "unsupported-retention-cause",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer does not fully address the exact entity/scope and contains an unsupported claim.",
+    "quotes": [],
+    "confidence": 0.5,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 627,
+      "output_tokens": 47,
+      "total_tokens": 674,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 1.6714895000040997
+}

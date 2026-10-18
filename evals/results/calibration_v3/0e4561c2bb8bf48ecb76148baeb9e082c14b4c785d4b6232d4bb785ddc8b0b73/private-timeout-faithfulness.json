@@ -1,0 +1,25 @@
+{
+  "id": "private-timeout-faithfulness",
+  "verdict": {
+    "passed": false,
+    "reason": "Missing evidence for the specific repository configuration, and no verbatim quote from the document ID 1 covering the necessary fact.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 595,
+      "output_tokens": 61,
+      "total_tokens": 656,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 1.93619512499572
+}

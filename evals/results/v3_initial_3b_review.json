@@ -1,0 +1,341 @@
+{
+  "scope": "Rejected frozen initial 3B profile: complete attempted development set, incomplete eligible metrics; structural audit plus limited semantic review",
+  "observed_at": "2026-10-18T14:17:18.110237+00:00",
+  "attempt_dir": "evals/results/verified/graph_v3/e35862494ee015671f4fd1d51b8085afab3ac9ce13c9806357b5d0cc849710b9/20261018T140101939329Z-0b7ceabe",
+  "code_commit": "fabc0520d8b1277ae15db33a0225b596406ffecd",
+  "questions_attempted": 40,
+  "completed_generation_and_scoring": 37,
+  "operational_gaps": 3,
+  "automated_correct_completed": 15,
+  "automated_correct_denominator": 37,
+  "not_full_dataset_accuracy": true,
+  "canonical_attempt_documents_checked": 775,
+  "literal_judge_quotes_checked": 36,
+  "confirmed_unsupported_acceptances": 2,
+  "supported_answer_semantic_reviews": 7,
+  "unknown_fact_refusals": 7,
+  "answerable_refusals_not_fully_adjudicated": 21,
+  "profile_promoted": false,
+  "records": [
+    {
+      "question": "What is required to access the pre‑release Cloud Run support for Temporal Serverless Workers?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "What does Activity.wrap() return when it is given a checked exception?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "In the Celery-to-Standalone-Activity migration guide, what command starts the Python Worker?",
+      "classification": "confirmed_unsupported_citation_scope",
+      "review_note": "The cited chunk starts a standalone Activity; it does not establish starting the migration guide Python Worker.",
+      "automated_correct": false,
+      "automated_grounded": false,
+      "attempt_count": 1
+    },
+    {
+      "question": "In the execution-failures troubleshooting guide, which metric tag identifies the failing Activity type?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "In the Java SDK, what function starts a new Workflow Run using Continue-As-New?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "What command disables API key authentication for a Temporal Cloud namespace?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "In Temporal, how can a workflow be paused after activity retries are exhausted and later resumed with corrected input using a signal?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "What is the default value for max_concurrent_activities in the lambda_worker package?",
+      "classification": "source_supported_answer",
+      "review_note": "Coding-assistant review of the answer and literal cited proof supports the narrow stated fact; this is not independent review.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 1
+    },
+    {
+      "question": "In the Python Google GenAI hello-world example, what task_queue name is used to execute the Workflow?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "In the Java Nexus feature-guide example, what mainClass argument starts the handler Worker?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "In the Recover Without Restart guide, how often does its dashboard poll the web service?",
+      "classification": "source_supported_answer",
+      "review_note": "Coding-assistant review of the answer and literal cited proof supports the narrow stated fact; this is not independent review.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 1
+    },
+    {
+      "question": "Which command pulls the Temporal proxy container image?",
+      "classification": "source_supported_answer",
+      "review_note": "Coding-assistant review of the answer and literal cited proof supports the narrow stated fact; this is not independent review.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 1
+    },
+    {
+      "question": "What does the Parent Close Policy determine in Temporal?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "What responsibilities does the Frontend Service have in Temporal?",
+      "classification": "source_supported_answer",
+      "review_note": "Coding-assistant review of the answer and literal cited proof supports the narrow stated fact; this is not independent review.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 1
+    },
+    {
+      "question": "What is the definition of the Temporal-specific term \"Retention Period\"?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "What components make up a Temporal Service?",
+      "classification": "operational_gap_not_an_answer",
+      "review_note": "Strict quote validation exhausted; do not relabel as a valid refusal.",
+      "automated_correct": null,
+      "automated_grounded": null,
+      "attempt_count": null
+    },
+    {
+      "question": "What is a Local Activity in Temporal?",
+      "classification": "source_supported_answer",
+      "review_note": "Coding-assistant review of the answer and literal cited proof supports the narrow stated fact; this is not independent review.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 1
+    },
+    {
+      "question": "What does the term Visibility refer to within the Temporal Platform?",
+      "classification": "source_supported_answer",
+      "review_note": "Coding-assistant review of the answer and literal cited proof supports the narrow stated fact; this is not independent review.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 1
+    },
+    {
+      "question": "What are Dynamic Handlers in Temporal?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "What does the Nexus Registry manage, and how are its scope and Endpoint-name uniqueness defined for Cloud versus self-hosted deployments?",
+      "classification": "operational_gap_not_an_answer",
+      "review_note": "Strict quote validation exhausted; do not relabel as a valid refusal.",
+      "automated_correct": null,
+      "automated_grounded": null,
+      "attempt_count": null
+    },
+    {
+      "question": "When porting Continue-As-New logic between Java and Python Temporal Workflows, what function starts the new Run in each SDK?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "How do the Go and TypeScript external-storage prerequisite documents differ in their stated read/write permissions for storing payloads?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "When monitoring whether Continue-As-New is suggested, which SDK call should a Java Workflow use and which should a Python Workflow use?",
+      "classification": "source_supported_answer",
+      "review_note": "Coding-assistant review of the answer and literal cited proof supports the narrow stated fact; this is not independent review.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 1
+    },
+    {
+      "question": "In Java, how does a client invoke a Dynamic Workflow, and what method and input type must its implementation provide?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "To let a Child Workflow survive its parent closing, which Parent Close Policy field/parameter and ABANDON value are used in Go and Python?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "For a Workflow constructor to receive Workflow input before message handlers run, what initializer marker is used in PHP versus Java?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "When listing standalone Nexus operations matching a filter, which base-client methods are used in .NET versus Go?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "What are the method names used in the .NET and Go SDKs to count standalone Nexus operations?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "Why are some scheduled workflow actions being skipped or delayed even though they were supposed to run?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "In the Go upgrade-on-continue-as-new example, how can a Workflow detect and adopt a changed target Worker deployment version?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "Is it possible to eliminate a workflow that only triggers one Nexus operation and call the operation directly?",
+      "classification": "confirmed_unsupported_citation_scope",
+      "review_note": "The cited Rust snippet calls Nexus inside a Workflow. It does not establish removing the Workflow and invoking the operation directly.",
+      "automated_correct": true,
+      "automated_grounded": false,
+      "attempt_count": 1
+    },
+    {
+      "question": "In Go Workflow tests, how can I mock Nexus asynchronous operations and add custom synchronous operation logic?",
+      "classification": "answerable_refusal_not_fully_adjudicated",
+      "review_note": "Counts as a false refusal against the full-corpus reference. Generator versus Judge causation not fully adjudicated in this rejected profile.",
+      "automated_correct": false,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "How much does Temporal Cloud cost per million actions?",
+      "classification": "operational_gap_not_an_answer",
+      "review_note": "Strict quote validation exhausted; do not relabel as a valid refusal.",
+      "automated_correct": null,
+      "automated_grounded": null,
+      "attempt_count": null
+    },
+    {
+      "question": "What is the home address of Temporal's CEO?",
+      "classification": "expected_unanswerable_refusal",
+      "review_note": "Reference/source scope requires refusal for unknown facts.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "How many employees does Temporal Technologies have?",
+      "classification": "expected_unanswerable_refusal",
+      "review_note": "Reference/source scope requires refusal for unknown facts.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "What was Temporal's revenue last quarter?",
+      "classification": "expected_unanswerable_refusal",
+      "review_note": "Reference/source scope requires refusal for unknown facts.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "Which venture capital firm led Temporal's Series C?",
+      "classification": "expected_unanswerable_refusal",
+      "review_note": "Reference/source scope requires refusal for unknown facts.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "What is the WiFi password at Temporal's head office?",
+      "classification": "expected_unanswerable_refusal",
+      "review_note": "Reference/source scope requires refusal for unknown facts.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "What is our company's internal on-call escalation policy for Temporal?",
+      "classification": "expected_unanswerable_refusal",
+      "review_note": "Reference/source scope requires refusal for unknown facts.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 2
+    },
+    {
+      "question": "How many Temporal workflows did Netflix run yesterday?",
+      "classification": "expected_unanswerable_refusal",
+      "review_note": "Reference/source scope requires refusal for unknown facts.",
+      "automated_correct": true,
+      "automated_grounded": true,
+      "attempt_count": 2
+    }
+  ]
+}

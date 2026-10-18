@@ -1,0 +1,18 @@
+{
+  "scope": "Fresh locked hosted Linux verification of fabc052; native model quality is outside this job",
+  "observed_at": "2026-10-18T14:06:53.607827+00:00",
+  "commit": "fabc0520d8b1277ae15db33a0225b596406ffecd",
+  "url": "https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39133573448",
+  "conclusion": "success",
+  "offline": {
+    "passed": 147,
+    "deselected": 5,
+    "seconds": 21.54
+  },
+  "fresh_index_chunks": 14414,
+  "integration": {
+    "passed": 5,
+    "deselected": 147,
+    "seconds": 13.13
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "supported-answer",
+  "verdict": {
+    "passed": true,
+    "reason": "Quote from document with ID 1 supports the answer.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 435,
+      "output_tokens": 71,
+      "total_tokens": 506,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 3.8061546250028186
+}

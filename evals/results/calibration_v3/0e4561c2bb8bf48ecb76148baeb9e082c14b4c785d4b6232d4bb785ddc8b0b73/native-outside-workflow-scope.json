@@ -1,0 +1,30 @@
+{
+  "id": "native-outside-workflow-scope",
+  "verdict": {
+    "passed": true,
+    "reason": "The document provides an example of calling a Nexus operation from a workflow.",
+    "quotes": [
+      {
+        "id": 7,
+        "text": "```rust\nuse std::time::Duration;\n\nuse temporalio_common::protos::coresdk::AsJsonPayloadExt;\nuse temporalio_macros::{workflow, workflow_methods};\nuse temporalio_sdk::{\n    ApplicationFailure, NexusOperationOptions, WorkflowContext, WorkflowContextView,\n    WorkflowResult,\n};\n\n#[workflow]\npub struct GreetingWorkflow {\n    pub name: String,\n}\n\n#[workflow_methods]\nimpl GreetingWorkflow {\n    #[init]\n    fn new(_ctx: &WorkflowContextView, name: String) -> Self {\n        Self { name }\n    }\n\n    #[run]\n    pub async fn run(ctx: &mut WorkflowContext<Self>) -> WorkflowResult<String> {\n        let name = ctx.state(|s| s.name.clone());\n        let nexus_started = ctx\n            .start_nexus_operation(\n                NexusOperationOptions::builder()\n                    .endpoint(\"my-endpoint\")\n                    .service(\"my-service\")\n                    .operation(\"my-operation\")\n                    .input(name.as_json_payload().map_err(ApplicationFailure::new)?)\n                    .start_to_close_timeout(Duration::from_secs(10))\n                    .build(),\n            )\n            .await;"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 774,
+      "output_tokens": 340,
+      "total_tokens": 1114,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 8.769306165995658
+}

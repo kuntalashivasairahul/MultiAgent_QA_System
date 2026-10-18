@@ -1,0 +1,30 @@
+{
+  "id": "incomplete-definition",
+  "verdict": {
+    "passed": true,
+    "reason": "The provided answer is supported by the document",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "Activities in Temporal are individual units of work that often represent non-deterministic parts of the code logic, such as querying a database or calling an external service. The SDK provides APIs to customize the behavior of an Activity Execution."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 635,
+      "output_tokens": 100,
+      "total_tokens": 735,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 2.969513916003052
+}

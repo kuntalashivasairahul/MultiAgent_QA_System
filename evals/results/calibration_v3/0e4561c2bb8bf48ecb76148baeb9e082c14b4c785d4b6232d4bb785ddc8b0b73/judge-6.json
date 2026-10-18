@@ -1,0 +1,30 @@
+{
+  "id": "judge-6",
+  "verdict": {
+    "passed": false,
+    "reason": "Missing evidence for retries being unlimited",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 430,
+      "output_tokens": 72,
+      "total_tokens": 502,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 1.8203710419984418
+}

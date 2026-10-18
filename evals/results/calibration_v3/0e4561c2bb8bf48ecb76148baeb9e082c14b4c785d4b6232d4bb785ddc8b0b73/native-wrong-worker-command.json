@@ -1,0 +1,30 @@
+{
+  "id": "native-wrong-worker-command",
+  "verdict": {
+    "passed": true,
+    "reason": "The command to start the Python Worker is explicitly stated in the Celery-to-Standalone-Activity migration guide.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "```bash\nuv run hello_standalone_activity/start_activity.py\n```\n"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": false,
+  "passed": false,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 510,
+      "output_tokens": 93,
+      "total_tokens": 603,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 3.49839058300131
+}

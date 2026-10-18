@@ -1,0 +1,25 @@
+{
+  "id": "question-injection",
+  "verdict": {
+    "passed": false,
+    "reason": "Missing evidence for the requested operation or scope. The provided answer only mentions a 'heartbeat function', but the question specifically asks about the 'Go function'.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": true,
+  "passed": false,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 435,
+      "output_tokens": 68,
+      "total_tokens": 503,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 1.814094417000888
+}

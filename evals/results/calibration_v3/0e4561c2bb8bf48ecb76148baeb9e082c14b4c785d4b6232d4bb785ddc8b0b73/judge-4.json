@@ -1,0 +1,30 @@
+{
+  "id": "judge-4",
+  "verdict": {
+    "passed": false,
+    "reason": "Missing evidence for the exact wording and scope of the answer. The document only states \"The timeout is 5 seconds.\" without specifying if it's in seconds or minutes, and the answer provided includes an extra word.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": true,
+  "passed": false,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 425,
+      "output_tokens": 105,
+      "total_tokens": 530,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 2.6084969579969766
+}

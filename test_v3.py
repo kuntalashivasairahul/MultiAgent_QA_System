@@ -114,6 +114,20 @@ def test_invalid_score_rejected(score):
         verdict(score)
 
 
+def test_retry_keeps_previously_cited_evidence_before_uncited_context(monkeypatch):
+    previous = [Document(id=f"old-{i}", page_content=f"Prior fact {i}.",
+                         metadata={"source": "old.mdx", "chunk_id": f"old-{i}"}) for i in range(12)]
+    fresh = [Document(id=f"new-{i}", page_content=f"Missing fact {i}.",
+                      metadata={"source": "new.mdx", "chunk_id": f"new-{i}"}) for i in range(12)]
+    monkeypatch.setattr(v3, "get_hybrid_context", lambda query, *, exclude_ids: fresh)
+    result = v3.retrieve({"question": "Explain both facts.", "attempt_count": 1,
+                          "documents": previous, "citations": [{"id": 12}],
+                          "quality": {"retry_query": "missing fact"}})
+    ids = {d.id for d in result["documents"]}
+    assert "old-11" in ids
+    assert len(ids) <= 12 and any(i.startswith("new-") for i in ids)
+
+
 @pytest.mark.integration
 def test_real_retry_excludes_seen_chunks_and_obeys_context_limits():
     from retrieval import get_hybrid_context

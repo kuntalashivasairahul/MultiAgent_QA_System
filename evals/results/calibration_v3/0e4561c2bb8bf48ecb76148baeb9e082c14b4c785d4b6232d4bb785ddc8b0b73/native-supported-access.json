@@ -1,0 +1,25 @@
+{
+  "id": "native-supported-access",
+  "verdict": {
+    "passed": false,
+    "reason": "The answer does not specify the required configuration or environment for accessing pre-release Cloud Run support for Temporal Serverless Workers.",
+    "quotes": [],
+    "confidence": 0.5,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": true,
+  "passed": false,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 2126,
+      "output_tokens": 55,
+      "total_tokens": 2181,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 4.973035957998945
+}

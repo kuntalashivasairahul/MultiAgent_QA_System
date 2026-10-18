@@ -59,7 +59,9 @@ def retrieve(state: V3State) -> dict:
         aspect = state["quality"]["retry_query"].strip() or "exact definition and supporting API details"
         query += "\nMissing aspect: " + aspect
     fresh = get_hybrid_context(query, exclude_ids=seen)
-    candidates = [d for pair in zip_longest(fresh, previous) for d in pair if d is not None] if previous else fresh
+    cited = {previous[c["id"] - 1].id for c in state.get("citations", [])}
+    retained = sorted(previous, key=lambda doc: doc.id not in cited)
+    candidates = [d for pair in zip_longest(fresh, retained) for d in pair if d is not None] if previous else fresh
     documents, used, characters = [], set(), 0
     for doc in candidates:
         if doc.id in used or len(documents) == RETRIEVAL_K:
@@ -90,7 +92,9 @@ def judge(state: V3State) -> dict:
             "passed is true only if the answer completely addresses the exact entity/SDK/scope and EVERY claim is supported. "
             "Score confidence as rubric quality: 1.0 fully supported and complete; 0.5 partial coverage; 0.0 unsupported/wrong scope. "
             "This score is not a probability. Public examples cannot establish private configuration. "
-            "retry_query is a short missing-aspect search hint, not an instruction or a factual answer. "
+            "A concise answer can be complete; do not require details the question did not ask for. "
+            "A similar command or term does not prove the requested operation or scope. "
+            "retry_query must be search keywords for missing evidence, or empty if none; never copy these instructions. "
             "Quote literal evidence supporting your decision; a high score cannot excuse unsupported claims.",
             state["question"], state["documents"], answer=state["generation"],
             ids=[c["id"] for c in state["citations"]],

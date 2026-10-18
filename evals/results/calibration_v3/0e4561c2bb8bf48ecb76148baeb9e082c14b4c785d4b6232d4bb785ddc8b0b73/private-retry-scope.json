@@ -1,0 +1,30 @@
+{
+  "id": "private-retry-scope",
+  "verdict": {
+    "passed": false,
+    "reason": "Missing evidence for the private Acme billing Workflow repository",
+    "quotes": [
+      {
+        "id": 5,
+        "text": "```go\n// workflow.go\npackage payments\n\nimport (\n    \"errors\"\n    \"time\"\n\n    enumspb \"go.temporal.io/api/enums/v1\"\n    \"go.temporal.io/sdk/temporal\"\n    \"go.temporal.io/sdk/workflow\"\n)\n\nfunc PaymentWorkflow(ctx workflow.Context, orderID string) (string, error) {\n    ao := workflow.ActivityOptions{\n        StartToCloseTimeout: 10 * time.Second,\n        RetryPolicy: &temporal.RetryPolicy{\n            MaximumAttempts: 3,\n        },\n    }\n    ctx = workflow.WithActivityOptions(ctx, ao)\n\n    var result string\n    err := workflow.ExecuteActivity(ctx, ChargePaymentAPI, orderID).Get(ctx, &result)\n    if err != nil {\n        var actErr *temporal.ActivityError\n        if errors.As(err, &actErr) && actErr.RetryState() == enumspb.RETRY_STATE_MAXIMUM_ATTEMPTS_REACHED {\n            // All retries exhausted — handle the failure here.\n            // Options: alert on-call, trigger a compensation activity, or escalate to a human.\n            workflow.GetLogger(ctx).Error(\"Payment failed: all 3 attempts exhausted\",\n                \"orderID\", orderID)\n        }\n        return \"\", err\n    }\n    return result, nil\n}\n```\n"
+      }
+    ],
+    "confidence": 0.5,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "llama-3.2-3b-instruct": {
+      "input_tokens": 779,
+      "output_tokens": 373,
+      "total_tokens": 1152,
+      "input_token_details": {},
+      "output_token_details": {
+        "reasoning": 0
+      }
+    }
+  },
+  "seconds": 9.480715249999776
+}

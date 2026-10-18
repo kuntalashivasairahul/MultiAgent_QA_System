@@ -1,0 +1,44 @@
+{
+  "scope": "Interim repair verification; no stable v3 score claimed",
+  "observed_at": "2026-10-18T14:20:37.436571+00:00",
+  "code_sha256": {
+    "graph_v3.py": "e5392725cf3b385c570967bf828970b842805c3ad313908889b3521d6b343d32",
+    "test_v3.py": "13424a1bab53dfdf8f985a23ba35db89ab8d97fdfc74f916b5ed64a5c3cbc155",
+    "evals/calibrate_v3.py": "030d5ba4837bea1fdb71017767d9d0b2f9d853bb55c00189aea6917efcd815be",
+    "evals/v3_judge_controls.json": "f07cef8d9ca24eaae3d07b8ddb25cd6619bb27e6e58111b415199e719a6e5cd2",
+    "v3_llm.py": "88e17bc35907d590f6c75f036374259e7d1405d7cf690ebdc68ae2c9d9871b88",
+    "api.py": "2f9064f29924ee0682925a53bffb5f207e3450f18149c93bd268d1163383f8b9",
+    "uv.lock": "165747edf565242f46a1576e6ef679bfb3f211ee43043e85fe64a0c939484456"
+  },
+  "regression": {
+    "finding": "Previously cited evidence near the end of the first context was dropped behind uncited chunks during retry mixing.",
+    "test_failed_before_fix": true,
+    "test_passed_after_fix": true,
+    "retained_citations_prioritized_within_shared_budget": true
+  },
+  "full_suite": {
+    "passed": 153,
+    "integration_tests": 5,
+    "seconds": 17.74
+  },
+  "clean_offline_snapshot": {
+    "passed": 148,
+    "deselected": 5,
+    "seconds": 8.69,
+    "credentials_dotenv_corpus_index_absent": true,
+    "reused_installed_locked_interpreter": true
+  },
+  "dependency_lock_check": "passed",
+  "native_3b_controls": {
+    "artifact": "evals/results/calibration_v3/0e4561c2bb8bf48ecb76148baeb9e082c14b4c785d4b6232d4bb785ddc8b0b73/result.json",
+    "scored": 15,
+    "passed": 9,
+    "promoted": false
+  },
+  "remaining": [
+    "Validate a stronger local model profile",
+    "Complete broader native validation and source review for the selected profile",
+    "Changed-code CI and final release audit",
+    "Assign evidence-backed v3 and overall scores after the gates pass"
+  ]
+}
