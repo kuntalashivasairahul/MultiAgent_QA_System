@@ -10,4 +10,4 @@ For future current-reference development runs, use:
 LANGSMITH_TRACING=false GROQ_JUDGE_MODEL=qwen/qwen3.8-27b uv run python evals/run_eval.py graph_v2_1 --dataset evals/golden_current_v21.jsonl
 ```
 
-The unqualified CLI continues to select the frozen benchmark for compatibility. The corrected file is a versioned source audit, not a new confirmation set. Shared authorship and model-based judging still limit the strength of resulting accuracy claims.
+Since implementation `e9a1185`, the unqualified evaluation and comparison CLI selects `golden_current_v21.jsonl`. To reproduce the historical references, explicitly pass `--dataset evals/golden.jsonl`. The corrected file is a versioned source audit, not a new confirmation set. Shared authorship and model-based judging still limit the strength of resulting accuracy claims. Comparison reports have content-addressed filenames and preserve the frozen development/holdout reports.

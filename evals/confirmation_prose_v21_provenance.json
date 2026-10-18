@@ -1,0 +1,18 @@
+{
+  "scope": "Coding-assistant authored and literal-source-reviewed after implementation freeze b024062; no retrieval/model outcomes used for selection. Earlier three 12-question sets were withdrawn before native execution. Small shared-authorship confirmation with overlapping Temporal/SDK topics; not blind or independent and not general future accuracy. SDK examples reviewed as text, not executed in all runtimes.",
+  "authored_at": "2026-10-18T07:10:26.137497+00:00",
+  "implementation_commit": "b0240629613d2482500a27c3e334108779f493b0",
+  "freeze_committed_at": "2026-10-18T12:38:43+05:30",
+  "dataset_sha256": "cacc9bf71d7607c841273e763bd2fd17a82a7cd08cfa5f50a9857cb799f9e7d5",
+  "n": 12,
+  "index_fingerprint": "17ea9773fac3cbcc49a11cace7d2e44fca36eea0d2e7639b0befdea3edc6e8f8",
+  "index_manifest_sha256": "104832dc00e7b0922877cb1203346bbf05aed05b5a2f68cb273f8f50d7ef0513",
+  "native_profile": {
+    "generation_model": "openai/gpt-oss-120b",
+    "judge_model": "qwen/qwen3.8-27b",
+    "max_retries": 8,
+    "requests_per_second": 0.25
+  },
+  "review": "Each answerable reference has literal quotes and canonical chunk IDs verified before native execution. Unknown private configuration is not supplied by the public corpus.",
+  "index_manifest_hash_format": "SHA-256 of json.dumps(read_manifest(), sort_keys=True).encode(), not raw on-disk whitespace"
+}

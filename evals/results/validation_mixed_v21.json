@@ -1,0 +1,45 @@
+{
+  "scope": "Observed local validation and prepared native input identities, not completed native final evidence. Test outcomes below were observed in this session; they do not imply a fresh dependency installation, Windows/GitHub execution or independent review.",
+  "recorded_at": "2026-10-18T07:14:58.452205+00:00",
+  "implementation_commit": "b0240629613d2482500a27c3e334108779f493b0",
+  "full_suite": {
+    "passed": 110,
+    "seconds": 10.48,
+    "integration_included": 4
+  },
+  "frozen_clean_checkout": {
+    "commit": "b0240629613d2482500a27c3e334108779f493b0",
+    "passed": 106,
+    "integration_deselected": 4,
+    "seconds": 7.86,
+    "credentials_removed": true,
+    "corpus_index_env_absent": true,
+    "dependencies": "reused installed locked interpreter; not a fresh install"
+  },
+  "corrected_source_diagnostic": "evals/results/section_retrieval/148bcae8cb7adc92f512094583b7046ad96604e01b3cfbe87d8ab64e4eb97874/result.json",
+  "local_documentation_links": {
+    "checked": 52,
+    "missing": 0
+  },
+  "prior_profile_partial_review": "evals/results/review_utf8_v21_partial.json",
+  "native_inputs_prepared": {
+    "golden_current_v21": {
+      "fingerprint": "3fc0170fc5bec6ef2040740e2608d9cbbbef8b787e544fd908bfed6df58787b2",
+      "questions": 40,
+      "dataset_sha256": "327de588c24b48b20958161f352f59120a268c073afc7073d64bfbade2e66cdb"
+    },
+    "confirmation_prose_v21": {
+      "fingerprint": "e3bf7c2b803964003069bbb5aea021498fc81ae59968e2048bc02c86eae51276",
+      "questions": 12,
+      "dataset_sha256": "cacc9bf71d7607c841273e763bd2fd17a82a7cd08cfa5f50a9857cb799f9e7d5"
+    }
+  },
+  "native_supervisor": {
+    "log": "/tmp/qa-mixed-supervisor.log",
+    "pid_when_observed": 13293,
+    "scheduled_after_previous_cooldown_utc": "2026-10-18T07:30:07.768518+00:00",
+    "status": "queued, not started; depends on this local process/network/provider capacity"
+  },
+  "fixed_rubric_score": 8.63,
+  "score_gate": "Final current-input native 40+12 completion and adjudication remain required."
+}

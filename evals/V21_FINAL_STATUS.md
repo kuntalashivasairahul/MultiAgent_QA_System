@@ -1,49 +1,50 @@
 # V2.1 final verification status
 
-Selected implementation: **`9d39840`**. Overall project-quality target: **9/10**; current evidence-based score: **8.63/10**. This is a coding-assistant engineering assessment of a public-document research prototype, not independently certified answer accuracy. The goal is not complete.
+Selected implementation: **`b024062`**. Overall project-quality target: **9/10**; current score: **8.63/10** using the fixed rubric. This is a coding-assistant assessment of a public-document research prototype, not independent certification or a promise of 90% future answer accuracy. The goal remains incomplete.
 
-## Completed
+## Verified repairs
 
-- 98 full-suite tests pass, including real retrieval/integrity integration, the recorded corrupted Java API URL, and checkpoint ownership during recovery reads. The latest full run completed in 11.29s.
-- A current-source clean snapshot without API credentials, corpus, index or `.env` passes 94 offline tests in 6.52s; four integration tests are explicitly deselected there and passed in the full suite. Dependencies reuse the installed locked environment; this is not a fresh package installation.
-- 11/11 frozen diagnostic facts, 7/7 complete diagnostic contexts, 32/32 required source groups; dense-twelve and legacy-section-ten controls retained.
-- Durable synchronous graph-node recovery, competing-writer protection, cumulative persisted graph/judge usage and safe retry metadata; real SQLite recovery tests pass.
-- Same-ID corruption is rejected. Real 14,414-document content equals the previous snapshot; rebuild is idempotent and old collections remain recoverable.
-- Bounded correction of invalid literal-quote verdicts, preserving rejected evidence/audits; strict validation is retained.
-- 21/21 native controls on the final grading profile, and a versioned source correction for the old pricing reference error.
-- Twelve new confirmation questions source-reviewed after the final implementation freeze. Earlier confirmation questions remain preserved but were withdrawn before inference.
+- **110 full-suite tests passed in 10.48s**, including four real corpus/index integration tests.
+- A frozen `b024062` checkout without corpus, index, `.env` or API credentials passed **106 offline tests in 7.86s**, with four integration tests explicitly deselected. It reused the installed locked environment; this was not a fresh dependency installation. `uv sync --frozen` verified the locked environment earlier this session.
+- Current frozen-code hybrid retrieval recovered **11/11 selected facts, 7/7 complete diagnostic contexts and 33/33 required source groups** on the corrected development references. These are development-tuned source diagnostics, not independent answer accuracy. See the [retained diagnostic](results/section_retrieval/148bcae8cb7adc92f512094583b7046ad96604e01b3cfbe87d8ab64e4eb97874/result.json).
+- Durable synchronous graph-node recovery, competing-writer protection, cumulative persisted graph/judge usage, safe retry metadata, and checkpoint ownership during repairing reads have passing regressions.
+- The 14,414-record index was rebuilt and matched canonical text/metadata, preserved the previous snapshot and passed idempotence checks. The digest does not cover embedding coordinates or adversarial local filesystem changes.
+- Evidence JSON now preserves Unicode. A controlled native replay fixed the observed em-dash/control-character quote corruption; the ordinary native development run also completed that question. [Probe](results/unicode_prompt_probe_v21.json).
+- Prose quotes can now recover whitespace beside fenced code while preserving literal code and returning exact contiguous source spans. The actual external-storage failure and all three rejected verdicts are [preserved](results/mixed_prose_quote_diagnosis_v21.json) and replay successfully under the fix. Tests reject changed facts/code, spans bridging code, unclosed/short-closing fences and nested-fence normalization.
+- Evidence validation still allows at most three attempts, retains rejected verdicts, and never retries a valid semantic negative. The preceding UTF8 checker/profile passed [21/21 native calibration controls](results/calibration_v21/cb55709fe327a2634541d758b44f38d040e27ffbe349cfbd9d11241a2c2edbc9/result.json); that is pre-mixed-prose-fix component evidence, not a new native run of `b024062`.
+- Current evaluation defaults to the [versioned reference correction](REFERENCE_ERRATA_V21.md). Content-addressed comparison reports preserve historical baseline/holdout reports; regression tests cover both behaviors.
 
-## Waiting on provider quota
+The [validation snapshot](results/validation_mixed_v21.json) retains outcomes, scope limits and prepared native input identities.
 
-At the 17:46 UTC checkpoint the final development run has **6/40 fully scored rows**, **34 missing native outputs**, and no completed confirmation run. Both models returned native daily-token errors: limit **200,000 tokens/day**. The second resumption recovered dev-04 and the third recovered dev-05, retaining completed answers. Two later passes made no further completion progress: dev-06 repeatedly produced a malformed quote, then daily quota interrupted its corrective call. The [preserved worker history](results/native_retry_before_reserve_v21.log) and native error audits retain this evidence. Missing outputs are operational failures, not correct answers or refusals.
+## Native evidence and current recovery
 
-The recovery runner now waits for a two-hour refill window when a long rate-limit response interrupts quote validation. It applies that window at startup and between resumptions, using the saved checkpoint time; restarting does not reset the whole wait. [Five scheduling checks](results/recovery_reserve_checks_v21.json) pass, and the actual pending metadata selects this longer window. Checkpoint reads acquire attempt ownership because the shared loader can repair torn appends; a regression failed before that guard and passes after it. Ownership releases before quota waiting. The worker was intentionally stopped during cooldown to apply these operator-only changes, then restarted and confirmed live. Frozen implementation inputs and the native fingerprint remain unchanged.
+The preceding `e9a1185` run is **incomplete: 21/40 fully scored, 19 missing**. It stopped after three rejected external-storage prose quotes and native daily-token rate limits. Its [aggregate and coverage](results/verified/graph_v2_1/93db52feb91110638d5cdaeb0c86490d725500fbcc5ab4e35c4038b6f6c64828/20261018T065045922242Z-a6077f8b/result.json), [raw answers/audits](results/verified/graph_v2_1/93db52feb91110638d5cdaeb0c86490d725500fbcc5ab4e35c4038b6f6c64828/20261018T065045922242Z-a6077f8b/partial.jsonl), and [worker log](results/native_before_mixed_prose_fix_v21.log) remain preserved. These are not final-current-version metrics and missing rows are not correct answers or refusals.
 
-The next attempt is scheduled approximately **19:22 UTC on 14 October / 00:52 IST on 15 October**. This heuristic allows more capacity for a multi-call correction sequence; it does not reserve tokens at Groq or guarantee enough quota for all remaining work. Full completion can require substantially longer. Successful graph nodes remain durable; unsuccessful validation attempts within a failed node can repeat after an outage, with their reported usage retained.
+The [partial source review](results/review_utf8_v21_partial.json) covers all 21 scored outputs, checks 251 retrieved documents against canonical text/metadata and 79 literal gate quotes, and preserves automated labels. Dev-16 is a genuine false refusal: retrieval supplied the Local Activity definition, but the generator added unsupported “high-throughput”; support correctly rejected it. Dev-00 has possible signup-requirement overstatement; dev-15 adds an implicit workflow-state/query interpretation to the exact store names. Both qualifications remain visible alongside passing automated labels. SDK/CLI examples were reviewed as text, not executed.
 
-A [partial source review](results/review_final_v21_partial.json) checks the six completed outputs against canonical cited text/metadata and literal support quotes. Five answers match directly, including the Java `Workflow.continueAsNew()` answer and its exact API URL/code quotes, and the CLI authentication command with its generic namespace placeholder. CLI source text was reviewed; no authentication command was executed. On dev-00, the answer calls signup a requirement while the reference says it is optional; the source uses “and” without separately specifying a formal signup prerequisite. This possible modal overstatement is recorded as qualified support, without silently changing automated labels. It is not a final accuracy estimate or independent human review. Remaining native outputs and confirmation still require review. Current source-code and replacement-confirmation hashes were rechecked against the frozen run/provenance and match. The additional regression test changes no fingerprinted implementation input.
+The old confirmation sets `confirmation_final_v21`, `confirmation_repaired_v21` and `confirmation_utf8_v21` were each withdrawn **before native execution** because implementation changed. [Twelve newly authored questions](confirmation_prose_v21.jsonl) now follow freeze `b024062`; [provenance](confirmation_prose_v21_provenance.json) records literal source checks, authorship timing, dataset identity, index identity and the explicit native profile. No retrieval/model outcomes selected these questions. Shared authorship and overlapping Temporal/SDK topics limit their independence.
 
-Current development attempt: [inputs](results/verified/graph_v2_1/22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f/20261014T152435540331Z-c2ddd6c6/inputs.json), [partial results](results/verified/graph_v2_1/22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f/20261014T152435540331Z-c2ddd6c6/partial.jsonl), [aggregate with denominators](results/verified/graph_v2_1/22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f/20261014T152435540331Z-c2ddd6c6/result.json). The aggregate may advance as the local resumer runs; inspect its actual `status` and coverage before interpreting it.
+At the **18 October 07:13 UTC** checkpoint, the final `b024062` development/confirmation run has not started. The local supervisor is scheduled after the last recorded native cooldown, **07:30:08 UTC / 13:00:08 IST on 18 October**. Its log is `/tmp/qa-mixed-supervisor.log`. The previous worker and supervisor are stopped. The replacement supervises corrected development first and fresh confirmation second, preserves matching completed graph nodes/answers, and waits for safe cooldowns between resumptions. A two-hour refill heuristic applies when daily quota interrupts validation; it is not a provider reservation or guarantee of completion. Failed validation calls inside an unfinished node may repeat after an outage; accumulated reported usage is retained.
 
-The [local resumer](results/final_native_resume.txt) is running with tracing disabled and the frozen profile. It checks prior cooldowns before initial inference, waits for attempt ownership, resumes only matching inputs, retains valid verdicts, respects reported numeric cooldowns and the quote-repair refill heuristic, and runs replacement confirmation after development completes. Its assertions enforce the same fingerprint/attempt across resumptions. It needs this machine/process and network to remain available. Local graph SQLite files are Git-ignored; moving only the portable JSONL cannot recover a pending graph node on another machine. No billing change or deployment was made.
+Use actual artifacts and live process state to refresh this timestamped snapshot. The supervisor needs this machine, process and network to remain available. Local SQLite recovery files are Git-ignored; portable JSONL alone cannot recover a pending graph node on a different machine.
 
-To resume if the process stops, from the project root:
-
-```sh
-LANGSMITH_TRACING=false GROQ_JUDGE_MODEL=qwen/qwen3.8-27b GROQ_MAX_RETRIES=8 uv run python -u evals/results/final_native_resume.txt
-```
-
-Individual equivalent commands, preserving input identity:
+If the supervisor stops, resume from the project root with the same explicit profile:
 
 ```sh
-LANGSMITH_TRACING=false GROQ_JUDGE_MODEL=qwen/qwen3.8-27b GROQ_MAX_RETRIES=8 uv run python evals/run_eval.py graph_v2_1 --dataset evals/golden_current_v21.jsonl
-LANGSMITH_TRACING=false GROQ_JUDGE_MODEL=qwen/qwen3.8-27b GROQ_MAX_RETRIES=8 uv run python evals/run_eval.py graph_v2_1 --dataset evals/confirmation_repaired_v21.jsonl
+LANGSMITH_TRACING=false GROQ_MODEL=openai/gpt-oss-120b GROQ_JUDGE_MODEL=qwen/qwen3.8-27b GROQ_MAX_RETRIES=8 GROQ_RPS=0.25 uv run python -u evals/results/final_native_resume.txt
 ```
 
-Do not use `--fresh` for quota recovery. Changing any fingerprinted code, model setting or reference selects a different attempt; keep the freeze intact while collecting final evidence. Existing `.env` preferences are preserved; explicit flags above select the measured grader/retry profile.
+Individual equivalent commands:
 
-## Required before claiming 9/10
+```sh
+LANGSMITH_TRACING=false GROQ_MODEL=openai/gpt-oss-120b GROQ_JUDGE_MODEL=qwen/qwen3.8-27b GROQ_MAX_RETRIES=8 GROQ_RPS=0.25 uv run python evals/run_eval.py graph_v2_1 --dataset evals/golden_current_v21.jsonl
+LANGSMITH_TRACING=false GROQ_MODEL=openai/gpt-oss-120b GROQ_JUDGE_MODEL=qwen/qwen3.8-27b GROQ_MAX_RETRIES=8 GROQ_RPS=0.25 uv run python evals/run_eval.py graph_v2_1 --dataset evals/confirmation_prose_v21.jsonl
+```
 
-Finish all eligible metrics on both datasets with zero missing values. Source-review all confirmation answers and development failures/suspected grader errors, preserving automated labels alongside adjudication. Report reported graph/judge usage and operational failures, uncertainty, false refusals, unsupported answers and reference changes. Apply the fixed scorecard weights again; repair remaining major findings and use newly authored confirmation if the selected implementation changes. Do not promote partial metrics or round the current 8.63 to nine.
+Do not use `--fresh` for quota recovery. Changing fingerprinted implementation, model, references or lock creates a new attempt. Keep the freeze intact while collecting final evidence. Existing `.env` preferences remain preserved; the commands select the measured profile explicitly. No billing change, deployment or push was made.
 
-Windows execution, hosted GitHub CI, independent human/field validation, private-data isolation and production deployment remain unverified or outside scope. SDK examples were source-reviewed, not executed against every SDK runtime. Model-based gates can still misjudge semantic support even with valid literal quotes.
+## Remaining before claiming 9/10
+
+Complete all eligible metrics on final development 40 and fresh confirmation 12 with zero missing values. Source-review confirmation and development failures/suspected grader errors, preserving automated labels alongside adjudication. Report graph/judge usage, operational failures, uncertainty, false refusals, unsupported answers and reference changes. Apply the fixed rubric; resolve major findings before promoting the score. An incomplete run cannot earn nine.
+
+Windows, hosted GitHub CI, independent human/field validation, private-data isolation and production deployment remain unverified or outside scope. Semantic gates remain fallible despite literal quotes.

@@ -1,6 +1,6 @@
 # Temporal QA / RAG Evaluation
 
-A versioned LangGraph experiment over a pinned snapshot of public Temporal documentation. v0 is a model-only baseline; v1 retrieves five chunks and generates an answer with validated citation IDs; v2 adds evidence sufficiency and cited-claim support checks; v2.1 combines dense and lexical search, balances explicitly requested SDKs, and adds nearby section evidence under fixed limits. Multiple agents, corrective loops, private-data access control, and conversational memory are not implemented.
+A versioned LangGraph experiment over a pinned snapshot of public Temporal documentation. v0 is a model-only baseline; v1 retrieves five chunks and generates an answer with validated citation IDs; v2 adds evidence sufficiency and cited-claim support checks; v2.1 combines dense and lexical search, balances explicitly requested SDKs, and adds nearby section evidence under fixed limits. Multiple agents, answer-rewriting loops, private-data access control, and conversational memory are not implemented. Evidence verdicts have bounded validation correction.
 
 Model-only performance measures answering without supplied documents. It cannot establish whether training data contained Temporal documentation.
 
@@ -40,7 +40,7 @@ uv run python evals/compare.py --run
 uv run python evals/compare.py --dataset evals/holdout.jsonl
 ~~~
 
-The five-question run is exploratory and cannot overwrite a full result. Default evaluation resumes only matching inputs. --fresh and compare.py --run create new attempts while preserving prior artifacts. Restart Python after changing .env model/rate settings because clients are cached. New installs default to GPT-OSS-120B generation and Qwen3.8-27B grading; existing `.env` overrides remain in force. Set the grading model explicitly to reproduce the current profile.
+The default dataset is `evals/golden_current_v21.jsonl`, with the explicit pricing-reference correction. Use `--dataset evals/golden.jsonl` to run the historical frozen references. The five-question run is exploratory and cannot overwrite a full result. Default evaluation resumes only matching inputs. --fresh and compare.py --run create new attempts while preserving prior artifacts. Comparison reports use content-addressed `evals/RESULTS_<dataset>_<sha256>.md` snapshots; historical baseline reports are preserved. Restart Python after changing .env model/rate settings because clients are cached. New installs default to GPT-OSS-120B generation and Qwen3.8-27B grading; existing `.env` overrides remain in force. Set the grading model explicitly to reproduce the current profile.
 
 The GitHub workflow runs offline behavioural tests before fetching the corpus/building the index and running explicit integration tests. The offline suite works without a corpus, index, API key, or `.env`; real retrieval tests require setup. Workflow execution on GitHub and Windows runtime portability remain unverified locally.
 
@@ -53,7 +53,7 @@ print(result["citations"])
 
 Graph output includes generation, documents, and citations. Citation IDs bind to actual retrieved chunks; structural validity alone does not prove claim support. Faithfulness evaluates the cited context when citations are present. Missing context produces the exact refusal: I don't know.
 
-V2 checks that retrieved evidence answers the exact question, including entity, SDK, and scope, before generation. It then checks every claim against only the cited chunks. Failing either semantic check produces the canonical refusal; a rejected answer remains in `draft` for inspection. Simple prose formatting differences in quotes can be restored to exact source spans; factual changes, invalid IDs, malformed verdicts, and grader outages raise errors. Output also includes `sufficiency` and `support` verdicts with reasons and checked quotes. These model-based checks can still be wrong.
+V2 checks that retrieved evidence answers the exact question, including entity, SDK, and scope, before generation. It then checks every claim against only the cited chunks. Failing either semantic check produces the canonical refusal; a rejected answer remains in `draft` for inspection. Evidence JSON preserves Unicode. Simple prose formatting differences in quotes can be restored to exact source spans, including prose beside fenced code; code stays literal. Invalid quotes/IDs receive at most three validation attempts with retained rejected verdicts. A valid semantic negative is not retried. Persistent malformed verdicts and grader outages raise errors. Output also includes `sufficiency` and `support` verdicts with reasons and checked quotes. These model-based checks can still be wrong.
 
 The default v2 variant runs both checks; single-check variants are evaluation ablations and have distinct fingerprints. Evaluation retains gate audits, provider-reported generation/gate token usage, wall-clock generation time, false refusals, supported correct answers, and unsupported answers across **all** buckets. Empty usage metadata means unreported usage, not zero billing. Evaluation-judge tokens are outside generation usage.
 
@@ -63,7 +63,7 @@ The default v2 variant runs both checks; single-check variants are evaluation ab
 
 - [Current audit and improvement scorecard](evals/V21_SCORECARD.md): fixed weighted rubric, reproduced failures, repair cycles and completion gates. Historical results below retain the code/model/snapshot they actually measured.
 - [Final verification status](evals/V21_FINAL_STATUS.md): selected freeze, current native coverage, provider-quota wait and exact recovery commands.
-- [Reference erratum](evals/REFERENCE_ERRATA_V21.md): the frozen benchmark incorrectly labels its pricing question unanswerable. A separate corrected reference file is available for future runs; original automated labels remain preserved.
+- [Reference erratum](evals/REFERENCE_ERRATA_V21.md): the frozen benchmark incorrectly labels its pricing question unanswerable. Current runs default to a versioned corrected reference file; historical automated labels remain preserved.
 - [V2.1 initial results](evals/V21_STATUS.md): 82 passing tests, all-40-question retrieval comparison, one successful paired native development regression, and the incomplete fresh confirmation. Selected fact coverage rises from 3/11 to 5/11 while context nearly doubles; six of seven diagnosed questions still lack a necessary fact.
 - [V2 results and next course](evals/V2_STATUS.md): 66 passing tests, four-question native comparison, fixed-draft ablations, usage, judge errors, and prioritized retrieval follow-up. The native study uses the frozen 14,153-chunk index; the current short-code fix yields 14,414 chunks. Post-fix recorded-output revalidation is labeled separately from native evaluation.
 - [Frozen development baseline](evals/RESULTS_VERIFIED.md): 40 revised questions at `9dcd9ef`, per-metric coverage, raw evidence links.
@@ -87,7 +87,7 @@ The headline faithfulness metric covers answerable questions and counts refusals
 
 The repaired v0/v1 baseline is frozen at commit `9dcd9ef`. Its results describe that snapshot; adding v2 changes current evaluation fingerprints. Existing holdout questions are now regression examples. Gate replay on frozen drafts measures rejection behavior without regenerating answers; it is not a fresh end-to-end accuracy comparison. Use newly authored questions after freezing code for confirmation, and report their small sample and shared authorship.
 
-Choose retrieval changes from retained failures: lexical retrieval for demonstrated identifier misses, or rewriting for demonstrated phrasing misses. Bundled retrieval, rewriting, grading, and reflection cannot support component-specific claims without ablations. One development question changes the overall score by 2.5 percentage points; one unanswerable question changes that bucket by 12.5 points.
+Choose retrieval changes from retained failures: lexical retrieval for demonstrated identifier misses, or rewriting for demonstrated phrasing misses. Bundled retrieval, rewriting, grading, and reflection cannot support component-specific claims without ablations. One development question changes measured overall correctness by 2.5 percentage points; one unanswerable question changes the corrected dataset's seven-question bucket by about 14.3 points (12.5 points in the historical eight-question bucket).
 
 - [Architecture](docs/architecture.md)
 - [Audit and repair status](docs/PROJECT_AUDIT.md)

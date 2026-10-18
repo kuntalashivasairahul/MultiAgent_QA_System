@@ -54,8 +54,8 @@ assert recovery_delay([{"generation_error_details": {"status_code": 429, "retry_
 assert recovery_delay([{"generation_error_details": {"status_code": 429, "retry_after": "20",
                                                     "validation_failures": [{}]}}]) == 35
 assert recovery_delay([{"judges": {"correct": {"error_details": {"retry_after": "7.5"}}}}]) == 35
-assert (ROOT / "evals/confirmation_repaired_v21.jsonl").exists()
-for dataset in (ROOT / "evals/golden_current_v21.jsonl", ROOT / "evals/confirmation_repaired_v21.jsonl"):
+assert (ROOT / "evals/confirmation_prose_v21.jsonl").exists()
+for dataset in (ROOT / "evals/golden_current_v21.jsonl", ROOT / "evals/confirmation_prose_v21.jsonl"):
     inputs = {**run_inputs(v21, load_golden(dataset=dataset), dataset), "limit": None, "variant": None}
     fingerprint = hashlib.sha256(json.dumps(inputs, sort_keys=True).encode()).hexdigest()
     run_root = RESULTS / "verified" / "graph_v2_1" / fingerprint
