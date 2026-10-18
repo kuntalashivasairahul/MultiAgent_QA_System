@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import os
 import sys
 from pathlib import Path
@@ -46,21 +47,20 @@ def main(argv=None) -> None:
                        "| Metric | Eligible | Scored | Missing |\n|---|---:|---:|---:|\n" +
                        "\n".join(f"| {m} | {c['eligible']} | {c['scored']} | {c['missing']} |"
                                  for m, c in r["coverage"].items()))
-    name = ("RESULTS_VERIFIED.md" if args.dataset.resolve() == GOLDEN.resolve() else
-            "RESULTS_HOLDOUT.md" if args.dataset.resolve() == (ROOT / "holdout.jsonl").resolve() else
-            f"RESULTS_{args.dataset.stem}.md")
-    path = ROOT / name
-    path.write_text(
+    report = (
         "# Verified evaluation results\n\nDataset: " + args.dataset.name + ". "
         "Only current-input full evaluations appear here; missing metrics are visible below.\n\n" +
         "\n".join([head, sep, *body]) + "\n" + "\n".join(details) +
         "\n\nSource recall counts evidence groups, accepting reviewed alternative paths. "
         "All-sources success requires every group. Exact refusal is a contract check, not a direct hallucination measure. "
         "Model-only performance cannot establish training-data provenance. "
-        "Development and holdout scores must be interpreted separately; small samples have substantial uncertainty.\n",
-        encoding="utf-8",
+        "Development and holdout scores must be interpreted separately; small samples have substantial uncertainty.\n"
     )
-    print(path.read_text())
+    digest = hashlib.sha256(report.encode()).hexdigest()
+    path = ROOT / f"RESULTS_{args.dataset.stem}_{digest}.md"
+    path.write_text(report, encoding="utf-8")
+    print(path, file=sys.stderr)
+    print(report)
     if any(r["status"] != "complete" for r in rows):
         raise SystemExit("Incomplete evaluation; not a phase-gate pass")
 

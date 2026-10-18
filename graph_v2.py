@@ -98,7 +98,7 @@ def check(instruction: str, question: str, documents: list, *, answer: str | Non
     records = json.loads(format_docs(documents))
     if ids is not None:
         records = [r for r in records if r["id"] in ids]
-    data = HumanMessage(json.dumps({"question": question, "documents": records, "answer": answer}))
+    data = HumanMessage(json.dumps({"question": question, "documents": records, "answer": answer}, ensure_ascii=False))
     messages = [SystemMessage(instruction + "\n" + RULES), data]
     available = {r["id"]: r["text"] for r in records}
     failures = []

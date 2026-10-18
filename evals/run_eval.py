@@ -31,7 +31,7 @@ from ingest import CORPUS, ROOT as PROJECT, index_spec, read_manifest
 from llm import JUDGE_MODEL, structured
 
 ROOT = Path(__file__).resolve().parent
-GOLDEN = ROOT / "golden.jsonl"
+GOLDEN = ROOT / "golden_current_v21.jsonl"
 RESULTS = ROOT / "results"
 BUCKETS = {"direct", "jargon", "multihop", "ambiguous", "unanswerable"}
 

@@ -1,0 +1,19 @@
+{
+  "id": "unsupported-retention-cause",
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document states that manual cleanup is useful 'along with reducing the Retention Period to clean up previously closed Workflow Executions,' but it does not explicitly state that reducing the retention period does *not* automatically delete existing closed workflows. The document only provides the solution (manual cleanup) for cases where you need to remove them before the timer expires, without explaining the specific behavior of the retention period change regarding existing data. Therefore, the claim that it 'does not automatically purge' is not strictly entailed by the text provided.",
+    "quotes": []
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 517,
+      "output_tokens": 122,
+      "total_tokens": 639
+    }
+  },
+  "seconds": 3.7146192500003963
+}

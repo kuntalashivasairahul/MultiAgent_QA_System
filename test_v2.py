@@ -155,6 +155,24 @@ def test_recorded_java_url_corruption_is_repaired_without_weakening_quotes(monke
     assert result["validation_failures"][0]["verdict"] == invalid.model_dump()
 
 
+def test_evidence_prompt_keeps_unicode_visible_without_accepting_corruption(monkeypatch):
+    import json
+    source = "The Workflow waits — without polling."
+    question = "Can the Workflow wait — without polling?"
+    with pytest.raises(ValueError, match="non-verbatim"):
+        v2.source_quote(source.replace("—", "\x14"), source)
+    grader = Mock()
+    grader.invoke.return_value = v2.EvidenceCheck(
+        passed=True, reason="Literal source", quotes=[v2.Quote(id=1, text=source)])
+    monkeypatch.setattr(v2, "structured", lambda *args, **kwargs: grader)
+    v2.check("Check supplied evidence.", question, [
+        Document(page_content=source, metadata={"source": "unicode.mdx"})])
+    data_message = grader.invoke.call_args.args[0][1].content
+    assert "—" in data_message and r"\u2014" not in data_message
+    data = json.loads(data_message)
+    assert data["question"] == question and data["documents"][0]["text"] == source
+
+
 def test_support_uses_only_cited_chunks_and_retains_original_ids(setup):
     _, _, generate, grader = setup
     generate.invoke.return_value = graph_v1.GroundedAnswer(answer="executeUpdate", citations=[2])

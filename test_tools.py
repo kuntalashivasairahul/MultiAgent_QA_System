@@ -39,6 +39,38 @@ def test_drafting_rejects_skip_duplicates_and_preserves_incomplete_output(tmp_pa
     assert (tmp_path / "golden.incomplete.jsonl").exists()
 
 
+@pytest.mark.parametrize("dataset_name", ["golden_current_v21.jsonl", "holdout.jsonl"])
+def test_comparison_snapshots_preserve_frozen_tables_and_previous_report(tmp_path, monkeypatch, dataset_name):
+    from evals import compare
+    frozen = {"RESULTS_VERIFIED.md": "Frozen development baseline",
+              "RESULTS_HOLDOUT.md": "Frozen confirmation baseline"}
+    for name, text in frozen.items():
+        (tmp_path / name).write_text(text)
+    dataset = tmp_path / dataset_name
+    dataset.write_text("{}\n")
+    artifact = tmp_path / "results/native"
+    artifact.mkdir(parents=True)
+    (artifact / "result.json").write_text("{}")
+    row = {**{key: 1.0 for key, _ in compare.COLS}, "graph": "graph_vtest", "n": 40,
+           "status": "complete", "artifact_dir": str(artifact), "run_id": "run-1",
+           "fingerprint": "fingerprint", "retrieval_k": 12,
+           "coverage": {"correctness": {"eligible": 40, "scored": 40, "missing": 0}}}
+    monkeypatch.setattr(compare, "ROOT", tmp_path)
+    monkeypatch.setattr(compare, "GOLDEN", tmp_path / "golden_current_v21.jsonl")
+    monkeypatch.setattr(compare, "VERSIONS", ["graph_vtest"])
+    monkeypatch.setattr(compare, "run_eval", lambda *args, **kwargs: dict(row))
+    compare.main(["--dataset", str(dataset)])
+    assert all((tmp_path / name).read_text() == text for name, text in frozen.items())
+    reports = [p for p in tmp_path.glob("RESULTS_*.md") if p.name not in frozen]
+    assert len(reports) == 1 and "(results/native/result.json)" in reports[0].read_text()
+    previous = reports[0].read_bytes()
+    row["correctness"] = 0.5
+    compare.main(["--dataset", str(dataset)])
+    assert len([p for p in tmp_path.glob("RESULTS_*.md") if p.name not in frozen]) == 2
+    assert reports[0].read_bytes() == previous
+    assert all((tmp_path / name).read_text() == text for name, text in frozen.items())
+
+
 def test_calibration_does_not_pass_an_always_false_judge(tmp_path, monkeypatch):
     def structured(schema, **kwargs):
         chain = Mock()

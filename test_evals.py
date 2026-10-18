@@ -42,6 +42,15 @@ def evaluation(tmp_path, monkeypatch):
     return module, dataset, rows, chains
 
 
+def test_default_reference_uses_declared_pricing_erratum_and_preserves_history():
+    current = [json.loads(line) for line in ev.GOLDEN.read_text().splitlines()]
+    price = next(row for row in current if row["id"] == "dev-32")
+    assert price["bucket"] == "direct"
+    assert ev.evidence_groups(price) == [["evaluate/temporal-cloud/pricing.mdx"]]
+    historical = [json.loads(line) for line in (ev.ROOT / "golden.jsonl").read_text().splitlines()]
+    assert next(row for row in historical if row["id"] == "dev-32")["bucket"] == "unanswerable"
+
+
 def test_refusal_requires_whole_answer():
     assert ev.is_refusal(" I don’t know.\n")
     assert not ev.is_refusal("I don't know for sure, but the price is $999.")

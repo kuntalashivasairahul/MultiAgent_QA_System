@@ -1,0 +1,24 @@
+{
+  "id": "public-sample",
+  "verdict": {
+    "passed": true,
+    "reason": "The document explicitly states that the public billing example sets MaximumAttempts to 3, which directly answers the question.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public billing example sets MaximumAttempts to 3."
+      }
+    ]
+  },
+  "expected": true,
+  "actual": true,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 277,
+      "output_tokens": 59,
+      "total_tokens": 336
+    }
+  },
+  "seconds": 4.391641792000883
+}

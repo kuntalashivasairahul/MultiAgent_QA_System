@@ -1,0 +1,127 @@
+[1/40] direct: correct=True grounded=True
+[2/40] direct: correct=True grounded=True
+[3/40] direct: correct=True grounded=True
+[4/40] direct: correct=True grounded=True
+[5/40] direct: correct=True grounded=True
+[6/40] direct: correct=True grounded=True
+[7/40] generation failed: ValueError
+[8/40] direct: correct=True grounded=True
+[9/40] direct: correct=True grounded=True
+[10/40] direct: correct=True grounded=True
+[11/40] direct: correct=True grounded=True
+[12/40] direct: correct=True grounded=True
+[13/40] jargon: correct=True grounded=True
+[14/40] jargon: correct=True grounded=True
+[15/40] jargon: correct=True grounded=True
+[16/40] jargon: correct=True grounded=True
+[17/40] jargon: correct=True grounded=True
+[18/40] jargon: correct=True grounded=True
+[19/40] jargon: correct=True grounded=True
+[20/40] jargon: correct=True grounded=True
+Traceback (most recent call last):
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1024, in request
+    response.raise_for_status()
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '429 Too Many Requests' for url 'https://api.groq.com/openai/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/final_native_resume.txt", line 69, in <module>
+    result = run_eval("graph_v2_1", dataset=dataset)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/run_eval.py", line 366, in run_eval
+    return _run_eval(graph_module, limit, dataset=dataset, fresh=fresh, variant=variant, stack=stack)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/run_eval.py", line 247, in _run_eval
+    out = _invoke_graph(graph, row["question"], checkpointed)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/run_eval.py", line 202, in _invoke_graph
+    return graph.invoke(None if snapshot.values else {"question": question}, config=config, durability="sync")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langgraph/pregel/main.py", line 3913, in invoke
+    for chunk in self.stream(
+                 ^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langgraph/pregel/main.py", line 2967, in stream
+    for _ in runner.tick(
+             ^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langgraph/pregel/_runner.py", line 207, in tick
+    run_with_retry(
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langgraph/pregel/_retry.py", line 617, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langgraph/_internal/_runnable.py", line 707, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langgraph/_internal/_runnable.py", line 447, in invoke
+    ret = self.func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/graph_v2.py", line 145, in sufficient
+    return {"sufficiency": check(
+                           ^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/graph_v2.py", line 108, in check
+    verdict = chain.invoke(messages)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/runnables/retry.py", line 201, in invoke
+    return self._call_with_config(self._invoke, input, config, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/runnables/base.py", line 2301, in _call_with_config
+    context.run(
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/runnables/config.py", line 526, in call_func_with_variable_args
+    return func(input, **kwargs)  # type: ignore[call-arg]
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/runnables/retry.py", line 186, in _invoke
+    for attempt in self._sync_retrying(reraise=True):
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/tenacity/__init__.py", line 438, in __iter__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/tenacity/__init__.py", line 371, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/tenacity/__init__.py", line 393, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/runnables/retry.py", line 188, in _invoke
+    result = super().invoke(
+             ^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/runnables/base.py", line 6014, in invoke
+    return self.bound.invoke(
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/runnables/base.py", line 3454, in invoke
+    input_ = context.run(step.invoke, input_, config, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/runnables/base.py", line 6014, in invoke
+    return self.bound.invoke(
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 488, in invoke
+    self.generate_prompt(
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 1877, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 1684, in generate
+    self._generate_with_cache(
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 2022, in _generate_with_cache
+    result = self._generate(
+             ^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/langchain_groq/chat_models.py", line 627, in _generate
+    response = self.client.create(messages=message_dicts, **params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/groq/resources/chat/completions.py", line 461, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1242, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1030, in request
+    self._sleep_for_retry(
+  File "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/.venv/lib/python3.12/site-packages/groq/_base_client.py", line 1070, in _sleep_for_retry
+    time.sleep(timeout)
+KeyboardInterrupt

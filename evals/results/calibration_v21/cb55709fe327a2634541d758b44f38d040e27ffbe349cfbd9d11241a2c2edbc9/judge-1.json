@@ -1,0 +1,18 @@
+{
+  "id": "judge-1",
+  "verdict": {
+    "correct": false,
+    "reason": "The answer does not match the reference. The reference specifies the flag is '--alpha', but the answer incorrectly states it is '--beta'."
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 79,
+      "output_tokens": 39,
+      "total_tokens": 118
+    }
+  },
+  "seconds": 4.15358279099928
+}

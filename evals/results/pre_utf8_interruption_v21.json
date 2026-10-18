@@ -1,0 +1,19 @@
+{
+  "scope": "Interrupted development attempt on the pre-UTF8 checker. Not a complete evaluation or confirmation. The aggregate file describes the last published pass; the later journal has additional outputs before the intentional encoding repair stop.",
+  "observed_at": "2026-10-18T06:50:41.447471+00:00",
+  "attempt": "evals/results/verified/graph_v2_1/22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f/20261014T152435540331Z-c2ddd6c6",
+  "fingerprint": "22c35431fd2520d320ff1b5ace2018fd2e5672119db5a8d31084e4c9b68e394f",
+  "rows": 40,
+  "answers": 19,
+  "fully_scored": 19,
+  "latest_generation_errors": {
+    "ValueError": 1,
+    "RateLimitError": 20
+  },
+  "journal_sha256": "c6aed4cfbc14af1f44864da052c28dff4dd66f702c9580db975066beb8107d9b",
+  "existing_aggregate_correctness_coverage": {
+    "eligible": 40,
+    "scored": 6,
+    "missing": 34
+  }
+}

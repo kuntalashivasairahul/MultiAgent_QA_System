@@ -1,0 +1,18 @@
+{
+  "id": "exact-identifier-correctness",
+  "verdict": {
+    "correct": true,
+    "reason": "The answer correctly identifies the task queue name as \"google-genai-hello-world\", which matches the reference."
+  },
+  "expected": true,
+  "actual": true,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 112,
+      "output_tokens": 34,
+      "total_tokens": 146
+    }
+  },
+  "seconds": 4.153724583999065
+}

@@ -1,0 +1,32 @@
+{
+  "id": "incomplete-definition",
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document defines 'Activities' as 'individual units of work' but does not define what an 'Activity Execution' consists of. It only states that the SDK provides APIs to customize the *behavior* of an Activity Execution. The answer claims an Activity Execution is 'the run of an Activity,' which is not explicitly stated in the text. Furthermore, the answer conflates the definition of the execution with the customizable behaviors (timeouts, retry policy, etc.), which are features of the SDK's control over the execution, not necessarily the constituent parts of the execution itself. The document does not provide a definition of the composition of an Activity Execution.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "Activities in Temporal are individual units of work that often represent non-deterministic parts of the code logic, such as querying a database or calling an external service."
+      },
+      {
+        "id": 1,
+        "text": "The SDK provides APIs to customize the behavior of an Activity Execution."
+      },
+      {
+        "id": 1,
+        "text": "However, Temporal enables developers to control a variety of timeouts, a Retry Policy, Heartbeat monitoring, and asynchronous completion."
+      }
+    ]
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 522,
+      "output_tokens": 249,
+      "total_tokens": 771
+    }
+  },
+  "seconds": 4.341340999999375
+}

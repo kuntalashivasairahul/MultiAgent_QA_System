@@ -1,0 +1,18 @@
+{
+  "id": "judge-6",
+  "verdict": {
+    "grounded": false,
+    "reason": "The context only states that the timeout is 5 seconds. It does not mention anything about retries, so the claim that 'retries are unlimited' is not supported by the context."
+  },
+  "expected": false,
+  "actual": false,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 109,
+      "output_tokens": 50,
+      "total_tokens": 159
+    }
+  },
+  "seconds": 4.040700666000703
+}

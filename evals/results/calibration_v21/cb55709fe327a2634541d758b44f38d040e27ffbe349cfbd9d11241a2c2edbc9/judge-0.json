@@ -1,0 +1,18 @@
+{
+  "id": "judge-0",
+  "verdict": {
+    "correct": true,
+    "reason": "The answer correctly identifies the flag as --alpha, matching the reference in substance."
+  },
+  "expected": true,
+  "actual": true,
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 79,
+      "output_tokens": 27,
+      "total_tokens": 106
+    }
+  },
+  "seconds": 3.8848959159986407
+}
