@@ -28,7 +28,7 @@ The [local guide](V3_LOCAL_UPGRADE.md) supplies revised résumé wording. The [s
 >
 > Orchestrated agent communication and conditional branching in LangGraph; exposed the pipeline through FastAPI REST endpoints.
 
-## Claim-by-claim verdict
+## Historical v2.1 claim-by-claim verdict
 
 | Claim | Verdict | Actual implementation and evidence |
 |---|---|---|
@@ -42,7 +42,7 @@ The [local guide](V3_LOCAL_UPGRADE.md) supplies revised résumé wording. The [s
 | Groq LLaMA | Historical configuration, outdated as the current stack | Initial commit `d5fd31f` configured `llama-3.3-70b-versatile`; `7a279e3` changed the default. Current [llm.py](../llm.py) defaults to GPT-OSS-120B generation and Qwen3.8-27B grading through Groq. Existing environment overrides remain possible; the retained tested final profile selects these models explicitly. Use “Groq-hosted LLMs” for the current project. |
 | Project year 2025 | Not corroborated by repository evidence | The earliest available Git commit is `1c8c47c`, dated 1 September 2026. Git history does not prove when uncommitted/offline work began. Use the actual work dates; this review cannot validate 2025. |
 
-## Wording supported now
+## Wording supported by the historical v2.1 checkpoint
 
 **Temporal QA / RAG Evaluation — Python, LangGraph, Groq, Chroma, sentence-transformers**
 
@@ -60,4 +60,4 @@ Keep the existing repository name/link if desired. Use accurate dates. Do not ad
 - Current final native development 40 and confirmation 12 remain unrun after the final code fix. The preceding implementation has only 21/40 scored development rows; those partial results cannot be presented as current full accuracy.
 - Windows, independent review and production deployment are unverified. Hosted [GitHub CI run 39108281218](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39108281218) passed: 106 offline tests, fresh 14,414-document index and four integration tests; details are in the [release verification](../evals/results/stable_v21_release_verification.json).
 
-The [v3 implementation plan](V3_RESUME_ALIGNMENT_PLAN.md) addresses the missing claims. Those features are planned, not included in the stable v2.1 push. See [current verification status](../evals/V21_FINAL_STATUS.md) for the stopped evaluation and retained evidence.
+The [v3 implementation plan](V3_RESUME_ALIGNMENT_PLAN.md) addressed the missing claims. Those features were absent from the stable v2.1 push; the current v3 development branch implements them as described in the matrix above. See [v2.1 verification status](../evals/V21_FINAL_STATUS.md) for its stopped evaluation and retained evidence, and the [v3 scorecard](../evals/V3_STABILITY_SCORECARD.md) for the current promotion limits.

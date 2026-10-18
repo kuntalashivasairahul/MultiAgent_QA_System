@@ -31,5 +31,33 @@
     "Initial isolated snapshot omitted JSON fixtures; corrected snapshot passes with unchanged source.",
     "Expanded control fixture has 17 cases; fixed-count assertion updated from 15 before inference."
   ],
-  "claim_status": "Three roles, quality-threshold retrieval retry, FastAPI and genuine local Llama implemented; Groq-hosted generative Llama unavailable; date2025 unverified."
+  "claim_status": "Three roles, quality-threshold retrieval retry, FastAPI and genuine local Llama implemented; Groq-hosted generative Llama unavailable; date2025 unverified.",
+  "status": "not_promoted",
+  "verified_runtime_commit": "88135c74981bc5ee34e427e7e2fd0973c4890709",
+  "hosted_ci": {
+    "url": "https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39160387642",
+    "status": "success",
+    "platform": "ubuntu-24.04",
+    "fresh_locked_dependency_install": true,
+    "offline_passed": 166,
+    "offline_seconds": 40.0,
+    "fresh_index_documents": 14414,
+    "integration_passed": 5,
+    "integration_seconds": 18.62
+  },
+  "reason_first_experiment": {
+    "artifact": "v3_reason_first_probe_resumption.json",
+    "eligible": 3,
+    "scored": 1,
+    "passed": 0,
+    "missing": 2,
+    "disposition": "rejected; not applied to runtime"
+  },
+  "remaining": [
+    "General causal-claim support repair with native positive/negative evidence",
+    "Expanded native controls complete and passing",
+    "Fixed12 native study complete and source-reviewed",
+    "Separate v3 and overall rubric assessments"
+  ],
+  "at_final_check": "2026-10-18T20:08:11.861424+00:00"
 }

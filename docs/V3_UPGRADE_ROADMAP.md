@@ -6,13 +6,15 @@ The three roles, numeric score, conditional retrieval retry, FastAPI endpoints a
 
 | Order | Work | Evidence required before completion |
 |---|---|---|
-| 1: finish v3 stability | Repair wrong-operation acceptance, preserve literal citations and strict refusals; freeze local Llama/Groq Judge profile | Native positive and negative scope controls, all fixed 12 regression questions completed and source-reviewed, full tests, isolated offline checks, changed-code Linux CI, real HTTP answer/refusal evidence |
+| 1: finish v3 stability | Repair unsupported causal explanations and wrong-operation acceptance, preserve literal citations and strict refusals; freeze local Llama/Groq Judge profile | All 17 fixed native controls passing, all fixed 12 regression questions completed and source-reviewed, full tests, isolated offline checks, changed-code Linux CI, real HTTP answer/refusal evidence |
 | 2: measure quality | Run the corrected 40-question development set and compare with a fixed v2.1 baseline; then write fresh confirmation questions after freezing code | Complete eligible denominators; source review of unsupported answers, false refusals and evaluator disagreements; reported latency and usage; no accuracy percentage from partial runs |
 | 3: prove retry value | Use retained first/second-attempt evidence to diagnose whether the missing fact was acquired and used | A controlled paired comparison with retry enabled/disabled, same references and model settings; report both gains and extra latency/tokens |
 | 4: make the demonstration portable | Reproduce setup and API requests on the actual Windows presentation machine | Frozen dependency installation, corpus/index integrity, real HTTP smoke and restart/recovery; document CPU/GPU/model differences |
 | 5: expand only for a concrete user | Add document ingestion, UI or hosted access when a use case requires it | Access filtering before model/tracing for private data; authentication and concurrency/load validation before hosted multi-user claims |
 
 The fixed scoring rubric is in the [stability scorecard](../evals/V3_STABILITY_SCORECARD.md). Both v3 and overall scores must be justified separately. An 8.5 engineering score is not 85% answer accuracy. Full development and fresh confirmation remain the stronger 9/10 gate. A reproduced major support failure blocks promotion regardless of weighted arithmetic.
+
+The immediate repair case is explicit: cleanup advice does not establish when a retention timer is assigned or changed. Require support for each explanatory claim, then test the unsupported explanation and directly supported counterparts before spending quota on the full regression. The reason-first schema experiment did not solve this and was rejected. Preserve valid failed verdicts; resuming operational gaps must not repeatedly sample them until a desired answer appears.
 
 ## Model choice on this machine
 

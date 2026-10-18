@@ -1,0 +1,135 @@
+{
+  "scope": "Controlled resumption of previously unscored native probes; development-only, not promotion",
+  "schema": {
+    "$defs": {
+      "Quote": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "text": {
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "text"
+        ],
+        "title": "Quote",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "properties": {
+      "reason": {
+        "description": "Check each factual claim against the cited evidence, including causal explanations; identify any missing support before deciding.",
+        "minLength": 1,
+        "title": "Reason",
+        "type": "string"
+      },
+      "quotes": {
+        "items": {
+          "$ref": "#/$defs/Quote"
+        },
+        "title": "Quotes",
+        "type": "array"
+      },
+      "passed": {
+        "title": "Passed",
+        "type": "boolean"
+      },
+      "confidence": {
+        "description": "Rubric quality score, not a calibrated probability",
+        "maximum": 1,
+        "minimum": 0,
+        "title": "Confidence",
+        "type": "number"
+      },
+      "retry_query": {
+        "description": "Missing aspect to search; empty if none",
+        "maxLength": 256,
+        "title": "Retry Query",
+        "type": "string"
+      }
+    },
+    "required": [
+      "reason",
+      "quotes",
+      "passed",
+      "confidence",
+      "retry_query"
+    ],
+    "title": "QualityVerdict",
+    "type": "object"
+  },
+  "base_graph_sha256": "a8549d7dfda8dbd42a2d97d7eda5fc4ae111e21104f2e1075cf5e6551f5c63da",
+  "selected_control_ids": [
+    "unsupported-retention-cause",
+    "native-same-guide-wrong-operation",
+    "native-same-guide-correct-worker"
+  ],
+  "previous_artifact": "v3_reason_first_probe.json at88135c7",
+  "at": "2026-10-18T20:05:52.869320+00:00",
+  "records": [
+    {
+      "id": "unsupported-retention-cause",
+      "expected": false,
+      "verdict": {
+        "reason": "The answer correctly explains that reducing the retention period does not immediately delete existing closed workflows, which aligns with the cited document stating that manual cleanup is required to remove closed Workflow Executions before their retention timer expires. The document explicitly links reducing the retention period with the need for manual cleanup of previously closed executions. The answer's claim that existing workflows must be removed manually is directly supported by the text.",
+        "quotes": [
+          {
+            "id": 5,
+            "text": "For cases where you need to remove closed Workflow Executions before their retention timer expires, you can use [`temporal workflow delete`](/cli/command-reference/workflow#delete) or the `DeleteWorkflowExecution` command."
+          },
+          {
+            "id": 5,
+            "text": "This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+          }
+        ],
+        "passed": true,
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "passed": false,
+      "usage": {
+        "qwen/qwen3.8-27b": {
+          "input_tokens": 1728,
+          "output_tokens": 230,
+          "total_tokens": 1958
+        }
+      },
+      "seconds": 10.863212708005449
+    },
+    {
+      "id": "native-same-guide-wrong-operation",
+      "expected": false,
+      "error": "RateLimitError",
+      "passed": false,
+      "safe_quota_numbers": {
+        "limit": "200000",
+        "used": "198111",
+        "requested": "3542."
+      },
+      "provider_cooldown": "11m54.096s",
+      "seconds": 9.36832691699965
+    },
+    {
+      "id": "native-same-guide-correct-worker",
+      "expected": true,
+      "error": "RateLimitError",
+      "passed": false,
+      "safe_quota_numbers": {
+        "limit": "200000",
+        "used": "198088",
+        "requested": "3622."
+      },
+      "provider_cooldown": "12m18.72s",
+      "seconds": 10.021778499998618
+    }
+  ]
+}

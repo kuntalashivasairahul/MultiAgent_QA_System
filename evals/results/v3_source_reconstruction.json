@@ -49,7 +49,12 @@
     {
       "snapshot": "evals/results/verified/graph_v3/f767d09f9e67f9ede7f271b13ab3091da294e39a588cf93e015cfb27192da45e/20261018T193506800870Z-3e9a509c/code_snapshot.json",
       "code_files_checked": 21
+    },
+    {
+      "snapshot": "evals/results/calibration_v3/0cca895ffa9d72063282b30bc803417d9ae358923091ea177d995bef6ecf3ed0/code_snapshot.json",
+      "code_files_checked": 21
     }
   ],
-  "at": "2026-10-18T19:42:49.329092+00:00"
+  "at": "2026-10-18T19:42:49.329092+00:00",
+  "last_verification_at": "2026-10-18T20:08:48.500703+00:00"
 }

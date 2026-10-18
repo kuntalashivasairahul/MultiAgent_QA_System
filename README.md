@@ -8,6 +8,8 @@ Model-only performance measures answering without supplied documents. It cannot 
 
 **V3 development upgrade:** the three named Retrieval/Reasoning/Judge roles, numeric rubric score, one bounded retrieval retry and FastAPI `/ask` and `/health` endpoints are implemented. **171 tests pass**, including five integration tests. Broader validation rejected the initial local self-Judges; the candidate uses local Llama 3.1 8B Reasoning and a Groq/Qwen Judge. A native regression reproduced a wrong-operation acceptance, so promotion remains blocked. The account currently offers no generative Groq Llama model. See the [machine assessment and startup guide](docs/V3_LOCAL_UPGRADE.md), [future upgrade plan](docs/V3_UPGRADE_ROADMAP.md) and [stability work and scoring gates](evals/V3_STABILITY_SCORECARD.md). The v2.1 score and CI result below describe that earlier stable code; new v3/overall scores remain unproven pending the current release audit.
 
+Current v3 [Linux CI 39160387642](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39160387642) passed for `88135c7`: 166 offline tests, a fresh 14,414-document index and five integration tests. The remaining native semantic failure and incomplete coverage still prevent stable promotion.
+
 ## Setup
 
 Python 3.12 is selected by .python-version. Corpus fetching requires Bash; use WSL or Git Bash on Windows.

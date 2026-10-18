@@ -22,6 +22,8 @@ The refinement downloaded **Meta Llama 3.1 8B Instruct Q4_K_M**, 4,920,739,168 b
 
 The 8B self-Judge still failed controls: 10/15 passed, 13 scored and two protocol gaps. The selected candidate therefore uses **local 8B Llama Reasoning with a Groq Qwen Judge**, which passed 15/15 inspected development controls after the quote/causal-support repairs. This is a profile-selection result, not broad answer accuracy. See the [ongoing stability assessment](../evals/V3_STABILITY_SCORECARD.md).
 
+After the rejected trials, the upgrade's downloaded 3B Llama and Qwen3-4B-Instruct weights were hash-verified and removed, recovering 4.21 GiB and leaving approximately **12.28 GiB free**. The selected 8B Llama and the pre-existing Nomic embedding model remain. [Cleanup record](../evals/results/v3_model_cleanup.json). Earlier trial measurements remain historical; reproducing those rejected models requires downloading their recorded weights again.
+
 ## What is implemented
 
 ```mermaid
@@ -44,6 +46,8 @@ flowchart LR
 ## Provider reality: Llama and Groq are separate here
 
 The live Groq account check returned 404 for `llama-3.3-70b-versatile`. Its currently accessible text model list contains GPT-OSS, Qwen, ALLAM and Llama Prompt Guard classifiers, but **no generative Llama model**. Prompt Guard is not an answer-generator substitute.
+
+The [refreshed account catalog](../evals/results/v3_current_provider_catalog.json), checked again at 19:56 UTC on 18 October, confirms the same distinction; it contains model IDs only.
 
 Therefore the working profiles are:
 
@@ -105,7 +109,8 @@ Switching back to stable v2.1 also restores its dependency lock and retrieval co
 - An earlier preserved smoke attempt had stale top-level generation metadata despite correct nested local model settings. It is superseded by the final trace above; the verification record identifies it rather than rewriting historical evidence.
 - Cold/warm caches, different models and different request paths prevent a causal performance comparison from these few observations.
 - Grammar-constrained JSON does not establish semantic truth. A small self-judging model can still accept unsupported answers or refuse answerable ones. No general accuracy increase or calibrated confidence is claimed.
-- Bind to loopback. Authentication, private-data filtering, multi-tenant isolation, hosted API deployment, load testing and Windows execution are not established by this development implementation. The stable v2.1 Linux CI result does not certify this changed dependency/code tree.
+- Changed-code [Linux CI 39160387642](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39160387642) passed for `88135c7`: 166 offline tests, fresh 14,414-document index and five integration tests. This verifies the changed dependency/source tree, not native model quality.
+- Bind to loopback. Authentication, private-data filtering, multi-tenant isolation, hosted API deployment, load testing and Windows execution are not established by this development implementation.
 
 ## Next upgrade order
 
