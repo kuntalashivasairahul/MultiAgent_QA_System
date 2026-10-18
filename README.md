@@ -44,7 +44,7 @@ uv run python evals/compare.py --dataset evals/holdout.jsonl
 
 The default dataset is `evals/golden_current_v21.jsonl`, with the explicit pricing-reference correction. Use `--dataset evals/golden.jsonl` to run the historical frozen references. The five-question run is exploratory and cannot overwrite a full result. Default evaluation resumes only matching inputs. --fresh and compare.py --run create new attempts while preserving prior artifacts. Comparison reports use content-addressed `evals/RESULTS_<dataset>_<sha256>.md` snapshots; historical baseline reports are preserved. Restart Python after changing .env model/rate settings because clients are cached. New installs default to GPT-OSS-120B generation and Qwen3.8-27B grading; existing `.env` overrides remain in force. Set the grading model explicitly to reproduce the current profile.
 
-The GitHub workflow runs offline behavioural tests before fetching the corpus/building the index and running explicit integration tests. The offline suite works without a corpus, index, API key, or `.env`; real retrieval tests require setup. Workflow execution on GitHub and Windows runtime portability remain unverified locally.
+The GitHub workflow runs offline behavioural tests before fetching the corpus/building the index and running explicit integration tests. The offline suite works without a corpus, index, API key, or `.env`; real retrieval tests require setup. [GitHub CI run 39108281218](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39108281218) passed on stable code commit `219af43`: 106 offline tests, a fresh 14,414-document index build and four integration tests. Windows runtime portability remains unverified.
 
 ~~~python
 from graph_v2_1 import graph

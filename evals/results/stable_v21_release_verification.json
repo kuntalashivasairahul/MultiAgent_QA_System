@@ -50,8 +50,80 @@
   "github": {
     "repository": "https://github.com/kuntalashivasairahul/MultiAgent_QA_System",
     "target_branch": "main",
-    "status": "pending_at_recording",
-    "hosted_ci": "pending_first_push"
+    "status": "published_and_hosted_ci_passed",
+    "published_runtime_checkpoint": "219af43453cf24da6a73b7162b78b3f9a446fc77",
+    "verified_at": "2026-10-18T07:54:05.375158+00:00",
+    "hosted_ci": {
+      "run_id": 39108281218,
+      "url": "https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39108281218",
+      "commit": "219af43453cf24da6a73b7162b78b3f9a446fc77",
+      "status": "completed",
+      "conclusion": "success",
+      "completed_at": "2026-10-18T07:52:18Z",
+      "offline_tests": {
+        "passed": 106,
+        "deselected_integration": 4,
+        "seconds": 19.55
+      },
+      "fresh_index": {
+        "documents": 14414,
+        "already_indexed_before_build": 0,
+        "complete": true
+      },
+      "integration_tests": {
+        "passed": 4,
+        "deselected_offline": 106,
+        "seconds": 17.61
+      },
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run python -m pip install uv==0.12.5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run uv sync --frozen",
+          "conclusion": "success"
+        },
+        {
+          "name": "Offline behavioural tests without corpus or index",
+          "conclusion": "success"
+        },
+        {
+          "name": "Pinned corpus and index",
+          "conclusion": "success"
+        },
+        {
+          "name": "Real retrieval and integrity integration",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ],
+      "nonblocking_annotation": "checkout@v4 and setup-python@v5 target Node.js 20 and were forced to Node.js 24; the run passed. Action-version maintenance remains separate."
+    },
+    "documentation_followup": "The subsequent commit only records this successful run in Markdown/release evidence; it skips duplicate CI. Runtime code, tests and locked dependencies remain identical to the tested commit."
   },
   "unchecked": [
     "Windows runtime",

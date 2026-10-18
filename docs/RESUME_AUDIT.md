@@ -42,6 +42,6 @@ Keep the existing repository name/link if desired. Use accurate dates. Do not ad
 - Evaluation and comparison CLI help commands succeed. No new provider inference was requested for this résumé/release audit.
 - The prior frozen checkout passed 106 offline tests without credentials/corpus/index; this is retained evidence and reused installed dependencies, not a new clean installation in this audit.
 - Current final native development 40 and confirmation 12 remain unrun after the final code fix. The preceding implementation has only 21/40 scored development rows; those partial results cannot be presented as current full accuracy.
-- Windows, independent review and production deployment are unverified. Hosted CI status is recorded separately in the release verification.
+- Windows, independent review and production deployment are unverified. Hosted [GitHub CI run 39108281218](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39108281218) passed: 106 offline tests, fresh 14,414-document index and four integration tests; details are in the [release verification](../evals/results/stable_v21_release_verification.json).
 
 The [v3 implementation plan](V3_RESUME_ALIGNMENT_PLAN.md) addresses the missing claims. Those features are planned, not included in the stable v2.1 push. See [current verification status](../evals/V21_FINAL_STATUS.md) for the stopped evaluation and retained evidence.
