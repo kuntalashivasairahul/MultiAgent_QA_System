@@ -2,6 +2,8 @@
 
 Reviewed on 18 October 2026 against implementation `b024062` and the current stable documentation checkpoint. This review covers the project excerpt supplied by the owner, not the rest of the résumé. Feature judgments come from code, the compiled graph, declared dependencies and tests. An engineering score is not an answer-accuracy measurement.
 
+**Subsequent v3 work:** this table preserves the stable v2.1 audit. The [v3 implementation and machine report](V3_LOCAL_UPGRADE.md) now documents the implemented three-role retry workflow, FastAPI endpoints, real local Meta Llama, tests and revised résumé wording. Groq-hosted generative Llama remains unavailable on the checked account; local Llama must not be mislabeled as Groq-hosted. The 2025 date remains unverified.
+
 ## Supplied project entry
 
 > Multi-Agent QA System — github.com/kuntalashivasairahul/MultiAgent_QA_System 2025

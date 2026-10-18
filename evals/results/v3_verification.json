@@ -1,0 +1,121 @@
+{
+  "observed_at": "2026-10-18T13:53:22.085742+00:00",
+  "scope": "V3 implementation verification and inspected native development smokes; no broad accuracy result",
+  "stable_base": "5c13ec4a1c07c15d33cfbe5883e4d7b758519576",
+  "branch": "codex/resume-aligned-v3",
+  "code_sha256": {
+    "api.py": "2f9064f29924ee0682925a53bffb5f207e3450f18149c93bd268d1163383f8b9",
+    "graph_v3.py": "f3fc8381394415d88ad663413bd541aa5c8c2679614d04392c9ee2d59c7e1404",
+    "v3_llm.py": "88e17bc35907d590f6c75f036374259e7d1405d7cf690ebdc68ae2c9d9871b88",
+    "graph_v1.py": "9dc20a2c991f89d865fce6c4330f493d5ea45f5dad2679aa80d3bc3cfc3f8d7e",
+    "graph_v2.py": "4b7e12f8cfb327aefb91055bbe0a3aee5d32311d90991b2571cb4f0b89d0b78e",
+    "retrieval.py": "13417d7c8b4d6ae5c6cb177927b4ace0599dfaa0f4912fb2beff9ba595185db7",
+    "evals/run_eval.py": "f863e025107c13feb3af0bc2db80b23aac4ec8e6dbffd0f25e67e37107b617aa",
+    "test_api.py": "90e62db6d7a98923017a1dacc40c28b341507249ee0de3d51f73b1a603da0e70",
+    "test_v3.py": "0513af9cee63bdd3b5f0cdba11fbc6d40e8f4f89e8c4d510b2a4aa6d44c4e285",
+    "test_v3_llm.py": "f60a7708e07ebfb943e6400f48a8e22c9686ddbfdb3c6ad915ded2b86d925275",
+    "pyproject.toml": "9a5b151cab7f37d05f9129099c9cafd662e13ec8648b7b154d08b129c033e61c",
+    "uv.lock": "165747edf565242f46a1576e6ef679bfb3f211ee43043e85fe64a0c939484456"
+  },
+  "tests": {
+    "current_index": {
+      "command": "uv run pytest -q",
+      "passed": 152,
+      "seconds": 15.98,
+      "integration_tests": 5
+    },
+    "isolated_offline": {
+      "command": "<locked existing interpreter> -m pytest -q -m \"not integration\"",
+      "passed": 147,
+      "deselected": 5,
+      "seconds": 8.17,
+      "credentials_env_dotenv_corpus_index_absent": true,
+      "imports_verified_from_isolated_snapshot": true,
+      "fresh_dependency_install": false
+    }
+  },
+  "native_controls": {
+    "artifact": "evals/results/v3_local_controls.json",
+    "passed": 4,
+    "scored": 4
+  },
+  "local_http": {
+    "artifact": "evals/results/v3_local_http_smoke.json",
+    "passed": 2,
+    "requests": 2
+  },
+  "groq_http": {
+    "artifact": "evals/results/v3_groq_http_smoke.json",
+    "requests": 1,
+    "status": 200,
+    "generation_model": "openai/gpt-oss-120b",
+    "judge_model": "qwen/qwen3.8-27b",
+    "not_groq_hosted_llama": true
+  },
+  "native_evaluator": {
+    "artifact_dir": "evals/results/verified/graph_v3/382007d5488a25f85565c47b31a247f6f58484a0daf4ccf1c69370166e61bdce/20261018T082905708564Z-d0d379f1",
+    "scope": "sample",
+    "n": 1,
+    "status": "complete",
+    "attempts": 2,
+    "chunks_per_attempt": [
+      12,
+      12
+    ],
+    "genuinely_new_retry_chunks": 6,
+    "final_answer": "I don't know.",
+    "canonical_refusal_scored_deterministically": true,
+    "all_recorded_code_hashes_match": true,
+    "max_document_text_characters": 8000,
+    "top_level_generation_metadata_verified": true
+  },
+  "metadata_erratum": {
+    "superseded_attempt": "evals/results/verified/graph_v3/4737882f2e00ab4f3d4480a9e9dbeb370c8c14d72b09e3a2ec5c9a31d24e27f9/20261018T082632930998Z-5c832958",
+    "reason": "Legacy top-level generation-model/token-limit metadata despite correct nested local graph settings; evaluator fixed and regression-tested, then a new native attempt recorded. Historical raw files preserved."
+  },
+  "hardware": {
+    "chip": "Apple M4",
+    "cpu_cores": 10,
+    "gpu_cores": 10,
+    "unified_memory_gib": 16,
+    "model_load_reported_gib": 1.88,
+    "model_estimate_gib": 2.53,
+    "model_load_seconds": 8.5,
+    "context_tokens": 8192,
+    "parallel_predictions": 1
+  },
+  "local_model_artifact": {
+    "model": {
+      "type": "llm",
+      "modelKey": "llama-3.2-3b-instruct",
+      "format": "gguf",
+      "displayName": "Llama 3.2 3B Instruct",
+      "publisher": "lmstudio-community",
+      "path": "lmstudio-community/Llama-3.2-3B-Instruct-GGUF/Llama-3.2-3B-Instruct-Q4_K_M.gguf",
+      "sizeBytes": 2019377440,
+      "indexedModelIdentifier": "lmstudio-community/Llama-3.2-3B-Instruct-GGUF/Llama-3.2-3B-Instruct-Q4_K_M.gguf",
+      "deviceIdentifier": null,
+      "paramsString": "3B",
+      "architecture": "llama",
+      "quantization": {
+        "name": "Q4_K_M",
+        "bits": 4
+      },
+      "vision": false,
+      "trainedForToolUse": true,
+      "maxContextLength": 131072
+    },
+    "sha256": "e4f1a04d927b09ec18eb2f233d85ecd760fc2d35cec97e37f8604d3632210d9a",
+    "lmstudio_version": "0.4.16+2"
+  },
+  "limits": [
+    "Quality score is an uncalibrated rubric, not probability.",
+    "No broad v3 accuracy or improvement measurement.",
+    "No accessible generative Groq Llama model on inspected account; local genuine Llama is distinct.",
+    "Existing evaluator uses Groq judges where model grading is needed.",
+    "8B models, Windows execution and production deployment not tested.",
+    "Stable v2.1 CI does not certify v3; changed-code hosted CI pending.",
+    "API is loopback public-data development only, with one inference per application process.",
+    "Resume 2025 date remains unverified."
+  ]
+}

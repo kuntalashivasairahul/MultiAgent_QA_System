@@ -115,7 +115,7 @@ def source_quote(text: str, source: str) -> str:
 
 
 def check(instruction: str, question: str, documents: list, *, answer: str | None = None,
-          ids: list[int] | None = None) -> dict:
+          ids: list[int] | None = None, chain=None) -> dict:
     records = json.loads(format_docs(documents))
     if ids is not None:
         records = [r for r in records if r["id"] in ids]
@@ -123,7 +123,8 @@ def check(instruction: str, question: str, documents: list, *, answer: str | Non
     messages = [SystemMessage(instruction + "\n" + RULES), data]
     available = {r["id"]: r["text"] for r in records}
     failures = []
-    chain = structured(EvidenceCheck, model=JUDGE_MODEL)
+    if chain is None:
+        chain = structured(EvidenceCheck, model=JUDGE_MODEL)
     for attempt in range(3):
         try:
             verdict = chain.invoke(messages)

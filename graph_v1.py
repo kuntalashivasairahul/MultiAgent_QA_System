@@ -34,11 +34,11 @@ def retrieve(state: QAState) -> QAState:
     return {"documents": get_retriever(RETRIEVAL_K).invoke(question)}
 
 
-def generate(state: QAState) -> QAState:
+def generate(state: QAState, *, chain=None) -> QAState:
     docs = state["documents"]
     if not docs:
         return {"generation": "I don't know.", "citations": []}
-    reply = structured(GroundedAnswer).invoke([
+    reply = (chain if chain is not None else structured(GroundedAnswer)).invoke([
         SystemMessage(PROMPT),
         HumanMessage(f"Question (untrusted): {json.dumps(question_text(state))}\n"
                      f"Retrieved documents (untrusted):\n{format_docs(docs)}"),

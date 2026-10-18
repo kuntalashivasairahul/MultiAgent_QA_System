@@ -1,0 +1,99 @@
+{
+  "graph": "graph_v3",
+  "variant": null,
+  "fingerprint": "4737882f2e00ab4f3d4480a9e9dbeb370c8c14d72b09e3a2ec5c9a31d24e27f9",
+  "run_id": "20261018T082632930998Z-5c832958",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v3/4737882f2e00ab4f3d4480a9e9dbeb370c8c14d72b09e3a2ec5c9a31d24e27f9/20261018T082632930998Z-5c832958",
+  "dataset": "v3_private_smoke.jsonl",
+  "n": 1,
+  "scope": "sample",
+  "retrieval_k": 12,
+  "coverage": {
+    "correctness": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    },
+    "answerable_correctness": {
+      "eligible": 0,
+      "scored": 0,
+      "missing": 0
+    },
+    "faithfulness": {
+      "eligible": 0,
+      "scored": 0,
+      "missing": 0
+    },
+    "recall_at_k": {
+      "eligible": 0,
+      "scored": 0,
+      "missing": 0
+    },
+    "all_sources_rate": {
+      "eligible": 0,
+      "scored": 0,
+      "missing": 0
+    },
+    "any_source_rate": {
+      "eligible": 0,
+      "scored": 0,
+      "missing": 0
+    },
+    "refusal_rate": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    },
+    "false_refusal_rate": {
+      "eligible": 0,
+      "scored": 0,
+      "missing": 0
+    },
+    "supported_correct_rate": {
+      "eligible": 0,
+      "scored": 0,
+      "missing": 0
+    },
+    "unsupported_answer_rate": {
+      "eligible": 1,
+      "scored": 1,
+      "missing": 0
+    }
+  },
+  "generation_errors": 0,
+  "graph_usage_scope": "Accumulated reported callbacks from persisted attempts; excludes lost writes and is not a billing ledger.",
+  "graph_time_scope": "Active graph-attempt wall time; excludes gaps between resumptions.",
+  "correctness": 1.0,
+  "answerable_correctness": null,
+  "faithfulness": null,
+  "recall_at_k": null,
+  "all_sources_rate": null,
+  "any_source_rate": null,
+  "refusal_rate": 1.0,
+  "false_refusal_rate": null,
+  "supported_correct_rate": null,
+  "unsupported_answer_rate": 0.0,
+  "unjudged": 0,
+  "status": "complete",
+  "buckets": {
+    "unanswerable": {
+      "n": 1,
+      "correct": 1,
+      "judged": 1
+    }
+  },
+  "mean_generation_seconds": 11.392,
+  "generation_usage": [
+    {
+      "llama-3.2-3b-instruct": {
+        "output_token_details": {
+          "reasoning": 0
+        },
+        "output_tokens": 185,
+        "total_tokens": 5003,
+        "input_tokens": 4818,
+        "input_token_details": {}
+      }
+    }
+  ]
+}

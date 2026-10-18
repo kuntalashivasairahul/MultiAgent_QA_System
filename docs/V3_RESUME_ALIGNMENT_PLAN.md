@@ -1,6 +1,6 @@
 # V3 plan: implement the missing résumé claims
 
-Status: **planned, not implemented**. Stable v2.1 remains at the accepted 8.63/10 engineering assessment. The owner stopped the 9/10 improvement run and requested a résumé audit, an implementation plan and a stable GitHub push. This plan does not authorize describing unfinished features as shipped.
+Status: **core v3 workflow and API implemented in the development branch**. Stable v2.1 remains at the accepted 8.63/10 engineering assessment. The owner subsequently requested actual implementation and an LM Studio machine assessment. See [delivered behavior, native evidence and remaining work](V3_LOCAL_UPGRADE.md). This design is retained below; full matched accuracy evaluation is still pending, and the checked Groq account currently has no generative Llama model.
 
 Goal: make the supplied claims about a Retrieval/Reasoning/Judge pipeline, quality-threshold retrieval retries and FastAPI endpoints demonstrably true. Reuse current retrieval, citations, evidence validation and evaluation infrastructure. No new multi-agent framework, parallel-agent infrastructure, database service, UI or private-data ingestion is needed for these claims.
 
@@ -59,4 +59,4 @@ That wording requires passing retry behavior tests, API contract tests and actua
 3. Add the thin FastAPI interface and its contract/isolation tests.
 4. Complete measured validation, then update the résumé to match shipped behavior.
 
-The stable push requested now completes item 1; it does not claim items 2–4 are finished.
+The stable v2.1 push completed item 1. The current development work implements items 2 and 3 with 152 passing tests, local native controls and real HTTP smoke evidence. Item 4's complete matched quality comparison and fresh confirmation remain future work; no numerical accuracy improvement is claimed.

@@ -27,6 +27,9 @@ v2: START → retrieve → sufficiency → generate → support → END
                           ↓ insufficient          ↓ unsupported
                        refusal                 refusal + retained draft
 v2.1: same v2 graph with bounded hybrid/SDK/section retrieval
+v3: START → initialize → retrieval → reasoning → judge → finish → END
+                          ↑                       ↓
+                          └──── one quality retry ┘
 ~~~
 
 v0 measures model-only answering, not training-data provenance. v1 uses a system instruction and JSON-encoded untrusted question/documents in a human message. Structured output contains answer text and numeric citation IDs. Non-refusal answers must cite actually retrieved IDs; refusals must have no citations. Empty retrieval refuses without a provider call. Invalid citations fail explicitly.
@@ -70,4 +73,6 @@ Groq clients and per-model request limiters are cached. Settings are fixed when 
 
 Duration depends on account-specific token limits and response sizes. Tracing is opt-in in the example configuration. Public prompts leave the machine through Groq, and through LangSmith when tracing is enabled.
 
-Corrective loops, reflection, ACLs, and conversational memory remain proposals. Introduce one measured change at a time or supply ablations. Multiple agents require an actual heterogeneous task.
+V3 implements the quality-triggered retrieval loop through three named roles and shared typed state. Judge scores are uncalibrated rubric values; acceptance also requires a supported verdict and validated citations/quotes. One retry excludes earlier chunk IDs when seeking fresh evidence, then mixes fresh and retained context under the existing caps. Per-attempt evidence is retained, and synchronous SQLite evaluation recovery is supported. See the [v3 implementation and local runtime guide](V3_LOCAL_UPGRADE.md).
+
+FastAPI validates each request, starts fresh graph state and allows one active inference per application process. Health is process-only. V3 defaults to Llama 3.2 3B through loopback LM Studio; its configurable Groq profile currently uses GPT-OSS/Qwen. External evaluation grading still uses Groq when required. Reflection, ACLs and conversational memory remain proposals; broader accuracy and deployment claims require separate evidence.

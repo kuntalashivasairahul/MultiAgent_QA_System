@@ -157,19 +157,25 @@ def source_recall(row: dict, docs: list[dict]) -> float:
 
 def run_inputs(module, rows: list[dict], dataset: Path) -> dict:
     paths = [*PROJECT.glob("graph_v*.py"),
-             *(PROJECT / n for n in ("ingest.py", "retrieval.py", "state.py", "llm.py", "artifacts.py")),
+             *(PROJECT / n for n in ("ingest.py", "retrieval.py", "state.py", "llm.py", "v3_llm.py", "artifacts.py")),
              *ROOT.glob("*.py"), PROJECT / "uv.lock"]
+    runtime = module.runtime_inputs() if hasattr(module, "runtime_inputs") else {}
+    if runtime.get("backend") == "lmstudio" and not re.fullmatch(r"[0-9a-f]{64}", runtime.get("model_weights_sha256") or ""):
+        raise ValueError("Local evaluation requires LMSTUDIO_MODEL_SHA256 for the loaded model weights")
     return {
         "schema": 2, "graph": module.__name__, "rows": rows,
         "dataset": dataset.name, "dataset_sha256": hashlib.sha256(dataset.read_bytes()).hexdigest(),
         "code": {p.relative_to(PROJECT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(paths)},
         "index": read_manifest() if module.USES_RETRIEVAL else index_spec(),
-        "generation_model": llm.GEN_MODEL, "judge_model": JUDGE_MODEL,
-        "temperature": 0, "max_tokens": 4096, "timeout": 120,
-        "max_retries": llm.MAX_RETRIES,
-        "requests_per_second": llm.REQUESTS_PER_SECOND,
+        "generation_model": runtime.get("generation_model", llm.GEN_MODEL), "judge_model": JUDGE_MODEL,
+        "graph_judge_model": runtime.get("judge_model", JUDGE_MODEL),
+        "generation_backend": runtime.get("backend", "groq"),
+        "temperature": 0, "max_tokens": runtime.get("max_tokens", 4096), "timeout": runtime.get("timeout", 120),
+        "max_retries": runtime.get("max_retries", llm.MAX_RETRIES),
+        "requests_per_second": llm.REQUESTS_PER_SECOND if runtime.get("backend", "groq") == "groq" else None,
         "retrieval_k": getattr(module, "RETRIEVAL_K", None),
         "context_limits": dict(getattr(module, "CONTEXT_LIMITS", {})),
+        "graph_runtime": runtime,
         "checkpoint_policy": "sqlite-node-sync" if getattr(module, "SUPPORTS_CHECKPOINTS", False) else "answer-jsonl",
     }
 
@@ -256,7 +262,7 @@ def _run_eval(graph_module: str, limit: int | None = None, *, dataset: Path | No
                     raise ValueError("Graph returned empty/non-text answer")
                 rec.update(answer=answer, citations=out.get("citations", []),
                            documents=[{"id": d.id, "text": d.page_content, "metadata": d.metadata} for d in out.get("documents", [])])
-                rec["checks"] = {name: out[name] for name in ("sufficiency", "support", "draft") if name in out}
+                rec["checks"] = {name: out[name] for name in ("sufficiency", "support", "draft", "quality", "history", "attempt_count") if name in out}
                 rec.pop("generation_error", None)
                 rec.pop("generation_error_details", None)
             except Exception as exc:

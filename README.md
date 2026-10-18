@@ -1,10 +1,12 @@
 # Temporal QA / RAG Evaluation
 
-A versioned LangGraph experiment over a pinned snapshot of public Temporal documentation. v0 is a model-only baseline; v1 retrieves five chunks and generates an answer with validated citation IDs; v2 adds evidence sufficiency and cited-claim support checks; v2.1 combines dense and lexical search, balances explicitly requested SDKs, and adds nearby section evidence under fixed limits. Multiple agents, answer-rewriting loops, private-data access control, and conversational memory are not implemented. Evidence verdicts have bounded validation correction.
+A versioned LangGraph experiment over a pinned snapshot of public Temporal documentation. v0 is a model-only baseline; v1 retrieves five chunks and generates an answer with validated citation IDs; v2 adds evidence sufficiency and cited-claim support checks; v2.1 combines dense and lexical search, balances explicitly requested SDKs, and adds nearby section evidence under fixed limits. V3 adds explicit Retrieval, Reasoning and Judge roles, a bounded quality-triggered retrieval retry, local Llama inference and FastAPI. Private-data access control and conversational memory remain unimplemented. Evidence verdicts have bounded validation correction.
 
 Model-only performance measures answering without supplied documents. It cannot establish whether training data contained Temporal documentation.
 
-**Stable v2.1 checkpoint, 18 October 2026:** accepted engineering assessment **8.63/10**; **110 automated tests pass**, including four corpus/index integration tests. The owner stopped the 9/10 improvement run and its queued evaluator. Current full native accuracy remains unverified after the final code fix. FastAPI endpoints, a numeric quality/confidence threshold and quality-triggered retrieval retries are planned for v3. See the [résumé claim audit](docs/RESUME_AUDIT.md), [implementation plan](docs/V3_RESUME_ALIGNMENT_PLAN.md) and [verification status](evals/V21_FINAL_STATUS.md).
+**Stable v2.1 checkpoint, 18 October 2026:** accepted engineering assessment **8.63/10**; **110 automated tests pass**, including four corpus/index integration tests. The owner stopped the 9/10 improvement run and its queued evaluator. Current full native accuracy remains unverified after the final code fix. FastAPI endpoints, a numeric quality/confidence threshold and quality-triggered retrieval retries are absent from that stable version; the v3 development upgrade below implements them. See the [résumé claim audit](docs/RESUME_AUDIT.md), [implementation plan](docs/V3_RESUME_ALIGNMENT_PLAN.md) and [verification status](evals/V21_FINAL_STATUS.md).
+
+**V3 development upgrade:** the three named Retrieval/Reasoning/Judge roles, numeric rubric score, one bounded retrieval retry and FastAPI `/ask` and `/health` endpoints are now implemented. **152 tests pass**, including five integration tests. Real local Llama controls and HTTP smoke requests are retained; a Groq HTTP smoke uses its currently available GPT-OSS/Qwen models. The account currently offers no generative Groq Llama model. See the [machine assessment, startup commands, evidence and next upgrade plan](docs/V3_LOCAL_UPGRADE.md). The v2.1 score and CI result below describe that earlier stable code; v3 is unscored and has no broad accuracy claim.
 
 ## Setup
 
@@ -17,7 +19,7 @@ uv run python ingest.py
 test -f .env || cp .env.example .env
 ~~~
 
-Set GROQ_API_KEY in .env. CORPUS_REVISION pins the Git snapshot. Fetching refuses local edits and preserves old checkouts before replacement. Embeddings use a pinned BGE-small revision on CPU; the initial model download needs network access. Generation, drafting, and judging call Groq.
+For v0–v2.1, set GROQ_API_KEY in .env; generation, drafting and judging call Groq. For the v3 local graph/API, follow the [LM Studio startup guide](docs/V3_LOCAL_UPGRADE.md); no Groq key is needed for inference. The separate evaluation judges still use Groq where model grading is required. CORPUS_REVISION pins the Git snapshot. Fetching refuses local edits and preserves old checkouts before replacement. Embeddings use a pinned BGE-small revision on CPU; the initial model download needs network access.
 
 Indexing publishes a new fingerprinted collection after every chunk is present and its text/metadata match canonical content. Repeating the same build does not duplicate documents. Old collections remain recoverable. Corpus, pipeline, or dependency changes require a rebuild; a missing/mismatched index fails clearly. Content validation is cached for an immutable collection during each process. Restart after changing local index files. The content digest covers text/metadata, not embedding coordinates or an attacker controlling the filesystem.
 

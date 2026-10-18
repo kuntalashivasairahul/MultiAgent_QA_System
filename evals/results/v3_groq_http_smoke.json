@@ -1,0 +1,81 @@
+{
+  "scope": "Single native HTTP smoke on current Groq-accessible models; not a benchmark or a Groq-hosted Llama claim.",
+  "observed_at": "2026-10-18T08:18:18.082950+00:00",
+  "request": {
+    "question": "What is the default Namespace name in Temporal?"
+  },
+  "http_status": 200,
+  "seconds": 16.01983279199885,
+  "body": {
+    "answer": "The default Namespace name is \"default\".",
+    "refused": false,
+    "citations": [
+      {
+        "id": 4,
+        "source": "production-deployment/self-hosted-guide/namespaces.mdx",
+        "chunk_id": "eb2cfd96d40e22dabb3fb570cf335ecca7083805acedd96692ada9310745d7ea"
+      },
+      {
+        "id": 6,
+        "source": "tctl-v1/index.mdx",
+        "chunk_id": "88b8eb4f086e38d86c404b494b479d3bc1444fecedf54057c2f022e6b28789ac"
+      }
+    ],
+    "quality": {
+      "passed": true,
+      "reason": "The answer correctly identifies the default Namespace name as \"default\", which is explicitly supported by the provided documents.",
+      "quotes": [
+        {
+          "id": 4,
+          "text": "If no Namespace is specified, SDKs and CLI use the `default` Namespace."
+        },
+        {
+          "id": 6,
+          "text": "The default Namespace is `default`."
+        }
+      ],
+      "confidence": 1.0,
+      "retry_query": ""
+    },
+    "attempt_count": 1,
+    "model_profile": {
+      "backend": "groq",
+      "generation_model": "openai/gpt-oss-120b",
+      "judge_model": "qwen/qwen3.8-27b",
+      "base_url": "https://api.groq.com/openai/v1",
+      "temperature": 0,
+      "max_tokens": 2048,
+      "timeout": 120,
+      "max_retries": 0,
+      "structured_output": "json_object+pydantic",
+      "schema_parse_attempts": 2,
+      "model_weights_sha256": null,
+      "quality_threshold": 0.8,
+      "max_attempts": 2,
+      "score_scope": "uncalibrated rubric quality, not probability",
+      "retry_policy": "missing-aspect-new-evidence"
+    },
+    "seconds": 16.010726791000707,
+    "usage": {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 1714,
+        "output_tokens": 175,
+        "total_tokens": 1889,
+        "output_token_details": {
+          "reasoning": 144
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "input_tokens": 957,
+        "output_tokens": 95,
+        "total_tokens": 1052
+      }
+    }
+  },
+  "groq_llama_preflight": {
+    "model": "llama-3.3-70b-versatile",
+    "status": 404,
+    "available_generative_llama_models": [],
+    "prompt_guard_classifiers_are_not_answer_generators": true
+  }
+}

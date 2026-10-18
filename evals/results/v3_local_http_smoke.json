@@ -1,0 +1,162 @@
+{
+  "scope": "Two native local HTTP smoke questions, shared known topics; not blind evaluation, accuracy or an optimized latency benchmark. Cold/warm/cache differences prevent a causal speed comparison with Groq.",
+  "observed_at": "2026-10-18T08:23:49.396473+00:00",
+  "hardware": {
+    "chip": "Apple M4",
+    "cpu_cores": 10,
+    "gpu_cores": 10,
+    "unified_memory_gib": 16,
+    "model_load_reported_gib": 1.88,
+    "model_estimate_gib": 2.53,
+    "model_load_seconds": 8.5,
+    "context_tokens": 8192,
+    "parallel_predictions": 1
+  },
+  "model_artifact": {
+    "model": {
+      "type": "llm",
+      "modelKey": "llama-3.2-3b-instruct",
+      "format": "gguf",
+      "displayName": "Llama 3.2 3B Instruct",
+      "publisher": "lmstudio-community",
+      "path": "lmstudio-community/Llama-3.2-3B-Instruct-GGUF/Llama-3.2-3B-Instruct-Q4_K_M.gguf",
+      "sizeBytes": 2019377440,
+      "indexedModelIdentifier": "lmstudio-community/Llama-3.2-3B-Instruct-GGUF/Llama-3.2-3B-Instruct-Q4_K_M.gguf",
+      "deviceIdentifier": null,
+      "paramsString": "3B",
+      "architecture": "llama",
+      "quantization": {
+        "name": "Q4_K_M",
+        "bits": 4
+      },
+      "vision": false,
+      "trainedForToolUse": true,
+      "maxContextLength": 131072
+    },
+    "sha256": "e4f1a04d927b09ec18eb2f233d85ecd760fc2d35cec97e37f8604d3632210d9a",
+    "lmstudio_version": "0.4.16+2"
+  },
+  "records": [
+    {
+      "id": "public-default-namespace",
+      "question": "What is the default Namespace name in Temporal?",
+      "http_status": 200,
+      "body": {
+        "answer": "default",
+        "refused": false,
+        "citations": [
+          {
+            "id": 4,
+            "source": "production-deployment/self-hosted-guide/namespaces.mdx",
+            "chunk_id": "eb2cfd96d40e22dabb3fb570cf335ecca7083805acedd96692ada9310745d7ea"
+          },
+          {
+            "id": 6,
+            "source": "tctl-v1/index.mdx",
+            "chunk_id": "88b8eb4f086e38d86c404b494b479d3bc1444fecedf54057c2f022e6b28789ac"
+          }
+        ],
+        "quality": {
+          "passed": true,
+          "reason": "The answer is supported by the provided documents.",
+          "quotes": [
+            {
+              "id": 4,
+              "text": "If no Namespace is specified, SDKs and CLI use the `default` Namespace."
+            },
+            {
+              "id": 6,
+              "text": "The default Namespace is `default`."
+            }
+          ],
+          "confidence": 1.0,
+          "retry_query": "None"
+        },
+        "attempt_count": 1,
+        "model_profile": {
+          "backend": "lmstudio",
+          "generation_model": "llama-3.2-3b-instruct",
+          "judge_model": "llama-3.2-3b-instruct",
+          "base_url": "http://127.0.0.1:1234/v1",
+          "temperature": 0,
+          "max_tokens": 2048,
+          "timeout": 120,
+          "max_retries": 0,
+          "structured_output": "json_schema",
+          "schema_parse_attempts": 2,
+          "model_weights_sha256": "e4f1a04d927b09ec18eb2f233d85ecd760fc2d35cec97e37f8604d3632210d9a",
+          "quality_threshold": 0.8,
+          "max_attempts": 2,
+          "score_scope": "uncalibrated rubric quality, not probability",
+          "retry_policy": "missing-aspect-new-evidence"
+        },
+        "seconds": 12.52432829099962,
+        "usage": {
+          "llama-3.2-3b-instruct": {
+            "output_token_details": {
+              "reasoning": 0
+            },
+            "input_token_details": {},
+            "input_tokens": 2166,
+            "output_tokens": 122,
+            "total_tokens": 2288
+          }
+        }
+      },
+      "expected_refusal": false,
+      "passed_smoke": true,
+      "seconds": 12.567764291001367
+    },
+    {
+      "id": "unknown-private-setting",
+      "question": "Which exact Task Queue does our private Orion invoice production Worker poll?",
+      "http_status": 200,
+      "body": {
+        "answer": "I don't know.",
+        "refused": true,
+        "citations": [],
+        "quality": {
+          "passed": false,
+          "reason": "Missing evidence for the exact Task Queue name. The document only provides a generic example of how to create a new task queue with a specific name, but it does not specify the actual Task Queue name.",
+          "quotes": [],
+          "confidence": 0.0,
+          "retry_query": ""
+        },
+        "attempt_count": 2,
+        "model_profile": {
+          "backend": "lmstudio",
+          "generation_model": "llama-3.2-3b-instruct",
+          "judge_model": "llama-3.2-3b-instruct",
+          "base_url": "http://127.0.0.1:1234/v1",
+          "temperature": 0,
+          "max_tokens": 2048,
+          "timeout": 120,
+          "max_retries": 0,
+          "structured_output": "json_schema",
+          "schema_parse_attempts": 2,
+          "model_weights_sha256": "e4f1a04d927b09ec18eb2f233d85ecd760fc2d35cec97e37f8604d3632210d9a",
+          "quality_threshold": 0.8,
+          "max_attempts": 2,
+          "score_scope": "uncalibrated rubric quality, not probability",
+          "retry_policy": "missing-aspect-new-evidence"
+        },
+        "seconds": 12.840044415999728,
+        "usage": {
+          "llama-3.2-3b-instruct": {
+            "output_token_details": {
+              "reasoning": 0
+            },
+            "input_token_details": {},
+            "input_tokens": 4818,
+            "output_tokens": 185,
+            "total_tokens": 5003
+          }
+        }
+      },
+      "expected_refusal": true,
+      "passed_smoke": true,
+      "seconds": 12.849196667000797
+    }
+  ],
+  "passed": 2
+}

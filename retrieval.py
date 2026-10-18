@@ -104,7 +104,8 @@ def _fuse(lexical: list[str], dense: list[str]) -> list[str]:
     return sorted(scores, key=lambda identifier: (-scores[identifier], identifier))
 
 
-def get_hybrid_context(question: str) -> list[Document]:
+def get_hybrid_context(question: str, *, exclude_ids: tuple[str, ...] = ()) -> list[Document]:
+    excluded = set(exclude_ids)
     store = get_vectorstore()
     chunks, vectorizer, matrix = _lexical_index(store._collection.name)
     by_id = {d.id: d for d in chunks}
@@ -130,7 +131,7 @@ def get_hybrid_context(question: str) -> list[Document]:
         if identifier not in by_id:
             raise ValueError("Retrieved ID is absent from the canonical index chunks")
         doc = by_id[identifier]
-        if identifier in used or len(selected) == HYBRID_LIMITS["max_chunks"]:
+        if identifier in excluded or identifier in used or len(selected) == HYBRID_LIMITS["max_chunks"]:
             return False
         if characters + len(doc.page_content) > HYBRID_LIMITS["max_document_text_characters"]:
             return False
