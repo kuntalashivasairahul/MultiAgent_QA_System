@@ -111,7 +111,7 @@ Switching back to stable v2.1 also restores its dependency lock and retrieval co
 - An earlier preserved smoke attempt had stale top-level generation metadata despite correct nested local model settings. It is superseded by the final trace above; the verification record identifies it rather than rewriting historical evidence.
 - Cold/warm caches, different models and different request paths prevent a causal performance comparison from these few observations.
 - Grammar-constrained JSON does not establish semantic truth. A small self-judging model can still accept unsupported answers or refuse answerable ones. No general accuracy increase or calibrated confidence is claimed.
-- Changed-code [Linux CI 39160387642](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39160387642) passed for `88135c7`: 166 offline tests, fresh 14,414-document index and five integration tests. This verifies the changed dependency/source tree, not native model quality.
+- Changed-code [Linux CI 39164202254](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39164202254) passed for `5f06e83`: 171 offline tests, fresh 14,414-document index and five integration tests. This verifies the changed dependency/source tree, not native model quality.
 - Bind to loopback. Authentication, private-data filtering, multi-tenant isolation, hosted API deployment, load testing and Windows execution are not established by this development implementation.
 
 ## Next upgrade order

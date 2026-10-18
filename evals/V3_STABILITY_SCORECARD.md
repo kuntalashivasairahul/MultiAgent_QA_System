@@ -88,3 +88,20 @@ The [new fixed-control run](results/calibration_v3/156111c64aa8b0d3c886819efb214
 A [current private-fact HTTP smoke](results/v3_two_check_http_private.json) returns the exact refusal in two attempts with the new policy identifier. The [verification record](results/v3_two_check_verification.json) retains source hashes and each check's scope.
 
 A local controlled operator is [scheduled](results/v3_validation_schedule.json) to resume the same control fingerprint after the observed quota refill window, then run only the fixed 12-question study. Its [source](results/v3_validation_worker_source.txt) and [timing/error self-checks](results/v3_validation_worker_checks.json) are retained. It stops on a valid failed control, non-quota error, evaluation-code/input drift or a conflicting local chat model. Completed nodes/verdicts are reused; scores are never awarded automatically. The two-hour reserve is an account-specific heuristic, not guaranteed capacity. The schedule is a point-in-time launch record; actual process/session liveness must be rechecked. The historical 40-question/confirmation operator remains stopped.
+
+## Completion audit for the 8.5 target
+
+This audit applies the original six release requirements above, rather than treating a test count as completion. The [compiled-contract inspection](results/v3_completion_contract_audit.json) verifies the actual graph edges, score bounds, API paths and frozen-input identity for `5f06e83` without model calls.
+
+| Requirement | Authoritative evidence | Current disposition |
+|---|---|---|
+| Three roles, score, bounded retrieval retry and REST API | Compiled nodes/conditional edges; strict quality schema; 176-test suite; real current HTTP smoke | Contract proved; native answer-quality coverage remains separate |
+| Genuine local Llama, with truthful Groq distinction | 8B weight hash/load evidence, native HTTP usage, refreshed account catalog and résumé matrix | Local Llama proved; generative Groq Llama unavailable on the inspected account |
+| Repair material correctness/recovery/isolation findings | Failing-before/passing-after regressions, separate checkpoints, component probe and retained unsuccessful experiments | Implementation repairs proved; general semantic reliability still under native validation |
+| Broader current-profile native study and source review | Fixed 17 controls and fixed 12-question study | Incomplete: 2/17 controls scored and source-reviewed, study not started; live operator must be polled |
+| Full, isolated and changed-code Linux checks; frozen provenance | 176 full and 171 isolated offline passes; compiled audit matches recorded hashes/inputs | Local checks proved; Linux CI `39164202254` passed |
+| Startup/recovery guide, résumé matrix and separate weighted ratings | Published guide, roadmap, audit and unchanged six-area rubric | Documentation published; both ratings withheld until remaining evidence exists |
+
+No row borrows native accuracy or CI status from an earlier version. The goal is not complete while the current-profile study, source review or final assessment is missing.
+
+[Linux CI 39164202254](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39164202254) passed for `5f06e83`: **171 offline tests in 26.32 seconds**, a fresh **14,414-document index**, then **five integration tests in 11.54 seconds**. [Partial source review](results/v3_two_check_partial_review.json) confirms the two completed synthetic controls and three literal assessment quotes. Those two developer controls are not canonical Temporal answer-accuracy evidence. The frozen native study remains pending; no new ratings or stable promotion are claimed.

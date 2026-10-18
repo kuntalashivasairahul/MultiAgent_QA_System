@@ -1,0 +1,95 @@
+{
+  "scope": "Current compiled contracts and frozen-input identity; not native accuracy or final promotion",
+  "at": "2026-10-18T20:44:18.152494+00:00",
+  "runtime_commit": "5f06e8368c610dcf66eb4b68388a99ec07f828c1",
+  "compiled_nodes": [
+    "__end__",
+    "__start__",
+    "finish",
+    "initialize",
+    "judge",
+    "judge_support",
+    "reasoning",
+    "retrieval"
+  ],
+  "compiled_edges": [
+    {
+      "from": "__start__",
+      "to": "initialize",
+      "conditional": false
+    },
+    {
+      "from": "initialize",
+      "to": "retrieval",
+      "conditional": false
+    },
+    {
+      "from": "judge",
+      "to": "finish",
+      "conditional": true
+    },
+    {
+      "from": "judge",
+      "to": "retrieval",
+      "conditional": true
+    },
+    {
+      "from": "judge_support",
+      "to": "judge",
+      "conditional": false
+    },
+    {
+      "from": "reasoning",
+      "to": "judge_support",
+      "conditional": false
+    },
+    {
+      "from": "retrieval",
+      "to": "reasoning",
+      "conditional": false
+    },
+    {
+      "from": "finish",
+      "to": "__end__",
+      "conditional": false
+    }
+  ],
+  "role_interpretation": "Three roles; Judge contains cited-support and context-veto steps",
+  "max_generation_attempts": 2,
+  "quality_threshold": 0.8,
+  "score_schema": {
+    "description": "Rubric quality score, not a calibrated probability",
+    "maximum": 1,
+    "minimum": 0,
+    "title": "Confidence",
+    "type": "number"
+  },
+  "api_methods": {
+    "/health": [
+      "get"
+    ],
+    "/ask": [
+      "post"
+    ]
+  },
+  "frozen_native_inputs_equal": true,
+  "recorded_source_hashes_equal": true,
+  "not_proven": [
+    "Complete native controls",
+    "Complete fixed12 study and source adjudication",
+    "V3 and overall target scores"
+  ],
+  "hosted_ci": {
+    "url": "https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39164202254",
+    "runtime_commit": "5f06e8368c610dcf66eb4b68388a99ec07f828c1",
+    "status": "success",
+    "platform": "ubuntu-24.04",
+    "fresh_locked_install": true,
+    "offline_passed": 171,
+    "offline_seconds": 26.32,
+    "fresh_index_documents": 14414,
+    "integration_passed": 5,
+    "integration_seconds": 11.54
+  },
+  "ci_observed_at": "2026-10-18T20:54:33.230163+00:00"
+}

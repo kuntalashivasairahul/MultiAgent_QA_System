@@ -41,7 +41,6 @@
   },
   "source_snapshot": "evals/results/calibration_v3/156111c64aa8b0d3c886819efb2149b764f74e0da7555305f9f2f8308e63f672/code_snapshot.json",
   "remaining": [
-    "Changed-code Linux CI",
     "Complete fixed17 native controls",
     "Complete fixed12 native study and source review",
     "V3 and overall rubric assessment"
@@ -52,5 +51,19 @@
     "self_checks": "v3_validation_worker_checks.json",
     "launch_observation": "v3_validation_schedule.json",
     "scope": "Complete17 then fixed12; no final score or goal completion"
-  }
+  },
+  "hosted_ci": {
+    "url": "https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39164202254",
+    "runtime_commit": "5f06e8368c610dcf66eb4b68388a99ec07f828c1",
+    "status": "success",
+    "platform": "ubuntu-24.04",
+    "fresh_locked_install": true,
+    "offline_passed": 171,
+    "offline_seconds": 26.32,
+    "fresh_index_documents": 14414,
+    "integration_passed": 5,
+    "integration_seconds": 11.54
+  },
+  "partial_source_review": "evals/results/v3_two_check_partial_review.json",
+  "compiled_contract_audit": "evals/results/v3_completion_contract_audit.json"
 }

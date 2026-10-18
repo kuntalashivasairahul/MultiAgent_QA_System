@@ -1,0 +1,27 @@
+{
+  "scope": "Assistant source review of only the two completed current-policy native controls; not independent human review or broad accuracy",
+  "at": "2026-10-18T20:49:20.452411+00:00",
+  "fingerprint": "156111c64aa8b0d3c886819efb2149b764f74e0da7555305f9f2f8308e63f672",
+  "eligible": 17,
+  "reviewed": 2,
+  "missing": 15,
+  "records": [
+    {
+      "id": "supported-answer",
+      "record_sha256": "8d8b18ba741b0081519a9403c13fd8ac3f473f6fc95c46777595dc9bfce90c96",
+      "source_kind": "Synthetic self-contained developer control, not canonical Temporal-source accuracy",
+      "acceptance_review": "correct",
+      "note": "Both checks accept exactly the stated MaximumAttempts value; no extra factual claim.",
+      "literal_quotes_checked": 2
+    },
+    {
+      "id": "unsupported-extra-claim",
+      "record_sha256": "f27ca453c1e1d4deecc8fbca457a01faf98d218e7139bc33d24e4d691506208b",
+      "source_kind": "Synthetic self-contained developer control, not canonical Temporal-source accuracy",
+      "acceptance_review": "correct",
+      "note": "Cited support rejects the added encryption claim, which is absent from the fixture; the context call is correctly skipped.",
+      "literal_quotes_checked": 1
+    }
+  ],
+  "total_literal_quotes_checked": 3
+}
