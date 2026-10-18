@@ -1,0 +1,200 @@
+{
+  "scope": "Recorded native malformed-quote verdicts replayed against deterministic source-only reconstruction of the same frozen retrieval. No new model call. All verdict quotes restore to exact contiguous prose spans; code and factual changes remain rejected.",
+  "question": "How do the Go and TypeScript external-storage prerequisite documents differ in their stated read/write permissions for storing payloads?",
+  "native_attempt": "evals/results/verified/graph_v2_1/93db52feb91110638d5cdaeb0c86490d725500fbcc5ab4e35c4038b6f6c64828/20261018T065045922242Z-a6077f8b",
+  "documents": [
+    {
+      "id": 1,
+      "text": "### Prerequisites\n\n- A bucket that you have read and write access to. Refer to [lifecycle management](/external-storage#lifecycle) to\n  ensure that your payloads remain available for the entire lifetime of the Workflow. For multi-region durability, see\n  [Durable External Storage](/external-storage#durable-external-storage).\n- Bucket credentials on both your Temporal Client and your Workers, since each reaches the bucket directly. Refer to\n  [Amazon S3 access control](https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html) or\n  [Cloud Storage IAM permissions](https://cloud.google.com/storage/docs/access-control/iam-permissions) for how to grant\n  access.\n- Permission to write objects on processes that store payloads, and to read objects on processes that retrieve them.\n  Storing also requires read permission, because the drivers check whether an object already exists before uploading.\n- Install the driver module, the client adapter for your cloud provider's SDK, and that SDK:\n\n      \n\n  ",
+      "metadata": {
+        "source": "develop/go/best-practices/data-handling/external-storage.mdx",
+        "title": "External Storage - Go SDK",
+        "headings": "Store and retrieve large payloads with Amazon S3 or Google Cloud Storage {/* #store-and-retrieve-large-payloads */} > Prerequisites",
+        "chunk_id": "fd36453c87b4f4771eeaf00eafe90fe1bf40ce5799903109fe5966083e2808f6",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 2,
+      "text": "### Prerequisites\n\n- A bucket that you have read and write access to. Refer to\n  [lifecycle management](/external-storage#lifecycle) to ensure that your payloads remain available for the entire\n  lifetime of the Workflow. For multi-region durability, see\n  [Durable External Storage](/external-storage#durable-external-storage).\n- Credentials with permission to write objects on components that store payloads, and to read objects on components\n  that retrieve them. Components that only retrieve payloads do not need write access, and the reverse is also true.\n- Install the driver, the client adapter for your cloud provider's SDK, and that SDK:\n\n  \n    \n\n  ```sh\n  npm install @temporalio/external-storage-s3 \\\n    @temporalio/external-storage-s3-aws-sdk \\\n    @aws-sdk/client-s3\n  ```\n\n    \n    \n\n  ```sh\n  npm install @temporalio/external-storage-gcs \\\n    @temporalio/external-storage-gcs-google-sdk \\\n    @google-cloud/storage\n  ```\n\n    \n  \n\n",
+      "metadata": {
+        "source": "develop/typescript/best-practices/data-handling/external-storage.mdx",
+        "title": "External Storage - TypeScript SDK",
+        "headings": "Store and retrieve large payloads with Amazon S3 or Google Cloud Storage {/* #store-and-retrieve-large-payloads */} > Prerequisites",
+        "chunk_id": "edb9dc82defb31a8e228d8844ce0e4124a5ffd31a72f22a30620972b94fbbbb0",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 3,
+      "text": "```go\nc, err := client.Dial(client.Options{\n\tExternalStorage: converter.ExternalStorage{\n\t\tDrivers:              []converter.StorageDriver{driver},\n\t\tPayloadSizeThreshold: 1,\n\t},\n})\n```\n",
+      "metadata": {
+        "source": "develop/go/best-practices/data-handling/external-storage.mdx",
+        "title": "External Storage - Go SDK",
+        "headings": "Configure payload size threshold",
+        "chunk_id": "179cfc37bc6499754beeb43e19f1f38cca66683a274253fa9e2b7d1457ca388f",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 4,
+      "text": "\n\n|                           | [PayloadConverter](/develop/typescript/best-practices/data-handling/data-conversion) | [PayloadCodec](/develop/typescript/best-practices/data-handling/data-encryption) | [ExternalStorage](/develop/typescript/best-practices/data-handling/external-storage) |\n| ------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------- |\n| **Purpose**               | Serialize application data to bytes                               | Transform encoded payloads (encrypt, compress)                | Offload large payloads to external store                               |\n| **Default**               | JSON serialization                                                | None (passthrough)                                            | None (all payloads are stored in Event History)                      |\n\nFor a deeper conceptual explanation, see the [Data Conversion encyclopedia](/dataconversion) and [External Storage](/external-storage).\n",
+      "metadata": {
+        "source": "develop/typescript/best-practices/data-handling/index.mdx",
+        "title": "Data handling - TypeScript SDK",
+        "headings": "Data handling - TypeScript SDK",
+        "chunk_id": "df3f2d8f096d35aeced13747a906fba9d6017af58d4b6f1766510c7241e0d048",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 5,
+      "text": "\n\nFor SDK-specific usage guides, see:\n\n- [Go SDK: Large payload storage](/develop/go/data-handling/external-storage)\n- [Python SDK: Large payload storage](/develop/python/data-handling/external-storage)\n- [TypeScript SDK: Large payload storage](/develop/typescript/best-practices/data-handling/external-storage)\n\n",
+      "metadata": {
+        "source": "encyclopedia/data-conversion/external-storage.mdx",
+        "title": "External Storage",
+        "headings": "Why use External Storage",
+        "chunk_id": "e4901243e70aa3de33b4c2f134c3f96c3b7c7c499857a83722df36f3992962be",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 6,
+      "text": "```ts\nconst dataConverter = {\n  externalStorage: new ExternalStorage({\n    drivers: [driver],\n    payloadSizeThreshold: 0,\n  }),\n};\n```\n",
+      "metadata": {
+        "source": "develop/typescript/best-practices/data-handling/external-storage.mdx",
+        "title": "External Storage - TypeScript SDK",
+        "headings": "Configure payload size threshold",
+        "chunk_id": "92e54f4a6093b36965b6160eac458c36656d9d0fd0dc8d2eac5a733af145b24f",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 7,
+      "text": "\n\n      \n\n  \n\n  ```sh\n  go get go.temporal.io/sdk/contrib/aws/s3driver \\\n    go.temporal.io/sdk/contrib/aws/s3driver/awssdkv2 \\\n    github.com/aws/aws-sdk-go-v2/config \\\n    github.com/aws/aws-sdk-go-v2/service/s3\n  ```\n\n        \n\n      \n\n  ```sh\n  go get go.temporal.io/sdk/contrib/gcp/gcsdriver \\\n    go.temporal.io/sdk/contrib/gcp/gcsdriver/gcssdk \\\n    cloud.google.com/go/storage\n  ```\n\n        \n\n    \n\n",
+      "metadata": {
+        "source": "develop/go/best-practices/data-handling/external-storage.mdx",
+        "title": "External Storage - Go SDK",
+        "headings": "Store and retrieve large payloads with Amazon S3 or Google Cloud Storage {/* #store-and-retrieve-large-payloads */} > Prerequisites",
+        "chunk_id": "9452d581c8414ccc6f66bcff5ae4a689d900121338c4ca4ae2d56bf8746d8306",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 8,
+      "text": "## Configure payload size threshold\n\nYou can configure the payload size threshold that triggers external storage. By default, payloads of 256 KiB or larger\nare offloaded to external storage. You can adjust this with the `PayloadSizeThreshold` option, or set it to 1 to\nexternalize all payloads regardless of size. A value of 0 is interpreted as the default (256 KiB). Payloads smaller than\nthe threshold stay inline in Event History. The size compared against the threshold is that of the serialized Payload,\nwhich includes its metadata, not just your data.\n\n<!--SNIPSTART go-external-storage-threshold-->\n[features/snippets/external_storage/threshold/threshold_config.go](https://github.com/temporalio/features/blob/main/features/snippets/external_storage/threshold/threshold_config.go)\n",
+      "metadata": {
+        "source": "develop/go/best-practices/data-handling/external-storage.mdx",
+        "title": "External Storage - Go SDK",
+        "headings": "Configure payload size threshold",
+        "chunk_id": "50299f671a68b6cfbdc24df0e9da5d4f34e2b28103f0a51e9e8377563d748384",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 9,
+      "text": "\n\nAll data sent to and from the Temporal Service passes through the **Data Converter**. The Data Converter has three\nlayers that handle different concerns:\n\n\n\nOf these three layers, only the PayloadConverter is required. Temporal uses a default PayloadConverter that handles JSON\nserialization. The PayloadCodec and ExternalStorage layers are optional. You only need to customize these layers when\nyour application requires non-JSON types, encryption, or payload offloading.",
+      "metadata": {
+        "source": "develop/typescript/best-practices/data-handling/index.mdx",
+        "title": "Data handling - TypeScript SDK",
+        "headings": "Data handling - TypeScript SDK",
+        "chunk_id": "0c543dee90c2766ea0f9e98e6f024ef19e9dffea61f81c3803889268f73ffd34",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 10,
+      "text": "\n\nExternal Storage addresses several common scenarios:\n\n- **Data processing pipelines.** Workflows that process documents, images, or other large blobs can exceed the\n  per-payload limit.\n- **AI agent conversations.** Long conversation histories grow with each turn, and the cumulative size can degrade\n  Workflow performance.\n- **Spiky data sizes.** Some Workflows handle data that is usually small but occasionally large. The Claim check pattern\n  handles these spikes transparently, offloading only the payloads that reach the size threshold.\n- **Migration to Temporal Cloud.** Self-hosted deployments may have higher configured payload limits. External Storage\n  lets you migrate to Cloud without restructuring Workflows that exceed the 2 MB limit.\n- **Data governance.** While Temporal supports end-to-end client-side encryption, some organizations prefer to store\n  payload data in infrastructure they control. Lower the offload size threshold to externalize all payloads regardless\n  of size. In the Python and TypeScript SDKs, set the threshold to 0. In the Go SDK, set it to 1, because 0 selects the\n  256 KiB default.\n\nFor SDK-specific usage guides, see:",
+      "metadata": {
+        "source": "encyclopedia/data-conversion/external-storage.mdx",
+        "title": "External Storage",
+        "headings": "Why use External Storage",
+        "chunk_id": "c2420dd2b830d172cb2bf671c55cc8418bd8adc13c7b78d6677ae8ffbc43755a",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 11,
+      "text": "## Configure payload size threshold\n\nYou can configure the payload size threshold that triggers external storage. By default, payloads of 256 KiB or larger\nare offloaded to external storage. You can adjust this with the `payloadSizeThreshold` option, or set it to `0` to\nexternalize all payloads regardless of size. Payloads smaller than the threshold stay inline in Event History. The size\ncompared against the threshold is that of the serialized Payload, which includes its metadata, not just your data.\n\n<!--SNIPSTART typescript-external-storage-threshold-->\n",
+      "metadata": {
+        "source": "develop/typescript/best-practices/data-handling/external-storage.mdx",
+        "title": "External Storage - TypeScript SDK",
+        "headings": "Configure payload size threshold",
+        "chunk_id": "53887690f2bb23a30e58f90c02759d3354e55a65e80589155e2548f03da6e46c",
+        "permitted_roles": "all"
+      }
+    },
+    {
+      "id": 12,
+      "text": "\n\n\n  APIs and configuration may change before General Availability. Join the\n  [#large-payloads Slack channel](https://temporalio.slack.com/archives/C09VA2DE15Y) to provide feedback or ask for\n  help.\n\n\nExternal Storage offloads payloads to an external store (such as Amazon S3) and passes a small reference token through\nthe Event History instead. This is called the\n[claim check pattern](https://dataengineering.wiki/Concepts/Software+Engineering/Claim+Check+Pattern).\n\nFor SDK-specific usage guides, see:\n\n- [Go SDK: Large payload storage](/develop/go/data-handling/external-storage)\n- [Python SDK: Large payload storage](/develop/python/data-handling/external-storage)\n- [TypeScript SDK: Large payload storage](/develop/typescript/best-practices/data-handling/external-storage)\n\n",
+      "metadata": {
+        "source": "encyclopedia/data-conversion/external-storage.mdx",
+        "title": "External Storage",
+        "headings": "External Storage",
+        "chunk_id": "534091a7868fbeb45f16c349830a35022265ccbe4f334cb420bb2bd40967dc72",
+        "permitted_roles": "all"
+      }
+    }
+  ],
+  "validation_failures": [
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": true,
+        "reason": "The Go document (id 1) explicitly states that storing payloads requires both write and read permissions because the driver checks for object existence before uploading. The TypeScript document (id 2) states that components that only retrieve payloads do not need write access, and the reverse is also true (implying components that only store do not need read access), which contrasts with the Go requirement for read access during storage.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "Permission to write objects on processes that store payloads, and to read objects on processes that retrieve them. Storing also requires read permission, because the drivers check whether an object already exists before uploading."
+          },
+          {
+            "id": 2,
+            "text": "Credentials with permission to write objects on components that store payloads, and to read objects on components that retrieve them. Components that only retrieve payloads do not need write access, and the reverse is also true."
+          }
+        ]
+      }
+    },
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": true,
+        "reason": "The Go document (id 1) explicitly states that storing payloads requires both write and read permissions because the driver checks for object existence before uploading. The TypeScript document (id 2) states that components that only retrieve payloads do not need write access, and the reverse is also true (implying components that only store do not need read access), which contrasts with the Go requirement for read access during storage.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "Permission to write objects on processes that store payloads, and to read objects on processes that retrieve them. Storing also requires read permission, because the drivers check whether an object already exists before uploading."
+          },
+          {
+            "id": 2,
+            "text": "Credentials with permission to write objects on components that store payloads, and to read objects on components that retrieve them. Components that only retrieve payloads do not need write access, and the reverse is also true."
+          }
+        ]
+      }
+    },
+    {
+      "error": "Evidence check returned a non-verbatim quote",
+      "verdict": {
+        "passed": true,
+        "reason": "The Go document (id 1) explicitly states that storing payloads requires both write and read permissions because the driver checks for object existence before uploading. The TypeScript document (id 2) states that components that only retrieve payloads do not need write access, and the reverse is also true (implying components that only store do not need read access), which contrasts with the Go requirement for read access during storage.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "Permission to write objects on processes that store payloads, and to read objects on processes that retrieve them."
+          },
+          {
+            "id": 1,
+            "text": "Storing also requires read permission, because the drivers check whether an object already exists before uploading."
+          },
+          {
+            "id": 2,
+            "text": "Credentials with permission to write objects on components that store payloads, and to read objects on components that retrieve them."
+          },
+          {
+            "id": 2,
+            "text": "Components that only retrieve payloads do not need write access, and the reverse is also true."
+          }
+        ]
+      }
+    }
+  ]
+}

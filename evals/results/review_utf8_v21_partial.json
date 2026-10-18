@@ -1,0 +1,279 @@
+{
+  "scope": "Partial coding-assistant source review, not independent review or final accuracy. First 21 fully scored UTF8-profile outputs only. Automated labels preserved. Remaining outputs and confirmation unreviewed.",
+  "reviewed_at": "2026-10-18T07:07:18.210812+00:00",
+  "implementation_commit": "e9a1185",
+  "native_attempt": "evals/results/verified/graph_v2_1/93db52feb91110638d5cdaeb0c86490d725500fbcc5ab4e35c4038b6f6c64828/20261018T065045922242Z-a6077f8b",
+  "fingerprint": "93db52feb91110638d5cdaeb0c86490d725500fbcc5ab4e35c4038b6f6c64828",
+  "reviewed": 21,
+  "mechanical_checks": {
+    "canonical_documents_equal": 251,
+    "literal_gate_quotes": 79,
+    "citation_binding_and_context_limits": true
+  },
+  "rows": [
+    {
+      "id": "dev-00",
+      "question": "What is required to access the pre‑release Cloud Run support for Temporal Serverless Workers?",
+      "answer_sha256": "08f9234bc9baedbafd9ba6c215d1b86d39b5d9e2f8c1d7f36801d725fd651c37",
+      "cited_canonical_chunk_ids": [
+        "dbe88a7ae15bc673fb7dd08d9975d08fc4a2723687573ae9b520e3dce2b7d617"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "qualified_support",
+      "note": "Access requirement matches. Answer says must sign up; reference says can. Source says and sign up without independently establishing a formal prerequisite. Possible modal overstatement."
+    },
+    {
+      "id": "dev-01",
+      "question": "What does Activity.wrap() return when it is given a checked exception?",
+      "answer_sha256": "30d8d7fbf25316cc2351c6b50f6b80310a7632f0158c626827326d9b85a6a4f0",
+      "cited_canonical_chunk_ids": [
+        "5934ff8f78d0fa743e6d72a76e5323626651b8ebce117fd5b6799cd0f380c177"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-02",
+      "question": "In the Celery-to-Standalone-Activity migration guide, what command starts the Python Worker?",
+      "answer_sha256": "539ab4d27a85bc26b0c1ec3d9ecde660d024c74acdce5296b2abca8a2178855d",
+      "cited_canonical_chunk_ids": [
+        "3e13fcc9458017176faa923a8073649a4233294f0928854f030d2e271656e915"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-03",
+      "question": "In the execution-failures troubleshooting guide, which metric tag identifies the failing Activity type?",
+      "answer_sha256": "8a9c6274acdc70c42adbb78ccc69d06295e4927c9fc7383fe8c731ccb9787f8d",
+      "cited_canonical_chunk_ids": [
+        "f68038c3e4a5421e4deb67dba9eac63812d54a5a053a0ea90e9450bad9176898",
+        "0c139c0adb419e2ef02b047e452b7f21098654d93498ea6325996c8c05b66553",
+        "a9ff676c2d4914ae9e802f20b97bf676802b68fafd3013acfaf0aad421528772"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-04",
+      "question": "In the Java SDK, what function starts a new Workflow Run using Continue-As-New?",
+      "answer_sha256": "ca02aa8042bbe8095e22a487327d0f7e7294171f2986994ed9d6a7fae2ede50b",
+      "cited_canonical_chunk_ids": [
+        "b93646b03b40b02cad14691ad62f56fc5cf30c7806eb53de1af11cafdbfba339",
+        "19dcd0f0af4daf473d23029b95f45a684b36aaff941e4f03aea574d80298093c"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-05",
+      "question": "What command disables API key authentication for a Temporal Cloud namespace?",
+      "answer_sha256": "5930c9c65df36adfd622a62729a306763572e1175a5eee8e78b4411b2c948197",
+      "cited_canonical_chunk_ids": [
+        "ba0fb503099de8c68c39e3411cafbfbbbfffed73e4fdf4b8b3142a8cbb378f56",
+        "0e51c9e6db5dc193e05ed306220e99c1ccf06ee7784688d2061d25d6c8446ea9"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-06",
+      "question": "In Temporal, how can a workflow be paused after activity retries are exhausted and later resumed with corrected input using a signal?",
+      "answer_sha256": "2653b7be2115abb96ee788c5922900125863463142368f8349e4b593e3b15f43",
+      "cited_canonical_chunk_ids": [
+        "69e2eabbf4e766f717dc19be110cda90b7f4aac9b84a000da3ce9a85c72e4991",
+        "3075a250177b848fc9a047bb8eaf4fa15b3e979b6a54699f4fe55175f4a93e2a",
+        "bc99bfdb797350ae616b247d23d7f57274234db1197bda75366cfa933d7438ed"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "ResumableActivity pattern supports bounded retry, ActivityError, AWAITING_CORRECTION, workflow.wait_condition, corrected Signal input and Activity re-execution. Em-dash quotes now remain literal."
+    },
+    {
+      "id": "dev-07",
+      "question": "What is the default value for max_concurrent_activities in the lambda_worker package?",
+      "answer_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "cited_canonical_chunk_ids": [
+        "3d453115d41684e6b7f8d7cd2cf58fbdb8a94463864f862a8151403e0d9225f3"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-08",
+      "question": "In the Python Google GenAI hello-world example, what task_queue name is used to execute the Workflow?",
+      "answer_sha256": "93eb84a673090bdfd4233e9ef3ca42f3f967051c189143de27ef57bf04c53476",
+      "cited_canonical_chunk_ids": [
+        "f5630802c753b7996a355532a7d461e664e36b34a7995bfbc4393a39dcab9083",
+        "af14152a29330736fcdee4a53d0cc687abb108335b9fa0eea4597f8380afc627"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Both Worker and client.execute_workflow examples use task_queue google-genai-hello-world; execution scope checked directly."
+    },
+    {
+      "id": "dev-09",
+      "question": "In the Java Nexus feature-guide example, what mainClass argument starts the handler Worker?",
+      "answer_sha256": "1e5c1472bad7262ff47e3072b0b5be3123e5200a72accc02763d1de96d544512",
+      "cited_canonical_chunk_ids": [
+        "ecf8bd59e19ed0ac278f9e9bb29fb82ffc033d37e6aecce4fa4a43d5bbc8d682"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-10",
+      "question": "In the Recover Without Restart guide, how often does its dashboard poll the web service?",
+      "answer_sha256": "5ed88a64856a578c9de9984318d196d2d3b27a6ac8ce5961825e2e77708c8d80",
+      "cited_canonical_chunk_ids": [
+        "ebd018dbd7344558767493cc79784562f8873e8aadd24f151166d4730a54bdce"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-11",
+      "question": "Which command pulls the Temporal proxy container image?",
+      "answer_sha256": "3e974526e15e2282a1a8dd36eaba5e68e14f0ab58d6e6cb67c90d24446e55469",
+      "cited_canonical_chunk_ids": [
+        "6c6844ae936c10bb7d3d5cbc0c1d4913d55aba310f322b98a0a7e7390b2a2c80"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-12",
+      "question": "What does the Parent Close Policy determine in Temporal?",
+      "answer_sha256": "8ae8928d5dd978794d8b258f11e6a6dec326bf373df14bf03a939c217a8e3844",
+      "cited_canonical_chunk_ids": [
+        "49887f56f20c75f477ff284e47636c6a4569c298583f3ef28ff93e410c30480b",
+        "783d75e9adbc7fd5e5fb59c8e03a62a1332e35e1bff3b46820d39291da6eb554"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-13",
+      "question": "What responsibilities does the Frontend Service have in Temporal?",
+      "answer_sha256": "497dcbb345d9496efc0cd389143e2225f2978223963d8dbfd37f44336fd9f246",
+      "cited_canonical_chunk_ids": [
+        "6aa3319d9e1c82b1b081b1b029eabea732d8181e952427dafd237fc59ccc316a",
+        "857411caa004ae3f596a003345b3f6016a62e8978c72c377e6e4a274491ff789"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-14",
+      "question": "What is the definition of the Temporal-specific term \"Retention Period\"?",
+      "answer_sha256": "66eec2ea96a92b4615c09a3d01f46ecee6cb2978da890eb66ace37949734d010",
+      "cited_canonical_chunk_ids": [
+        "2e0010166633c1396812164bae5e5b19dd59a4332e687c1973ef17291c371565"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-15",
+      "question": "What components make up a Temporal Service?",
+      "answer_sha256": "2329ae466bf1c4d5654068113860815b2d9a445e11891b51521d713f37019795",
+      "cited_canonical_chunk_ids": [
+        "11447c5aceca9b32996ffd6ab1472485382a2c95d9093aa8d769959a0e02281d",
+        "a19a1d2cbb93aef4ca2d541dc203cc818bc29c0d64522291cdbe0935a6a27713"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "qualified_support",
+      "note": "Core components match exactly. Parenthetical workflow-state/query explanation interprets Persistence and Visibility; those roles are not separately stated in the cited excerpts. Automated support accepts it; qualification retained."
+    },
+    {
+      "id": "dev-16",
+      "question": "What is a Local Activity in Temporal?",
+      "answer_sha256": "810d7c3ca6aa6411102588f8636833035138a35f32f5e7b2df96d2ab2dc4d660",
+      "cited_canonical_chunk_ids": [],
+      "automated_correct": false,
+      "automated_grounded": true,
+      "source_assessment": "false_refusal_generation_extra_claim",
+      "note": "Exact Local Activity definition was retrieved. Draft added high-throughput, absent from both cited chunks. Support correctly rejected the addition. Generation precision caused the false refusal; automated correctness=False and grounded=True preserved."
+    },
+    {
+      "id": "dev-17",
+      "question": "What does the term Visibility refer to within the Temporal Platform?",
+      "answer_sha256": "c2588546178efb6145301433a65d74d8541d19a9ac8aefd076b5a70a190af87f",
+      "cited_canonical_chunk_ids": [
+        "cbfdc4404772ff6a34780104e7e3cb7fe2146845dcc8c4c8ac6d67608cd3773e",
+        "69ea9349823d46734cbbd986d0a1cf646f984eb95821be3e9ef78560f1ce8cf7"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-18",
+      "question": "What are Dynamic Handlers in Temporal?",
+      "answer_sha256": "6b5b7ba2b3f06db3b369fc8707d41ebd585fca2f8731900e4877bb9a608bc51c",
+      "cited_canonical_chunk_ids": [
+        "6e09d8198557e3e02b415403f914740870b50d6e9deae35c3eaa046427f3216b",
+        "c905878a6ef7f0ad93f4a5e66c6bba13fa24274d6d805d58e6f6b5161b5dbccc"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-19",
+      "question": "What does the Nexus Registry manage, and how are its scope and Endpoint-name uniqueness defined for Cloud versus self-hosted deployments?",
+      "answer_sha256": "564339ead869ed025abb6b89d2c516bea1ae757108aac97c57a77c4303119492",
+      "cited_canonical_chunk_ids": [
+        "d7e8de816c014dad5e8c5e7eb0d140ce9604a758e542bb412f3f8da06cec802e",
+        "59dee9777403b7002aa3f5c01e08f0359652ed499002d220ac6c316176cf6804"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Answer matches the requested fact in the pinned cited canonical prose/code and reference. Reviewed source examples, not executed SDK/CLI commands."
+    },
+    {
+      "id": "dev-20",
+      "question": "When porting Continue-As-New logic between Java and Python Temporal Workflows, what function starts the new Run in each SDK?",
+      "answer_sha256": "3946c29fd78e66ce10487c468e62a3ae6901bbac6e7a3ad5ccfed7717197caf3",
+      "cited_canonical_chunk_ids": [
+        "b93646b03b40b02cad14691ad62f56fc5cf30c7806eb53de1af11cafdbfba339",
+        "dd8f2e83b7bfe79510dc9262fa35d5261072532bf9ab3d8259092d2a829d51e2"
+      ],
+      "automated_correct": true,
+      "automated_grounded": true,
+      "source_assessment": "supported_correct",
+      "note": "Java continueAsNew and Python continue_as_new are stated in SDK prose. One malformed Java URL was rejected and corrected to literal spans; rejected verdict remains in audit."
+    }
+  ]
+}

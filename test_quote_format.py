@@ -44,6 +44,48 @@ def test_literal_code_quotes_are_preserved(monkeypatch):
     assert checked(monkeypatch, source, source)["quotes"][0]["text"] == source
 
 
+@pytest.mark.parametrize("fence", ["```", "~~~~"])
+def test_prose_recovery_beside_code_preserves_literal_boundaries(monkeypatch, fence):
+    prose = "Storing also requires read permission,\n  because drivers check existing objects."
+    source = f"{prose}\n\n{fence}python\na**2**b\n{fence}\n\nThen stop."
+    quote = prose.replace("\n  ", " ")
+    assert checked(monkeypatch, source, quote)["quotes"][0]["text"] == prose
+    for invalid in ("a2b", "existing objects. Then stop.", "Storing also requires write permission."):
+        with pytest.raises(ValueError, match="quote"):
+            checked(monkeypatch, source, invalid)
+
+
+@pytest.mark.parametrize("source", [
+    "Before.\n```python\na**2**b",
+    "Before.\n~~~~python\na**2**b\n~~~\na**2**b",
+    "Before.\n    a**2**b\nAfter.",
+    "Before.\n> ```python\n> a**2**b\n> ```",
+])
+def test_mixed_code_is_never_normalized(monkeypatch, source):
+    with pytest.raises(ValueError, match="quote"):
+        checked(monkeypatch, source, "a2b")
+
+
+def test_recorded_external_storage_prose_is_restored_without_merging_code():
+    import json
+    from pathlib import Path
+
+    capture = json.loads((Path(__file__).parent / "evals/results/mixed_prose_quote_diagnosis_v21.json").read_text())
+    for failure in capture["validation_failures"]:
+        for quote in failure["verdict"]["quotes"]:
+            source = capture["documents"][quote["id"] - 1]["text"]
+            restored = v2.source_quote(quote["text"], source)
+            assert restored in source
+            assert "```" not in restored and "~~~" not in restored
+
+
+def test_prose_after_longer_closing_fence_and_indented_code(monkeypatch):
+    for code in ("```py\na**2**b\n````", "    a**2**b"):
+        source = f"{code}\nAfter the operation,\nreturn the result."
+        quote = "After the operation, return the result."
+        assert checked(monkeypatch, source, quote)["quotes"][0]["text"] == "After the operation,\nreturn the result."
+
+
 @pytest.mark.parametrize("source,quote", [
     ("MaximumAttempts is **3**.", "MaximumAttempts is 5."),
     ("The Go API is **RecordHeartbeat**.", "The Go API is RecordActivityHeartbeat."),

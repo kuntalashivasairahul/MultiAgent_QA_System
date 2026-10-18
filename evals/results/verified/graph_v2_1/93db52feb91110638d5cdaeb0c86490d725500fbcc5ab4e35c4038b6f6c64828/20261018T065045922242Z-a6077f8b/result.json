@@ -1,0 +1,478 @@
+{
+  "graph": "graph_v2_1",
+  "variant": null,
+  "fingerprint": "93db52feb91110638d5cdaeb0c86490d725500fbcc5ab4e35c4038b6f6c64828",
+  "run_id": "20261018T065045922242Z-a6077f8b",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/verified/graph_v2_1/93db52feb91110638d5cdaeb0c86490d725500fbcc5ab4e35c4038b6f6c64828/20261018T065045922242Z-a6077f8b",
+  "dataset": "golden_current_v21.jsonl",
+  "n": 40,
+  "scope": "full",
+  "retrieval_k": 12,
+  "coverage": {
+    "correctness": {
+      "eligible": 40,
+      "scored": 21,
+      "missing": 19
+    },
+    "answerable_correctness": {
+      "eligible": 33,
+      "scored": 21,
+      "missing": 12
+    },
+    "faithfulness": {
+      "eligible": 33,
+      "scored": 21,
+      "missing": 12
+    },
+    "recall_at_k": {
+      "eligible": 33,
+      "scored": 21,
+      "missing": 12
+    },
+    "all_sources_rate": {
+      "eligible": 33,
+      "scored": 21,
+      "missing": 12
+    },
+    "any_source_rate": {
+      "eligible": 33,
+      "scored": 21,
+      "missing": 12
+    },
+    "refusal_rate": {
+      "eligible": 7,
+      "scored": 0,
+      "missing": 7
+    },
+    "false_refusal_rate": {
+      "eligible": 33,
+      "scored": 21,
+      "missing": 12
+    },
+    "supported_correct_rate": {
+      "eligible": 33,
+      "scored": 21,
+      "missing": 12
+    },
+    "unsupported_answer_rate": {
+      "eligible": 40,
+      "scored": 21,
+      "missing": 19
+    }
+  },
+  "generation_errors": 19,
+  "graph_usage_scope": "Accumulated reported callbacks from persisted attempts; excludes lost writes and is not a billing ledger.",
+  "graph_time_scope": "Active graph-attempt wall time; excludes gaps between resumptions.",
+  "correctness": 0.952,
+  "answerable_correctness": 0.952,
+  "faithfulness": 1.0,
+  "recall_at_k": 1.0,
+  "all_sources_rate": 1.0,
+  "any_source_rate": 1.0,
+  "refusal_rate": null,
+  "false_refusal_rate": 0.048,
+  "supported_correct_rate": 0.952,
+  "unsupported_answer_rate": 0.0,
+  "unjudged": 12,
+  "status": "incomplete",
+  "buckets": {
+    "ambiguous": {
+      "n": 4,
+      "correct": 0,
+      "judged": 0
+    },
+    "direct": {
+      "n": 13,
+      "correct": 12,
+      "judged": 12
+    },
+    "jargon": {
+      "n": 8,
+      "correct": 7,
+      "judged": 8
+    },
+    "multihop": {
+      "n": 8,
+      "correct": 1,
+      "judged": 1
+    },
+    "unanswerable": {
+      "n": 7,
+      "correct": 0,
+      "judged": 0
+    }
+  },
+  "mean_generation_seconds": 19.463,
+  "generation_usage": [
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3200,
+        "output_tokens": 286,
+        "total_tokens": 3486,
+        "output_token_details": {
+          "reasoning": 233
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 4179,
+        "output_tokens": 315,
+        "input_tokens": 3864
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3209,
+        "output_tokens": 146,
+        "total_tokens": 3355,
+        "output_token_details": {
+          "reasoning": 114
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 4042,
+        "output_tokens": 152,
+        "input_tokens": 3890
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2558,
+        "output_tokens": 159,
+        "total_tokens": 2717,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 135
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 3261,
+        "output_tokens": 222,
+        "input_tokens": 3039
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3070,
+        "output_tokens": 309,
+        "total_tokens": 3379,
+        "output_token_details": {
+          "reasoning": 272
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 4813,
+        "output_tokens": 280,
+        "input_tokens": 4533
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2588,
+        "output_tokens": 168,
+        "total_tokens": 2756,
+        "output_token_details": {
+          "reasoning": 124
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 3764,
+        "output_tokens": 444,
+        "input_tokens": 3320
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2085,
+        "output_tokens": 160,
+        "total_tokens": 2245,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 109
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 2988,
+        "output_tokens": 292,
+        "input_tokens": 2696
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3149,
+        "output_tokens": 403,
+        "total_tokens": 3552,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 291
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 5050,
+        "output_tokens": 702,
+        "input_tokens": 4348
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3389,
+        "output_tokens": 108,
+        "total_tokens": 3497,
+        "output_token_details": {
+          "reasoning": 84
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 4327,
+        "output_tokens": 172,
+        "input_tokens": 4155
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2474,
+        "output_tokens": 157,
+        "total_tokens": 2631,
+        "output_token_details": {
+          "reasoning": 127
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 3664,
+        "output_tokens": 213,
+        "input_tokens": 3451
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2928,
+        "output_tokens": 220,
+        "total_tokens": 3148,
+        "output_token_details": {
+          "reasoning": 185
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 3705,
+        "output_tokens": 228,
+        "input_tokens": 3477
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2915,
+        "output_tokens": 113,
+        "total_tokens": 3028,
+        "output_token_details": {
+          "reasoning": 82
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 3774,
+        "output_tokens": 174,
+        "input_tokens": 3600
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 1980,
+        "output_tokens": 126,
+        "total_tokens": 2106,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 92
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 2544,
+        "output_tokens": 137,
+        "input_tokens": 2407
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2735,
+        "output_tokens": 218,
+        "total_tokens": 2953,
+        "output_token_details": {
+          "reasoning": 168
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 3996,
+        "output_tokens": 320,
+        "input_tokens": 3676
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3260,
+        "output_tokens": 308,
+        "total_tokens": 3568,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 226
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 4811,
+        "output_tokens": 539,
+        "input_tokens": 4272
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2365,
+        "output_tokens": 244,
+        "total_tokens": 2609,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 196
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 3257,
+        "output_tokens": 207,
+        "input_tokens": 3050
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2989,
+        "output_tokens": 165,
+        "total_tokens": 3154,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 109
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 4322,
+        "output_tokens": 365,
+        "input_tokens": 3957
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2993,
+        "output_tokens": 233,
+        "total_tokens": 3226,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 130
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 4630,
+        "output_tokens": 524,
+        "input_tokens": 4106
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2671,
+        "output_tokens": 274,
+        "total_tokens": 2945,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 220
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 4014,
+        "output_tokens": 521,
+        "input_tokens": 3493
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 3129,
+        "output_tokens": 273,
+        "total_tokens": 3402,
+        "output_token_details": {
+          "reasoning": 196
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 4626,
+        "output_tokens": 412,
+        "input_tokens": 4214
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2920,
+        "output_tokens": 299,
+        "total_tokens": 3219,
+        "output_token_details": {
+          "reasoning": 215
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 4492,
+        "output_tokens": 574,
+        "input_tokens": 3918
+      }
+    },
+    {
+      "openai/gpt-oss-120b": {
+        "input_tokens": 2689,
+        "output_tokens": 220,
+        "total_tokens": 2909,
+        "input_token_details": {
+          "cache_read": 256
+        },
+        "output_token_details": {
+          "reasoning": 141
+        }
+      },
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 5161,
+        "output_tokens": 606,
+        "input_tokens": 4555
+      }
+    },
+    {
+      "qwen/qwen3.8-27b": {
+        "total_tokens": 11537,
+        "output_tokens": 615,
+        "input_tokens": 10922
+      }
+    },
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {}
+  ]
+}

@@ -54,8 +54,7 @@ class V2State(QAState):
 def source_quote(text: str, source: str) -> str:
     if text.strip() and text in source:
         return text
-    # shortcut: recover simple prose formatting only; use a Markdown lexer for mixed fenced/indented code.
-    if any("```" in t or "~~~" in t or re.search(r"(?m)^(?: {4}|\t)", t) for t in (text, source)):
+    if "```" in text or "~~~" in text or re.search(r"(?m)^(?: {4}|\t)", text):
         raise ValueError("Evidence check returned a non-verbatim quote")
 
     def normalize(value: str, *, links: bool = False):
@@ -86,11 +85,33 @@ def source_quote(text: str, source: str) -> str:
         return "".join(chars), offsets
 
     needle = normalize(text)[0].strip()
-    haystack, offsets = normalize(source, links=True)
-    start = haystack.find(needle) if needle else -1
-    if start < 0:
-        raise ValueError("Evidence check returned a non-verbatim quote")
-    return source[offsets[start]:offsets[start + len(needle) - 1] + 1]
+    # Normalize only contiguous prose; fenced/indented code stays literal.
+    prose, pending, fence = [], [], None
+    for line in source.splitlines(keepends=True):
+        marker = re.match(r"^ {0,3}(`{3,}|~{3,})([^\r\n]*)", line)
+        if fence:
+            if (marker and marker[1][0] == fence[0] and len(marker[1]) >= len(fence)
+                    and not marker[2].strip()):
+                fence = None
+            continue
+        if marker or re.match(r"^(?: {4}|\t)", line):
+            if pending:
+                prose.append("".join(pending))
+                pending = []
+            if marker:
+                fence = marker[1]
+        else:
+            pending.append(line)
+    prose.append("".join(pending))
+    for span in prose:
+        # shortcut: nested Markdown fences stay literal; use a lexer if recovery is needed.
+        if "```" in span or "~~~" in span:
+            continue
+        haystack, offsets = normalize(span, links=True)
+        start = haystack.find(needle) if needle else -1
+        if start >= 0:
+            return span[offsets[start]:offsets[start + len(needle) - 1] + 1]
+    raise ValueError("Evidence check returned a non-verbatim quote")
 
 
 def check(instruction: str, question: str, documents: list, *, answer: str | None = None,
