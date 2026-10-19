@@ -18,6 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from groq import GroqError
+from openai import OpenAIError
 from langchain_core.callbacks import get_usage_metadata_callback
 from langchain_core.exceptions import OutputParserException
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -28,12 +29,34 @@ from pydantic import BaseModel, Field, ValidationError
 import llm
 from artifacts import write_json
 from ingest import CORPUS, ROOT as PROJECT, index_spec, read_manifest
-from llm import JUDGE_MODEL, structured
+from llm import structured as groq_structured
+import v3_llm
+
+EVAL_BACKEND = os.environ.get("QA_EVAL_BACKEND", "groq")
+JUDGE_MODEL = os.environ.get("QA_EVAL_MODEL", "gemini-2.5-flash" if EVAL_BACKEND == "gemini" else llm.JUDGE_MODEL)
+if EVAL_BACKEND not in {"groq", "gemini"} or not JUDGE_MODEL.strip():
+    raise ValueError("QA_EVAL_BACKEND must be groq or gemini and QA_EVAL_MODEL must not be empty")
 
 ROOT = Path(__file__).resolve().parent
 GOLDEN = ROOT / "golden_current_v21.jsonl"
 RESULTS = ROOT / "results"
 BUCKETS = {"direct", "jargon", "multihop", "ambiguous", "unanswerable"}
+
+
+def structured(schema, *, model: str):
+    if EVAL_BACKEND == "groq":
+        return groq_structured(schema, model=model)
+    return v3_llm.structured(schema, backend=EVAL_BACKEND, model=model)
+
+
+def evaluation_profile() -> dict:
+    if EVAL_BACKEND == "groq":
+        return {"backend": "groq", "model": JUDGE_MODEL, "max_tokens": 4096,
+                "timeout": 120, "max_retries": llm.MAX_RETRIES,
+                "requests_per_second": llm.REQUESTS_PER_SECOND}
+    return {"backend": EVAL_BACKEND, "model": JUDGE_MODEL, "base_url": v3_llm.GEMINI_BASE_URL,
+            **v3_llm._model_settings(EVAL_BACKEND, JUDGE_MODEL), "max_retries": 0,
+            "schema_parse_attempts": 2}
 
 
 class Correctness(BaseModel):
@@ -134,7 +157,7 @@ def _judge(chain, messages: list, tries: int = 4, *, previous: dict | None = Non
                 output = chain.invoke(messages).model_dump()
                 error, details = None, None
                 break
-            except (GroqError, OutputParserException, ValidationError, ValueError) as exc:
+            except (GroqError, OpenAIError, OutputParserException, ValidationError, ValueError) as exc:
                 error = type(exc).__name__
                 details = {"status_code": getattr(exc, "status_code", None),
                            "retry_after": getattr(getattr(exc, "response", None), "headers", {}).get("retry-after")}
@@ -178,9 +201,7 @@ def run_inputs(module, rows: list[dict], dataset: Path) -> dict:
         "retrieval_k": getattr(module, "RETRIEVAL_K", None),
         "context_limits": dict(getattr(module, "CONTEXT_LIMITS", {})),
         "graph_runtime": runtime,
-        "evaluation_judge": {"backend": "groq", "model": JUDGE_MODEL, "max_tokens": 4096,
-                             "timeout": 120, "max_retries": llm.MAX_RETRIES,
-                             "requests_per_second": llm.REQUESTS_PER_SECOND},
+        "evaluation_judge": evaluation_profile(),
         "checkpoint_policy": "sqlite-node-sync" if getattr(module, "SUPPORTS_CHECKPOINTS", False) else "answer-jsonl",
     }
 

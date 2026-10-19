@@ -56,8 +56,8 @@ def test_local_profile_cannot_send_documents_to_remote_or_credential_url(url, lo
     assert result.returncode != 0 and "loopback /v1 endpoint" in result.stderr
 
 
-@pytest.mark.parametrize("generation_backend", ["groq", "lmstudio"])
-@pytest.mark.parametrize("judge_backend", ["groq", "lmstudio"])
+@pytest.mark.parametrize("generation_backend", ["groq", "gemini", "lmstudio"])
+@pytest.mark.parametrize("judge_backend", ["groq", "gemini", "lmstudio"])
 def test_local_reasoner_and_independent_judge_routing_are_reported(monkeypatch, generation_backend, judge_backend):
     import graph_v3
     observed = []
@@ -75,6 +75,7 @@ def test_local_reasoner_and_independent_judge_routing_are_reported(monkeypatch, 
     monkeypatch.setattr(v3_llm, "BACKEND", generation_backend)
     monkeypatch.setattr(v3_llm, "JUDGE_BACKEND", judge_backend)
     monkeypatch.setattr(v3_llm, "client", lambda model: Model("lmstudio"))
+    monkeypatch.setattr(v3_llm, "gemini_client", lambda model: Model("gemini"))
     monkeypatch.setattr(v3_llm.llm, "get_llm", lambda **kwargs: Model("groq"))
     v3_llm.structured(graph_v1.GroundedAnswer).invoke([])
     v3_llm.structured(graph_v3.QualityVerdict, judge=True).invoke([])
@@ -148,3 +149,63 @@ def test_local_evaluation_rejects_missing_or_invalid_weights_identity(monkeypatc
     dataset.write_text('{}\n')
     with pytest.raises(ValueError, match="LMSTUDIO_MODEL_SHA256"):
         evaluation.run_inputs(graph_v3, [], dataset)
+
+
+def test_gemini_client_uses_fixed_endpoint_bounded_calls_and_no_secret_in_profile(monkeypatch):
+    captured = {}
+    monkeypatch.setenv("GEMINI_API_KEY", "test-secret")
+    monkeypatch.setattr(v3_llm, "ChatOpenAI", lambda **kwargs: captured.update(kwargs) or object())
+    v3_llm.gemini_client.cache_clear()
+    try:
+        v3_llm.gemini_client("gemini-2.5-flash")
+        assert captured["base_url"] == v3_llm.GEMINI_BASE_URL
+        assert captured["api_key"] == "test-secret" and captured["max_retries"] == 0
+        assert captured["reasoning_effort"] == "none" and captured["timeout"] == 120
+        monkeypatch.setattr(v3_llm, "JUDGE_BACKEND", "gemini")
+        monkeypatch.setattr(v3_llm, "JUDGE_MODEL", "gemini-2.5-flash")
+        profile = v3_llm.profile()
+        assert profile["judge_base_url"] == v3_llm.GEMINI_BASE_URL
+        assert profile["judge_reasoning_effort"] == "none"
+        assert "test-secret" not in json.dumps(profile)
+        monkeypatch.delenv("GEMINI_API_KEY")
+        with pytest.raises(ValueError, match="GEMINI_API_KEY"):
+            v3_llm.gemini_client("another-model")
+    finally:
+        v3_llm.gemini_client.cache_clear()
+
+
+def test_external_grader_backend_is_routed_and_fingerprinted(monkeypatch, tmp_path):
+    import graph_v3
+    import evals.run_eval as evaluation
+    monkeypatch.setattr(evaluation, "read_manifest", lambda: {"fingerprint": "fixture"})
+    monkeypatch.setattr(v3_llm, "MODEL_SHA256", "a" * 64)
+    dataset = tmp_path / "fixture.jsonl"
+    dataset.write_text('{}\n')
+    before = evaluation.run_inputs(graph_v3, [], dataset)
+    monkeypatch.setattr(evaluation, "EVAL_BACKEND", "gemini")
+    monkeypatch.setattr(evaluation, "JUDGE_MODEL", "gemini-2.5-flash")
+    observed = {}
+    monkeypatch.setattr(v3_llm, "structured", lambda schema, **kwargs: observed.update(kwargs) or "chain")
+    assert evaluation.structured(evaluation.Correctness, model=evaluation.JUDGE_MODEL) == "chain"
+    assert observed == {"backend": "gemini", "model": "gemini-2.5-flash"}
+    after = evaluation.run_inputs(graph_v3, [], dataset)
+    assert after != before
+    assert after["evaluation_judge"]["backend"] == "gemini"
+    assert after["evaluation_judge"]["reasoning_effort"] == "none"
+    assert after["graph_runtime"] == before["graph_runtime"]
+
+
+def test_alternate_grader_quota_stays_missing_and_is_not_retried(monkeypatch):
+    import httpx
+    from openai import RateLimitError
+    import evals.run_eval as evaluation
+    calls = []
+    def fail(messages):
+        calls.append(messages)
+        raise RateLimitError("quota exhausted", response=httpx.Response(
+            429, headers={"retry-after": "60"}, request=httpx.Request("POST", v3_llm.GEMINI_BASE_URL)),
+            body=None)
+    result = evaluation._judge(RunnableLambda(fail), [])
+    assert len(calls) == 1 and result["output"] is None
+    assert result["error"] == "RateLimitError"
+    assert result["error_details"] == {"status_code": 429, "retry_after": "60"}
