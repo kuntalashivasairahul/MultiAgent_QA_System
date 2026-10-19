@@ -75,7 +75,8 @@ def test_local_reasoner_and_independent_judge_routing_are_reported(monkeypatch, 
     monkeypatch.setattr(v3_llm, "BACKEND", generation_backend)
     monkeypatch.setattr(v3_llm, "JUDGE_BACKEND", judge_backend)
     monkeypatch.setattr(v3_llm, "client", lambda model: Model("lmstudio"))
-    monkeypatch.setattr(v3_llm, "gemini_client", lambda model: Model("gemini"))
+    monkeypatch.setattr(v3_llm, "gemini_keys", lambda: ("test-key",))
+    monkeypatch.setattr(v3_llm, "gemini_client", lambda model, **kwargs: Model("gemini"))
     monkeypatch.setattr(v3_llm.llm, "get_llm", lambda **kwargs: Model("groq"))
     v3_llm.structured(graph_v1.GroundedAnswer).invoke([])
     v3_llm.structured(graph_v3.QualityVerdict, judge=True).invoke([])
@@ -209,3 +210,72 @@ def test_alternate_grader_quota_stays_missing_and_is_not_retried(monkeypatch):
     assert len(calls) == 1 and result["output"] is None
     assert result["error"] == "RateLimitError"
     assert result["error_details"] == {"status_code": 429, "retry_after": "60"}
+
+
+@pytest.mark.parametrize("status", [429, 503])
+def test_gemini_pool_cools_failed_slots_and_preserves_typed_verdict(monkeypatch, status):
+    import httpx
+    from openai import InternalServerError, RateLimitError
+    monkeypatch.setattr(v3_llm, "gemini_keys", lambda: ("first", "second"))
+    monkeypatch.setattr(v3_llm, "_GEMINI_COOLDOWNS", {})
+    calls = []
+    verdict = graph_v1.GroundedAnswer(answer="Supported.", citations=[1])
+    class Model:
+        def __init__(self, key):
+            self.key = key
+        def with_structured_output(self, schema, **kwargs):
+            def invoke(messages):
+                calls.append(self.key)
+                if self.key == "first":
+                    error = RateLimitError if status == 429 else InternalServerError
+                    raise error("unavailable", response=httpx.Response(status, headers={"retry-after": "120"},
+                                request=httpx.Request("POST", v3_llm.GEMINI_BASE_URL)), body=None)
+                return verdict
+            return RunnableLambda(invoke)
+    monkeypatch.setattr(v3_llm, "gemini_client", lambda model, *, key: Model(key))
+    chain = v3_llm.gemini_structured(graph_v1.GroundedAnswer, "gemini-2.5-flash")
+    assert chain.invoke([]) is verdict and chain.invoke([]) is verdict
+    assert calls == ["first", "second", "second"]
+    monkeypatch.setattr(v3_llm.time, "monotonic", lambda: float("inf"))
+    assert chain.invoke([]) is verdict
+    assert calls[-2:] == ["first", "second"]
+
+
+def test_gemini_pool_never_rotates_for_auth_or_schema_or_semantic_rejection(monkeypatch):
+    import httpx
+    from openai import AuthenticationError
+    monkeypatch.setattr(v3_llm, "gemini_keys", lambda: ("first", "second"))
+    monkeypatch.setattr(v3_llm, "_GEMINI_COOLDOWNS", {})
+    calls = []
+    class Model:
+        def with_structured_output(self, schema, **kwargs):
+            def invoke(messages):
+                calls.append(True)
+                raise AuthenticationError("invalid key", response=httpx.Response(
+                    401, request=httpx.Request("POST", v3_llm.GEMINI_BASE_URL)), body=None)
+            return RunnableLambda(invoke)
+    monkeypatch.setattr(v3_llm, "gemini_client", lambda model, **kwargs: Model())
+    with pytest.raises(AuthenticationError):
+        v3_llm.gemini_structured(graph_v1.GroundedAnswer, "test").invoke([])
+    assert len(calls) == 1 and not v3_llm._GEMINI_COOLDOWNS
+
+
+def test_gemini_pool_exhaustion_stays_an_error_without_repeating_cooled_slots(monkeypatch):
+    import httpx
+    from openai import RateLimitError
+    monkeypatch.setattr(v3_llm, "gemini_keys", lambda: ("first", "second"))
+    monkeypatch.setattr(v3_llm, "_GEMINI_COOLDOWNS", {})
+    calls = []
+    class Model:
+        def with_structured_output(self, schema, **kwargs):
+            def invoke(messages):
+                calls.append(True)
+                raise RateLimitError("quota", response=httpx.Response(
+                    429, request=httpx.Request("POST", v3_llm.GEMINI_BASE_URL)), body=None)
+            return RunnableLambda(invoke)
+    monkeypatch.setattr(v3_llm, "gemini_client", lambda model, **kwargs: Model())
+    chain = v3_llm.gemini_structured(graph_v1.GroundedAnswer, "test")
+    for _ in range(2):
+        with pytest.raises(RateLimitError):
+            chain.invoke([])
+    assert len(calls) == 2

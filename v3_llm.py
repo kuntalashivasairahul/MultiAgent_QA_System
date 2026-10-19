@@ -1,6 +1,7 @@
 """Explicit, fingerprintable Groq, Gemini and loopback LM Studio profiles for v3."""
 import json
 import os
+import time
 from functools import lru_cache
 from urllib.parse import urlsplit
 
@@ -10,6 +11,7 @@ from langchain_core.messages import SystemMessage
 from langchain_core.runnables import RunnableLambda
 from langchain_core.rate_limiters import InMemoryRateLimiter
 from pydantic import ValidationError
+from openai import APIConnectionError, APITimeoutError, InternalServerError, RateLimitError
 
 import llm
 
@@ -24,6 +26,7 @@ MAX_TOKENS = 2048
 
 GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai"
 GEMINI_RPS = float(os.environ.get("GEMINI_RPS", "0.1"))
+_GEMINI_COOLDOWNS = {}
 if not 0 < GEMINI_RPS < float("inf"):
     raise ValueError("GEMINI_RPS must be finite and positive")
 
@@ -42,7 +45,8 @@ def _model_settings(backend: str, model: str) -> dict:
     return {"max_tokens": MAX_TOKENS, "timeout": 120,
             "structured_output": "json_object+pydantic" if backend == "groq" else "json_schema",
             **({"reasoning_effort": "none" if model.startswith("gemini-2.5-flash") else "low",
-                "requests_per_second": GEMINI_RPS}
+                "requests_per_second": GEMINI_RPS, "credential_slots": len(gemini_keys()),
+                "failover_policy": "same-model-configured-keys-quota-and-transient-cooldown"}
                if backend == "gemini" else {})}
 
 
@@ -58,6 +62,8 @@ def profile() -> dict:
             "max_retries": llm.MAX_RETRIES if BACKEND == "groq" else 0,
             "judge_max_retries": llm.MAX_RETRIES if JUDGE_BACKEND == "groq" else 0,
             "judge_reasoning_effort": judge.get("reasoning_effort"),
+            **({"judge_credential_slots": judge["credential_slots"], "judge_failover_policy": judge["failover_policy"]}
+               if JUDGE_BACKEND == "gemini" else {}),
             "judge_requests_per_second": llm.REQUESTS_PER_SECOND if JUDGE_BACKEND == "groq" else judge.get("requests_per_second"),
             "judge_structured_output": judge["structured_output"],
             "schema_parse_attempts": 2, "model_weights_sha256": MODEL_SHA256 if BACKEND == "lmstudio" else None,
@@ -72,17 +78,57 @@ def client(model: str):
                       max_tokens=settings["max_tokens"], timeout=settings["timeout"], max_retries=0)
 
 
+def gemini_keys() -> tuple[str, ...]:
+    return tuple(dict.fromkeys(value for name in ("GEMINI_API_KEY", *(f"GEMINI_API_KEY_{i}" for i in range(1, 9)))
+                               if (value := os.environ.get(name, "").strip())))
+
+
 @lru_cache(maxsize=4)
-def gemini_client(model: str):
-    key = os.environ.get("GEMINI_API_KEY", "").strip()
+def gemini_limiter(model: str):
+    return InMemoryRateLimiter(requests_per_second=GEMINI_RPS, check_every_n_seconds=0.1, max_bucket_size=1)
+
+
+@lru_cache(maxsize=32)
+def gemini_client(model: str, *, key: str | None = None):
+    key = key or os.environ.get("GEMINI_API_KEY", "").strip()
     if not key:
         raise ValueError("GEMINI_API_KEY is required for the Gemini backend")
     settings = _model_settings("gemini", model)
     return ChatOpenAI(model=model, base_url=GEMINI_BASE_URL, api_key=key, temperature=0,
                       max_tokens=MAX_TOKENS, timeout=settings["timeout"], max_retries=0,
                       reasoning_effort=settings["reasoning_effort"],
-                      rate_limiter=InMemoryRateLimiter(requests_per_second=GEMINI_RPS,
-                                                      check_every_n_seconds=0.1, max_bucket_size=1))
+                      rate_limiter=gemini_limiter(model))
+
+
+def gemini_structured(schema, model: str):
+    keys = gemini_keys()
+    if not keys:
+        raise ValueError("GEMINI_API_KEY or a numbered Gemini key is required")
+    chains = [gemini_client(model, key=key).with_structured_output(schema, method="json_schema", strict=True)
+              for key in keys]
+
+    def invoke(messages, config):
+        last_error = None
+        for key, chain in zip(keys, chains):
+            cooldown = _GEMINI_COOLDOWNS.get((model, key))
+            if cooldown and cooldown[0] > time.monotonic():
+                last_error = cooldown[1]
+                continue
+            try:
+                return chain.invoke(messages, config=config)
+            except (RateLimitError, APIConnectionError, APITimeoutError, InternalServerError) as exc:
+                headers = getattr(getattr(exc, "response", None), "headers", {})
+                try:
+                    seconds = float(headers.get("retry-after", "60"))
+                except (TypeError, ValueError):
+                    seconds = 60
+                if not 0 < seconds < float("inf"):
+                    seconds = 60
+                _GEMINI_COOLDOWNS[(model, key)] = (time.monotonic() + seconds, exc)
+                last_error = exc
+        raise last_error
+
+    return RunnableLambda(invoke)
 
 
 def structured(schema, *, judge: bool = False, backend: str | None = None, model: str | None = None):
@@ -99,7 +145,8 @@ def structured(schema, *, judge: bool = False, backend: str | None = None, model
 
         chain = (RunnableLambda(with_schema) |
                  llm.get_llm(model=model).with_structured_output(schema, method="json_mode").bind(max_tokens=MAX_TOKENS))
+    elif backend == "gemini":
+        chain = gemini_structured(schema, model)
     else:
-        selected = gemini_client(model) if backend == "gemini" else client(model)
-        chain = selected.with_structured_output(schema, method="json_schema", strict=True)
+        chain = client(model).with_structured_output(schema, method="json_schema", strict=True)
     return chain.with_retry(retry_if_exception_type=(OutputParserException, ValidationError), stop_after_attempt=2)
