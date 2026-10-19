@@ -1,0 +1,7 @@
+{
+  "id": "private-retry-scope",
+  "error": "OpenAIRateLimitError",
+  "passed": false,
+  "usage": {},
+  "seconds": 0.40144874999532476
+}

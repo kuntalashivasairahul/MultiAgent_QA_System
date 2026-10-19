@@ -1,0 +1,72 @@
+{
+  "id": "native-supported-access",
+  "cited_support": {
+    "passed": true,
+    "reason": "The answer accurately states the requirements to access the pre-release GCP Cloud Run support for Temporal Serverless Workers, directly supported by the provided documentation.",
+    "quotes": [
+      {
+        "id": 3,
+        "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer accurately states the requirements to access the pre-release GCP Cloud Run support for Temporal Serverless Workers, directly supported by the provided documentation.",
+        "quotes": [
+          {
+            "id": 3,
+            "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "stage": "context_consistency",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer accurately states the requirements to access pre-release Cloud Run support for Temporal Serverless Workers directly supported by the cited documents.",
+        "quotes": [
+          {
+            "id": 8,
+            "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    }
+  ],
+  "verdict": {
+    "passed": true,
+    "reason": "The answer accurately states the requirements to access the pre-release GCP Cloud Run support for Temporal Serverless Workers, directly supported by the provided documentation.",
+    "quotes": [
+      {
+        "id": 3,
+        "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "output_token_details": {},
+      "total_tokens": 8621,
+      "input_token_details": {},
+      "input_tokens": 8186,
+      "output_tokens": 300
+    }
+  },
+  "seconds": 21.201032999990275
+}

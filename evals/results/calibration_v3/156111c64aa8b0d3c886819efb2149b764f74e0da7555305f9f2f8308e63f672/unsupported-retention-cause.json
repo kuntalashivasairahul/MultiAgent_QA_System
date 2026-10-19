@@ -1,7 +1,55 @@
 {
   "id": "unsupported-retention-cause",
-  "error": "RateLimitError",
-  "passed": false,
-  "usage": {},
-  "seconds": 9.97861712500162
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 949,
+      "output_tokens": 230,
+      "total_tokens": 1179
+    }
+  },
+  "seconds": 20.640022291991045,
+  "cited_support": {
+    "passed": false,
+    "reason": "The answer claims that reducing the retention period 'only changes the timer for future deletions' and does not affect existing closed workflows. However, the provided document (id 5) explicitly states that reducing the Retention Period is 'particularly useful... to clean up previously closed Workflow Executions.' This implies that the reduction does affect previously closed workflows (likely by triggering their deletion or making them eligible for it), which contradicts the answer's claim that they must be removed manually because the retention change doesn't apply to them. The document suggests the retention change itself is the mechanism for cleaning up old workflows, whereas the answer suggests it is not.",
+    "quotes": [
+      {
+        "id": 5,
+        "text": "This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "Does reducing namespace retention period automatically delete previously closed workflows or only future ones?"
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer claims that reducing the retention period 'only changes the timer for future deletions' and does not affect existing closed workflows. However, the provided document (id 5) explicitly states that reducing the Retention Period is 'particularly useful... to clean up previously closed Workflow Executions.' This implies that the reduction does affect previously closed workflows (likely by triggering their deletion or making them eligible for it), which contradicts the answer's claim that they must be removed manually because the retention change doesn't apply to them. The document suggests the retention change itself is the mechanism for cleaning up old workflows, whereas the answer suggests it is not.",
+        "quotes": [
+          {
+            "id": 5,
+            "text": "This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "Does reducing namespace retention period automatically delete previously closed workflows or only future ones?"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The answer claims that reducing the retention period 'only changes the timer for future deletions' and does not affect existing closed workflows. However, the provided document (id 5) explicitly states that reducing the Retention Period is 'particularly useful... to clean up previously closed Workflow Executions.' This implies that the reduction does affect previously closed workflows (likely by triggering their deletion or making them eligible for it), which contradicts the answer's claim that they must be removed manually because the retention change doesn't apply to them. The document suggests the retention change itself is the mechanism for cleaning up old workflows, whereas the answer suggests it is not.",
+    "quotes": [
+      {
+        "id": 5,
+        "text": "This is particularly useful along with reducing the Retention Period to clean up previously closed Workflow Executions to reduce storage costs."
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "Does reducing namespace retention period automatically delete previously closed workflows or only future ones?"
+  },
+  "actual": false,
+  "expected": false
 }

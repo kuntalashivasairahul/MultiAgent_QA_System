@@ -1,0 +1,7 @@
+{
+  "id": "native-wrong-worker-command",
+  "error": "OpenAIRateLimitError",
+  "passed": false,
+  "usage": {},
+  "seconds": 0.5147227920097066
+}

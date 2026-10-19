@@ -1,0 +1,42 @@
+{
+  "id": "native-wrong-worker-command",
+  "cited_support": {
+    "passed": false,
+    "reason": "The cited document describes starting a Standalone Activity (`start_activity.py`), not starting the Python Worker, and it is from the standalone-activities guide rather than a Celery-to-Standalone-Activity migration guide.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "Celery to Standalone Activity migration guide start Python Worker command"
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": false,
+        "reason": "The cited document describes starting a Standalone Activity (`start_activity.py`), not starting the Python Worker, and it is from the standalone-activities guide rather than a Celery-to-Standalone-Activity migration guide.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Celery to Standalone Activity migration guide start Python Worker command"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The cited document describes starting a Standalone Activity (`start_activity.py`), not starting the Python Worker, and it is from the standalone-activities guide rather than a Celery-to-Standalone-Activity migration guide.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "Celery to Standalone Activity migration guide start Python Worker command"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "input_tokens": 546,
+      "output_tokens": 98,
+      "total_tokens": 644,
+      "input_token_details": {},
+      "output_token_details": {}
+    }
+  },
+  "seconds": 9.116013291000854
+}

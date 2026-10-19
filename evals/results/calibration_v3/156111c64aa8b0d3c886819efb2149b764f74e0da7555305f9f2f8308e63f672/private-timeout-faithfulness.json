@@ -1,7 +1,55 @@
 {
   "id": "private-timeout-faithfulness",
-  "error": "RateLimitError",
-  "passed": false,
-  "usage": {},
-  "seconds": 10.085770750003576
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "input_tokens": 919,
+      "output_tokens": 184,
+      "total_tokens": 1103
+    }
+  },
+  "seconds": 20.326228250021813,
+  "cited_support": {
+    "passed": false,
+    "reason": "The cited document is a public guide ('guides/worker-execution-affinity.mdx') describing a generic implementation example, not the user's private 'Nova payments production Worker repository'. Public examples cannot establish an organization's private configuration. The document mentions a 30s heartbeat_timeout in a failure scenario description, but this does not prove the specific value configured in the user's private production environment.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "Worker crashes mid-Activity** → Detected by `heartbeat_timeout` (30s) → Exception caught by try/except → Workflow retries on new Worker"
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "Nova payments production Worker repository HeartbeatTimeout configuration"
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": false,
+        "reason": "The cited document is a public guide ('guides/worker-execution-affinity.mdx') describing a generic implementation example, not the user's private 'Nova payments production Worker repository'. Public examples cannot establish an organization's private configuration. The document mentions a 30s heartbeat_timeout in a failure scenario description, but this does not prove the specific value configured in the user's private production environment.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "Worker crashes mid-Activity** → Detected by `heartbeat_timeout` (30s) → Exception caught by try/except → Workflow retries on new Worker"
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "Nova payments production Worker repository HeartbeatTimeout configuration"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The cited document is a public guide ('guides/worker-execution-affinity.mdx') describing a generic implementation example, not the user's private 'Nova payments production Worker repository'. Public examples cannot establish an organization's private configuration. The document mentions a 30s heartbeat_timeout in a failure scenario description, but this does not prove the specific value configured in the user's private production environment.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "Worker crashes mid-Activity** → Detected by `heartbeat_timeout` (30s) → Exception caught by try/except → Workflow retries on new Worker"
+      }
+    ],
+    "confidence": 0.0,
+    "retry_query": "Nova payments production Worker repository HeartbeatTimeout configuration"
+  },
+  "actual": false,
+  "expected": false
 }

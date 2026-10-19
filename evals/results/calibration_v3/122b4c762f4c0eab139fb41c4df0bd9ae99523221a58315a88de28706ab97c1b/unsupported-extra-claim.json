@@ -1,0 +1,42 @@
+{
+  "id": "unsupported-extra-claim",
+  "cited_support": {
+    "passed": false,
+    "reason": "The answer includes an extra unsupported claim ('and encrypts all payloads') that is not present in the cited document.",
+    "quotes": [],
+    "confidence": 0.5,
+    "retry_query": ""
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer includes an extra unsupported claim ('and encrypts all payloads') that is not present in the cited document.",
+        "quotes": [],
+        "confidence": 0.5,
+        "retry_query": ""
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The answer includes an extra unsupported claim ('and encrypts all payloads') that is not present in the cited document.",
+    "quotes": [],
+    "confidence": 0.5,
+    "retry_query": ""
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "input_tokens": 452,
+      "output_tokens": 46,
+      "total_tokens": 498,
+      "input_token_details": {},
+      "output_token_details": {}
+    }
+  },
+  "seconds": 9.775401791004697
+}

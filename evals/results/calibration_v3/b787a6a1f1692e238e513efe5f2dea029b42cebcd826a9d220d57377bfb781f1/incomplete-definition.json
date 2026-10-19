@@ -1,0 +1,42 @@
+{
+  "id": "incomplete-definition",
+  "cited_support": {
+    "passed": false,
+    "reason": "The provided document describes APIs used to customize Activity Execution behavior and mentions what Activities represent (individual units of work), but it does not state what an Activity Execution specifically consists of in Temporal.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "What does an Activity Execution consist of in Temporal?"
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document describes APIs used to customize Activity Execution behavior and mentions what Activities represent (individual units of work), but it does not state what an Activity Execution specifically consists of in Temporal.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "What does an Activity Execution consist of in Temporal?"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document describes APIs used to customize Activity Execution behavior and mentions what Activities represent (individual units of work), but it does not state what an Activity Execution specifically consists of in Temporal.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "What does an Activity Execution consist of in Temporal?"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "input_tokens": 661,
+      "output_tokens": 87,
+      "total_tokens": 748,
+      "input_token_details": {},
+      "output_token_details": {}
+    }
+  },
+  "seconds": 15.294468499996583
+}

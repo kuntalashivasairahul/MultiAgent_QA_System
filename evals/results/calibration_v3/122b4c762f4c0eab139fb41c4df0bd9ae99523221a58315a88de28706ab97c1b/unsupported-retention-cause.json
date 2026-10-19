@@ -1,0 +1,42 @@
+{
+  "id": "unsupported-retention-cause",
+  "cited_support": {
+    "passed": false,
+    "reason": "The provided document mentions that manual cleanup via `temporal workflow delete` is useful along with reducing the Retention Period, but it does not state or entail that reducing the namespace retention period only changes the timer for future deletions or that existing closed workflows retain their previous expiration timer.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "namespace retention period shortened old closed workflows"
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document mentions that manual cleanup via `temporal workflow delete` is useful along with reducing the Retention Period, but it does not state or entail that reducing the namespace retention period only changes the timer for future deletions or that existing closed workflows retain their previous expiration timer.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "namespace retention period shortened old closed workflows"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document mentions that manual cleanup via `temporal workflow delete` is useful along with reducing the Retention Period, but it does not state or entail that reducing the namespace retention period only changes the timer for future deletions or that existing closed workflows retain their previous expiration timer.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "namespace retention period shortened old closed workflows"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "input_tokens": 656,
+      "output_tokens": 102,
+      "total_tokens": 758,
+      "input_token_details": {},
+      "output_token_details": {}
+    }
+  },
+  "seconds": 10.224544374999823
+}

@@ -1,0 +1,57 @@
+{
+  "id": "unsupported-extra-claim",
+  "cited_support": {
+    "passed": false,
+    "reason": "The answer includes an unsupported claim about encrypting all payloads. The document only states that MaximumAttempts is set to 3.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "confidence": 0.5,
+    "retry_query": "encrypts all payloads"
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer includes an unsupported claim about encrypting all payloads. The document only states that MaximumAttempts is set to 3.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 0.5,
+        "retry_query": "encrypts all payloads"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The answer includes an unsupported claim about encrypting all payloads. The document only states that MaximumAttempts is set to 3.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The public example sets MaximumAttempts to 3."
+      }
+    ],
+    "confidence": 0.5,
+    "retry_query": "encrypts all payloads"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "gemini-2.5-flash": {
+      "input_tokens": 452,
+      "output_tokens": 103,
+      "total_tokens": 555,
+      "input_token_details": {},
+      "output_token_details": {}
+    }
+  },
+  "seconds": 1.4041495840065181
+}

@@ -11,11 +11,11 @@ Reviewed on 18 October 2026 against implementation `b024062` and the current sta
 | Supplied claim | Current v3 evidence and boundary |
 |---|---|
 | Retrieval, Reasoning and Judge | Named nodes in [graph_v3.py](../graph_v3.py), typed state handoff and retained attempt history. These are workflow roles, not independently autonomous parallel agents. |
-| Quality score and threshold retry | Strict score in [0, 1], default threshold 0.8, support/quote checks and one actual retrieval retry; tests cover acceptance, retry success, exhausted retry and new evidence. Score is uncalibrated and a native wrong-operation acceptance remains under repair. |
+| Quality score and threshold retry | Strict score in [0, 1], default threshold 0.8, support/quote checks and one actual retrieval retry; tests cover acceptance, retry success, exhausted retry and new evidence. Score is uncalibrated. The cited-support/context-veto policy rejects the known wrong operation in native controls and the current study; false refusals remain a model limitation. |
 | Conditional LangGraph communication | State and conditional edges implement the handoff; SQLite node checkpoints support evaluation recovery. |
 | FastAPI REST endpoints | [api.py](../api.py) exposes validated `POST /ask` and process-only `GET /health`; tests cover errors, request isolation, concurrency and corrected-verdict audit serialization. Historical native HTTP evidence is linked in the local guide. |
 | Llama | Actual Meta Llama 3.1 8B Q4_K_M runs locally through LM Studio on the inspected M4/16 GiB Mac. Model SHA and load measurements are retained. |
-| Groq LLaMA | Groq integration exists, but the inspected account has no generative Llama offering. The candidate uses local Llama plus Groq Qwen judging. Use “Groq, LM Studio, Meta Llama”; do not call the measured Llama Groq-hosted. |
+| Groq LLaMA | Groq integration exists, but the inspected account has no generative Llama offering. The 19 October alternative uses local Llama plus Gemini judging and preserves the Groq profile. Use “LM Studio, Meta Llama, Gemini, Groq”; do not call the measured Llama Groq-hosted. |
 | 2025 | Unverified; use actual work dates. Implementation now does not establish that it existed in 2025. |
 
 The [local guide](V3_LOCAL_UPGRADE.md) supplies revised résumé wording. The [stability scorecard](../evals/V3_STABILITY_SCORECARD.md) tracks the unresolved model failure. Implemented architecture does not establish broad answer accuracy, production readiness or personal authorship of every line.

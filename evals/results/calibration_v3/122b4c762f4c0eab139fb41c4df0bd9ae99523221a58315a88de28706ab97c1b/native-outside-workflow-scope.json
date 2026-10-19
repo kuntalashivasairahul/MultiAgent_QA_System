@@ -1,0 +1,42 @@
+{
+  "id": "native-outside-workflow-scope",
+  "cited_support": {
+    "passed": false,
+    "reason": "The provided document demonstrates calling a Nexus operation from within a Temporal workflow in Rust, but it does not state or verify whether a workflow that only triggers one Nexus operation can be eliminated to call the operation directly outside of a workflow.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "call Nexus operation directly without workflow"
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document demonstrates calling a Nexus operation from within a Temporal workflow in Rust, but it does not state or verify whether a workflow that only triggers one Nexus operation can be eliminated to call the operation directly outside of a workflow.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "call Nexus operation directly without workflow"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The provided document demonstrates calling a Nexus operation from within a Temporal workflow in Rust, but it does not state or verify whether a workflow that only triggers one Nexus operation can be eliminated to call the operation directly outside of a workflow.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "call Nexus operation directly without workflow"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "input_tokens": 836,
+      "output_tokens": 92,
+      "total_tokens": 928,
+      "input_token_details": {},
+      "output_token_details": {}
+    }
+  },
+  "seconds": 9.56363412499195
+}

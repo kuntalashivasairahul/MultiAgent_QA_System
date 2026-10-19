@@ -1,0 +1,89 @@
+{
+  "scope": "Actual current-profile private-fact HTTP refusal; one smoke, not broad quality",
+  "question": "What is our company's internal on-call escalation policy for Temporal?",
+  "health": {
+    "status": "ok",
+    "scope": "process_only",
+    "version": "3.0",
+    "model_profile": {
+      "backend": "lmstudio",
+      "generation_model": "llama-3.1-8b-instruct",
+      "judge_model": "gemini-3.5-flash",
+      "judge_backend": "gemini",
+      "base_url": "http://127.0.0.1:1234/v1",
+      "judge_base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "temperature": 0,
+      "max_tokens": 2048,
+      "timeout": 120,
+      "structured_output": "json_schema",
+      "judge_max_tokens": 2048,
+      "judge_timeout": 120,
+      "max_retries": 0,
+      "judge_max_retries": 0,
+      "judge_reasoning_effort": "low",
+      "judge_credential_slots": 9,
+      "judge_failover_policy": "same-model-configured-keys-quota-and-transient-cooldown",
+      "judge_requests_per_second": 0.1,
+      "judge_structured_output": "json_schema",
+      "schema_parse_attempts": 2,
+      "model_weights_sha256": "f2be3e1a239c12c9f3f01a962b11fb2807f8032fdb63b0a5502ea42ddef55e44",
+      "judge_weights_sha256": null
+    }
+  },
+  "status": 200,
+  "body": {
+    "answer": "I don't know.",
+    "refused": true,
+    "citations": [],
+    "quality": {
+      "passed": false,
+      "reason": "No supported answer was generated.",
+      "quotes": [],
+      "confidence": 0.0,
+      "retry_query": "What is our company's internal on-call escalation policy for Temporal?",
+      "validation_failures": []
+    },
+    "attempt_count": 2,
+    "model_profile": {
+      "backend": "lmstudio",
+      "generation_model": "llama-3.1-8b-instruct",
+      "judge_model": "gemini-3.5-flash",
+      "judge_backend": "gemini",
+      "base_url": "http://127.0.0.1:1234/v1",
+      "judge_base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "temperature": 0,
+      "max_tokens": 2048,
+      "timeout": 120,
+      "structured_output": "json_schema",
+      "judge_max_tokens": 2048,
+      "judge_timeout": 120,
+      "max_retries": 0,
+      "judge_max_retries": 0,
+      "judge_reasoning_effort": "low",
+      "judge_credential_slots": 9,
+      "judge_failover_policy": "same-model-configured-keys-quota-and-transient-cooldown",
+      "judge_requests_per_second": 0.1,
+      "judge_structured_output": "json_schema",
+      "schema_parse_attempts": 2,
+      "model_weights_sha256": "f2be3e1a239c12c9f3f01a962b11fb2807f8032fdb63b0a5502ea42ddef55e44",
+      "judge_weights_sha256": null,
+      "quality_threshold": 0.8,
+      "max_attempts": 2,
+      "score_scope": "uncalibrated rubric quality, not probability",
+      "retry_policy": "missing-aspect-new-evidence",
+      "judge_policy": "cited-support-then-context-veto"
+    },
+    "seconds": 8.673686250011087,
+    "usage": {
+      "llama-3.1-8b-instruct": {
+        "output_tokens": 32,
+        "input_tokens": 5358,
+        "output_token_details": {
+          "reasoning": 0
+        },
+        "total_tokens": 5390,
+        "input_token_details": {}
+      }
+    }
+  }
+}

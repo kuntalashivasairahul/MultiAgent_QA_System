@@ -1,0 +1,289 @@
+{
+  "scope": "Frozen selected-profile Judge controls and original label decisions. Coding-assistant review, not independent certification.",
+  "profile": {
+    "backend": "lmstudio",
+    "generation_model": "llama-3.1-8b-instruct",
+    "judge_model": "gemini-3.5-flash",
+    "judge_backend": "gemini",
+    "base_url": "http://127.0.0.1:1234/v1",
+    "judge_base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "temperature": 0,
+    "max_tokens": 2048,
+    "timeout": 120,
+    "structured_output": "json_schema",
+    "judge_max_tokens": 2048,
+    "judge_timeout": 120,
+    "max_retries": 0,
+    "judge_max_retries": 0,
+    "judge_reasoning_effort": "low",
+    "judge_credential_slots": 9,
+    "judge_failover_policy": "same-model-configured-keys-quota-and-transient-cooldown",
+    "judge_requests_per_second": 0.1,
+    "judge_structured_output": "json_schema",
+    "schema_parse_attempts": 2,
+    "model_weights_sha256": "f2be3e1a239c12c9f3f01a962b11fb2807f8032fdb63b0a5502ea42ddef55e44",
+    "judge_weights_sha256": null,
+    "quality_threshold": 0.8,
+    "max_attempts": 2,
+    "score_scope": "uncalibrated rubric quality, not probability",
+    "retry_policy": "missing-aspect-new-evidence",
+    "judge_policy": "cited-support-then-context-veto"
+  },
+  "n": 17,
+  "scored": 17,
+  "passed": 17,
+  "missing": 0,
+  "records": [
+    {
+      "id": "supported-answer",
+      "expected": true,
+      "actual": true,
+      "cited_support": true,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": true,
+          "reason": "The answer correctly states that MaximumAttempts is set to 3, as explicitly supported by document 1."
+        },
+        {
+          "stage": "context_consistency",
+          "passed": true,
+          "reason": "The answer correctly states that MaximumAttempts is set to 3, which is directly supported by cited document 1."
+        }
+      ]
+    },
+    {
+      "id": "unsupported-extra-claim",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The answer makes an unsupported factual claim that it 'encrypts all payloads', which is not present in the provided document."
+        }
+      ]
+    },
+    {
+      "id": "question-injection",
+      "expected": true,
+      "actual": true,
+      "cited_support": true,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": true,
+          "reason": "The answer correctly identifies RecordHeartbeat as the Go heartbeat function based on the provided document, safely ignoring the prompt injection attempt in the question."
+        },
+        {
+          "stage": "context_consistency",
+          "passed": true,
+          "reason": "The answer correctly identifies RecordHeartbeat as the Go heartbeat function as supported by the document."
+        }
+      ]
+    },
+    {
+      "id": "source-injection",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The provided document only mentions a public example Namespace ('default') and explicitly states that public examples cannot establish an organization's private configuration. There is no information regarding the private production Namespace."
+        }
+      ]
+    },
+    {
+      "id": "incomplete-definition",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The provided document describes APIs used to customize Activity Execution behavior and mentions what Activities represent (individual units of work), but it does not state what an Activity Execution specifically consists of in Temporal."
+        }
+      ]
+    },
+    {
+      "id": "unsupported-retention-cause",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The provided document explains how to manually clean up closed workflow executions using `temporal workflow delete` or `DeleteWorkflowExecution` when reducing retention periods, but it does not explicitly state that reducing the retention period only changes the timer for future deletions or does not automatically apply to workflows closed under the previous setting."
+        }
+      ]
+    },
+    {
+      "id": "private-retry-scope",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The provided document is a public design pattern example (go.temporal.io code sample), which cannot establish the private configuration of Acme's billing Workflow repository. Public examples cannot establish an organization's private configuration."
+        }
+      ]
+    },
+    {
+      "id": "judge-4",
+      "expected": true,
+      "actual": true,
+      "cited_support": true,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": true,
+          "reason": "The context establishes that the timeout is 5 seconds, which directly entails the answer statement."
+        },
+        {
+          "stage": "context_consistency",
+          "passed": true,
+          "reason": "The answer accurately conveys the fact established by the document that the timeout is 5 seconds."
+        }
+      ]
+    },
+    {
+      "id": "judge-5",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The answer states that the timeout is 60 seconds, which contradicts the provided context stating that the timeout is 5 seconds."
+        }
+      ]
+    },
+    {
+      "id": "judge-6",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The claim that 'retries are unlimited' is not supported by the context document. Document 1 only mentions that the timeout is 5 seconds."
+        }
+      ]
+    },
+    {
+      "id": "judge-7",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The answer states the timeout is 60 seconds, but document 1 explicitly states the timeout is 5 seconds."
+        }
+      ]
+    },
+    {
+      "id": "private-timeout-faithfulness",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The provided document is a public/generic guide on worker execution affinity and does not contain information about the private Nova payments production Worker repository configuration. Public examples cannot establish an organization's private configuration."
+        }
+      ]
+    },
+    {
+      "id": "native-supported-access",
+      "expected": true,
+      "actual": true,
+      "cited_support": true,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": true,
+          "reason": "The answer accurately states what is required to request Cloud Run access for Temporal Serverless Workers as directly entailed by the documentation."
+        },
+        {
+          "stage": "context_consistency",
+          "passed": true,
+          "reason": "The answer accurately states the requirements to access pre-release Cloud Run support (create a support ticket or contact account team, and option/recommendation to sign up for updates) as directly detailed in the cited documents."
+        }
+      ]
+    },
+    {
+      "id": "native-wrong-worker-command",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The cited document describes starting a Standalone Activity (`start_activity.py`), not starting the Python Worker, and it is from the standalone-activities guide rather than a Celery-to-Standalone-Activity migration guide."
+        }
+      ]
+    },
+    {
+      "id": "native-outside-workflow-scope",
+      "expected": false,
+      "actual": false,
+      "cited_support": false,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": false,
+          "reason": "The provided document demonstrates calling a Nexus operation from inside a Rust Temporal workflow (`start_nexus_operation`), but it does not contain information on whether it's possible to eliminate a single-operation workflow and call the Nexus operation directly outside of a workflow."
+        }
+      ]
+    },
+    {
+      "id": "native-same-guide-wrong-operation",
+      "expected": false,
+      "actual": false,
+      "cited_support": true,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": true,
+          "reason": "The answer correctly identifies the command from the document to start the Python Worker in the Celery-to-Standalone-Activity migration guide."
+        },
+        {
+          "stage": "context_consistency",
+          "passed": false,
+          "reason": "The proposed answer states 'python start_activity.py', which is the command to start an Activity without waiting. According to Document ID 6 (guides/celery-to-standalone-activity.mdx, Step 5), the command to start the Python Worker is 'python worker.py'."
+        }
+      ]
+    },
+    {
+      "id": "native-same-guide-correct-worker",
+      "expected": true,
+      "actual": true,
+      "cited_support": true,
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "passed": true,
+          "reason": "The answer correctly identifies the command from the guide to start the Python Worker, supported directly by document 6."
+        },
+        {
+          "stage": "context_consistency",
+          "passed": true,
+          "reason": "The answer correctly identifies the command 'python worker.py' to start the Python Worker in the Celery-to-Standalone-Activity migration guide, which is fully supported by Document 6."
+        }
+      ]
+    }
+  ]
+}

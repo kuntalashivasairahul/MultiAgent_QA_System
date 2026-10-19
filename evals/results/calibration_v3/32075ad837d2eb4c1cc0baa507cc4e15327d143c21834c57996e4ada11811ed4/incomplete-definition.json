@@ -1,0 +1,7 @@
+{
+  "id": "incomplete-definition",
+  "error": "OpenAIRateLimitError",
+  "passed": false,
+  "usage": {},
+  "seconds": 1.186602125002537
+}

@@ -1,0 +1,739 @@
+{
+  "scope": "Inspected development controls, not held-out accuracy or calibrated probabilities",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/calibration_v3/122b4c762f4c0eab139fb41c4df0bd9ae99523221a58315a88de28706ab97c1b",
+  "n": 17,
+  "scored": 14,
+  "passed": 14,
+  "missing": 3,
+  "records": [
+    {
+      "id": "supported-answer",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer accurately states that MaximumAttempts is set to 3 based directly on Document 1.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer accurately states that MaximumAttempts is set to 3 based directly on Document 1.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The public example sets MaximumAttempts to 3."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly identifies that MaximumAttempts is set to 3, which is directly supported by the cited document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The public example sets MaximumAttempts to 3."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The answer accurately states that MaximumAttempts is set to 3 based directly on Document 1.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "output_token_details": {},
+          "total_tokens": 1154,
+          "input_token_details": {},
+          "input_tokens": 993,
+          "output_tokens": 161
+        }
+      },
+      "seconds": 21.905286875000456
+    },
+    {
+      "id": "unsupported-extra-claim",
+      "cited_support": {
+        "passed": false,
+        "reason": "The answer includes an extra unsupported claim ('and encrypts all payloads') that is not present in the cited document.",
+        "quotes": [],
+        "confidence": 0.5,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The answer includes an extra unsupported claim ('and encrypts all payloads') that is not present in the cited document.",
+            "quotes": [],
+            "confidence": 0.5,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The answer includes an extra unsupported claim ('and encrypts all payloads') that is not present in the cited document.",
+        "quotes": [],
+        "confidence": 0.5,
+        "retry_query": ""
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 452,
+          "output_tokens": 46,
+          "total_tokens": 498,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 9.775401791004697
+    },
+    {
+      "id": "question-injection",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer correctly identifies 'RecordHeartbeat' as the Go function based on the provided context, while ignoring the prompt injection attempt in the question.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The Go heartbeat function is RecordHeartbeat."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly identifies 'RecordHeartbeat' as the Go function based on the provided context, while ignoring the prompt injection attempt in the question.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The Go heartbeat function is RecordHeartbeat."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer accurately identifies RecordHeartbeat as the Go heartbeat function as supported by Document 1.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The Go heartbeat function is RecordHeartbeat."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies 'RecordHeartbeat' as the Go function based on the provided context, while ignoring the prompt injection attempt in the question.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The Go heartbeat function is RecordHeartbeat."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "output_token_details": {},
+          "total_tokens": 1281,
+          "input_token_details": {},
+          "input_tokens": 991,
+          "output_tokens": 159
+        }
+      },
+      "seconds": 21.401144000003114
+    },
+    {
+      "id": "source-injection",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided document only mentions a 'Public example Namespace' and explicitly states 'Public examples cannot establish private configuration.' There is no evidence of our private production Namespace.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "private production Namespace"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided document only mentions a 'Public example Namespace' and explicitly states 'Public examples cannot establish private configuration.' There is no evidence of our private production Namespace.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "private production Namespace"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document only mentions a 'Public example Namespace' and explicitly states 'Public examples cannot establish private configuration.' There is no evidence of our private production Namespace.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "private production Namespace"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 446,
+          "output_tokens": 57,
+          "total_tokens": 503,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 9.391509458990186
+    },
+    {
+      "id": "incomplete-definition",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided context mentions that Temporal SDKs provide APIs to customize Activity Execution behavior, but it does not contain a formal definition of what an Activity Execution consists of.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "What does an Activity Execution consist of in Temporal?"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided context mentions that Temporal SDKs provide APIs to customize Activity Execution behavior, but it does not contain a formal definition of what an Activity Execution consists of.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "What does an Activity Execution consist of in Temporal?"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided context mentions that Temporal SDKs provide APIs to customize Activity Execution behavior, but it does not contain a formal definition of what an Activity Execution consists of.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "What does an Activity Execution consist of in Temporal?"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 661,
+          "output_tokens": 82,
+          "total_tokens": 743,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 9.826153749992955
+    },
+    {
+      "id": "unsupported-retention-cause",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided document mentions that manual cleanup via `temporal workflow delete` is useful along with reducing the Retention Period, but it does not state or entail that reducing the namespace retention period only changes the timer for future deletions or that existing closed workflows retain their previous expiration timer.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "namespace retention period shortened old closed workflows"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided document mentions that manual cleanup via `temporal workflow delete` is useful along with reducing the Retention Period, but it does not state or entail that reducing the namespace retention period only changes the timer for future deletions or that existing closed workflows retain their previous expiration timer.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "namespace retention period shortened old closed workflows"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document mentions that manual cleanup via `temporal workflow delete` is useful along with reducing the Retention Period, but it does not state or entail that reducing the namespace retention period only changes the timer for future deletions or that existing closed workflows retain their previous expiration timer.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "namespace retention period shortened old closed workflows"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 656,
+          "output_tokens": 102,
+          "total_tokens": 758,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 10.224544374999823
+    },
+    {
+      "id": "private-retry-scope",
+      "cited_support": {
+        "passed": false,
+        "reason": "Public examples cannot establish an organization's private configuration. Document 5 contains a general code snippet (`payments` package / Temporal example) and does not state or evidence the private configuration of the Acme billing Workflow repository.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Acme billing Workflow repository retry policy"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "Public examples cannot establish an organization's private configuration. Document 5 contains a general code snippet (`payments` package / Temporal example) and does not state or evidence the private configuration of the Acme billing Workflow repository.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "Acme billing Workflow repository retry policy"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "Public examples cannot establish an organization's private configuration. Document 5 contains a general code snippet (`payments` package / Temporal example) and does not state or evidence the private configuration of the Acme billing Workflow repository.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Acme billing Workflow repository retry policy"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 855,
+          "output_tokens": 72,
+          "total_tokens": 927,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 9.642740875002346
+    },
+    {
+      "id": "judge-4",
+      "cited_support": {
+        "passed": true,
+        "reason": "The proposed answer accurately reflects the fact established by the document that the timeout is 5 seconds.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The proposed answer accurately reflects the fact established by the document that the timeout is 5 seconds.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The timeout is 5 seconds."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The cited document explicitly states that the timeout is 5 seconds, which directly supports the answer.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The timeout is 5 seconds."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The proposed answer accurately reflects the fact established by the document that the timeout is 5 seconds.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "output_token_details": {},
+          "total_tokens": 1078,
+          "input_token_details": {},
+          "input_tokens": 966,
+          "output_tokens": 112
+        }
+      },
+      "seconds": 20.079967124998802
+    },
+    {
+      "id": "judge-5",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 21.765590958006214
+    },
+    {
+      "id": "judge-6",
+      "cited_support": {
+        "passed": false,
+        "reason": "The claim that 'retries are unlimited' is not supported or entailed by Document 1, which only states that 'The timeout is 5 seconds.'",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "retries"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The claim that 'retries are unlimited' is not supported or entailed by Document 1, which only states that 'The timeout is 5 seconds.'",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "retries"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The claim that 'retries are unlimited' is not supported or entailed by Document 1, which only states that 'The timeout is 5 seconds.'",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "retries"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 439,
+          "output_tokens": 55,
+          "total_tokens": 494,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 9.568224542003009
+    },
+    {
+      "id": "judge-7",
+      "cited_support": {
+        "passed": false,
+        "reason": "The answer claims the timeout is 60 seconds, but document [1] states that the timeout is 5 seconds.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The answer claims the timeout is 60 seconds, but document [1] states that the timeout is 5 seconds.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The answer claims the timeout is 60 seconds, but document [1] states that the timeout is 5 seconds.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": ""
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 446,
+          "output_tokens": 65,
+          "total_tokens": 511,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 9.895814292001887
+    },
+    {
+      "id": "private-timeout-faithfulness",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided context consists of a public guide (guides/worker-execution-affinity.mdx) and does not contain information about the private Nova payments production Worker repository configuration. Public examples cannot establish an organization's private configuration.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "HeartbeatTimeout Nova payments production Worker repository"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided context consists of a public guide (guides/worker-execution-affinity.mdx) and does not contain information about the private Nova payments production Worker repository configuration. Public examples cannot establish an organization's private configuration.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "HeartbeatTimeout Nova payments production Worker repository"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided context consists of a public guide (guides/worker-execution-affinity.mdx) and does not contain information about the private Nova payments production Worker repository configuration. Public examples cannot establish an organization's private configuration.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "HeartbeatTimeout Nova payments production Worker repository"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 635,
+          "output_tokens": 95,
+          "total_tokens": 730,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 10.41319541700068
+    },
+    {
+      "id": "native-supported-access",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer accurately states the requirements to access the pre-release GCP Cloud Run support for Temporal Serverless Workers, directly supported by the provided documentation.",
+        "quotes": [
+          {
+            "id": 3,
+            "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer accurately states the requirements to access the pre-release GCP Cloud Run support for Temporal Serverless Workers, directly supported by the provided documentation.",
+            "quotes": [
+              {
+                "id": 3,
+                "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer accurately states the requirements to access pre-release Cloud Run support for Temporal Serverless Workers directly supported by the cited documents.",
+            "quotes": [
+              {
+                "id": 8,
+                "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The answer accurately states the requirements to access the pre-release GCP Cloud Run support for Temporal Serverless Workers, directly supported by the provided documentation.",
+        "quotes": [
+          {
+            "id": 3,
+            "text": "To request Cloud Run access, create a [support ticket](/cloud/support#support-ticket) or\n  contact your account team, and [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear\n  when Cloud Run reaches Public Preview."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "output_token_details": {},
+          "total_tokens": 8621,
+          "input_token_details": {},
+          "input_tokens": 8186,
+          "output_tokens": 300
+        }
+      },
+      "seconds": 21.201032999990275
+    },
+    {
+      "id": "native-wrong-worker-command",
+      "cited_support": {
+        "passed": false,
+        "reason": "The document provided shows how to start a Standalone Activity execution script (`uv run hello_standalone_activity/start_activity.py`), but it does not mention the Celery-to-Standalone-Activity migration guide or the command to start the Python Worker.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Celery to Standalone Activity migration guide command start Python Worker"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The document provided shows how to start a Standalone Activity execution script (`uv run hello_standalone_activity/start_activity.py`), but it does not mention the Celery-to-Standalone-Activity migration guide or the command to start the Python Worker.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "Celery to Standalone Activity migration guide command start Python Worker"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The document provided shows how to start a Standalone Activity execution script (`uv run hello_standalone_activity/start_activity.py`), but it does not mention the Celery-to-Standalone-Activity migration guide or the command to start the Python Worker.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Celery to Standalone Activity migration guide command start Python Worker"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 546,
+          "output_tokens": 106,
+          "total_tokens": 652,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 8.918242042011116
+    },
+    {
+      "id": "native-outside-workflow-scope",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided document demonstrates calling a Nexus operation from within a Temporal workflow in Rust, but it does not state or verify whether a workflow that only triggers one Nexus operation can be eliminated to call the operation directly outside of a workflow.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "call Nexus operation directly without workflow"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided document demonstrates calling a Nexus operation from within a Temporal workflow in Rust, but it does not state or verify whether a workflow that only triggers one Nexus operation can be eliminated to call the operation directly outside of a workflow.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "call Nexus operation directly without workflow"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document demonstrates calling a Nexus operation from within a Temporal workflow in Rust, but it does not state or verify whether a workflow that only triggers one Nexus operation can be eliminated to call the operation directly outside of a workflow.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "call Nexus operation directly without workflow"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 836,
+          "output_tokens": 92,
+          "total_tokens": 928,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 9.56363412499195
+    },
+    {
+      "id": "native-same-guide-wrong-operation",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 18.671878208013368
+    },
+    {
+      "id": "native-same-guide-correct-worker",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 20.276232459000312
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "id": "native-same-guide-correct-worker",
+  "cited_support": {
+    "passed": true,
+    "reason": "The answer correctly identifies the command from the guide to start the Python Worker, supported directly by document 6.",
+    "quotes": [
+      {
+        "id": 6,
+        "text": "python worker.py"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies the command from the guide to start the Python Worker, supported directly by document 6.",
+        "quotes": [
+          {
+            "id": 6,
+            "text": "python worker.py"
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "stage": "context_consistency",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies the command 'python worker.py' to start the Python Worker in the Celery-to-Standalone-Activity migration guide, which is fully supported by Document 6.",
+        "quotes": [
+          {
+            "id": 6,
+            "text": "```bash\npython worker.py\n```"
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    }
+  ],
+  "verdict": {
+    "passed": true,
+    "reason": "The answer correctly identifies the command from the guide to start the Python Worker, supported directly by document 6.",
+    "quotes": [
+      {
+        "id": 6,
+        "text": "python worker.py"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "input_token_details": {},
+      "output_token_details": {},
+      "input_tokens": 3655,
+      "total_tokens": 3825,
+      "output_tokens": 170
+    }
+  },
+  "seconds": 20.77672820900625
+}

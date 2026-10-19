@@ -1,0 +1,190 @@
+{
+  "scope": "Quota alternatives and rejected Reasoning prompt experiment, not accuracy evidence",
+  "harrison_reused": [
+    "backend/llm/router.py cooldown/error separation",
+    "backend/llm/llm.py model-scoped KeyManager rotation"
+  ],
+  "probes": [
+    {
+      "provider": "mistral",
+      "model": "mistral-medium-2604",
+      "result": "HTTP 429, not integrated"
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-2.5-flash",
+      "result": "native JSON/schema response; single-key control run subsequently hit quota"
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash",
+      "result": "native structured response; second configured slot succeeds after first slot returns 429"
+    }
+  ],
+  "credentials": "Configured existing owner-held Gemini slots in ignored local .env; no values exported",
+  "old_operator": {
+    "pid": 63426,
+    "action": "Stopped before new evaluation/code work to avoid competing calls",
+    "previous_phase": "waiting_for_quota"
+  },
+  "reasoning_probe": {
+    "instruction": "Before answering, read all retrieved chunks and their source headings. Match the exact requested operation, entity, and SDK; commands for different operations are not interchangeable. For a comparison, state each requested side and its distinguishing requirement. For a requested configuration, include both the exact field name and value. Copy commands, identifiers and numbers from the matching source; do not guess.",
+    "results": [
+      {
+        "id": "dev-02",
+        "baseline": "python start_activity.py",
+        "candidate": {
+          "generation": "python start_activity.py",
+          "citations": [
+            {
+              "id": 3,
+              "source": "guides/celery-to-standalone-activity.mdx",
+              "chunk_id": "c9d3cdac113e0060cde28a816b03b6280a854367e145a9da84bb78a9790c39fb"
+            }
+          ]
+        }
+      },
+      {
+        "id": "dev-21",
+        "baseline": "The Go and TypeScript external-storage prerequisite documents differ in their stated read/write permissions for storing payloads. The Go document requires permission to write objects on processes that store payloads, and to read objects on processes that retrieve them. In contrast, the TypeScript document states that components that only retrieve payloads do not need write access, and the reverse is also true.",
+        "candidate": {
+          "generation": "The Go and TypeScript external-storage prerequisite documents differ in their stated read/write permissions for storing payloads. The Go document requires permission to write objects on processes that store payloads, and to read objects on processes that retrieve them. In contrast, the TypeScript document states that components that only retrieve payloads do not need write access, and the reverse is also true.",
+          "citations": [
+            {
+              "id": 1,
+              "source": "develop/go/best-practices/data-handling/external-storage.mdx",
+              "chunk_id": "fd36453c87b4f4771eeaf00eafe90fe1bf40ce5799903109fe5966083e2808f6"
+            },
+            {
+              "id": 2,
+              "source": "develop/typescript/best-practices/data-handling/external-storage.mdx",
+              "chunk_id": "edb9dc82defb31a8e228d8844ce0e4124a5ffd31a72f22a30620972b94fbbbb0"
+            }
+          ]
+        }
+      },
+      {
+        "id": "dev-24",
+        "baseline": "ParentClosePolicy::ABANDON and ParentClosePolicy.ABANDON",
+        "candidate": {
+          "generation": "ParentClosePolicy: enums.PARENT_CLOSE_POLICY_ABANDON",
+          "citations": [
+            {
+              "id": 7,
+              "source": "develop/go/workflows/child-workflows.mdx",
+              "chunk_id": "d923b11ba1672b50be953062a9458e117d8e2d21ac7b0748d80e3923e2572db3"
+            },
+            {
+              "id": 8,
+              "source": "develop/python/workflows/child-workflows.mdx",
+              "chunk_id": "349feb1efe1d72c60f617dbe9fb992fb61678b65ca240ed6f7994b7ec56cbb00"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "reasoning_probe_decision": "Rejected. General scope/comparison prompt did not fix the Worker command and reduced the Go/Python field answer. Production Reasoning prompt unchanged.",
+  "code_sha256": {
+    "v3_llm.py": "fcf48acc5eb14113bd2422fbaf86af7ca357af6a4e6ff02e2ec9e5ede8aaf38a",
+    "evals/run_eval.py": "d0c2cf04a81340928434fa8bfa7e2f409867a99764969f61a1c1df12c55b5e24",
+    "test_v3_llm.py": "4903bf09fb39ed2234dc9b256dc4607325e26152e0532fa77bf878ca716a316a",
+    "uv.lock": "165747edf565242f46a1576e6ef679bfb3f211ee43043e85fe64a0c939484456"
+  },
+  "reasoning_schema_probe": {
+    "schema": {
+      "properties": {
+        "evidence_review": {
+          "description": "First identify the source text and headings for EACH requested operation, SDK, field and value. Explain distinctions and missing evidence, using only the documents.",
+          "maxLength": 1400,
+          "title": "Evidence Review",
+          "type": "string"
+        },
+        "answer": {
+          "description": "Complete concise answer supported by the evidence review, or exactly I don't know.",
+          "minLength": 1,
+          "title": "Answer",
+          "type": "string"
+        },
+        "citations": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Citations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "evidence_review",
+        "answer",
+        "citations"
+      ],
+      "title": "ReviewedAnswer",
+      "type": "object"
+    },
+    "results": [
+      {
+        "id": "dev-02",
+        "baseline": "python start_activity.py",
+        "candidate": {
+          "generation": "python worker.py",
+          "citations": [
+            {
+              "id": 6,
+              "source": "guides/celery-to-standalone-activity.mdx",
+              "chunk_id": "3e13fcc9458017176faa923a8073649a4233294f0928854f030d2e271656e915"
+            }
+          ]
+        },
+        "audit": [
+          {
+            "evidence_review": "I don't know.",
+            "answer": "python worker.py",
+            "citations": [
+              6
+            ]
+          }
+        ]
+      },
+      {
+        "id": "dev-21",
+        "baseline": "The Go and TypeScript external-storage prerequisite documents differ in their stated read/write permissions for storing payloads. The Go document requires permission to write objects on processes that store payloads, and to read objects on processes that retrieve them. In contrast, the TypeScript document states that components that only retrieve payloads do not need write access, and the reverse is also true.",
+        "candidate": {
+          "generation": "I don't know.",
+          "citations": []
+        },
+        "audit": [
+          {
+            "evidence_review": "I don't know.",
+            "answer": "I don't know.",
+            "citations": []
+          }
+        ]
+      },
+      {
+        "id": "dev-24",
+        "baseline": "ParentClosePolicy::ABANDON and ParentClosePolicy.ABANDON",
+        "candidate": {
+          "generation": "To let a Child Workflow survive its parent closing, the Parent Close Policy field/parameter and ABANDON value used in Go and Python are PARENT_CLOSE_POLICY_ABANDON.",
+          "citations": [
+            {
+              "id": 7,
+              "source": "develop/go/workflows/child-workflows.mdx",
+              "chunk_id": "d923b11ba1672b50be953062a9458e117d8e2d21ac7b0748d80e3923e2572db3"
+            }
+          ]
+        },
+        "audit": [
+          {
+            "evidence_review": "I don't know.",
+            "answer": "To let a Child Workflow survive its parent closing, the Parent Close Policy field/parameter and ABANDON value used in Go and Python are PARENT_CLOSE_POLICY_ABANDON.",
+            "citations": [
+              7
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "reasoning_schema_probe_decision": "Not adopted: fixes the Worker command in this probe but changes the permissions answer to a refusal and still omits Python configuration details. Evidence-review text is not a verified reasoning trace."
+}

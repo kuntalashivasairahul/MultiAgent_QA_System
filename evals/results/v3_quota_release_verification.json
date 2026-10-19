@@ -1,0 +1,179 @@
+{
+  "scope": "Completed quota-recovery release verification for the explicitly scoped public-document research prototype",
+  "runtime_commit": "70153e9b4435b9100a8e6125b0177d817f5092da",
+  "code_sha256": {
+    "graph_v3.py": "4f35e892dce7daf4c1f9f66080b6939cf36476ecba5cbd42b3bc23b7810fa01d",
+    "v3_llm.py": "fcf48acc5eb14113bd2422fbaf86af7ca357af6a4e6ff02e2ec9e5ede8aaf38a",
+    "evals/run_eval.py": "d0c2cf04a81340928434fa8bfa7e2f409867a99764969f61a1c1df12c55b5e24",
+    "api.py": "f594a8f9514ec8debddeb6e7b84e655c8ace794a67ada06d031df365472b4ecc",
+    "test_v3_llm.py": "4903bf09fb39ed2234dc9b256dc4607325e26152e0532fa77bf878ca716a316a",
+    "uv.lock": "165747edf565242f46a1576e6ef679bfb3f211ee43043e85fe64a0c939484456"
+  },
+  "full_tests": {
+    "passed": 188,
+    "integration": 5,
+    "seconds": 22.51,
+    "local_selected_gemini_judge_configuration": true
+  },
+  "isolated_offline": {
+    "snapshot": "/var/folders/ct/d9ypd52x3rdcpr2l1plbz9x00000gn/T/qa-v3-pooled-offline-9os8kvyb",
+    "no_dotenv_corpus_or_index": true,
+    "exit_code": 0,
+    "seconds": 14.211910083002294,
+    "stdout": "........................................................................ [ 39%]\n........................................................................ [ 78%]\n.......................................                                  [100%]\n183 passed, 5 deselected in 12.94s\n",
+    "stderr": "",
+    "installed_locked_interpreter_reused": true
+  },
+  "judge_controls": "evals/results/calibration_v3/b787a6a1f1692e238e513efe5f2dea029b42cebcd826a9d220d57377bfb781f1/result.json",
+  "external_grader_controls": "evals/results/calibration_alternate_grader/5c5aa53a612391dc95e2df62c26ec8910e6ffc6d4f1efcf6a7cbafd427d099a3/result.json",
+  "http": "evals/results/v3_pooled_http_smoke.json",
+  "weights": "evals/results/v3_current_weights_verification.json",
+  "credential_scan": "No configured credential literals found in changed/untracked publication inputs",
+  "native_study_dir": "evals/results/verified/graph_v3/cb33ce027484ede71166b08ea3c79fa981384fd39589e6780680e88742b6a8dc/20261019T025201935213Z-e100fbe6",
+  "hosted_ci": {
+    "conclusion": "success",
+    "headSha": "70153e9b4435b9100a8e6125b0177d817f5092da",
+    "jobs": [
+      {
+        "completedAt": "2026-10-19T03:07:22Z",
+        "conclusion": "success",
+        "databaseId": 117866296924,
+        "name": "verify",
+        "startedAt": "2026-10-19T02:51:08Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-19T02:51:09Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-19T02:51:09Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-19T02:51:10Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-19T02:51:09Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-19T02:51:10Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 3,
+            "startedAt": "2026-10-19T02:51:10Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-19T02:51:13Z",
+            "conclusion": "success",
+            "name": "Run python -m pip install uv==0.12.5",
+            "number": 4,
+            "startedAt": "2026-10-19T02:51:10Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-19T02:51:31Z",
+            "conclusion": "success",
+            "name": "Run uv sync --frozen",
+            "number": 5,
+            "startedAt": "2026-10-19T02:51:13Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-19T02:52:15Z",
+            "conclusion": "success",
+            "name": "Offline behavioural tests without corpus or index",
+            "number": 6,
+            "startedAt": "2026-10-19T02:51:31Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-19T03:06:59Z",
+            "conclusion": "success",
+            "name": "Pinned corpus and index",
+            "number": 7,
+            "startedAt": "2026-10-19T02:52:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-19T03:07:20Z",
+            "conclusion": "success",
+            "name": "Real retrieval and integrity integration",
+            "number": 8,
+            "startedAt": "2026-10-19T03:06:59Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-19T03:07:20Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 15,
+            "startedAt": "2026-10-19T03:07:20Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-19T03:07:20Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 16,
+            "startedAt": "2026-10-19T03:07:20Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-19T03:07:20Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 17,
+            "startedAt": "2026-10-19T03:07:20Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39191887080/job/117866296924"
+      }
+    ],
+    "status": "completed",
+    "url": "https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39191887080",
+    "offline_passed": 183,
+    "offline_seconds": 39.35,
+    "fresh_index_documents": 14414,
+    "integration_passed": 5,
+    "integration_seconds": 18.07,
+    "platform": "ubuntu-24.04",
+    "fresh_locked_install": true
+  },
+  "frozen_inputs_match_current_runtime_code": true,
+  "external_capacity": "Configured provider pools remain quota-limited; this release supplies alternatives/recovery, not unlimited capacity",
+  "native_study": {
+    "result": "evals/results/verified/graph_v3/cb33ce027484ede71166b08ea3c79fa981384fd39589e6780680e88742b6a8dc/20261019T025201935213Z-e100fbe6/result.json",
+    "status": "complete",
+    "n": 12,
+    "correct": 9,
+    "answerable_correct": 7,
+    "answerable_n": 10,
+    "false_refusals": 3,
+    "unsupported_final_answers": 0,
+    "generation_errors": 0,
+    "mean_active_graph_seconds": 44.132,
+    "source_review": "evals/results/v3_pooled_study_source_review.json",
+    "source_reviewed_canonical_documents": 204,
+    "source_reviewed_literal_assessment_quotes": 17,
+    "scope": "Previously inspected development regression, not held-out or representative answer accuracy"
+  },
+  "native_controls": {
+    "n": 17,
+    "passed": 17,
+    "missing": 0,
+    "source_review": "evals/results/v3_pooled_control_review.json"
+  },
+  "external_grader_controls_summary": {
+    "n": 8,
+    "passed": 8,
+    "missing": 0
+  },
+  "private_http": "evals/results/v3_pooled_http_private.json",
+  "assessment": "evals/results/v3_quota_final_assessment.json",
+  "release_stable_within_scope": true
+}

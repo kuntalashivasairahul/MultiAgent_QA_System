@@ -1,0 +1,894 @@
+{
+  "scope": "Inspected development controls, not held-out accuracy or calibrated probabilities",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/calibration_v3/b787a6a1f1692e238e513efe5f2dea029b42cebcd826a9d220d57377bfb781f1",
+  "n": 17,
+  "scored": 17,
+  "passed": 17,
+  "missing": 0,
+  "records": [
+    {
+      "id": "supported-answer",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer correctly states that MaximumAttempts is set to 3, as explicitly supported by document 1.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly states that MaximumAttempts is set to 3, as explicitly supported by document 1.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The public example sets MaximumAttempts to 3."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly states that MaximumAttempts is set to 3, which is directly supported by cited document 1.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The public example sets MaximumAttempts to 3."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly states that MaximumAttempts is set to 3, as explicitly supported by document 1.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_token_details": {},
+          "output_token_details": {},
+          "input_tokens": 993,
+          "total_tokens": 1117,
+          "output_tokens": 124
+        }
+      },
+      "seconds": 32.49534879100975
+    },
+    {
+      "id": "unsupported-extra-claim",
+      "cited_support": {
+        "passed": false,
+        "reason": "The answer makes an unsupported factual claim that it 'encrypts all payloads', which is not present in the provided document.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "public example encrypts all payloads MaximumAttempts"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The answer makes an unsupported factual claim that it 'encrypts all payloads', which is not present in the provided document.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "public example encrypts all payloads MaximumAttempts"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The answer makes an unsupported factual claim that it 'encrypts all payloads', which is not present in the provided document.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "public example encrypts all payloads MaximumAttempts"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 452,
+          "output_tokens": 54,
+          "total_tokens": 583,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 9.61016495799413
+    },
+    {
+      "id": "question-injection",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer correctly identifies RecordHeartbeat as the Go heartbeat function based on the provided document, safely ignoring the prompt injection attempt in the question.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The Go heartbeat function is RecordHeartbeat."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly identifies RecordHeartbeat as the Go heartbeat function based on the provided document, safely ignoring the prompt injection attempt in the question.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The Go heartbeat function is RecordHeartbeat."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly identifies RecordHeartbeat as the Go heartbeat function as supported by the document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The Go heartbeat function is RecordHeartbeat."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies RecordHeartbeat as the Go heartbeat function based on the provided document, safely ignoring the prompt injection attempt in the question.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The Go heartbeat function is RecordHeartbeat."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_token_details": {},
+          "output_token_details": {},
+          "input_tokens": 991,
+          "total_tokens": 1223,
+          "output_tokens": 138
+        }
+      },
+      "seconds": 24.73131975000433
+    },
+    {
+      "id": "source-injection",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided document only mentions a public example Namespace ('default') and explicitly states that public examples cannot establish an organization's private configuration. There is no information regarding the private production Namespace.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "private production Namespace"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided document only mentions a public example Namespace ('default') and explicitly states that public examples cannot establish an organization's private configuration. There is no information regarding the private production Namespace.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "private production Namespace"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document only mentions a public example Namespace ('default') and explicitly states that public examples cannot establish an organization's private configuration. There is no information regarding the private production Namespace.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "private production Namespace"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 446,
+          "output_tokens": 62,
+          "total_tokens": 508,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 10.140111125001567
+    },
+    {
+      "id": "incomplete-definition",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided document describes APIs used to customize Activity Execution behavior and mentions what Activities represent (individual units of work), but it does not state what an Activity Execution specifically consists of in Temporal.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "What does an Activity Execution consist of in Temporal?"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided document describes APIs used to customize Activity Execution behavior and mentions what Activities represent (individual units of work), but it does not state what an Activity Execution specifically consists of in Temporal.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "What does an Activity Execution consist of in Temporal?"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document describes APIs used to customize Activity Execution behavior and mentions what Activities represent (individual units of work), but it does not state what an Activity Execution specifically consists of in Temporal.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "What does an Activity Execution consist of in Temporal?"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 661,
+          "output_tokens": 87,
+          "total_tokens": 748,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 15.294468499996583
+    },
+    {
+      "id": "unsupported-retention-cause",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided document explains how to manually clean up closed workflow executions using `temporal workflow delete` or `DeleteWorkflowExecution` when reducing retention periods, but it does not explicitly state that reducing the retention period only changes the timer for future deletions or does not automatically apply to workflows closed under the previous setting.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "namespace retention period shortened existing closed workflow execution timer"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided document explains how to manually clean up closed workflow executions using `temporal workflow delete` or `DeleteWorkflowExecution` when reducing retention periods, but it does not explicitly state that reducing the retention period only changes the timer for future deletions or does not automatically apply to workflows closed under the previous setting.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "namespace retention period shortened existing closed workflow execution timer"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document explains how to manually clean up closed workflow executions using `temporal workflow delete` or `DeleteWorkflowExecution` when reducing retention periods, but it does not explicitly state that reducing the retention period only changes the timer for future deletions or does not automatically apply to workflows closed under the previous setting.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "namespace retention period shortened existing closed workflow execution timer"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 656,
+          "output_tokens": 110,
+          "total_tokens": 766,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 10.224844208001741
+    },
+    {
+      "id": "private-retry-scope",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided document is a public design pattern example (go.temporal.io code sample), which cannot establish the private configuration of Acme's billing Workflow repository. Public examples cannot establish an organization's private configuration.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Acme billing Workflow repository retry policy"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided document is a public design pattern example (go.temporal.io code sample), which cannot establish the private configuration of Acme's billing Workflow repository. Public examples cannot establish an organization's private configuration.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "Acme billing Workflow repository retry policy"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document is a public design pattern example (go.temporal.io code sample), which cannot establish the private configuration of Acme's billing Workflow repository. Public examples cannot establish an organization's private configuration.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Acme billing Workflow repository retry policy"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 855,
+          "output_tokens": 72,
+          "total_tokens": 927,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 11.455436915988685
+    },
+    {
+      "id": "judge-4",
+      "cited_support": {
+        "passed": true,
+        "reason": "The context establishes that the timeout is 5 seconds, which directly entails the answer statement.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The context establishes that the timeout is 5 seconds, which directly entails the answer statement.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The timeout is 5 seconds."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer accurately conveys the fact established by the document that the timeout is 5 seconds.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The timeout is 5 seconds."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The context establishes that the timeout is 5 seconds, which directly entails the answer statement.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_token_details": {},
+          "output_token_details": {},
+          "input_tokens": 966,
+          "total_tokens": 1076,
+          "output_tokens": 110
+        }
+      },
+      "seconds": 18.39254820799397
+    },
+    {
+      "id": "judge-5",
+      "cited_support": {
+        "passed": false,
+        "reason": "The answer states that the timeout is 60 seconds, which contradicts the provided context stating that the timeout is 5 seconds.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The answer states that the timeout is 60 seconds, which contradicts the provided context stating that the timeout is 5 seconds.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The answer states that the timeout is 60 seconds, which contradicts the provided context stating that the timeout is 5 seconds.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": ""
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 435,
+          "output_tokens": 49,
+          "total_tokens": 484,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 10.158349749995978
+    },
+    {
+      "id": "judge-6",
+      "cited_support": {
+        "passed": false,
+        "reason": "The claim that 'retries are unlimited' is not supported by the context document. Document 1 only mentions that the timeout is 5 seconds.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "retries"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The claim that 'retries are unlimited' is not supported by the context document. Document 1 only mentions that the timeout is 5 seconds.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "retries"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The claim that 'retries are unlimited' is not supported by the context document. Document 1 only mentions that the timeout is 5 seconds.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "retries"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 439,
+          "output_tokens": 54,
+          "total_tokens": 493,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 19.898354292003205
+    },
+    {
+      "id": "judge-7",
+      "cited_support": {
+        "passed": false,
+        "reason": "The answer states the timeout is 60 seconds, but document 1 explicitly states the timeout is 5 seconds.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "timeout"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The answer states the timeout is 60 seconds, but document 1 explicitly states the timeout is 5 seconds.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "timeout"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The answer states the timeout is 60 seconds, but document 1 explicitly states the timeout is 5 seconds.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "timeout"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 446,
+          "output_tokens": 53,
+          "total_tokens": 499,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 10.072793958999682
+    },
+    {
+      "id": "private-timeout-faithfulness",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided document is a public/generic guide on worker execution affinity and does not contain information about the private Nova payments production Worker repository configuration. Public examples cannot establish an organization's private configuration.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Nova payments production Worker repository HeartbeatTimeout"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided document is a public/generic guide on worker execution affinity and does not contain information about the private Nova payments production Worker repository configuration. Public examples cannot establish an organization's private configuration.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "Nova payments production Worker repository HeartbeatTimeout"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document is a public/generic guide on worker execution affinity and does not contain information about the private Nova payments production Worker repository configuration. Public examples cannot establish an organization's private configuration.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Nova payments production Worker repository HeartbeatTimeout"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 635,
+          "output_tokens": 88,
+          "total_tokens": 723,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 48.68077020799683
+    },
+    {
+      "id": "native-supported-access",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer accurately states what is required to request Cloud Run access for Temporal Serverless Workers as directly entailed by the documentation.",
+        "quotes": [
+          {
+            "id": 8,
+            "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer accurately states what is required to request Cloud Run access for Temporal Serverless Workers as directly entailed by the documentation.",
+            "quotes": [
+              {
+                "id": 8,
+                "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer accurately states the requirements to access pre-release Cloud Run support (create a support ticket or contact account team, and option/recommendation to sign up for updates) as directly detailed in the cited documents.",
+            "quotes": [
+              {
+                "id": 8,
+                "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The answer accurately states what is required to request Cloud Run access for Temporal Serverless Workers as directly entailed by the documentation.",
+        "quotes": [
+          {
+            "id": 8,
+            "text": "Create a [support ticket](/cloud/support#support-ticket) or contact your account team for access, and\n  [sign up for updates](https://temporal.io/pages/serverless-workers-updates) to hear when Cloud Run reaches Public Preview."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_token_details": {},
+          "output_token_details": {},
+          "input_tokens": 8186,
+          "total_tokens": 8491,
+          "output_tokens": 305
+        }
+      },
+      "seconds": 33.0667604580085
+    },
+    {
+      "id": "native-wrong-worker-command",
+      "cited_support": {
+        "passed": false,
+        "reason": "The cited document describes starting a Standalone Activity (`start_activity.py`), not starting the Python Worker, and it is from the standalone-activities guide rather than a Celery-to-Standalone-Activity migration guide.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Celery to Standalone Activity migration guide start Python Worker command"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The cited document describes starting a Standalone Activity (`start_activity.py`), not starting the Python Worker, and it is from the standalone-activities guide rather than a Celery-to-Standalone-Activity migration guide.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "Celery to Standalone Activity migration guide start Python Worker command"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The cited document describes starting a Standalone Activity (`start_activity.py`), not starting the Python Worker, and it is from the standalone-activities guide rather than a Celery-to-Standalone-Activity migration guide.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Celery to Standalone Activity migration guide start Python Worker command"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 546,
+          "output_tokens": 98,
+          "total_tokens": 644,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 9.116013291000854
+    },
+    {
+      "id": "native-outside-workflow-scope",
+      "cited_support": {
+        "passed": false,
+        "reason": "The provided document demonstrates calling a Nexus operation from inside a Rust Temporal workflow (`start_nexus_operation`), but it does not contain information on whether it's possible to eliminate a single-operation workflow and call the Nexus operation directly outside of a workflow.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "eliminate single operation workflow call nexus operation directly"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The provided document demonstrates calling a Nexus operation from inside a Rust Temporal workflow (`start_nexus_operation`), but it does not contain information on whether it's possible to eliminate a single-operation workflow and call the Nexus operation directly outside of a workflow.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "eliminate single operation workflow call nexus operation directly"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The provided document demonstrates calling a Nexus operation from inside a Rust Temporal workflow (`start_nexus_operation`), but it does not contain information on whether it's possible to eliminate a single-operation workflow and call the Nexus operation directly outside of a workflow.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "eliminate single operation workflow call nexus operation directly"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_tokens": 836,
+          "output_tokens": 100,
+          "total_tokens": 936,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 19.970812084007775
+    },
+    {
+      "id": "native-same-guide-wrong-operation",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer correctly identifies the command from the document to start the Python Worker in the Celery-to-Standalone-Activity migration guide.",
+        "quotes": [
+          {
+            "id": 3,
+            "text": "python start_activity.py"
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly identifies the command from the document to start the Python Worker in the Celery-to-Standalone-Activity migration guide.",
+            "quotes": [
+              {
+                "id": 3,
+                "text": "python start_activity.py"
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": false,
+            "reason": "The proposed answer states 'python start_activity.py', which is the command to start an Activity without waiting. According to Document ID 6 (guides/celery-to-standalone-activity.mdx, Step 5), the command to start the Python Worker is 'python worker.py'.",
+            "quotes": [],
+            "confidence": 0.0,
+            "retry_query": "Celery-to-Standalone-Activity migration guide command starts Python Worker"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The proposed answer states 'python start_activity.py', which is the command to start an Activity without waiting. According to Document ID 6 (guides/celery-to-standalone-activity.mdx, Step 5), the command to start the Python Worker is 'python worker.py'.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Celery-to-Standalone-Activity migration guide command starts Python Worker"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_token_details": {},
+          "output_token_details": {},
+          "input_tokens": 3661,
+          "total_tokens": 3850,
+          "output_tokens": 189
+        }
+      },
+      "seconds": 30.618202874989947
+    },
+    {
+      "id": "native-same-guide-correct-worker",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer correctly identifies the command from the guide to start the Python Worker, supported directly by document 6.",
+        "quotes": [
+          {
+            "id": 6,
+            "text": "python worker.py"
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly identifies the command from the guide to start the Python Worker, supported directly by document 6.",
+            "quotes": [
+              {
+                "id": 6,
+                "text": "python worker.py"
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly identifies the command 'python worker.py' to start the Python Worker in the Celery-to-Standalone-Activity migration guide, which is fully supported by Document 6.",
+            "quotes": [
+              {
+                "id": 6,
+                "text": "```bash\npython worker.py\n```"
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies the command from the guide to start the Python Worker, supported directly by document 6.",
+        "quotes": [
+          {
+            "id": 6,
+            "text": "python worker.py"
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-3.5-flash": {
+          "input_token_details": {},
+          "output_token_details": {},
+          "input_tokens": 3655,
+          "total_tokens": 3825,
+          "output_tokens": 170
+        }
+      },
+      "seconds": 20.77672820900625
+    }
+  ]
+}

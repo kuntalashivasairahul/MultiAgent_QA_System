@@ -1,0 +1,48 @@
+{
+  "scope": "Coding-assistant engineering assessment of the supported public-document research prototype, not independent certification or answer accuracy",
+  "runtime_commit": "70153e9b4435b9100a8e6125b0177d817f5092da",
+  "weights": {
+    "architecture_scope": 0.2,
+    "ingestion_retrieval": 0.15,
+    "evaluation_validity": 0.25,
+    "testing": 0.15,
+    "reproducibility_runtime": 0.15,
+    "documentation": 0.1
+  },
+  "v3": {
+    "ratings": {
+      "architecture_scope": 9.0,
+      "ingestion_retrieval": 9.0,
+      "evaluation_validity": 7.5,
+      "testing": 9.0,
+      "reproducibility_runtime": 8.5,
+      "documentation": 9.0
+    },
+    "weighted_score": 8.55
+  },
+  "overall_current_project": {
+    "ratings": {
+      "architecture_scope": 9.0,
+      "ingestion_retrieval": 9.0,
+      "evaluation_validity": 7.5,
+      "testing": 9.0,
+      "reproducibility_runtime": 8.5,
+      "documentation": 9.0
+    },
+    "weighted_score": 8.55
+  },
+  "rating_identity_reason": "Both assess the current shared retrieval, V3/API runtime, tests, evaluation evidence and documentation. Neither averages historical version scores. Historical v2.1 8.63 remains historical.",
+  "release_stable_within_scope": true,
+  "evidence": {
+    "verification": "evals/results/v3_quota_release_verification.json",
+    "source_review": "evals/results/v3_pooled_study_source_review.json",
+    "controls": "evals/results/v3_pooled_control_review.json",
+    "ci": "https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39191887080"
+  },
+  "limits": [
+    "Current fixed12 is inspected development coverage: 9/12 correct, 7/10 supported-correct answerable, three false refusals, zero observed unsupported final answers.",
+    "Corrected full40 comparison and fresh confirmation remain unrun for this profile. No broad accuracy gain, calibrated probability or causal retry benefit claimed.",
+    "Provider quota remains finite; project-sharing keys may share limits, pacing/cooldowns are per process.",
+    "Windows, hosted multi-user deployment and private-data service readiness remain unverified."
+  ]
+}

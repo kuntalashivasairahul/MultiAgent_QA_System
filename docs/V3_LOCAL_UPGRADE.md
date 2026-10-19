@@ -1,6 +1,8 @@
 # V3: résumé-aligned workflow and local Llama
 
-V3 implements three named LangGraph roles, a quality-triggered retrieval retry and FastAPI endpoints. These are role-specific workflow participants, not a claim of parallel autonomous workers. Stable v2.1 and its accepted 8.63/10 assessment remain historical baselines. V3 has not inherited that score or established a new answer-accuracy result.
+V3 implements three named LangGraph roles, a quality-triggered retrieval retry and FastAPI endpoints. These are role-specific workflow participants, not a claim of parallel autonomous workers. Stable v2.1 and its accepted 8.63/10 assessment remain historical baselines. Current V3 ratings and measured answer quality are reported separately in the [stability scorecard](../evals/V3_STABILITY_SCORECARD.md).
+
+**19 October quota recovery:** the selected local-machine alternative uses local Llama 3.1 8B Reasoning, Gemini 3.5 Flash judging and a separately configured Gemini 2.5 Flash evaluation grader. It passes 17/17 fixed native Judge controls and 8/8 existing external-grader controls. The implementation passes 188 tests, including five integrations. Configured key slots, model-scoped cooldowns and shared pacing replace repeated waits on the exhausted Groq bucket. See the [provider/recovery guide](V3_QUOTA_RECOVERY.md) for exact commands, data flows, quota limits and current study evidence. Groq remains an explicit supported profile.
 
 ## Initial machine assessment, 18 October 2026
 
@@ -55,7 +57,8 @@ Therefore the working profiles are:
 
 | Profile | Reasoning / Judge | Output protocol |
 |---|---|---|
-| Default hybrid candidate | Llama 3.1 8B through LM Studio / Qwen3.8-27B through Groq | Local JSON schema / cloud JSON object mode, then Pydantic and literal evidence checks |
+| Selected local-machine alternative, 19 October | Llama 3.1 8B through LM Studio / Gemini 3.5 Flash | JSON schema, then Pydantic and literal evidence checks; configured Gemini key pool |
+| Earlier hybrid candidate; still configurable | Llama 3.1 8B through LM Studio / Qwen3.8-27B through Groq | Local JSON schema / cloud JSON object mode, then Pydantic and literal evidence checks |
 | Groq | GPT-OSS-120B / Qwen3.8-27B | JSON object mode with explicit schema instructions, then Pydantic and literal evidence checks |
 | Experimental all-local | Same loaded Llama model for both roles | JSON schema; the inspected 3B/8B self-Judges failed controls and are not promoted |
 
@@ -93,30 +96,31 @@ LANGSMITH_TRACING=false QA_BACKEND=groq QA_MODEL=openai/gpt-oss-120b \
   QA_JUDGE_MODEL=qwen/qwen3.8-27b uv run uvicorn api:app --host 127.0.0.1 --port 8000
 ```
 
-Configure `GROQ_API_KEY` normally for the hybrid and cloud profiles. Existing `.env` values are preserved. `QA_JUDGE_BACKEND` selects the Judge independently of the Reasoner. Experimental fully local execution uses `QA_JUDGE_BACKEND=lmstudio`; the inspected self-Judges failed controls. Local evaluation requires a weight hash for each local role: `LMSTUDIO_MODEL_SHA256` and, for a different Judge model, `LMSTUDIO_JUDGE_MODEL_SHA256`. The same-model Judge inherits the Reasoner's hash. The LM Studio URL must be a loopback `/v1` endpoint without embedded credentials or query strings. Restart Python after changing a profile; model clients are cached. After the one-hour idle TTL unloads the model, repeat `lms load`; process health alone does not establish model readiness.
+Configure `GROQ_API_KEY` for the Groq profiles or follow the [Gemini alternative](V3_QUOTA_RECOVERY.md). Existing Groq `.env` values are preserved. `QA_JUDGE_BACKEND` selects the Judge independently of the Reasoner. Experimental fully local execution uses `QA_JUDGE_BACKEND=lmstudio`; the inspected self-Judges failed controls. Local evaluation requires a weight hash for each local role: `LMSTUDIO_MODEL_SHA256` and, for a different Judge model, `LMSTUDIO_JUDGE_MODEL_SHA256`. The same-model Judge inherits the Reasoner's hash. The LM Studio URL must be a loopback `/v1` endpoint without embedded credentials or query strings. Restart Python after changing a profile; model clients are cached. After the one-hour idle TTL unloads the model, repeat `lms load`; process health alone does not establish model readiness.
 
 To retain local native evaluation identities, compute the SHA-256 of the actual loaded GGUF, set `LMSTUDIO_MODEL_SHA256` to it, and run the normal evaluator, for example `uv run python evals/run_eval.py graph_v3 1 --dataset evals/v3_private_smoke.jsonl`. That file is an inspected one-question smoke reference, not a benchmark. Full comparison must use a deliberately selected complete dataset.
 
-The default candidate sends the question, proposed answer and cited public evidence to Groq for quality judging. Tracing can add another data flow when enabled. The evaluator also uses separately configured Groq correctness/faithfulness judges when model grading is needed; their model/retry/rate settings are fingerprinted separately from generation and the graph Judge. A broad evaluation is not an offline benchmark. Historical canonical unanswerable-refusal smokes were scored deterministically without an external evaluation-Judge call.
+The selected alternative sends the question, proposed answer and bounded public evidence to Gemini for quality judging. Explicit Groq profiles send the same data to Groq. Tracing can add another data flow when enabled. External correctness/faithfulness grading selects Groq by default or Gemini through `QA_EVAL_BACKEND`; its model/retry/rate settings are fingerprinted separately from generation and the graph Judge. A broad evaluation is not an offline benchmark. Historical canonical unanswerable-refusal smokes were scored deterministically without an external evaluation-Judge call.
 
 Switching back to stable v2.1 also restores its dependency lock and retrieval code. Run `uv sync --frozen` and `uv run python ingest.py` after switching branches to select the matching index manifest; old collections are preserved.
 
 ## Evidence and limits
 
-- 176 tests pass locally, including five real corpus/index integration tests. Tests exercise score validation, low/high-score branches, actual fresh retrieval, retained cited evidence, the retry bound, forged quotes and altered URLs, durable node/control recovery, per-role routing/fingerprints, API validation, isolation, safe failures and concurrency. See the scorecard for each frozen verification scope.
-- An isolated source snapshot also passed 171 offline tests with five integration tests deselected, without credentials, `.env`, corpus or index. It included the retained JSON evidence fixtures and reused the installed locked interpreter; this was not a fresh dependency installation or a Windows test.
+- 188 tests pass locally, including five real corpus/index integration tests. Tests exercise score validation, low/high-score branches, actual fresh retrieval, retained cited evidence, the retry bound, forged quotes and altered URLs, durable node/control recovery, per-role routing/fingerprints, API validation, isolation, safe failures and concurrency. See the scorecard for each frozen verification scope.
+- The 19 October isolated source snapshot passed 183 offline tests with five integration tests deselected, without credentials, `.env`, corpus or index. It included the retained JSON evidence fixtures and reused the installed locked interpreter; this was not a fresh dependency installation or a Windows test.
 - [Initial local native controls](../evals/results/v3_local_controls.json) retain four historical 3B outcomes. Broader controls subsequently rejected that self-Judge; the initial smoke is not independent accuracy certification.
 - [Initial local HTTP smoke](../evals/results/v3_local_http_smoke.json) and [initial Groq HTTP smoke](../evals/results/v3_groq_http_smoke.json) retain actual outcomes for the earlier implementation/profiles. They do not establish current hybrid accuracy. Current validation belongs in the stability scorecard.
 - The [initial verification record](../evals/results/v3_verification.json) and [historical native evaluator trace](../evals/results/verified/graph_v3/382007d5488a25f85565c47b31a247f6f58484a0daf4ccf1c69370166e61bdce/20261018T082905708564Z-d0d379f1/partial.jsonl) retain the original implementation: two 12-chunk attempts, six genuinely new retry chunks and a final private-fact refusal. Later repairs changed code fingerprints. This one inspected question establishes historical trace/retry behavior, not current answerable-question accuracy.
 - An earlier preserved smoke attempt had stale top-level generation metadata despite correct nested local model settings. It is superseded by the final trace above; the verification record identifies it rather than rewriting historical evidence.
 - Cold/warm caches, different models and different request paths prevent a causal performance comparison from these few observations.
 - Grammar-constrained JSON does not establish semantic truth. A small self-judging model can still accept unsupported answers or refuse answerable ones. No general accuracy increase or calibrated confidence is claimed.
-- Changed-code [Linux CI 39164202254](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39164202254) passed for `5f06e83`: 171 offline tests, fresh 14,414-document index and five integration tests. This verifies the changed dependency/source tree, not native model quality.
+- Earlier changed-code [Linux CI 39164202254](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39164202254) passed for `5f06e83`: 171 offline tests, fresh 14,414-document index and five integration tests. This verifies the changed dependency/source tree, not native model quality.
+- Current [Linux CI 39191887080](https://github.com/kuntalashivasairahul/MultiAgent_QA_System/actions/runs/39191887080) passes for `70153e9`: 183 offline tests, fresh 14,414-document index and five integration tests. Both current engineering assessments are 8.55/10 under the unchanged rubric; these are not answer-accuracy percentages.
 - Bind to loopback. Authentication, private-data filtering, multi-tenant isolation, hosted API deployment, load testing and Windows execution are not established by this development implementation.
 
 ## Next upgrade order
 
-The [future upgrade plan](V3_UPGRADE_ROADMAP.md) gives acceptance criteria and a practical learning sequence. The candidate's 12-question native regression reproduced a wrong-operation acceptance despite earlier 15/15 fixed Judge controls. Promotion remains blocked pending repair and a complete rerun; controls and tests alone do not establish stability.
+The [future upgrade plan](V3_UPGRADE_ROADMAP.md) gives acceptance criteria and a practical learning sequence. The earlier 18 October candidate reproduced a wrong-operation acceptance. The two-check policy and 19 October Gemini profile reject that operation in all 17 fixed controls and the current native study; local Reasoning still produces false refusals. The [current scorecard](../evals/V3_STABILITY_SCORECARD.md) records the complete study and release disposition. Controls and tests alone do not establish broad accuracy.
 
 1. **Measure the delivered v3.** Freeze provider, weights, threshold and retrieval settings; compare v2.1 and v3 on the corrected development set. Report supported correctness, false refusals, unsupported answers, evidence added by retry, tokens and latency. Then author fresh confirmation questions. Do not resume the old 9/10 goal automatically.
 2. **Finish profile comparison and source review.** The inspected 3B/8B self-Judges were insufficient; the hybrid candidate must earn its broader result. Report quality, false refusals, protocol gaps, latency and reported usage. Model and prompt changes are bundled, so do not attribute gains to retrieval retry alone.
@@ -124,10 +128,10 @@ The [future upgrade plan](V3_UPGRADE_ROADMAP.md) gives acceptance criteria and a
 
 ## Résumé wording after this implementation
 
-**Multi-Agent QA System — LangGraph, FastAPI, Groq, LM Studio, Meta Llama, Python**
+**Multi-Agent QA System — LangGraph, FastAPI, LM Studio, Meta Llama, Gemini, Groq, Python**
 
 - Built a three-role Retrieval–Reasoning–Judge workflow in LangGraph, with structured quality scoring, cited-evidence checks and one bounded retrieval retry below a configurable threshold.
-- Exposed the shared workflow through validated FastAPI REST endpoints; implemented local Meta Llama Reasoning through LM Studio with a Groq-hosted quality Judge, per-request state isolation and reproducible evaluation artifacts.
+- Exposed the shared workflow through validated FastAPI REST endpoints; implemented local Meta Llama Reasoning through LM Studio with an independently configured cloud quality Judge, per-request state isolation and reproducible evaluation artifacts.
 
 Use actual work dates. “Groq-hosted Llama” still requires an accessible model and native evidence on that provider; the current account does not supply it. Do not add an accuracy-improvement percentage from smoke tests.
 

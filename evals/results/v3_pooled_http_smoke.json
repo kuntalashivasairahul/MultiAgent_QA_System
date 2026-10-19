@@ -1,0 +1,170 @@
+{
+  "scope": "Actual loopback HTTP to local Llama Reasoning and configured Gemini Judge; one answerable smoke, not broad accuracy",
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "scope": "process_only",
+      "version": "3.0",
+      "model_profile": {
+        "backend": "lmstudio",
+        "generation_model": "llama-3.1-8b-instruct",
+        "judge_model": "gemini-3.5-flash",
+        "judge_backend": "gemini",
+        "base_url": "http://127.0.0.1:1234/v1",
+        "judge_base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "temperature": 0,
+        "max_tokens": 2048,
+        "timeout": 120,
+        "structured_output": "json_schema",
+        "judge_max_tokens": 2048,
+        "judge_timeout": 120,
+        "max_retries": 0,
+        "judge_max_retries": 0,
+        "judge_reasoning_effort": "low",
+        "judge_credential_slots": 9,
+        "judge_failover_policy": "same-model-configured-keys-quota-and-transient-cooldown",
+        "judge_requests_per_second": 0.1,
+        "judge_structured_output": "json_schema",
+        "schema_parse_attempts": 2,
+        "model_weights_sha256": null,
+        "judge_weights_sha256": null
+      }
+    }
+  },
+  "invalid_requests": [
+    {
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "string_too_short",
+            "loc": [
+              "body",
+              "question"
+            ],
+            "msg": "String should have at least 1 character",
+            "input": "",
+            "ctx": {
+              "min_length": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "string_type",
+            "loc": [
+              "body",
+              "question"
+            ],
+            "msg": "Input should be a valid string",
+            "input": 42
+          }
+        ]
+      }
+    },
+    {
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "extra_forbidden",
+            "loc": [
+              "body",
+              "extra"
+            ],
+            "msg": "Extra inputs are not permitted",
+            "input": true
+          }
+        ]
+      }
+    }
+  ],
+  "positive": {
+    "status": 200,
+    "body": {
+      "answer": "default",
+      "refused": false,
+      "citations": [
+        {
+          "id": 4,
+          "source": "production-deployment/self-hosted-guide/namespaces.mdx",
+          "chunk_id": "eb2cfd96d40e22dabb3fb570cf335ecca7083805acedd96692ada9310745d7ea"
+        },
+        {
+          "id": 6,
+          "source": "tctl-v1/index.mdx",
+          "chunk_id": "88b8eb4f086e38d86c404b494b479d3bc1444fecedf54057c2f022e6b28789ac"
+        }
+      ],
+      "quality": {
+        "passed": true,
+        "reason": "The answer correctly identifies 'default' as the default Namespace name in Temporal, which is directly supported by the cited documents.",
+        "quotes": [
+          {
+            "id": 4,
+            "text": "If no Namespace is specified, SDKs and CLI use the `default` Namespace."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": "",
+        "validation_failures": []
+      },
+      "attempt_count": 1,
+      "model_profile": {
+        "backend": "lmstudio",
+        "generation_model": "llama-3.1-8b-instruct",
+        "judge_model": "gemini-3.5-flash",
+        "judge_backend": "gemini",
+        "base_url": "http://127.0.0.1:1234/v1",
+        "judge_base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "temperature": 0,
+        "max_tokens": 2048,
+        "timeout": 120,
+        "structured_output": "json_schema",
+        "judge_max_tokens": 2048,
+        "judge_timeout": 120,
+        "max_retries": 0,
+        "judge_max_retries": 0,
+        "judge_reasoning_effort": "low",
+        "judge_credential_slots": 9,
+        "judge_failover_policy": "same-model-configured-keys-quota-and-transient-cooldown",
+        "judge_requests_per_second": 0.1,
+        "judge_structured_output": "json_schema",
+        "schema_parse_attempts": 2,
+        "model_weights_sha256": null,
+        "judge_weights_sha256": null,
+        "quality_threshold": 0.8,
+        "max_attempts": 2,
+        "score_scope": "uncalibrated rubric quality, not probability",
+        "retry_policy": "missing-aspect-new-evidence",
+        "judge_policy": "cited-support-then-context-veto"
+      },
+      "seconds": 56.129146291990764,
+      "usage": {
+        "llama-3.1-8b-instruct": {
+          "input_tokens": 1521,
+          "output_tokens": 17,
+          "total_tokens": 1538,
+          "input_token_details": {},
+          "output_token_details": {
+            "reasoning": 0
+          }
+        },
+        "gemini-3.5-flash": {
+          "output_tokens": 207,
+          "input_tokens": 3170,
+          "total_tokens": 3377,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      }
+    }
+  },
+  "wall_seconds": 56.14195429199026
+}

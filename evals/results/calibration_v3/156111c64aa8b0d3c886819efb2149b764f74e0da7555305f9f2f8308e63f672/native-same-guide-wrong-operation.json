@@ -1,7 +1,70 @@
 {
   "id": "native-same-guide-wrong-operation",
-  "error": "RateLimitError",
-  "passed": false,
-  "usage": {},
-  "seconds": 10.045097249996616
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "total_tokens": 4466,
+      "output_tokens": 357,
+      "input_tokens": 4109
+    }
+  },
+  "seconds": 40.221894333997625,
+  "cited_support": {
+    "passed": true,
+    "reason": "The document explicitly provides the command `python start_activity.py` under the heading 'Step 7: Start an Activity in place of `.delay()`' in the Celery-to-Standalone-Activity migration guide, which directly answers the question.",
+    "quotes": [
+      {
+        "id": 3,
+        "text": "```bash\npython start_activity.py\n```"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": true,
+        "reason": "The document explicitly provides the command `python start_activity.py` under the heading 'Step 7: Start an Activity in place of `.delay()`' in the Celery-to-Standalone-Activity migration guide, which directly answers the question.",
+        "quotes": [
+          {
+            "id": 3,
+            "text": "```bash\npython start_activity.py\n```"
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "stage": "context_consistency",
+      "verdict": {
+        "passed": false,
+        "reason": "The proposed answer 'python start_activity.py' is incorrect for the specific question asked. The question asks for the command to start the **Python Worker**. According to the cited document (id 3), 'python start_activity.py' is the command for 'Step 7: Start an Activity in place of .delay()'. The background documents (specifically id 6 and id 12) clarify that the command to start the Worker is 'python worker.py' (found in 'Step 5: Run a Worker to process the Activity'). The cited document provided for the answer does not contain the command for starting the Worker, and the answer provided corresponds to a different operation (starting an activity) than the one requested (starting a worker).",
+        "quotes": [
+          {
+            "id": 3,
+            "text": "```bash\npython start_activity.py\n```"
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": "celery-to-standalone-activity start worker command"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The proposed answer 'python start_activity.py' is incorrect for the specific question asked. The question asks for the command to start the **Python Worker**. According to the cited document (id 3), 'python start_activity.py' is the command for 'Step 7: Start an Activity in place of .delay()'. The background documents (specifically id 6 and id 12) clarify that the command to start the Worker is 'python worker.py' (found in 'Step 5: Run a Worker to process the Activity'). The cited document provided for the answer does not contain the command for starting the Worker, and the answer provided corresponds to a different operation (starting an activity) than the one requested (starting a worker).",
+    "quotes": [
+      {
+        "id": 3,
+        "text": "```bash\npython start_activity.py\n```"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": "celery-to-standalone-activity start worker command"
+  },
+  "actual": false,
+  "expected": false
 }

@@ -1,0 +1,42 @@
+{
+  "id": "unsupported-extra-claim",
+  "cited_support": {
+    "passed": false,
+    "reason": "The answer makes an unsupported factual claim that it 'encrypts all payloads', which is not present in the provided document.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "public example encrypts all payloads MaximumAttempts"
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer makes an unsupported factual claim that it 'encrypts all payloads', which is not present in the provided document.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "public example encrypts all payloads MaximumAttempts"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The answer makes an unsupported factual claim that it 'encrypts all payloads', which is not present in the provided document.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "public example encrypts all payloads MaximumAttempts"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "input_tokens": 452,
+      "output_tokens": 54,
+      "total_tokens": 583,
+      "input_token_details": {},
+      "output_token_details": {}
+    }
+  },
+  "seconds": 9.61016495799413
+}

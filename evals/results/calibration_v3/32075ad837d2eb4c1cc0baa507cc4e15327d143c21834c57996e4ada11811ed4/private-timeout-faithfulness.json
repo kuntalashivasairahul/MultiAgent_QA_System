@@ -1,0 +1,7 @@
+{
+  "id": "private-timeout-faithfulness",
+  "error": "OpenAIRateLimitError",
+  "passed": false,
+  "usage": {},
+  "seconds": 0.3981024169916054
+}

@@ -1,0 +1,7 @@
+{
+  "id": "native-supported-access",
+  "error": "OpenAIRateLimitError",
+  "passed": false,
+  "usage": {},
+  "seconds": 0.5237847089883871
+}

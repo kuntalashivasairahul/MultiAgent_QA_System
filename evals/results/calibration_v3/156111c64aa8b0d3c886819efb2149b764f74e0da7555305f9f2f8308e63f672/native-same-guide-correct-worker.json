@@ -1,7 +1,70 @@
 {
   "id": "native-same-guide-correct-worker",
-  "error": "RateLimitError",
-  "passed": false,
-  "usage": {},
-  "seconds": 10.066487875003077
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "total_tokens": 4367,
+      "output_tokens": 260,
+      "input_tokens": 4107
+    }
+  },
+  "seconds": 40.07572562499263,
+  "cited_support": {
+    "passed": true,
+    "reason": "The document explicitly provides the command 'python worker.py' under the section 'Step 5: Run a Worker to process the Activity' in the Celery-to-Standalone-Activity migration guide, which directly answers the question.",
+    "quotes": [
+      {
+        "id": 6,
+        "text": "```bash\npython worker.py\n```"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": true,
+        "reason": "The document explicitly provides the command 'python worker.py' under the section 'Step 5: Run a Worker to process the Activity' in the Celery-to-Standalone-Activity migration guide, which directly answers the question.",
+        "quotes": [
+          {
+            "id": 6,
+            "text": "```bash\npython worker.py\n```"
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "stage": "context_consistency",
+      "verdict": {
+        "passed": true,
+        "reason": "The cited document (id 6) explicitly provides the command 'python worker.py' under the heading 'Step 5: Run a Worker to process the Activity' in the 'guides/celery-to-standalone-activity.mdx' file. This directly answers the question about the command to start the Python Worker in the specified migration guide.",
+        "quotes": [
+          {
+            "id": 6,
+            "text": "```bash\npython worker.py\n```"
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    }
+  ],
+  "verdict": {
+    "passed": true,
+    "reason": "The document explicitly provides the command 'python worker.py' under the section 'Step 5: Run a Worker to process the Activity' in the Celery-to-Standalone-Activity migration guide, which directly answers the question.",
+    "quotes": [
+      {
+        "id": 6,
+        "text": "```bash\npython worker.py\n```"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true
 }

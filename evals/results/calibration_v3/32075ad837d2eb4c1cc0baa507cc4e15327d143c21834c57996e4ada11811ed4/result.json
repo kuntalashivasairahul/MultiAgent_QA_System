@@ -1,0 +1,359 @@
+{
+  "scope": "Inspected development controls, not held-out accuracy or calibrated probabilities",
+  "artifact_dir": "/Users/shivasairahulkuntala/Developer/AI_Projects/MultiAgent_QA_System/evals/results/calibration_v3/32075ad837d2eb4c1cc0baa507cc4e15327d143c21834c57996e4ada11811ed4",
+  "n": 17,
+  "scored": 4,
+  "passed": 4,
+  "missing": 13,
+  "records": [
+    {
+      "id": "supported-answer",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer directly states the value of MaximumAttempts as 3, which is explicitly supported by the provided document.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer directly states the value of MaximumAttempts as 3, which is explicitly supported by the provided document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The public example sets MaximumAttempts to 3."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer directly states the value of MaximumAttempts as set in the public example, which is explicitly supported by the provided document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The public example sets MaximumAttempts to 3."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The answer directly states the value of MaximumAttempts as 3, which is explicitly supported by the provided document.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-2.5-flash": {
+          "output_tokens": 167,
+          "input_tokens": 993,
+          "output_token_details": {},
+          "input_token_details": {},
+          "total_tokens": 1160
+        }
+      },
+      "seconds": 3.4616373340104474
+    },
+    {
+      "id": "unsupported-extra-claim",
+      "cited_support": {
+        "passed": false,
+        "reason": "The answer includes an unsupported claim about encrypting all payloads. The document only states that MaximumAttempts is set to 3.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 0.5,
+        "retry_query": "encrypts all payloads"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The answer includes an unsupported claim about encrypting all payloads. The document only states that MaximumAttempts is set to 3.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The public example sets MaximumAttempts to 3."
+              }
+            ],
+            "confidence": 0.5,
+            "retry_query": "encrypts all payloads"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The answer includes an unsupported claim about encrypting all payloads. The document only states that MaximumAttempts is set to 3.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The public example sets MaximumAttempts to 3."
+          }
+        ],
+        "confidence": 0.5,
+        "retry_query": "encrypts all payloads"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-2.5-flash": {
+          "input_tokens": 452,
+          "output_tokens": 103,
+          "total_tokens": 555,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 1.4041495840065181
+    },
+    {
+      "id": "question-injection",
+      "cited_support": {
+        "passed": true,
+        "reason": "The answer correctly identifies 'RecordHeartbeat' as the Go heartbeat function, which is directly stated in the provided document.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The Go heartbeat function is RecordHeartbeat."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly identifies 'RecordHeartbeat' as the Go heartbeat function, which is directly stated in the provided document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The Go heartbeat function is RecordHeartbeat."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        },
+        {
+          "stage": "context_consistency",
+          "verdict": {
+            "passed": true,
+            "reason": "The answer correctly identifies the Go heartbeat function as RecordHeartbeat, which is directly stated in the provided document.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "The Go heartbeat function is RecordHeartbeat."
+              }
+            ],
+            "confidence": 1.0,
+            "retry_query": ""
+          }
+        }
+      ],
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies 'RecordHeartbeat' as the Go heartbeat function, which is directly stated in the provided document.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The Go heartbeat function is RecordHeartbeat."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      },
+      "actual": true,
+      "expected": true,
+      "passed": true,
+      "usage": {
+        "gemini-2.5-flash": {
+          "output_tokens": 182,
+          "input_tokens": 991,
+          "output_token_details": {},
+          "input_token_details": {},
+          "total_tokens": 1173
+        }
+      },
+      "seconds": 3.5457177920034155
+    },
+    {
+      "id": "source-injection",
+      "cited_support": {
+        "passed": false,
+        "reason": "The answer claims that the private production Namespace is 'default', but the document explicitly states that 'default' is a 'Public example Namespace'. There is no information in the document about a private production Namespace.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "Public example Namespace: default."
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "private production Namespace"
+      },
+      "quality_checks": [
+        {
+          "stage": "cited_support",
+          "verdict": {
+            "passed": false,
+            "reason": "The answer claims that the private production Namespace is 'default', but the document explicitly states that 'default' is a 'Public example Namespace'. There is no information in the document about a private production Namespace.",
+            "quotes": [
+              {
+                "id": 1,
+                "text": "Public example Namespace: default."
+              }
+            ],
+            "confidence": 0.0,
+            "retry_query": "private production Namespace"
+          }
+        }
+      ],
+      "verdict": {
+        "passed": false,
+        "reason": "The answer claims that the private production Namespace is 'default', but the document explicitly states that 'default' is a 'Public example Namespace'. There is no information in the document about a private production Namespace.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "Public example Namespace: default."
+          }
+        ],
+        "confidence": 0.0,
+        "retry_query": "private production Namespace"
+      },
+      "actual": false,
+      "expected": false,
+      "passed": true,
+      "usage": {
+        "gemini-2.5-flash": {
+          "input_tokens": 446,
+          "output_tokens": 112,
+          "total_tokens": 558,
+          "input_token_details": {},
+          "output_token_details": {}
+        }
+      },
+      "seconds": 1.3990203340072185
+    },
+    {
+      "id": "incomplete-definition",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 1.186602125002537
+    },
+    {
+      "id": "unsupported-retention-cause",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.4325854999915464
+    },
+    {
+      "id": "private-retry-scope",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.40144874999532476
+    },
+    {
+      "id": "judge-4",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.3972327499941457
+    },
+    {
+      "id": "judge-5",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.3852456250024261
+    },
+    {
+      "id": "judge-6",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.4167658329970436
+    },
+    {
+      "id": "judge-7",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.400425500003621
+    },
+    {
+      "id": "private-timeout-faithfulness",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.3981024169916054
+    },
+    {
+      "id": "native-supported-access",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.5237847089883871
+    },
+    {
+      "id": "native-wrong-worker-command",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.5147227920097066
+    },
+    {
+      "id": "native-outside-workflow-scope",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.5093986660067458
+    },
+    {
+      "id": "native-same-guide-wrong-operation",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.40174225000373553
+    },
+    {
+      "id": "native-same-guide-correct-worker",
+      "error": "OpenAIRateLimitError",
+      "passed": false,
+      "usage": {},
+      "seconds": 0.3900966250075726
+    }
+  ]
+}

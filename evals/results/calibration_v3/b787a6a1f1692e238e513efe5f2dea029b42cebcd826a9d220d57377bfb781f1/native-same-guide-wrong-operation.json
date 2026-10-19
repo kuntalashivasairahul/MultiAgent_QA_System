@@ -1,0 +1,62 @@
+{
+  "id": "native-same-guide-wrong-operation",
+  "cited_support": {
+    "passed": true,
+    "reason": "The answer correctly identifies the command from the document to start the Python Worker in the Celery-to-Standalone-Activity migration guide.",
+    "quotes": [
+      {
+        "id": 3,
+        "text": "python start_activity.py"
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer correctly identifies the command from the document to start the Python Worker in the Celery-to-Standalone-Activity migration guide.",
+        "quotes": [
+          {
+            "id": 3,
+            "text": "python start_activity.py"
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "stage": "context_consistency",
+      "verdict": {
+        "passed": false,
+        "reason": "The proposed answer states 'python start_activity.py', which is the command to start an Activity without waiting. According to Document ID 6 (guides/celery-to-standalone-activity.mdx, Step 5), the command to start the Python Worker is 'python worker.py'.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "Celery-to-Standalone-Activity migration guide command starts Python Worker"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The proposed answer states 'python start_activity.py', which is the command to start an Activity without waiting. According to Document ID 6 (guides/celery-to-standalone-activity.mdx, Step 5), the command to start the Python Worker is 'python worker.py'.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "Celery-to-Standalone-Activity migration guide command starts Python Worker"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "input_token_details": {},
+      "output_token_details": {},
+      "input_tokens": 3661,
+      "total_tokens": 3850,
+      "output_tokens": 189
+    }
+  },
+  "seconds": 30.618202874989947
+}

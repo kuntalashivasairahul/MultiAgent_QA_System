@@ -2,11 +2,13 @@
 
 The three roles, numeric score, conditional retrieval retry, FastAPI endpoints and genuine local Meta Llama inference are implemented. Stability is a separate gate. The inspected M4 Mac mini has 16 GiB unified memory; Llama 3.1 8B Q4_K_M fits at an 8K context with one prediction. Its observed model load report is 4.58 GiB, not total system memory. Keep the pinned BGE embedding index and avoid further model downloads until the current profile is understood.
 
+**19 October update:** the explicit Gemini alternative has passed 17/17 fixed Judge controls, 8/8 external-grader controls and the complete source-reviewed 12-question study (9/12 correct, three false refusals, no observed unsupported final answers). All 188 local tests and 183 isolated offline tests pass. The [current scorecard](../evals/V3_STABILITY_SCORECARD.md) records the Linux release check and final engineering assessments. The full 40-question comparison, fresh confirmation and Windows milestone remain separate work.
+
 ## Milestones and acceptance criteria
 
 | Order | Work | Evidence required before completion |
 |---|---|---|
-| 1: finish v3 stability | Repair unsupported causal explanations and wrong-operation acceptance, preserve literal citations and strict refusals; freeze local Llama/Groq Judge profile | All 17 fixed native controls passing, all fixed 12 regression questions completed and source-reviewed, full tests, isolated offline checks, changed-code Linux CI, real HTTP answer/refusal evidence |
+| 1: finish v3 stability | Repair unsupported causal explanations and wrong-operation acceptance, preserve literal citations and strict refusals; freeze the explicit local Llama/Gemini alternative (Groq remains configurable) | All 17 fixed native controls passing, all fixed 12 regression questions completed and source-reviewed, full tests, isolated offline checks, changed-code Linux CI, real HTTP answer/refusal evidence |
 | 2: measure quality | Run the corrected 40-question development set and compare with a fixed v2.1 baseline; then write fresh confirmation questions after freezing code | Complete eligible denominators; source review of unsupported answers, false refusals and evaluator disagreements; reported latency and usage; no accuracy percentage from partial runs |
 | 3: prove retry value | Use retained first/second-attempt evidence to diagnose whether the missing fact was acquired and used | A controlled paired comparison with retry enabled/disabled, same references and model settings; report both gains and extra latency/tokens |
 | 4: make the demonstration portable | Reproduce setup and API requests on the actual Windows presentation machine | Frozen dependency installation, corpus/index integrity, real HTTP smoke and restart/recovery; document CPU/GPU/model differences |
@@ -14,13 +16,13 @@ The three roles, numeric score, conditional retrieval retry, FastAPI endpoints a
 
 The fixed scoring rubric is in the [stability scorecard](../evals/V3_STABILITY_SCORECARD.md). Both v3 and overall scores must be justified separately. An 8.5 engineering score is not 85% answer accuracy. Full development and fresh confirmation remain the stronger 9/10 gate. A reproduced major support failure blocks promotion regardless of weighted arithmetic.
 
-The immediate repair case is explicit: cleanup advice does not establish when a retention timer is assigned or changed. Require support for each explanatory claim, then test the unsupported explanation and directly supported counterparts before spending quota on the full regression. The reason-first schema experiment did not solve this and was rejected. Preserve valid failed verdicts; resuming operational gaps must not repeatedly sample them until a desired answer appears.
+The repaired causal-support case remains a regression: cleanup advice does not establish when a retention timer is assigned or changed. The current cited-support/context-veto policy rejects this explanation and the wrong-operation case in fixed native controls. Preserve support for each explanatory claim when changing profiles. The reason-first schema experiment did not solve this and was rejected. Preserve valid failed verdicts; resuming operational gaps must not repeatedly sample them until a desired answer appears.
 
 ## Model choice on this machine
 
 Use local Llama 3.1 8B for Reasoning while investigating the hybrid profile. The tested local 3B/8B self-Judges and two 4B Qwen experiments were insufficient; valid JSON and hardware fit did not establish reliable judgment. Do not silently fall back to them when Groq quota is exhausted. Preserve completed graph nodes, inspect the recorded cooldown and resume identical inputs.
 
-The checked Groq account has no generative Llama offering. The truthful stack is **LangGraph, FastAPI, Groq, LM Studio, Meta Llama, Python**. Local Llama is not Groq-hosted Llama. The tested hybrid sends public questions and cited evidence to Groq. [LM Studio's structured-output documentation](https://lmstudio.ai/docs/developer/openai-compat/structured-output) confirms schema support and cautions that smaller models may struggle; schema compliance is a format guarantee, not factual support.
+The checked Groq account has no generative Llama offering. The truthful stack is **LangGraph, FastAPI, LM Studio, Meta Llama, Gemini, Groq, Python**. Local Llama is not Groq-hosted Llama. The selected alternative sends public questions and bounded evidence to Gemini; explicit Groq profiles send them to Groq. See [quota recovery](V3_QUOTA_RECOVERY.md) for provider selection, configured key pools and safe failure behavior. [LM Studio's structured-output documentation](https://lmstudio.ai/docs/developer/openai-compat/structured-output) confirms schema support and cautions that smaller models may struggle; schema compliance is a format guarantee, not factual support.
 
 ## Learning sequence alongside the work
 

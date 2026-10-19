@@ -1,7 +1,70 @@
 {
   "id": "judge-4",
-  "error": "RateLimitError",
-  "passed": false,
-  "usage": {},
-  "seconds": 10.01897441699839
+  "passed": true,
+  "usage": {
+    "qwen/qwen3.8-27b": {
+      "total_tokens": 1737,
+      "output_tokens": 180,
+      "input_tokens": 1557
+    }
+  },
+  "seconds": 39.571296041991445,
+  "cited_support": {
+    "passed": true,
+    "reason": "The answer accurately reflects the single fact established in the provided document.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer accurately reflects the single fact established in the provided document.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "stage": "context_consistency",
+      "verdict": {
+        "passed": true,
+        "reason": "The answer accurately reflects the information provided in the cited document, which states that the timeout is 5 seconds.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    }
+  ],
+  "verdict": {
+    "passed": true,
+    "reason": "The answer accurately reflects the single fact established in the provided document.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true
 }

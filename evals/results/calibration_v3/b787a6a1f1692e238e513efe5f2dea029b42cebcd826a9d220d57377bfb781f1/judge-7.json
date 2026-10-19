@@ -1,0 +1,42 @@
+{
+  "id": "judge-7",
+  "cited_support": {
+    "passed": false,
+    "reason": "The answer states the timeout is 60 seconds, but document 1 explicitly states the timeout is 5 seconds.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "timeout"
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": false,
+        "reason": "The answer states the timeout is 60 seconds, but document 1 explicitly states the timeout is 5 seconds.",
+        "quotes": [],
+        "confidence": 0.0,
+        "retry_query": "timeout"
+      }
+    }
+  ],
+  "verdict": {
+    "passed": false,
+    "reason": "The answer states the timeout is 60 seconds, but document 1 explicitly states the timeout is 5 seconds.",
+    "quotes": [],
+    "confidence": 0.0,
+    "retry_query": "timeout"
+  },
+  "actual": false,
+  "expected": false,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "input_tokens": 446,
+      "output_tokens": 53,
+      "total_tokens": 499,
+      "input_token_details": {},
+      "output_token_details": {}
+    }
+  },
+  "seconds": 10.072793958999682
+}

@@ -1,0 +1,72 @@
+{
+  "id": "judge-4",
+  "cited_support": {
+    "passed": true,
+    "reason": "The proposed answer accurately reflects the fact established by the document that the timeout is 5 seconds.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "quality_checks": [
+    {
+      "stage": "cited_support",
+      "verdict": {
+        "passed": true,
+        "reason": "The proposed answer accurately reflects the fact established by the document that the timeout is 5 seconds.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    },
+    {
+      "stage": "context_consistency",
+      "verdict": {
+        "passed": true,
+        "reason": "The cited document explicitly states that the timeout is 5 seconds, which directly supports the answer.",
+        "quotes": [
+          {
+            "id": 1,
+            "text": "The timeout is 5 seconds."
+          }
+        ],
+        "confidence": 1.0,
+        "retry_query": ""
+      }
+    }
+  ],
+  "verdict": {
+    "passed": true,
+    "reason": "The proposed answer accurately reflects the fact established by the document that the timeout is 5 seconds.",
+    "quotes": [
+      {
+        "id": 1,
+        "text": "The timeout is 5 seconds."
+      }
+    ],
+    "confidence": 1.0,
+    "retry_query": ""
+  },
+  "actual": true,
+  "expected": true,
+  "passed": true,
+  "usage": {
+    "gemini-3.5-flash": {
+      "output_token_details": {},
+      "total_tokens": 1078,
+      "input_token_details": {},
+      "input_tokens": 966,
+      "output_tokens": 112
+    }
+  },
+  "seconds": 20.079967124998802
+}
